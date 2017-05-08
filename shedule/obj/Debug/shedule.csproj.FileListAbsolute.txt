@@ -1,0 +1,11 @@
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\bin\Debug\shedule.exe.config
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\bin\Debug\shedule.exe
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\bin\Debug\shedule.pdb
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.csprojResolveAssemblyReference.cache
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.Properties.Resources.resources
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.csproj.GenerateResource.Cache
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.exe
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.pdb
+c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.Form1.resources
+C:\Users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.csproj.ResolveComReference.cache
