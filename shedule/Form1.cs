@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Office.Interop.Excel;
-using SD = System.Data;
 using Excel = Microsoft.Office.Interop.Excel;
+using SD = System.Data;
+using System.Configuration;
 
 namespace shedule
 {
@@ -256,5 +253,31 @@ namespace shedule
             }
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            // название процедуры
+            string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/05', '2017/02/05 23:59:00')";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int id = reader.GetInt16(0);
+                    DateTime filename = reader.GetDateTime(1); 
+                    string title = reader.GetString(2);
+                    string filee = reader.GetString(3);
+                    int titl = reader.GetInt32(4);
+                    int filame = reader.GetInt32(5);
+                    double tite = reader.GetDouble(6);
+                    MessageBox.Show(id+""+filee+""+filename+""+tite);
+                }
+            }
+        }
     }
+    
 }
