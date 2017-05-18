@@ -9,3 +9,14 @@ c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\sh
 c:\users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.Form1.resources
 C:\Users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\Interop.Microsoft.Office.Core.dll
 C:\Users\kras\documents\visual studio 2015\Projects\shedule\shedule\obj\Debug\shedule.csproj.ResolveComReference.cache
+C:\Users\kras\Documents\GitHub\shedule\shedule\bin\Debug\shedule.exe.config
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.csproj.ResolveComReference.cache
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.exe
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.pdb
+C:\Users\kras\Documents\GitHub\shedule\shedule\bin\Debug\shedule.exe
+C:\Users\kras\Documents\GitHub\shedule\shedule\bin\Debug\shedule.pdb
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.csprojResolveAssemblyReference.cache
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form1.resources
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Properties.Resources.resources
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.csproj.GenerateResource.Cache
