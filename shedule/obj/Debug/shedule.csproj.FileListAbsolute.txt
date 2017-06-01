@@ -20,3 +20,4 @@ C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.csprojResolveAs
 C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form1.resources
 C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Properties.Resources.resources
 C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.csproj.GenerateResource.Cache
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form2.resources
