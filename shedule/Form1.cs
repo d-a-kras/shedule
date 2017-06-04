@@ -14,33 +14,89 @@ namespace shedule
 {
     public partial class Form1 : Form
     {
+        static public int[] chartX;
+        static public int[] chartY2;
+        static public int[] chartY1;
+        static public int Nday=0;
+
+        public void ShowProizvCalendar() {
+            foreach (DataForCalendary d in Program.DFCs)
+            {
+                if(DataForCalendary.isHolyday(d.getData()))
+                    monthCalendar1.AddBoldedDate(d.getData());
+                if (DataForCalendary.isPrHolyday(d.getData()))
+                    monthCalendar1.AddAnnuallyBoldedDate(d.getData());
+            }
+            
+        }
+
+         public void getChart()
+        {
+            
+            DateTime d = new DateTime();
+            List<hourSale> Hss = new List<hourSale>();
+           // MessageBox.Show(Program.HSS[1].getData().Date.ToString());
+            // Hss=HSS.FindAll(p => p.getData().Date == );
+
+            int[] TimeObr = new int[15];
+            int[] TimeSotr = new int[15];
+
+           
+            labelData.Text= (Nday+1) + " марта";
+            
+            chartX = new int[15];
+            chartY2 = new int[15];
+            chartY1 = new int[15];
+
+            for (int i = 8, n = 0; i < 23; n++, i++)
+            {
+                if ((textBoxSpeed.Text == "") || (textBoxTimeClick.Text == "") || (textBoxTimeTell.Text == "")) { MessageBox.Show("Не все данные введены"); break; }
+                else
+                {
+                    TimeObr[n] = (Program.CountCheck[Nday, n] * Int32.Parse(textBoxTimeTell.Text) + Program.CountClick[Nday, n] * Int32.Parse(textBoxTimeClick.Text))/60;
+                    TimeSotr[n] = Program.CountS[Nday, n] * Int32.Parse(textBoxSpeed.Text)/60;
+                    chartX[n] = i;
+
+                    chartY2[n] = TimeSotr[n];
+                    chartY1[n] = TimeObr[n];
+                }
+            }
+
+        }
+
         private SD.DataTable CreateTable()
         {
             //создаём таблицу
-            SD.DataTable dt = new SD.DataTable("Friends");
+            string[] months = Program.getMonths();
+            SD.DataTable dt = new SD.DataTable("norm");
             //создаём три колонки
-            DataColumn colID = new DataColumn("ID", typeof(Int32));
-            DataColumn colName = new DataColumn("Name", typeof(String));
-            DataColumn colAge = new DataColumn("Age", typeof(Int32));
+            DataColumn Mounth = new DataColumn("M", typeof(string));
+            
+            DataColumn colCountDayInMonth = new DataColumn("CDIM", typeof(Int16));
+            DataColumn colCountDayRab = new DataColumn("CDR", typeof(Int16));
+            DataColumn colCountDayVuh = new DataColumn("CDV", typeof(Int16));
+            DataColumn normCh = new DataColumn("NC", typeof(Int16));
+
             //добавляем колонки в таблицу
-            dt.Columns.Add(colID);
-            dt.Columns.Add(colName);
-            dt.Columns.Add(colAge);
+            dt.Columns.Add(Mounth);
+            dt.Columns.Add(colCountDayInMonth);
+            dt.Columns.Add(colCountDayRab);
+            dt.Columns.Add(colCountDayVuh);
+            dt.Columns.Add(normCh);
             DataRow row = null;
             //создаём новую строку
-            row = dt.NewRow();
+            
             //заполняем строку значениями
-            row["ID"] = 1;
-            row["Name"] = "Vanya";
-            row["Age"] = 45;
-            //добавляем строку в таблицу
-            dt.Rows.Add(row);
-            //создаём ещё одну запись в таблице
-            row = dt.NewRow();
-            row["ID"] = 2;
-            row["Name"] = "Vasya";
-            row["Age"] = 35;
-            dt.Rows.Add(row);
+            
+            for (int i = 1; i <= 12; i++) {
+                row = dt.NewRow();
+                row["M"] = months[i-1];
+                row["CDIM"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
+                row["CDR"] = Program.RD[i - 1];
+                row["CDV"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1]; 
+                row["NC"] = Program.RD[i - 1]*8-Program.PHD[i-1];
+                dt.Rows.Add(row);
+            }
             return dt;
         }
 
@@ -54,13 +110,13 @@ namespace shedule
             workSheet.Cells[1, 2] = "Name";
             workSheet.Cells[1, 3] = "Age";
             int rowExcel = 2;
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+          /* for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 workSheet.Cells[rowExcel, "A"] = dataGridView1.Rows[i].Cells["ID"].Value;
                 workSheet.Cells[rowExcel, "B"] = dataGridView1.Rows[i].Cells["Name"].Value;
                 workSheet.Cells[rowExcel, "C"] = dataGridView1.Rows[i].Cells["Age"].Value;
                 ++rowExcel;
-            }
+            }*/
             workSheet.SaveAs("MyFile.xls");
             exApp.Quit();
         }
@@ -325,14 +381,21 @@ namespace shedule
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Program.isConnect()) { labelStatus1.Text = "Статус: режим работы сетевой "; radioButtonIzBD.Checked = true; }
-            else { labelStatus1.Text = "Статус: режим работы локальный";radioButtonIzFile.Checked = true; }
+           
             Program.ReadListShops();
+           // Program.setListShops();
             tabControl1.TabPages[4].Hide();
-            foreach (Shop h in Program.listShops) {
-                
-                listBox1.Items.Add(h.getAddress());
-            }
+            if (Program.listShops!=null) {
+                foreach (Shop h in Program.listShops) {
+
+                    listBox1.Items.Add(h.getAddress());
+                } }
+            textBoxSpeed.Text = 1000 + "";
+            textBoxTimeTell.Text = 25 + "";
+            textBoxTimeClick.Text = 4 + "";
+
+            if (Program.isConnect()) { labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count; labelStatus2.Text="режим работы сетевой "  ; radioButtonIzBD.Checked = true; }
+            else { labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count; labelStatus2.Text = " режим работы локальный"; radioButtonIzFile.Checked = true; }
         }
 
         private void buttonHelp_Click(object sender, EventArgs e)
@@ -540,5 +603,127 @@ namespace shedule
         {
             buttonImportKasOper.Visible = false;
         }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            Program.ReadConfigShop(listBox1.SelectedIndex);
+        }
+
+        private void button_refresh_list_shops_Click(object sender, EventArgs e)
+        {
+            Program.setListShops();
+            foreach (Shop h in Program.listShops)
+            {
+
+                listBox1.Items.Add(h.getAddress());
+            }
+        }
+
+        private void buttonGruz_Click(object sender, EventArgs e)
+        {
+            panelGruz.BringToFront();
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonNext_Click(object sender, EventArgs e)
+        {
+            Nday++;
+            if (Nday  < 25)
+            {
+                getChart();
+                // labelData.Text = Program.getData();
+                chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
+                chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+            }
+            else { Nday--; MessageBox.Show("Больше данных нет"); }
+        }
+
+        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Program.ReadTekChedule(openFileDialog1.FileName);
+        }
+
+        
+
+        private void buttonReadTekShedule_Click(object sender, EventArgs e)
+        {
+           // openFileDialog1.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //Program.ReadOperFromExel(Environment.CurrentDirectory + @"\P.xls");
+            Nday = 0;
+            Program.Kass();
+            Program.getSm();
+            getChart();
+            chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
+            chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+
+        }
+
+        private void buttonPrevios_Click(object sender, EventArgs e)
+        {
+            Nday--;
+            if (Nday > -1)
+            {
+                getChart();
+                // labelData.Text = Program.getData();
+                chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
+                chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+            }
+            else { Nday++; MessageBox.Show("Больше данных нет"); }
+        }
+
+        private void buttonReadCalendarFromXML_Click(object sender, EventArgs e)
+        {
+            Program.ReadCalendarFronXML();
+        }
+
+        private void buttonCalendar_Click(object sender, EventArgs e)
+        {
+            panelCalendar.BringToFront();
+            Program.getListDate(DateTime.Today.Year);
+            ShowProizvCalendar();
+            dataGridViewCalendar.DataSource = CreateTable();
+
+        }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            DateTime f23 = new DateTime(2017, 5, 9);
+            DataForCalendary f = new DataForCalendary(f23);
+            MessageBox.Show(DataForCalendary.isHolyday(f23).ToString());
+
+            MessageBox.Show(f.getTip().ToString());
+            Program.getListDate(2017);
+            for (int i = 1; i < 30; i++)
+            {
+                 f23 = new DateTime(2017, 5, i);
+                f = new DataForCalendary(f23);
+
+                MessageBox.Show(f.getTip().ToString());
+                // MessageBox.Show( DataForCalendary.isHolyday(f23).ToString());
+            }
+        }
+
+        private void buttonKassov_Click(object sender, EventArgs e)
+        {
+            panelKassOper.BringToFront();
+            
+        }
+
+        
+        
     }
 }
