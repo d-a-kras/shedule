@@ -9,6 +9,7 @@ using SD = System.Data;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 
 namespace shedule
 {
@@ -30,7 +31,84 @@ namespace shedule
             
         }
 
-         public void getChart()
+       
+
+        private SD.DataTable viewTSR()
+        {
+            //создаём таблицу
+            string[] months = Program.getMonths();
+            SD.DataTable dt = new SD.DataTable("norm");
+            //создаём три колонки
+            Program.readTSR();
+
+            DataColumn colCountDayInMonth = new DataColumn("Должность", typeof(string));
+            DataColumn colCountDayRab = new DataColumn("Количество", typeof(Int16));
+            DataColumn colCountDayVuh = new DataColumn("Зарплата", typeof(Int16));
+            DataColumn normCh = new DataColumn("Зарплата за 1/2", typeof(Int16));
+
+            //добавляем колонки в таблицу
+        
+            dt.Columns.Add(colCountDayInMonth);
+            dt.Columns.Add(colCountDayRab);
+            dt.Columns.Add(colCountDayVuh);
+            dt.Columns.Add(normCh);
+            DataRow row = null;
+            //создаём новую строку
+
+            //заполняем строку значениями
+
+            for (int i = 0; i <4; i++)
+            {
+                row = dt.NewRow();
+                row["Должность"] = Program.tsr[i].position;
+                row["Количество"] = Program.tsr[i].count;
+                row["Зарплата"] = Program.tsr[i].zarp;
+                row["Зарплата за 1/2"] = Program.tsr[i].zarp1_2;
+                dt.Rows.Add(row);
+            }
+            return dt;
+        }
+
+        private SD.DataTable viewFactors()
+        {
+            //создаём таблицу
+            string[] months = Program.getMonths();
+            SD.DataTable dt = new SD.DataTable("norm");
+            //создаём три колонки
+          
+
+            DataColumn colCountDayInMonth = new DataColumn("Название", typeof(string));
+            DataColumn colCountDayRab = new DataColumn("Текущее значение", typeof(Int16));
+            DataColumn colCountDayVuh = new DataColumn("действует на текущую дату", typeof(bool));
+            DataColumn normCh = new DataColumn("Действует до даты", typeof(DateTime));
+            DataColumn rr = new DataColumn("Новое значение", typeof(int));
+
+            //добавляем колонки в таблицу
+
+            dt.Columns.Add(colCountDayInMonth);
+            dt.Columns.Add(colCountDayRab);
+            dt.Columns.Add(colCountDayVuh);
+            dt.Columns.Add(normCh);
+            DataRow row = null;
+            //создаём новую строку
+
+            //заполняем строку значениями
+
+            foreach (Factor f in Program.factors)
+            {
+                row = dt.NewRow();
+                row["Название"] = f.name;
+                row["Текущее значение"] = f.TZnach;
+                row["Действует на текущую дату"] = f.Deistvie;
+                row["Действует до даты"] = f.DDD;
+                row["Новое значение"] = f.NewZnach;
+                dt.Rows.Add(row);
+            }
+            return dt;
+        }
+
+
+        public void getChart()
         {
             
             DateTime d = new DateTime();
@@ -64,42 +142,7 @@ namespace shedule
 
         }
 
-        private SD.DataTable CreateTable()
-        {
-            //создаём таблицу
-            string[] months = Program.getMonths();
-            SD.DataTable dt = new SD.DataTable("norm");
-            //создаём три колонки
-            DataColumn Mounth = new DataColumn("M", typeof(string));
-            
-            DataColumn colCountDayInMonth = new DataColumn("CDIM", typeof(Int16));
-            DataColumn colCountDayRab = new DataColumn("CDR", typeof(Int16));
-            DataColumn colCountDayVuh = new DataColumn("CDV", typeof(Int16));
-            DataColumn normCh = new DataColumn("NC", typeof(Int16));
-
-            //добавляем колонки в таблицу
-            dt.Columns.Add(Mounth);
-            dt.Columns.Add(colCountDayInMonth);
-            dt.Columns.Add(colCountDayRab);
-            dt.Columns.Add(colCountDayVuh);
-            dt.Columns.Add(normCh);
-            DataRow row = null;
-            //создаём новую строку
-            
-            //заполняем строку значениями
-            
-            for (int i = 1; i <= 12; i++) {
-                row = dt.NewRow();
-                row["M"] = months[i-1];
-                row["CDIM"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
-                row["CDR"] = Program.RD[i - 1];
-                row["CDV"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1]; 
-                row["NC"] = Program.RD[i - 1]*8-Program.PHD[i-1];
-                dt.Rows.Add(row);
-            }
-            return dt;
-        }
-
+       
         private void ExportToExcel()
         {
             Excel.Application exApp = new Excel.Application();
@@ -110,13 +153,13 @@ namespace shedule
             workSheet.Cells[1, 2] = "Name";
             workSheet.Cells[1, 3] = "Age";
             int rowExcel = 2;
-          /* for (int i = 0; i < dataGridView1.Rows.Count; i++)
+           for (int i = 0; i < dataGridViewFactors.Rows.Count; i++)
             {
-                workSheet.Cells[rowExcel, "A"] = dataGridView1.Rows[i].Cells["ID"].Value;
-                workSheet.Cells[rowExcel, "B"] = dataGridView1.Rows[i].Cells["Name"].Value;
-                workSheet.Cells[rowExcel, "C"] = dataGridView1.Rows[i].Cells["Age"].Value;
+                workSheet.Cells[rowExcel, "A"] = dataGridViewFactors.Rows[i].Cells["ID"].Value;
+                workSheet.Cells[rowExcel, "B"] = dataGridViewFactors.Rows[i].Cells["Name"].Value;
+                workSheet.Cells[rowExcel, "C"] = dataGridViewFactors.Rows[i].Cells["Age"].Value;
                 ++rowExcel;
-            }*/
+            }
             workSheet.SaveAs("MyFile.xls");
             exApp.Quit();
         }
@@ -124,7 +167,7 @@ namespace shedule
         public Form1()
         {
             InitializeComponent();
-            Program.Connect();
+        //    Program.Connect();
            
         }
 
@@ -381,40 +424,56 @@ namespace shedule
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            
             Program.ReadListShops();
-           // Program.setListShops();
-            tabControl1.TabPages[4].Hide();
-            if (Program.listShops!=null) {
+            // Program.setListShops();
+            tabControl1.Visible = false;
+           
+            if (Program.listShops != null) {
                 foreach (Shop h in Program.listShops) {
-
-                    listBox1.Items.Add(h.getAddress());
+                  
+                    listBox1.Items.Add(h.getIdShop() +"_"+ h.getAddress());
                 } }
-            textBoxSpeed.Text = 1000 + "";
+           textBoxSpeed.Text = 1000 + "";
             textBoxTimeTell.Text = 25 + "";
             textBoxTimeClick.Text = 4 + "";
+          
 
-            if (Program.isConnect()) { labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count; labelStatus2.Text="режим работы сетевой "  ; radioButtonIzBD.Checked = true; }
-            else { labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count; labelStatus2.Text = " режим работы локальный"; radioButtonIzFile.Checked = true; }
+            //if (/*Program.isConnect()*/true) {   }
+            labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count; labelStatus2.Text = " режим работы локальный"; radioButtonIzFile.Checked = true; 
         }
 
-        private void buttonHelp_Click(object sender, EventArgs e)
-        {
-            Form2 formHelp = new Form2();
-            formHelp.Show();
-        }
+       
 
         private void buttonFactors_Click(object sender, EventArgs e)
         {
+            buttonFactors.BackColor = Color.MistyRose;
+            buttonVariantsSmen.BackColor = Color.White;
+            buttonParamOptimiz.BackColor = Color.White;
             panelFactors.BringToFront();
+            dataGridViewFactors.DataSource = viewFactors(); 
         }
 
         private void buttonVariantsSmen_Click(object sender, EventArgs e)
         {
+            buttonVariantsSmen.BackColor = Color.MistyRose;
+            buttonFactors.BackColor = Color.White;
+            buttonParamOptimiz.BackColor = Color.White;
             panelDopusVarSmen.BringToFront();
-            String readPath = Environment.CurrentDirectory + @"\Smens.txt"; ;
-            Program.CountSmen = File.ReadAllLines(readPath).Length;
+            String readPath = Environment.CurrentDirectory + "/Shops/"+Program.currentShop.getIdShop()+"/Smens.txt";
+            try
+            {
+                Program.CountSmen = File.ReadAllLines(readPath).Length;
+            }
+            catch (Exception ex) {
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.WriteLine("");
+                    Program.CountSmen = 0;
+                }
+            }
             switch (Program.CountSmen) {
+                case 0: panelSmen1.Visible = true; panelSmen2.Visible = false; panelSmen3.Visible = false; panelSmen4.Visible = false; panelSmen5.Visible = false; break;
                 case 1: panelSmen1.Visible = true; panelSmen2.Visible = false; panelSmen3.Visible = false; panelSmen4.Visible = false; panelSmen5.Visible = false; break;
                 case 2: panelSmen1.Visible = true; panelSmen2.Visible = true; panelSmen3.Visible = false; panelSmen4.Visible = false; panelSmen5.Visible = false; buttonDelSmen1.Visible = false; break;
                 case 3: panelSmen1.Visible = true; panelSmen2.Visible = true; panelSmen3.Visible = true; panelSmen4.Visible = false; panelSmen5.Visible = false; buttonDelSmen1.Visible = false; buttonDelSmen2.Visible = false; break;
@@ -424,25 +483,67 @@ namespace shedule
             }
             using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
             {
-                string line;
-                int i = 1;
-                while ((line = sr.ReadLine()) != null)
+                try
                 {
-                    short R = Convert.ToInt16(line.Substring(0,1));
-                    short V = Convert.ToInt16(line.Substring(1));
-                    // MessageBox.Show(R+" "+V);
-                    (this.Controls["tabControl1"].Controls["tabPage2"].Controls["panelUpravlenie"].Controls["panelDopusVarSmen"].Controls["panelSmen" + i].Controls["textBox" + i + "1"] as System.Windows.Forms.TextBox).Text = R.ToString();
-                    (this.Controls["tabControl1"].Controls["tabPage2"].Controls["panelUpravlenie"].Controls["panelDopusVarSmen"].Controls["panelSmen" + i].Controls["textBox" + i + "2"] as System.Windows.Forms.TextBox).Text = V.ToString();
-                    i++;
+                    string line;
+                    int i = 1;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        if (Program.CountSmen==1 && line=="") {
+                            (this.Controls["panelSingleShop"].Controls["tabControl1"].Controls["tabPage2"].Controls["panelUpravlenie"].Controls["panelDopusVarSmen"].Controls["panelSmen" + i].Controls["textBox" + i + "1"] as System.Windows.Forms.TextBox).Text = "";
+                            (this.Controls["panelSingleShop"].Controls["tabControl1"].Controls["tabPage2"].Controls["panelUpravlenie"].Controls["panelDopusVarSmen"].Controls["panelSmen" + i].Controls["textBox" + i + "2"] as System.Windows.Forms.TextBox).Text = "";
+                            break;
+                        }
+                        short R = Convert.ToInt16(line.Substring(0, 1));
+                        short V = Convert.ToInt16(line.Substring(1));
+                        // MessageBox.Show(R+" "+V);
+                        (this.Controls["panelSingleShop"].Controls["tabControl1"].Controls["tabPage2"].Controls["panelUpravlenie"].Controls["panelDopusVarSmen"].Controls["panelSmen" + i].Controls["textBox" + i + "1"] as System.Windows.Forms.TextBox).Text = R.ToString();
+                        (this.Controls["panelSingleShop"].Controls["tabControl1"].Controls["tabPage2"].Controls["panelUpravlenie"].Controls["panelDopusVarSmen"].Controls["panelSmen" + i].Controls["textBox" + i + "2"] as System.Windows.Forms.TextBox).Text = V.ToString();
+                        i++;
 
+                    }
+                }
+                catch (Exception ex) {
+                    using (StreamWriter sw = new StreamWriter(readPath,false, Encoding.Default)) {
+                        sw.WriteLine("");
+                    }
                 }
             }
             }
 
         private void buttonParamOptimiz_Click(object sender, EventArgs e)
         {
+            buttonParamOptimiz.BackColor = Color.MistyRose;
+            buttonFactors.BackColor = Color.White;
+            buttonVariantsSmen.BackColor = Color.White;
             panelParamOptim.BringToFront();
+            String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/parametrOptimization.txt"; ;
+            try
+            {
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+
+                    Program.ParametrOptimization = short.Parse(sr.ReadLine());
+                }
+            }
+                catch (Exception ex) {
+                    using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                    {
+                        sw.WriteLine("0");
+                        Program.ParametrOptimization = 0;
+                    }
+                }
+            
+            switch(Program.ParametrOptimization){
+                case 0: break;
+                case 1: radioButtonMinFondOpl.Select();break;
+                case 2: radioButtonMinTime.Select();break;
+                case 3: radioButtonObRabTime.Select();break;
+                default: Program.ParametrOptimization = 0;break;
+            }
+
         }
+
 
         private void buttonRedactir1_Click(object sender, EventArgs e)
         {
@@ -602,21 +703,32 @@ namespace shedule
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
         {
             buttonImportKasOper.Visible = false;
+            Form3 f3 = new Form3();
+            f3.Show();
+            this.Enabled = false;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            Program.ReadConfigShop(listBox1.SelectedIndex);
+            Program.DFCs.Clear();
+            // Program.ReadConfigShop();
+            //MessageBox.Show(listBox1.Text);
+            string[] s = new string[2];
+            s=listBox1.Text.Split('_');
+            Program.currentShop = new Shop(Int16.Parse(s[0]),s[1]);
+            tabControl1.Visible = true;
         }
+
+
 
         private void button_refresh_list_shops_Click(object sender, EventArgs e)
         {
             Program.setListShops();
+            Program.refreshFoldersShops();
             foreach (Shop h in Program.listShops)
             {
 
-                listBox1.Items.Add(h.getAddress());
+                listBox1.Items.Add(h.getIdShop()+"_"+h.getAddress());
             }
         }
 
@@ -687,43 +799,200 @@ namespace shedule
 
         private void buttonReadCalendarFromXML_Click(object sender, EventArgs e)
         {
-            Program.ReadCalendarFronXML();
+            Program.ReadCalendarFromXML();
         }
 
         private void buttonCalendar_Click(object sender, EventArgs e)
         {
+            buttonCalendar.BackColor = Color.MistyRose;
+            buttonRaspisanie.BackColor = Color.White;
+            buttonKassov.BackColor = Color.White;
             panelCalendar.BringToFront();
-            Program.getListDate(DateTime.Today.Year);
-            ShowProizvCalendar();
-            dataGridViewCalendar.DataSource = CreateTable();
 
+            
+            buttonImportKasOper.Visible = false;
+           // ShowProizvCalendar();
+            Form4 f4 = new Form4();
+            f4.Show();
         }
+
+      
+
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
-            DateTime f23 = new DateTime(2017, 5, 9);
-            DataForCalendary f = new DataForCalendary(f23);
-            MessageBox.Show(DataForCalendary.isHolyday(f23).ToString());
-
-            MessageBox.Show(f.getTip().ToString());
-            Program.getListDate(2017);
-            for (int i = 1; i < 30; i++)
-            {
-                 f23 = new DateTime(2017, 5, i);
-                f = new DataForCalendary(f23);
-
-                MessageBox.Show(f.getTip().ToString());
-                // MessageBox.Show( DataForCalendary.isHolyday(f23).ToString());
-            }
+            Program.isConnected("VShleyev", "gjkrjdyb93");
+            
         }
 
         private void buttonKassov_Click(object sender, EventArgs e)
         {
+            buttonKassov.BackColor = Color.MistyRose;
+            buttonCalendar.BackColor = Color.White;
+            buttonRaspisanie.BackColor = Color.White;
             panelKassOper.BringToFront();
             
         }
 
+        private void buttonRaspisanie_Click(object sender, EventArgs e)
+        {
+            buttonRaspisanie.BackColor = Color.MistyRose;
+            buttonCalendar.BackColor = Color.White;
+            buttonKassov.BackColor = Color.White;
+            panelTRasp.BringToFront();
+            dataGridViewForTSR.DataSource = viewTSR();
+        }
+
+        public void writeTSR()
+        {
+            String writePath = Environment.CurrentDirectory + @"\TSR.txt";
+            try
+            {
+
+
+                using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                {
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Должность"].Value.ToString());
+                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Количество"].Value);
+                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Зарплата"].Value);
+                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Зарплата за 1/2"].Value);
+                    }
+                    
+                    
+                }
+                MessageBox.Show("Данные сохранены");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+
+         public void writeFactors()
+        {
+            String writePath = Environment.CurrentDirectory + @"\factors.txt";
+            try
+            {
+
+
+                using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                {
+
+                    for (int i=0; i< Program.factors.Count;i++)
+                    {
+                        sw.WriteLine(dataGridViewFactors.Rows[i].Cells["Должность"].Value);
+                        sw.WriteLine(dataGridViewFactors.Rows[i].Cells["Количество"].Value);
+                        sw.WriteLine(dataGridViewFactors.Rows[i].Cells["Зарплата"].Value);
+                        sw.WriteLine(dataGridViewFactors.Rows[i].Cells["Зарплата за 1/2"].Value);
+                    }
+
+
+                }
+                MessageBox.Show("Данные сохранены");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+
+        private void Form1_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Form2 formHelp = new Form2();
+            formHelp.Show();
         
-        
+         }
+
+        private void buttonPTSR_Click(object sender, EventArgs e)
+        {
+            writeTSR();
+        }
+
+        private void buttonAplyFactors_Click(object sender, EventArgs e)
+        {
+            writeFactors();
+        }
+
+        private void buttonAplyVarSmen_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonMultShops_Click(object sender, EventArgs e)
+        {
+            panelMultShops.BringToFront();
+          
+            listBoxMShops.Items.AddRange( listBox1.Items);
+        }
+
+        private void buttonSingleShop_Click(object sender, EventArgs e)
+        {
+            panelSingleShop.BringToFront();
+        }
+
+        private void buttonMadd_Click(object sender, EventArgs e)
+        {
+            string ss = listBoxMShops.Text;
+            foreach (string s in listBoxMPartShops.Items) {
+                if (listBoxMShops.Text == s) {
+                    ss = "";
+                }
+            }
+
+            
+                if (ss!="") {
+                    listBoxMPartShops.Items.Add(ss);
+                }
+            
+        }
+
+        private void buttonMdel_Click(object sender, EventArgs e)
+        {
+            if (listBoxMPartShops.Text != "")
+            {
+                listBoxMPartShops.Items.Remove(listBoxMPartShops.SelectedItem);
+            }
+        }
+
+        private void radioButtonMinFondOpl_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ParametrOptimization = 1;
+        }
+
+        private void radioButtonMinTime_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ParametrOptimization = 2;
+        }
+
+        private void radioButtonObRabTime_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.ParametrOptimization = 3;
+        }
+
+        private void buttonApplyParamsOptim_Click(object sender, EventArgs e)
+        {
+            String writePath = Environment.CurrentDirectory + @"\parametrzoptimization.txt";
+            using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+            {
+
+                try
+                {
+                    sw.Write(Program.ParametrOptimization.ToString());
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+
+                }
+            }
+        }
     }
 }
