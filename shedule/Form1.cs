@@ -821,8 +821,10 @@ namespace shedule
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
-            Program.isConnected("VShleyev", "gjkrjdyb93");
-            
+            //Program.isConnected("VShleyev", "gjkrjdyb93");
+
+            Form4 f5 = new Form4();
+            f5.Show();
         }
 
         private void buttonKassov_Click(object sender, EventArgs e)
