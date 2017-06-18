@@ -21,7 +21,7 @@ namespace shedule
         static public int Nday=0;
 
         public void ShowProizvCalendar() {
-            foreach (DataForCalendary d in Program.DFCs)
+            foreach (DataForCalendary d in  Program.currentShop.DFCs)
             {
                 if(DataForCalendary.isHolyday(d.getData()))
                     monthCalendar1.AddBoldedDate(d.getData());
@@ -60,10 +60,10 @@ namespace shedule
             for (int i = 0; i <4; i++)
             {
                 row = dt.NewRow();
-                row["Должность"] = Program.tsr[i].position;
-                row["Количество"] = Program.tsr[i].count;
-                row["Зарплата"] = Program.tsr[i].zarp;
-                row["Зарплата за 1/2"] = Program.tsr[i].zarp1_2;
+                row["Должность"] = Program.currentShop.tsr[i].position;
+                row["Количество"] = Program.currentShop.tsr[i].count;
+                row["Зарплата"] = Program.currentShop.tsr[i].zarp;
+                row["Зарплата за 1/2"] = Program.currentShop.tsr[i].zarp1_2;
                 dt.Rows.Add(row);
             }
             return dt;
@@ -94,7 +94,7 @@ namespace shedule
 
             //заполняем строку значениями
 
-            foreach (Factor f in Program.factors)
+            foreach (Factor f in Program.currentShop.factors)
             {
                 row = dt.NewRow();
                 row["Название"] = f.name;
@@ -428,13 +428,14 @@ namespace shedule
             Program.ReadListShops();
             // Program.setListShops();
             tabControl1.Visible = false;
+            buttonTest.Visible = false;
            
             if (Program.listShops != null) {
                 foreach (Shop h in Program.listShops) {
                   
                     listBox1.Items.Add(h.getIdShop() +"_"+ h.getAddress());
                 } }
-           textBoxSpeed.Text = 1000 + "";
+           textBoxSpeed.Text = 20 + "";
             textBoxTimeTell.Text = 25 + "";
             textBoxTimeClick.Text = 4 + "";
           
@@ -710,12 +711,14 @@ namespace shedule
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Program.DFCs.Clear();
+
+            
             // Program.ReadConfigShop();
             //MessageBox.Show(listBox1.Text);
             string[] s = new string[2];
             s=listBox1.Text.Split('_');
             Program.currentShop = new Shop(Int16.Parse(s[0]),s[1]);
+            Program.getListDate(DateTime.Today.Year);
             tabControl1.Visible = true;
         }
 
@@ -745,12 +748,19 @@ namespace shedule
         private void buttonNext_Click(object sender, EventArgs e)
         {
             Nday++;
-            if (Nday  < 25)
+            if (Nday  < Program.currentShop.templates.Count)
             {
-                getChart();
-                // labelData.Text = Program.getData();
+               /* getChart();
+                // 
                 chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
                 chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+                */
+                labelData.Text = Program.currentShop.templates[Nday].getData().ToString();
+                Program.currentShop.templates[Nday].createChartTemplate();
+                Program.currentShop.templates[Nday].DS.CreateChartDaySale();
+
+                chart1.Series["s2"].Points.DataBindXY(Program.currentShop.templates[Nday].Chart.X, Program.currentShop.templates[Nday].Chart.Y);
+                chart1.Series["s1"].Points.DataBindXY(Program.currentShop.templates[Nday].DS.Chart.X, Program.currentShop.templates[Nday].DS.Chart.Y);
             }
             else { Nday--; MessageBox.Show("Больше данных нет"); }
         }
@@ -774,13 +784,30 @@ namespace shedule
 
         private void button6_Click(object sender, EventArgs e)
         {
-            //Program.ReadOperFromExel(Environment.CurrentDirectory + @"\P.xls");
+            Program.speed = int.Parse(textBoxSpeed.Text);
             Nday = 0;
-            Program.Kass();
+           
+            DateTime d1 = new DateTime(2017, 5, 1);
+            DateTime d2 = new DateTime(2017, 5, 20);
+            Program.createListDaySale(d1, d2);
+
+            foreach (daySale ds in Program.currentShop.daysSale)
+            {
+                Program.createTemplate(ds);
+
+            }
+
+            Program.currentShop.templates[Nday].createChartTemplate();
+           
+            Program.currentShop.templates[Nday].DS.CreateChartDaySale();
+
+            chart1.Series["s2"].Points.DataBindXY(Program.currentShop.templates[Nday].Chart.X, Program.currentShop.templates[Nday].Chart.Y);
+           chart1.Series["s1"].Points.DataBindXY(Program.currentShop.templates[Nday].DS.Chart.X, Program.currentShop.templates[Nday].DS.Chart.Y);
+            /*Program.Kass();
             Program.getSm();
             getChart();
             chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
-            chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+            chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);*/
 
         }
 
@@ -789,10 +816,17 @@ namespace shedule
             Nday--;
             if (Nday > -1)
             {
-                getChart();
+               /* getChart();
                 // labelData.Text = Program.getData();
                 chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
-                chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+                chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);*/
+
+                labelData.Text = Program.currentShop.templates[Nday].getData().ToString();
+                Program.currentShop.templates[Nday].createChartTemplate();
+                Program.currentShop.templates[Nday].DS.CreateChartDaySale();
+
+                chart1.Series["s2"].Points.DataBindXY(Program.currentShop.templates[Nday].Chart.X, Program.currentShop.templates[Nday].Chart.Y);
+                chart1.Series["s1"].Points.DataBindXY(Program.currentShop.templates[Nday].DS.Chart.X, Program.currentShop.templates[Nday].DS.Chart.Y);
             }
             else { Nday++; MessageBox.Show("Больше данных нет"); }
         }
@@ -823,7 +857,7 @@ namespace shedule
         {
             //Program.isConnected("VShleyev", "gjkrjdyb93");
 
-            Form4 f5 = new Form4();
+            Form5 f5 = new Form5();
             f5.Show();
         }
 
@@ -885,7 +919,7 @@ namespace shedule
                 using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
                 {
 
-                    for (int i=0; i< Program.factors.Count;i++)
+                    for (int i=0; i< Program.currentShop.factors.Count;i++)
                     {
                         sw.WriteLine(dataGridViewFactors.Rows[i].Cells["Должность"].Value);
                         sw.WriteLine(dataGridViewFactors.Rows[i].Cells["Количество"].Value);
@@ -996,5 +1030,7 @@ namespace shedule
                 }
             }
         }
+
+        
     }
 }

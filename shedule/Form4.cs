@@ -24,12 +24,12 @@ namespace shedule
 
         private void createCalendar() {
 
-         ld = new Label[Program.DFCs.Count];
+         ld = new Label[Program.currentShop.DFCs.Count];
         int m, i, j;
             int k = 0;
           
 
-            foreach (DataForCalendary d in Program.DFCs)
+            foreach (DataForCalendary d in Program.currentShop.DFCs)
             {
 
                 i = d.getNWeekday()-1;
@@ -121,7 +121,7 @@ namespace shedule
 
         {
            
-            Program.getListDate(DateTime.Today.Year);
+            
             dataGridViewCalendar.DataSource = CreateTable();
             createCalendar();
         }

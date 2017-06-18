@@ -19,11 +19,27 @@ namespace shedule
 
         private void Form5_Load(object sender, EventArgs e)
         {
-            DateTime dt = new DateTime(2017,06,03);
-            TemplateWorkingDay t = new TemplateWorkingDay(dt);
-            t.cre
-            chart1.Series["s1"].Points.DataBindXY(, chartY1);
-            chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
+           
+            DateTime d1 = new DateTime(2017,5,1);
+            DateTime d2 = new DateTime(2017,5,4);
+            Program.createListDaySale(d1,d2);
+          
+            foreach (daySale ds in Program.currentShop.daysSale) {
+                Program.createTemplate(ds);
+                
+            }
+
+            Program.currentShop.templates[0].createChartTemplate();
+          
+            Program.currentShop.templates[0].DS.CreateChartDaySale();
+
+            chart1.Series["S1"].Points.DataBindXY(Program.currentShop.templates[0].Chart.X, Program.currentShop.templates[0].Chart.Y);
+            chart1.Series["S2"].Points.DataBindXY(Program.currentShop.templates[0].DS.Chart.X, Program.currentShop.templates[0].DS.Chart.Y);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }

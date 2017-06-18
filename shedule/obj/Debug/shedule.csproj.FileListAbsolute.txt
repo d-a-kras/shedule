@@ -23,3 +23,4 @@ C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.csproj.Generate
 C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form2.resources
 C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form3.resources
 C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form4.resources
+C:\Users\kras\Documents\GitHub\shedule\shedule\obj\Debug\shedule.Form5.resources
