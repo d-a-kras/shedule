@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.getStatisticByShopsDayHourBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet1 = new shedule.DataSet1();
             this.button1 = new System.Windows.Forms.Button();
@@ -141,6 +141,7 @@
             this.textBoxTimeTell = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.buttonReadTekShedule = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -387,7 +388,7 @@
             this.panelSingleShop.Controls.Add(this.tabControl1);
             this.panelSingleShop.Location = new System.Drawing.Point(13, 48);
             this.panelSingleShop.Name = "panelSingleShop";
-            this.panelSingleShop.Size = new System.Drawing.Size(743, 429);
+            this.panelSingleShop.Size = new System.Drawing.Size(751, 429);
             this.panelSingleShop.TabIndex = 13;
             // 
             // buttonMultShops
@@ -1094,11 +1095,13 @@
             this.buttonExport1.TabIndex = 6;
             this.buttonExport1.Text = "export в .xls";
             this.buttonExport1.UseVisualStyleBackColor = true;
+            this.buttonExport1.Click += new System.EventHandler(this.buttonExport1_Click);
             // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
+            "график на месяц",
             "Прогноз на 3 месяца по кассовым операциям",
             "Потребность в персонале",
             "Экономический эффект"});
@@ -1106,6 +1109,7 @@
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(172, 21);
             this.comboBox3.TabIndex = 4;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -1178,20 +1182,20 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(3, 19);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "s1";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "s2";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "s1";
+            series10.ChartArea = "ChartArea1";
+            series10.Legend = "Legend1";
+            series10.Name = "s2";
+            this.chart1.Series.Add(series9);
+            this.chart1.Series.Add(series10);
             this.chart1.Size = new System.Drawing.Size(457, 198);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "гистограмма ";
@@ -1231,7 +1235,6 @@
             this.textBoxTimeClick.Name = "textBoxTimeClick";
             this.textBoxTimeClick.Size = new System.Drawing.Size(42, 20);
             this.textBoxTimeClick.TabIndex = 1;
-//            this.textBoxTimeClick.TextChanged += new System.EventHandler(this.textBoxTimeClick_TextChanged);
             // 
             // labelTimeTell
             // 
@@ -1449,6 +1452,7 @@
         private System.Windows.Forms.TextBox textBoxTimeTell;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button buttonReadTekShedule;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

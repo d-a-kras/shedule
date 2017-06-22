@@ -428,7 +428,7 @@ namespace shedule
             Program.ReadListShops();
             // Program.setListShops();
             tabControl1.Visible = false;
-            buttonTest.Visible = false;
+            buttonTest.Visible = true;
            
             if (Program.listShops != null) {
                 foreach (Shop h in Program.listShops) {
@@ -786,17 +786,17 @@ namespace shedule
         {
             Program.speed = int.Parse(textBoxSpeed.Text);
             Nday = 0;
-           
-            DateTime d1 = new DateTime(2017, 5, 1);
-            DateTime d2 = new DateTime(2017, 5, 20);
-            Program.createListDaySale(d1, d2);
 
-            foreach (daySale ds in Program.currentShop.daysSale)
-            {
-                Program.createTemplate(ds);
+            // DateTime d1 = new DateTime(2017, 5, 1);
+            //DateTime d2 = new DateTime(2017, 5, 20);
+            //Program.createListDaySale(d1, d2);
 
-            }
+            //foreach (daySale ds in Program.currentShop.daysSale)
+            //{
+            //   Program.createTemplate(ds);
 
+            //}
+            Program.createPrognoz();
             Program.currentShop.templates[Nday].createChartTemplate();
            
             Program.currentShop.templates[Nday].DS.CreateChartDaySale();
@@ -856,9 +856,7 @@ namespace shedule
         private void buttonTest_Click(object sender, EventArgs e)
         {
             //Program.isConnected("VShleyev", "gjkrjdyb93");
-
-            Form5 f5 = new Form5();
-            f5.Show();
+            Program.createPrognoz();
         }
 
         private void buttonKassov_Click(object sender, EventArgs e)
@@ -1031,6 +1029,70 @@ namespace shedule
             }
         }
 
-        
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonExport1_Click(object sender, EventArgs e)
+        {
+            if (comboBox3.SelectedIndex == 0) {
+                Program.createPrognoz();
+                Program.OptimCountSotr();
+                Program.CreateSmens1();
+ 
+                Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook ObjWorkBook;
+                Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+
+                ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
+
+                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                int i = 6;
+                foreach (TemplateWorkingDay twd in Program.currentShop.templates){
+                    
+                    ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
+                    ObjWorkSheet.Cells[2, i] = twd.getData().Day;
+                    i++;
+                }
+
+                ObjWorkSheet.Cells[2, 1] = "Адрес";
+
+                ObjWorkSheet.Cells[2, 2] = "Должность";
+                ObjWorkSheet.Cells[2, 3] = "Тип занятости";
+                ObjWorkSheet.Cells[2, 4] = "Общее число часов";
+                ObjWorkSheet.Cells[2, 5] = "Количество смен";
+
+                i = 6;
+                foreach (employee emp in Program.currentShop.employes) {
+
+                    foreach (TemplateWorkingDay twd in Program.currentShop.templates)
+                    {
+
+                        if (emp.smens.Find(t => t.getData() == twd.getData()) != null)
+                        {
+                            ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
+                        }
+                        //else
+                       // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
+
+                    }
+
+                    ObjWorkSheet.Cells[emp.getID() + 4, 1] = Program.currentShop.getAddress();
+                    ObjWorkSheet.Cells[emp.getID() + 4, 2] = "Кассир";
+                    ObjWorkSheet.Cells[emp.getID() + 4, 3] = "Сменный график";
+
+
+                }
+                ObjExcel.Visible = false;
+                ObjExcel.UserControl = false;
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return;
+                // получаем выбранный файл
+                string filename = saveFileDialog1.FileName;
+                ObjWorkBook.SaveAs(filename);
+                ObjExcel.Quit();
+            }
+        }
     }
 }
