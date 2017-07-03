@@ -13,20 +13,21 @@ using System.Data;
 using System.Drawing;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Xml.Linq;
+using System.Net.Mail;
 
 namespace shedule
 {
 
-    public class DataForCalendary{
+    public class DataForCalendary {
         DateTime Data;
         int Tip;
         int TimeBegin;
         int TimeEnd;
 
-        public int getTimeStart() {  return this.TimeBegin; }
+        public int getTimeStart() { return this.TimeBegin; }
 
         public int getTimeEnd() {
-           
+
             return this.TimeEnd; }
 
         public void setTimeBaE(int b, int e) {
@@ -34,15 +35,15 @@ namespace shedule
             this.TimeEnd = e;
 
         }
-		
-		public int setTip(int t){
-			return this.Tip=t;
-		}
+
+        public int setTip(int t) {
+            return this.Tip = t;
+        }
 
         public int getNWeekday()
         {
             int i = 0;
-           // MessageBox.Show(this.getWeekday());
+            // MessageBox.Show(this.getWeekday());
             switch (this.getWeekday())
             {
                 case "Monday": i = 1; break;
@@ -58,12 +59,12 @@ namespace shedule
         }
 
         static public int OON(DateTime dfc) {
-            DataForCalendary dt = new DataForCalendary(new DateTime(dfc.Year,dfc.Month,1));
-            
-            return (dt.getNWeekday()-1);
+            DataForCalendary dt = new DataForCalendary(new DateTime(dfc.Year, dfc.Month, 1));
+
+            return (dt.getNWeekday() - 1);
         }
 
-    public int getNiM() {
+        public int getNiM() {
             return this.Data.Day;
         }
 
@@ -71,10 +72,10 @@ namespace shedule
         {
             return this.Data.Month;
         }
-        static public bool isHolyday(DateTime mdt) {
+        /*static public bool isHolyday(DateTime mdt) {
             foreach (DateTime dt in Program.holydays) {
-               int rez= DateTime.Compare(mdt, dt);
-                
+                int rez = DateTime.Compare(mdt, dt);
+
                 if (rez == 0) return true;
             }
             return false;
@@ -98,20 +99,20 @@ namespace shedule
                 else return false;
             }
 
-        }
+        }*/
 
-       public DataForCalendary(DateTime Дата, int тип) {
+        public DataForCalendary(DateTime Дата, int тип) {
             Data = Дата;
             Tip = тип;
         }
 
-       public DataForCalendary(DateTime Дата)
+        public DataForCalendary(DateTime Дата)
         {
             Data = Дата;
             Tip = 0;
         }
 
-        public DataForCalendary(DateTime D,int T,int b,int e) {
+        public DataForCalendary(DateTime D, int T, int b, int e) {
             Data = D;
             Tip = T;
             TimeBegin = b;
@@ -119,44 +120,140 @@ namespace shedule
         }
 
         public DateTime getData() { return this.Data; }
-        public int getTip() {
-            if (this.Tip == 0) {
-                if (this.getData().DayOfWeek.ToString() == "Saturday") return 6;
-                else if (this.getData().DayOfWeek.ToString() == "Sunday") return 7;
-                else if (isHolyday(this.getData())) return 8;
-                else if (isPrHolyday(this.getData())) return 9;
-                else switch(this.getData().DayOfWeek.ToString()) {
-                		case "Monday": return 1; break;
-                		case "Tuesday": return 2; break;
-               		 case "Wednesday": return 3; break;
-               		 case "Thursday": return 4; break;
-               		 case "Friday": return 5; break;
-                        default: return 0;
+        public int getTip()
+        {
+            if (this.Tip == 0)
+            {
+                switch (this.getData().DayOfWeek.ToString())
+                {
+                    case "Monday": return 1; ;
+                    case "Tuesday": return 2; 
+                    case "Wednesday": return 3; 
+                    case "Thursday": return 4;
+                    case "Friday": return 5; 
+                    case "Saturday": return 6; ;
+                    case "Sunday": return 7; 
+                    default: return 0;
                 }
-                
-        	}
+
+            }
             else return this.Tip;
         }
         public string getWeekday() { return this.getData().DayOfWeek.ToString(); }
     }
 
 
-  public class Factor
+    public class Factor
     {
-       public string name;
-       public  int TZnach;
-       public  bool Deistvie;
-       public  DateTime DDD;
-       public  int NewZnach;
+        public string name;
+        public string otobragenie;
+        public int TZnach;
+        public bool Deistvie;
+        public DateTime Data;
+        public int NewZnach;
 
-        public Factor(string n, int TZ, bool D, DateTime ddd, int nz) {
-            name = n;
-            TZnach = TZ;
-            Deistvie = D;
-            DDD = ddd;
-            NewZnach = nz;
+        public Factor(string n, string ot, int TZ, bool D, DateTime ddd, int nz) {
+            this.name = n;
+            this.otobragenie = ot;
+            this.TZnach = TZ;
+            this.Deistvie = D;
+            this.Data = ddd;
+            this.NewZnach = nz;
+        }
+        
+        public string getName(){
+        	return this.name;
+        }
+        public string getOtobragenie(){
+        	return this.otobragenie;
+        }
+        public DateTime getData(){
+        	return this.Data;
+        }
+        
+        public int getTZnach(){
+        	return this.TZnach;
+        }
+		 public int getNewZnach(){
+        	return this.NewZnach;
+        }
+        
+        public bool getDeistvie(){
+        	return this.Deistvie;
         }
 
+        public void setTZnach(int x)
+        {
+            this.TZnach=x;
+        }
+
+        public void setNewZnach(int x)
+        {
+            this.NewZnach = x;
+        }
+
+        public void setDeistvie(bool x)
+        {
+            this.Deistvie = x;
+        }
+
+        public void setData(DateTime x)
+        {
+            this.Data = x;
+        }
+    }
+
+    public class VarSmen {
+        public TipSmen ts;
+        bool Deistvie;
+        public VarSmen(TipSmen t, bool d) {
+            this.ts = t;
+            this.Deistvie = d;
+        }
+
+        static public void CreateTipSmen() {
+            Program.currentShop.VarSmen.Clear();
+            foreach (VarSmen vs in Program.currentShop.VarSmenBP) {
+                if (vs.Deistvie)
+                {
+                    switch (vs.ts.getR())
+                    {
+                        case 5: Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 1)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 2)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 10)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 11)); break;
+                        case 4: Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 3)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 4)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 12)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 13)); break;
+                        case 2: Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 5)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 6)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 14)); Program.currentShop.VarSmen.Add(new TipSmen(vs.ts.getR(), vs.ts.getV(), 15)); break;
+                    }
+                }
+               
+            }
+            Program.currentShop.VarSmen.Add(new TipSmen(0, 0, 0));
+        }
+
+        static public void CreateVarSmen()
+        {
+            Program.currentShop.VarSmenBP.Clear();
+            Dictionary<int, bool> p = new Dictionary<int, bool>();
+            foreach (TipSmen ts in Program.currentShop.VarSmen)
+            {
+                
+                if (p.ContainsKey(ts.getR()))
+                {
+                    continue;
+                }
+                else
+                {
+                    switch (ts.getR())
+                    {
+
+                        case 5: Program.currentShop.VarSmenBP.Add(new VarSmen(ts, true));p.Add(ts.getR(),true); break;
+                        case 4: Program.currentShop.VarSmenBP.Add(new VarSmen(ts, true)); p.Add(ts.getR(), true); break;
+                        case 2: Program.currentShop.VarSmenBP.Add(new VarSmen(ts, true)); p.Add(ts.getR(), true); break;
+                        case 0: p.Add(ts.getR(), true); break;
+                    }
+                }
+
+            }
+           
+        }
     }
 
     public class TipSmen
@@ -166,31 +263,70 @@ namespace shedule
         int v;
         int DenVych;
         int srvden;
+        bool deistvie;
 
+        public void setR(int r)
+        {
+            this.b=r;
+        }
 
-       public TipSmen(int byd, int vych)
+        public void setV(int r)
+        {
+            this.v = r;
+        }
+
+        public void setDeistvie(bool r)
+        {
+            this.deistvie = r;
+        }
+
+        public bool getDeistvie()
+        {
+           return this.deistvie;
+        }
+
+        public int getR() {
+            return this.b;
+        }
+        public int getV()
+        {
+            return this.v;
+        }
+        public TipSmen(int byd, int vych, int t)
         {
             this.b = byd;
             this.v = vych;
+            this.Tip = t;
         }
+
+
 
         public void setDenVych(int dv)
         {
             this.DenVych = dv;
         }
 
-       public  int getSrednee()
+        public int getSrednee()
         {
-            switch (b)
+            switch (this.Tip)
             {
-                case 2: return 10;
+                case 0: return 6;
+                case 5: return 10;
+                case 6: return 10;
                 case 4: return 11;
-                case 5: return 8;
+                case 3: return 11;
+                case 1: return 8;
+                case 2: return 8;
                 default: return -1;
             }
         }
         public int getTip() {
-            return this.Tip;
+
+            if (this.Tip != 0) {
+                
+                return this.Tip;
+            }
+            else return 0;
         }
 
 
@@ -199,29 +335,101 @@ namespace shedule
 
     public class employee
     {
-        
-	int IdShop;
+
+        int IdShop;
         int IdEmployee;
         int status;
         int tip;
         TipSmen TipSm;
         int NormRab;
+        int koef = 2;
+        string Dolgnost;
+        string TipGraf;
         public List<Smena> smens;
 
         public int getID() {
             return this.IdEmployee;
         }
 
-       public employee(int ish, int ie, TipSmen ts)
+        public string getTipZan() {
+            if (this.TipGraf != "")
+            {
+                return this.TipGraf;
+            }
+            else return "Сменный график";
+
+    }
+
+        public string getTipGraph() {
+            return this.TipGraf;
+        }
+
+        public int GetTip() {
+            if (this.tip == 0)
+            {
+                return this.tip;
+            }
+            else {
+                this.tip= this.TipSm.getTip();
+                return this.tip; }
+        }
+        public employee(int ish, int ie, TipSmen ts, string d, string tgr)
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
-            TipSm = ts;
-            smens = new List<Smena>();
+            this.TipSm = ts;
+            this.Dolgnost = d;
+            this.TipGraf = tgr;
+            this.smens = new List<Smena>();
+        }
+
+        public employee(int ish, int ie, TipSmen ts)
+        {
+            this.IdShop = ish;
+            this.IdEmployee = ie;
+            this.TipSm = ts;
+            this.smens = new List<Smena>();
+        }
+
+        public string GetDolgnost() {
+            if (this.Dolgnost != "")
+            {
+                return this.Dolgnost;
+            }
+            else {
+                switch (this.tip) {
+                    case 1: this.Dolgnost = "Кассир 1"; return this.Dolgnost;
+                    case 2: this.Dolgnost = "Кассир 1"; return this.Dolgnost;
+                    case 3: this.Dolgnost = "Кассир 2"; return this.Dolgnost;
+                    case 4: this.Dolgnost = "Кассир 2"; return this.Dolgnost;
+                    case 5: this.Dolgnost = "Кассир 3"; return this.Dolgnost;
+                    case 6: this.Dolgnost = "Кассир 3"; return this.Dolgnost;
+                    case 7: this.Dolgnost = ""; return this.Dolgnost;
+                    case 8: this.Dolgnost = ""; return this.Dolgnost;
+                    case 9: this.Dolgnost = ""; return this.Dolgnost;
+                    case 10: this.Dolgnost = "Продавец 1"; return this.Dolgnost;
+                    case 11: this.Dolgnost = "Продавец 2"; return this.Dolgnost;
+                    case 12: this.Dolgnost = "Продавец 3"; return this.Dolgnost;
+                    case 0: this.Dolgnost = "Кассир 3"; return this.Dolgnost;
+                    default: return "";
+                }
+            }
+        }
+
+        public void AddSmena(Smena sm) {
+            this.PlusNormRab(sm.getLenght());
+            this.smens.Add(sm);
         }
 
         public int getTip() {
-            return this.tip;
+            if (this.tip != 0) {
+                return this.tip;
+            }
+            if (this.TipSm != null)
+            {
+                return this.TipSm.getTip();
+            }
+            return 0;
         }
 
         public int getStatus() {
@@ -232,20 +440,25 @@ namespace shedule
             this.status = s;
         }
 
-        public int getNormRab() { return this.NormRab; }
+        public int getNormRab() {
+            int summ = 0;
+            if (this.smens.Count!=0) {
+                foreach (Smena s in this.smens) {
+                    if(s!=null)
+                    summ += s.getLenght();
+                } }
+            this.NormRab = summ;
+            return this.NormRab;
+        }
 
         public void setNormRab(int n) {
             this.NormRab = n;
         }
+        public void PlusNormRab(int n) {
+            this.NormRab += n;
+        }
     }
 
-
-    enum Position
-    {
-        cashier,
-        seller,
-        loader
-    }
 
     public class WorkingDay
     {
@@ -255,8 +468,8 @@ namespace shedule
         int endWorkingDay;
         int Lenght;
         DateTime Data;
-       public List<Smena> lss;
-        int LenghtWorkingDay ;
+        public List<Smena> lss;
+        int LenghtWorkingDay;
         int Tip;
 
         public int getTip() {
@@ -264,16 +477,16 @@ namespace shedule
         }
 
         public WorkingDay(int id, int start, int end) {
-			this.idShop=id;
-			this.startWorkingDay=start;
-			this.endWorkingDay=end;
-			this.lss=new List<Smena>();
+            this.idShop = id;
+            this.startWorkingDay = start;
+            this.endWorkingDay = end;
+            this.lss = new List<Smena>();
         }
 
         public WorkingDay(int id, DateTime D, int start, int end, int t)
         {
             this.idShop = id;
-            this.Data=D;
+            this.Data = D;
             this.startWorkingDay = start;
             this.endWorkingDay = end;
             this.Tip = t;
@@ -289,13 +502,13 @@ namespace shedule
             return this.endWorkingDay;
         }
 
-        public void AddSmena(Smena s){
-			this.lss.Add(s);
-		}
-		
-		public int getIdShop(){
-			return this.idShop;
-		}
+        public void AddSmena(Smena s) {
+            this.lss.Add(s);
+        }
+
+        public int getIdShop() {
+            return this.idShop;
+        }
 
         public DateTime getData() {
             return this.Data;
@@ -304,8 +517,8 @@ namespace shedule
         public int GetLenghtWorkingDay() {
             return this.Lenght;
         }
-		
-		 public ForChart createChartTemplate()
+
+        public ForChart createChartTemplate()
         {
 
             int[] X = new int[LenghtWorkingDay];
@@ -321,7 +534,7 @@ namespace shedule
                     Y[i]++;
                 }
             }
-            return new ForChart( this.getIdShop(), this.getData(),X,Y);
+            return new ForChart(this.getIdShop(), this.getData(), X, Y);
         }
 
         public int getWeekDay()
@@ -346,24 +559,134 @@ namespace shedule
 
     }
 
-   public class TemplateWorkingDay
+    public class TemplateWorkingDay
     {
 
         public daySale DS;
-		public List<Smena> lss;
+        public List<Smena> lss;
+        public Dictionary<int, int> Raznica;
+
+        public ForChart Chart;
+
+        public void PereschetSmen() {
+            int K;
+            if (Program.currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
+            {
+                 K = Program.currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+            }
+            else
+            {
+                K = Program.KoefKassira;
+            }
+            foreach (employee emp in Program.currentShop.employes.FindAll(t=>t.getStatus()==2)) {
+                if (emp.smens.Count != 0) {
+                   // if(emp.getNormRab()!=Program.normchas)
+                    //MessageBox.Show(emp.getID()+" "+emp.smens.Count);
+                List<Smena> ls = emp.smens.FindAll(t => t.getData() == this.getData());
+                    foreach (Smena s in ls)
+                    {
+                        if (s.getStartSmena() < this.DS.getStartDaySale()) { s.SetStarnAndLenght(this.DS.getStartDaySale(), s.getLenght()); }
+                        for (int i = s.getStartSmena(); i < s.getEndSmena(); i++)
+                        {
+                            Raznica[i] = Raznica[i] - K;
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+        public string getMonth() {
+         //   MessageBox.Show(this.getData().Month+"");
+            switch (this.getData().Month) {
+               // case : return "";
+                default: return "";
+            }
+        }
+
+        public void CreateSmens2() {
+
+        }
+
+        public void CreateSmens() {
+            
+            int K;
+            if (Program.currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
+            {
+                 K = Program.currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+            }
+            else {  K = Program.KoefKassira; }
+            createRazniza();
+            this.lss.Clear();
+            PereschetSmen();
+            int lenght;
+            int min = 100;
+            int max = -1;
+            while (checkRazn()) {
+                foreach (int k in this.Raznica.Keys)
+                {
+                    if (k > 0)
+                    {
+                        if (min > k)
+                        {
+                            min = k;
+
+                        }
+                        if (max < k)
+                        {
+                            max = k;
+                        }
+                    }
+                }
+                lenght = max - min;
+
+                Smena sm = new Smena(min, lenght, this.DS.getData());
+                this.lss.Add(sm);
+                int EndSmena = sm.getStartSmena() + sm.getLenght() + 1;
+
+                if (sm.getStartSmena()< this.DS.getStartDaySale()) { sm.SetStarnAndLenght(this.DS.getStartDaySale(),sm.getLenght()); }
+
+                for (int i = sm.getStartSmena(); i < EndSmena; i++)
+                {
+
+                    this.Raznica[i] = this.Raznica[i] - K;
+
+
+                }
+            }
+        }
         
-		public ForChart Chart;
+        
+
+
+        public bool checkRazn()
+        {
+
+            foreach (int k in this.Raznica.Keys)
+            {
+                if (Raznica[k] > 0)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+
+        }
+
 
         public string GetWeekDay()
         {
             switch (this.DS.getData().DayOfWeek.ToString())
             {
-                case "Monday": return "Понедельник"; 
-                case "Tuesday": return "Вторник"; 
-                case "Wednesday": return "Среда"; 
-                case "Thursday": return "Четверг"; 
+                case "Monday": return "Понедельник";
+                case "Tuesday": return "Вторник";
+                case "Wednesday": return "Среда";
+                case "Thursday": return "Четверг";
                 case "Friday": return "Пятница";
-                case "Satuday": return "Суббота";
+                case "Saturday": return "Суббота";
                 case "Sunday": return "Воскресенье";
                 default: return "";
             }
@@ -379,37 +702,102 @@ namespace shedule
             this.DS = d;
             this.lss = new List<Smena>();
 
+
         }
 
         public int getCapacity() {
-            int cap=0;
+            int cap = 0;
+            int K;
+            if (Program.currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
+            {
+               K = Program.currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+            }
+            else {  K = Program.KoefKassira; }
 
+            foreach (Smena s in this.lss)
+            {
+                for (int j = 0, i = this.DS.getStartDaySale(); i < this.DS.getEndDaySale(); i++, j++)
+                {
+                    if ((i >= s.getStartSmena()) && (i <= s.getEndSmena())) {
+                        cap += K;
 
+                    }
+                }
+            }
             return cap;
         }
-	
-		
-		public DateTime getData(){
-			return this.DS.getData();
-		}
+
+        public int getClick() {
+            int otc=0;
+            foreach (hourSale hs in this.DS.hoursSale ) {
+                otc += hs.getCountClick();
+            }
+            return otc;
+        }
+
+
+
+
+
+        public DateTime getData() {
+            return this.DS.getData();
+        }
 
         public void AddSmena(Smena smena)
         {
             this.lss.Add(smena);
         }
-		
-        public void M12(){
-        	foreach(Smena sm in this.lss){
-        		if(sm.getLenght()>12){
-        			lss.Add(new Smena(sm.getIdShop(),sm.getData(),sm.getStartSmena(),7));
-        			lss.Add(new Smena(sm.getIdShop(),sm.getData(),sm.getStartSmena()+7,sm.getEndSmena()));
-        			lss.Remove(sm);
-        		}
-        	}
+
+        public void M12() {
+            foreach (Smena sm in this.lss) {
+                if (sm.getLenght() > 12) {
+                    lss.Add(new Smena(sm.getIdShop(), sm.getData(), sm.getStartSmena(), 7));
+                    lss.Add(new Smena(sm.getIdShop(), sm.getData(), sm.getStartSmena() + 7, sm.getEndSmena()));
+                    lss.Remove(sm);
+                }
+            }
         }
-        
-       
-        
+
+        public void createRazniza() {
+            int K;
+
+            if (Program.currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
+            {
+                K = Program.currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+
+            }
+            else { K = Program.KoefKassira; }
+        	
+            if (this.Raznica == null)
+            {
+                int[] X = new int[this.DS.getLenghtDaySale()];
+                int[] Y = new int[this.DS.getLenghtDaySale()];
+
+                for (int j = 0, i = this.DS.getStartDaySale(); i < this.DS.getEndDaySale(); i++, j++)
+                {
+                    X[j] = i;
+                }
+                foreach (Smena s in lss)
+                {
+                    for (int j = 0, i = this.DS.getStartDaySale(); i < this.DS.getEndDaySale(); i++, j++)
+                    {
+                        if ((i >= s.getStartSmena()) && (i <= s.getEndSmena()))
+                        {
+                            Y[j] +=K;
+                            //   MessageBox.Show("Y"+j+" "+Y[j] + "X"+j+" "+X[j]);
+                        }
+                    }
+                }
+                this.Raznica = new Dictionary<int, int>();
+                for (int i = 0; i < this.DS.getLenghtDaySale(); i++)
+                {
+
+                    this.Raznica.Add(X[i], Y[i]);
+
+                }
+            }
+        }
+
 
         public void createChartTemplate()
         {
@@ -425,13 +813,19 @@ namespace shedule
             {
                 for (int j = 0, i = this.DS.getStartDaySale(); i < this.DS.getEndDaySale(); i++, j++)
                 {
-                    if ((i>=s.getStartSmena())&&(i<=s.getEndSmena())) {
-                        Y[j] += Program.speed; ;
-                     //   MessageBox.Show("Y"+j+" "+Y[j] + "X"+j+" "+X[j]);
+                    if ((i >= s.getStartSmena()) && (i <= s.getEndSmena())) {
+                        Y[j] += Program.KoefKassira ;
+                        //   MessageBox.Show("Y"+j+" "+Y[j] + "X"+j+" "+X[j]);
                     }
                 }
             }
-            this.Chart= new ForChart(DS.getIdShop(),getData(),X, Y);
+            this.Raznica = new Dictionary<int, int>();
+            for (int i = 0; i < this.DS.getLenghtDaySale(); i++) {
+         
+                    this.Raznica.Add(X[i], Y[i]);
+                
+            }
+            this.Chart = new ForChart(DS.getIdShop(), getData(), X, Y);
         }
 
         public ForChart getChart() {
@@ -454,45 +848,45 @@ namespace shedule
         }
     }
 
-   public class ForChart
+    public class ForChart
     {
         public int[] X;
         public int[] Y;
-		public DateTime Data;
-		public int idShop;
-		
-        public ForChart(  int id, DateTime d,int[] x,int[] y)
+        public DateTime Data;
+        public int idShop;
+
+        public ForChart(int id, DateTime d, int[] x, int[] y)
         {
             this.X = x;
             this.Y = y;
-			this.Data=d;
-			this.idShop=id;
+            this.Data = d;
+            this.idShop = id;
         }
     }
 
-   public class Smena 
+    public class Smena
     {
         int idShop;
         int NStart;
         int NEnd;
         int Lenght;
         DateTime Data;
-		
-		public Smena(int id, DateTime dt, int start, int lenght){
-			this.idShop=id;
-			this.NStart=start;
-			this.Lenght=lenght;
-			this.Data=dt;
-		}
-         static public void giveHoursSdvig(Smena sm1,Smena sm2, int x){
-        	sm1.SetStarnAndLenght(sm1.getStartSmena(),sm1.Lenght-x);
-        	sm2.SetStarnAndLenght(sm2.getStartSmena()-x,sm2.getLenght()+x);
+
+        public Smena(int id, DateTime dt, int start, int lenght) {
+            this.idShop = id;
+            this.NStart = start;
+            this.Lenght = lenght;
+            this.Data = dt;
         }
-        
-        public void SetStarnAndLenght(int s, int l){
-        	this.NStart=s;
-        	this.Lenght=l;
-        	this.NEnd= s+l;
+        static public void giveHoursSdvig(Smena sm1, Smena sm2, int x) {
+            sm1.SetStarnAndLenght(sm1.getStartSmena(), sm1.Lenght - x);
+            sm2.SetStarnAndLenght(sm2.getStartSmena() - x, sm2.getLenght() + x);
+        }
+
+        public void SetStarnAndLenght(int s, int l) {
+            this.NStart = s;
+            this.Lenght = l;
+            this.NEnd = s + l;
         }
 
         public Smena(int start, int lenght, DateTime dt)
@@ -501,16 +895,16 @@ namespace shedule
             Lenght = lenght;
             Data = dt;
         }
-        public int getIdShop(){
-        	return this.idShop;
+        public int getIdShop() {
+            return this.idShop;
         }
 
-        public void addChas(WorkingDay w) {
-            if (this.getEndSmena() == w.getEndWorkingDay()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
+        public void addChas(TemplateWorkingDay w) {
+            if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-            
+
         }
-        
+
         public int getStartSmena()
         {
             return this.NStart;
@@ -518,9 +912,9 @@ namespace shedule
 
         public int getEndSmena()
         {
-        	if(this.NEnd== (this.getStartSmena()+this.getLenght())){
-            return this.NEnd;}
-			else return this.getStartSmena()+this.getLenght();
+            if (this.NEnd == (this.getStartSmena() + this.getLenght())) {
+                return this.NEnd; }
+            else return this.getStartSmena() + this.getLenght();
         }
         public int getLenght() {
             return this.Lenght;
@@ -530,33 +924,64 @@ namespace shedule
             return this.Data;
         }
     }
-
-    public class Shop
+    
+    public class mShop
     {
-        public List<WorkingDay> workingDays { get; set; }
-		public List<employee> employes{get;set;}
-		public List<TemplateWorkingDay> templates {get;set;}
-		public List<daySale> daysSale {get;set;}
-		public List<Factor> factors = new List<Factor>();
-		public List<DataForCalendary> DFCs = new List<DataForCalendary>();
-		public TSR[] tsr;
-		public List<daySale> MouthPrognoz= new List<daySale>();
-        public List<TipSmen> VarSmen = new List<TipSmen>();
-		
-        private int idShop; 
+        private int idShop;
         private String address;
         public int getIdShop() { return idShop; }
         public string getAddress() { return address; }
+        public mShop(int i, string a)
+        {
 
-        List<employee> employees;
-        		
-		
-		
-			
-		
+            idShop = i;
+            address = a;
+
+
+        }
+    }
+
+        public class Shop
+    {
+        public List<WorkingDay> workingDays { get; set; }
+        public List<employee> employes { get; set; }
+        public List<TemplateWorkingDay> templates { get; set; }
+        public List<daySale> daysSale { get; set; }
+        public List<Factor> factors = new List<Factor>();
+        public List<DataForCalendary> DFCs = new List<DataForCalendary>();
+        public List<TSR> tsr = new List<TSR>();
+        public List<daySale> MouthPrognoz = new List<daySale>();
+        public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
+        public List<TipSmen> VarSmen = new List<TipSmen>();
+        public List<VarSmen> VarSmenBP = new List<VarSmen>();
+
+        private int idShop;
+        int idFM;
+        private String address;
+        public int getIdShop() { return idShop; }
+        public int getIdShopFM() { return idFM; }
+        public string getAddress() { return address; }
+
+
+
+        public Shop(int i, string a, int i2)
+        {
+
+            this.idShop = i;
+            this.address = a;
+            this.idFM = i2;
+            this.workingDays = new List<WorkingDay>();
+            this.daysSale = new List<daySale>();
+            this.employes = new List<employee>();
+            this.factors = new List<Factor>();
+            this.DFCs = new List<DataForCalendary>();
+            this.templates = new List<TemplateWorkingDay>();
+            Program.newShop();
+
+        }
 
         public Shop(int i, string a) {
-			tsr = new TSR[4];
+            
             idShop = i;
             address = a;
             this.workingDays = new List<WorkingDay>();
@@ -565,39 +990,98 @@ namespace shedule
             this.factors = new List<Factor>();
             this.DFCs = new List<DataForCalendary>();
             this.templates = new List<TemplateWorkingDay>();
+            Program.newShop();
+           
         }
-		
-		public void AddTemplate(TemplateWorkingDay t){
-			this.templates.Add(t);
-		}
+
+        public void AddTemplate(TemplateWorkingDay t) {
+            this.templates.Add(t);
+        }
 
         public List<WorkingDay> getWorkingDays() {
             return this.workingDays;
         }
 
-        
+
     }
 
     public class TSR
     {
         public string position;
+         public string otobragenie;
+        int tip;
         public int count;
         public int zarp;
         public int zarp1_2;
 
-        public TSR(string p, int c, int z, int z1_2)
+        public TSR(string p, string ot, int c, int z, int z1_2)
         {
             this.position = p;
+            this.otobragenie=ot;
             this.count = c;
             this.zarp = z;
             this.zarp1_2 = z1_2;
         }
+        
+        public string getPosition(){
+        	return this.position;
+        }
+        
+        public string getOtobragenie(){
+        	return this.otobragenie;
+        }
+        
+        
+        public int getCount(){
+        	return this.count;
+        }
+
+        public void setCount(int x)
+        {
+             this.count=x;
+        }
+
+        public int getZarp(){
+        	return this.zarp;
+        }
+
+        public void setZarp(int x)
+        {
+            this.zarp = x;
+        }
+
+        public int getZarp1_2(){
+        	return this.zarp1_2;
+        }
+
+        public void setZarp1_2(int x)
+        {
+            this.zarp1_2 = x;
+        }
+
+        public int getTip(){
+        	if(this.tip!=0){
+        		return this.tip;
+        	}
+        	else {
+        		switch(this.position){
+        			case "kass1": this.tip=1;return this.tip;
+        			case "kass2": this.tip=1;return this.tip;
+        			case "kass3": this.tip=1;return this.tip;
+        			case "prod1": this.tip=1;return this.tip;
+        			case "prod2": this.tip=1;return this.tip;
+        			case "prod3": this.tip=1;return this.tip;
+                    default:  return 0;
+        		}
+        	}
+        }
+        
     }
 
 
     public class hourSale
     {
-		
+
         private int idShop;
         private DateTime Data;
         private string weekday;
@@ -608,23 +1092,23 @@ namespace shedule
         private int Minute;
 
 
-        public void setClick(int c){
-        	this.countClick=c;
+        public void setClick(int c) {
+            this.countClick = c;
         }
-        
-        public void setCheck(int ch){
-        	this.countCheck=ch;
+
+        public void setCheck(int ch) {
+            this.countCheck = ch;
         }
-        
-        public hourSale(int idS, DateTime D, string NH,  int countCh, int countCl)
+
+        public hourSale(int idS, DateTime D, string NH, int countCh, int countCl)
         {
             this.idShop = idS;
             this.Data = D;
-       
+
             this.NHour = NH;
             this.countCheck = countCh;
             this.countClick = countCl;
-         
+
         }
 
         public hourSale(int idS, DateTime D, string NH, string dn, int countCh, int countCl)
@@ -638,7 +1122,7 @@ namespace shedule
 
         }
 
-        public hourSale(int ids, DateTime D, string NH,int m) {
+        public hourSale(int ids, DateTime D, string NH, int m) {
             this.idShop = ids;
             this.Data = D;
             this.NHour = NH;
@@ -677,30 +1161,32 @@ namespace shedule
         public int getCountCheck() { return this.countCheck; }
 
         public int getMinut() {
-            if(this.Minute==0){
-                return (this.getCountCheck() * 25 + this.getCountClick() * 4) / Program.speed; }
+            if (this.Minute == 0) {
+                return (this.getCountCheck() * Program.TimeClick + this.getCountClick() * Program.TimeClick)*100 / Program.KoefKassira; }
             else return this.Minute;
         }
-        
+
 
     }
 
-	public class daySale{
-		public List<hourSale> hoursSale;
-		DateTime Data;
-		int idShop;
+    public class daySale {
+        public List<hourSale> hoursSale;
+        DateTime Data;
+        int idShop;
         int startDaySale;
         int endDaySale;
         int lenghtDaySale;
         int tip;
         int DayWeek;
-		public ForChart Chart;
-		
-		
-		public int getWeekDay(){
-			
+        public ForChart Chart;
+        public ForChart ChartClick;
+        public ForChart ChartCheck;
+
+
+        public int getWeekDay() {
+
             int i = 0;
-           // MessageBox.Show(this.getWeekday());
+            // MessageBox.Show(this.getWeekday());
             switch (this.getData().DayOfWeek.ToString())
             {
                 case "Monday": i = 1; break;
@@ -713,145 +1199,388 @@ namespace shedule
                 default: i = -1; break;
             }
             return i;
-        
-			}
-		
-		public daySale(int id, DateTime d){
-			this.Data=d;
-			this.idShop=id;
-			this.hoursSale=new List<hourSale>();
-            this.startDaySale = Program.currentShop.DFCs.Find(x => x.getData()==d).getTimeStart();
-           // MessageBox.Show("Start "+this.startDaySale);
-            this.endDaySale = Program.currentShop.DFCs.Find(x => x.getData() == d).getTimeEnd();
-           // MessageBox.Show("END"+this.endDaySale + "");
+
         }
 
-		public void whatTip(){
-		//	Program.currentShop.DFCs.Find(x => x.getData()==d).getTip();
-			
-		}
-		
-		public int getTip(){
-			return this.tip;
-		}
-		public void setTip(int t){
-			this.tip=t;
-		}
+        public daySale(int id, DateTime d) {
+            this.Data = d;
+            this.idShop = id;
+            this.hoursSale = new List<hourSale>();
+            this.startDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeStart();
+            // MessageBox.Show("Start "+this.startDaySale);
+
+            this.endDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeEnd();
+            // MessageBox.Show("END"+this.getData().ToShortDateString() + "");
+        }
+
+        public void whatTip() {
+            //	Program.currentShop.DFCs.Find(x => x.getData()==d).getTip();
+
+        }
+
+        public int getTip() {
+            if (this.tip != 0)
+            {
+                return this.tip;
+            }
+            else {
+              return  Program.currentShop.DFCs.Find(t => t.getData() == this.getData()).getTip();
+            }
+        }
+        public void setTip(int t) {
+            this.tip = t;
+        }
         public void Add(hourSale hs) {
             this.hoursSale.Add(hs);
         }
 
-		public int getIdShop(){
-			return this.idShop;
-		}
-		
-		public DateTime getData(){
-			return this.Data;
-		}
+        public int getIdShop() {
+            return this.idShop;
+        }
+
+        public DateTime getData() {
+            return this.Data;
+        }
 
         public int getStartDaySale() {
 
-          
+
             return this.startDaySale;
         }
 
         public int getEndDaySale()
         {
-            
+
             return this.endDaySale;
-            
+
         }
 
         public int getLenghtDaySale()
         {
             //MessageBox.Show("lenght="+(this.getEndDaySale() - this.getStartDaySale()));
-            return this.lenghtDaySale= this.getEndDaySale() - this.getStartDaySale();
+            return this.lenghtDaySale = this.getEndDaySale() - this.getStartDaySale();
         }
 
-        public void CreateChartDaySale(){
-			int [] x= new int [this.hoursSale.Count];
-			int [] y = new int [this.hoursSale.Count];
-			int i=0;
-			foreach(hourSale hs in this.hoursSale){
-				
-				x[i]=int.Parse(hs.getNHour());
-             //  MessageBox.Show(x[i]+"xi");
-				y[i]=hs.getMinut();
-               // MessageBox.Show(y[i] + "yi");
-                i++;
-			}
-			this.Chart = new ForChart(getIdShop(),getData(),x,y ); 
-		}
-	}
-  
-    public class PrognDaySale:daySale{
-        int tip;
-    	public List<hourSale> hss;
-    	public PrognDaySale(int id,DateTime d,int t):base( id, d){
-    		hss =new List<hourSale>();
-            this.tip = t;
-    	}
+        public void CreateChartDaySale() {
+            int[] x = new int[this.hoursSale.Count];
+            int[] y = new int[this.hoursSale.Count];
+            int i = 0;
+            foreach (hourSale hs in this.hoursSale) {
 
-    public int getTip()
+                x[i] = int.Parse(hs.getNHour());
+                //  MessageBox.Show(x[i]+"xi");
+                y[i] = hs.getMinut();
+                // MessageBox.Show(y[i] + "yi");
+                i++;
+            }
+            this.Chart = new ForChart(getIdShop(), getData(), x, y);
+        }
+
+        public void CreateChartDaySaleClick()
+        {
+            int[] x = new int[this.hoursSale.Count];
+            int[] y = new int[this.hoursSale.Count];
+            int i = 0;
+            foreach (hourSale hs in this.hoursSale)
+            {
+
+                x[i] = int.Parse(hs.getNHour());
+                //  MessageBox.Show(x[i]+"xi");
+                y[i] = hs.getCountClick();
+                // MessageBox.Show(y[i] + "yi");
+                i++;
+            }
+            this.ChartClick = new ForChart(getIdShop(), getData(), x, y);
+        }
+
+        public void CreateChartDaySaleCheck()
+        {
+            int[] x = new int[this.hoursSale.Count];
+            int[] y = new int[this.hoursSale.Count];
+            int i = 0;
+            foreach (hourSale hs in this.hoursSale)
+            {
+
+                x[i] = int.Parse(hs.getNHour());
+                //  MessageBox.Show(x[i]+"xi");
+                y[i] = hs.getCountCheck();
+                // MessageBox.Show(y[i] + "yi");
+                i++;
+            }
+            this.ChartCheck = new ForChart(getIdShop(), getData(), x, y);
+        }
+    }
+
+    public class PrognDaySale : daySale {
+        int tip;
+        public List<hourSale> hss;
+        public PrognDaySale(int id, DateTime d, int t) : base(id, d) {
+        	
+            hss = new List<hourSale>();
+            this.tip = t;
+        }
+
+        public int getTip()
         { return this.tip; }
     }
-    
+
     static class Program
     {
-        static public int  normchas=0;
-        static public bool connect= false;
+        static public List<Shop> shops;
+        static public int normchas = 0;
+        static public bool connect = false;
         static public SqlConnection connection;
-        static public int CountSmen;
-        static public List<Shop> listShops = new List<Shop>();
-        
-       
-        static public List<hourSale> HSS = new List<hourSale>();
+         static public int CountSmen;
+        static public bool SozdanPrognoz = false;
+        static public List<mShop> listShops = new List<mShop>();
+        static public int TipOptimizacii=0;
+        static public int TipExporta=-1;
+
+
+        // static public List<hourSale> HSS = new List<hourSale>();
         static public string CountObr = "";
 
-        static public int[,] CountS = new int[25, 15];
-        static public int[,] CountClick = new int[25, 15];
-        static public int[,] CountCheck = new int[25, 15];
+      //  static public int[,] CountS = new int[25, 15];
+      //   static public int[,] CountClick = new int[25, 15];
+      //   static public int[,] CountCheck = new int[25, 15];
         static public List<DateTime> holydays = new List<DateTime>();
         static public int[] RD = new int[12];
         static public int[] PHD = new int[12];
-        static public int speed = 40;
+    
+        static public int KoefKassira = 50;
+        static public int KoefObr = 20;
+        static public int TimeClick = 4;
+        static public int TimeRech = 25;
+        static public int TimeObrTov=14;
+
+        static public string login="";
+        static public string password = "";
+        static public int tipDiagram=0;
         
+        
+
         static public Shop currentShop;
         static public short ParametrOptimization;
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
 
 
-       public  static void OptimCountSotr()
+        static public  void newShop() {
+            RD = new int[12];
+            PHD = new int[12];
+        }
+       
+            static public void readTSR()
         {
-            DateTime dt = DateTime.Today;
-            normchas= Program.RD[dt.Month+1] * 8 - Program.PHD[dt.Month+1];
-            normchas = 168;
-            int ob = 0;
-            foreach (TemplateWorkingDay t in Program.currentShop.templates)
+                       String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+           
+            try
             {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                	string [] str= new string[5];
+                    string s;
+
+                    while ((s= sr.ReadLine())!=null){
+
+                		str = s.Split('#');
+                		currentShop.tsr.Add(new TSR(str[0],str[1],int.Parse(str[2]), int.Parse(str[3]), int.Parse(str[4])));
+
+                	      }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+            	
+            	currentShop.tsr.Add(new TSR("kass1","Кассир 1" ,4, 27000 , 14000 ));
+                currentShop.tsr.Add(new TSR("kass2", "Кассир 2",4,25000,13000 ));
+                currentShop.tsr.Add(new TSR("kass3", "Кассир 3",3,24000,12000 ));
+                currentShop.tsr.Add(new TSR("prod1", "Продавец 1",4,25000,13000));
+                currentShop.tsr.Add(new TSR("prod2", "Продавец 2",4,24000,12000 ));
+                currentShop.tsr.Add(new TSR("prod3", "Продавец 3",2,23000,23000 ));
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                   
+                    foreach (TSR f in currentShop.tsr)
+                    	sw.WriteLine(f.getPosition()+"#"+f.getOtobragenie()+"#"+f.getCount()+"#"+f.getZarp()+"#"+f.getZarp1_2());
+                }
+               // MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+         
+        static public void WriteTSR(){
+         		 String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+
+                    foreach (TSR f in currentShop.tsr)
+                        sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+                }
+            
+            } catch (Exception ex)
+            {
+            	MessageBox.Show("Ошибка записи");
+            }
+         }
+        
+        
+            
+            
+         static public void readFactors()
+        {
+                       String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\factors";
+           
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                    string s;
+
+                    string [] str= new string[6];
+                	while((s= sr.ReadLine())!=null){
+
+                		str= s.Split('#');
+                		currentShop.factors.Add( new Factor(str[0],str[1],int.Parse(str[2]),bool.Parse(str[3]), DateTime.Parse(str[4]), int.Parse(str[5])));
+
+                	      }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+            	
+            	currentShop.factors.Add(new Factor("TimeClick","Время Клика" , 4,true, new DateTime(2100,1,1) , 0 ));
+            	currentShop.factors.Add(new Factor("TimeRech","Голосовой интерфейс" , 25,true, new DateTime(2100,1,1) , 0 ));
+            	currentShop.factors.Add(new Factor("TimeObrTov","Время на нелиннейные операции" , 14,true, new DateTime(2100,1,1) , 0 ));
+                currentShop.factors.Add(new Factor("TimeObrTov", "Позиций в чеке", 5, true, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("KoefKassira","Коэффициент эффективности кассиров (%)" , 50,true, new DateTime(2100,1,1) , 0 ));
+            	currentShop.factors.Add(new Factor("KoefObr","Коэффициент эффетивности продавцов (%)" , 20,true, new DateTime(2100,1,1) , 0 ));
+            	currentShop.factors.Add(new Factor("Otkr_konkurenta","Открытие конкурента" , 4,false, new DateTime(2100,1,1) , 0 ));
+                currentShop.factors.Add(new Factor("zakr_konkurenta", "Закрытие конкурента", 4, false, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("rost_reklam", "Реклама конкурента", 4, false, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("snig_reklam", "Собственная рекламная активность", 4, false, new DateTime(2100, 1, 1), 0));
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                   
+                    foreach (Factor f in currentShop.factors)
+                    	sw.WriteLine(f.getName()+"#"+f.getOtobragenie()+"#"+f.getTZnach()+"#"+f.getDeistvie()+"#"+f.getData()+"#"+f.getNewZnach());
+                }
+               // MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+         
+         static public void WriteFactors(){
+         		 String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\factors";
+           
+            try
+            {
+            	 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                   
+                    foreach (Factor f in currentShop.factors)
+                    	sw.WriteLine(f.getName()+"#"+f.getOtobragenie()+"#"+f.getTZnach()+"#"+f.getDeistvie()+"#"+f.getData()+"#"+f.getNewZnach());
+                }
+            } catch (Exception ex)
+            {
+            	MessageBox.Show("Ошибка записи");
+            }
+         }
+        
+
+        public static void OptimCountSotr()
+        {
+            if (!SozdanPrognoz) {
+                MessageBox.Show("Прогноз не создан");
+                return;
+
+            }
+            currentShop.employes.Clear();
+            int K;
+            if (currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
+            {
+               K = currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+            }
+            else {  K = KoefKassira; }
+            DateTime dt = DateTime.Today;
+          //  normchas = Program.RD[dt.Month ] * 8 - Program.PHD[dt.Month ];
+           // MessageBox.Show(normchas + " norm");
+             normchas = 184;
+            int ob = 0;
+            int tc = 0;
+            foreach (TemplateWorkingDay t in Program.currentShop.MouthPrognozT)
+            {
+                tc += t.getClick();
                 ob += t.getCapacity();
             }
-            int Count = (ob / normchas) + 1;
-            if (Count < 8) { Count = 9; }
+            
+            int CountProd = ((tc * TimeObrTov * 100)/(normchas*3600*KoefObr)); 
+            int CountKassirov = ((ob*100 / (normchas*K*3600))) + ParametrOptimization;
+            //MessageBox.Show(Program.currentShop.MouthPrognozT.Count+" Количество продавцов=" +CountProd+" Количество кассиров=" + CountKassirov);
+            if (CountKassirov < 8) { CountKassirov = 8; }
+            if (CountProd < 8) { CountProd = 8; }
+
+            for (int i = 100; i < 104; i++)
+            {
+
+                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 10), "Продавец 1", "Сменный график");
+
+                currentShop.employes.Add(e);
+                CountProd--;
+            }
+
+            for (int i = 104; i < 108; i++)
+            {
+
+                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 11), "Продавец 2", "Сменный график");
+
+                currentShop.employes.Add(e);
+                CountProd--;
+            }
+
+            for (int i = 108; CountProd>0; i++, CountProd--)
+            {
+
+                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 12), "Продавец 3", "Сменный график");
+
+                currentShop.employes.Add(e);
+                CountProd--;
+            }
+
+
             for (int i = 0; i < 2; i++)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1));
+                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1), "Кассир 1", "Сменный график");
 
                 currentShop.employes.Add(e);
             }
             for (int i = 2; i < 4; i++)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 2));
+                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 2), "Кассир 1", "Сменный график");
 
                 currentShop.employes.Add(e);
             }
             for (int i = 4; i < 6; i++)
             {
 
-                employee e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 3));
+                employee e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 3), "Кассир 2", "Сменный график");
 
                 currentShop.employes.Add(e);
             }
@@ -859,239 +1588,519 @@ namespace shedule
             for (int i = 6; i < 8; i++)
             {
 
-                employee e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 4));
+                employee e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 4), "Кассир 2", "Сменный график");
 
                 currentShop.employes.Add(e);
             }
 
-            int Ost = Count - 8;
-
-            if ((currentShop.VarSmen.Count > 2) && (Ost > 4))
+            int Ost = CountKassirov - 8;
+          //  MessageBox.Show(Ost+"");
+            if ((currentShop.VarSmen.Count > 5) && (Ost > 4))
             {
 
 
-                employee e = new employee(currentShop.getIdShop(), 8, currentShop.VarSmen.Find(t => t.getTip() == 1));
+                employee e = new employee(currentShop.getIdShop(), 8, currentShop.VarSmen.Find(t => t.getTip() == 5), "Кассир 3", "Сменный график");
 
                 currentShop.employes.Add(e);
-                e = new employee(currentShop.getIdShop(), 9, currentShop.VarSmen.Find(t => t.getTip() == 2));
+                e = new employee(currentShop.getIdShop(), 9, currentShop.VarSmen.Find(t => t.getTip() == 6), "Кассир 3", "Сменный график");
 
                 currentShop.employes.Add(e);
                 Ost -= 2;
                 for (int i = 10; Ost == 0; Ost--, i++)
                 {
-                    e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 3));
+                    e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 0), "Кассир 3", "Сменный график");
                     currentShop.employes.Add(e);
                 }
 
             }
             else
             {
-                for (int i = 8; Ost == 0; Ost--, i++)
+                
+                for (int i = 8; Ost > 0; Ost--, i++)
                 {
-                    employee e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 0));
+                    employee e = new employee(currentShop.getIdShop(), i, currentShop.VarSmen.Find(t => t.getTip() == 0) ,"Кассир 3", "Сменный график");
 
                     currentShop.employes.Add(e);
+                  //  MessageBox.Show("Else");
                 }
             }
+          //  MessageBox.Show(currentShop.employes.Count.ToString());
         }
 
         static void Pereshet() {
 
+            foreach (TemplateWorkingDay twd in currentShop.MouthPrognozT) {
+                twd.CreateSmens();
+                
+                
+            }
+
         }
 
-         public static void CreateSmens1()
+        public static void writeVarSmen()
         {
-            foreach (employee emp in currentShop.employes)
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen";
+           
+            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-                int dlina;//= currentShop.VarSmen.Find(x => x.getTip() == emp.getTip()).getSrednee();
 
-                foreach (WorkingDay wd in currentShop.workingDays)
+                foreach (TipSmen ts in currentShop.VarSmen)
+                    sw.WriteLine(ts.getR() + "#" + ts.getV() + "#" + ts.getTip());
+            }
+
+        }
+
+        public static void readVarSmen()
+        {
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen";
+            // String readPath = Environment.CurrentDirectory + "/" + currentShop.getIdShop() + @"\varSmen.txt";
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+
+
+                    string line;
+                    string[] s = new string[3];
+
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        s = line.Split('#');
+                        currentShop.VarSmen.Add(new TipSmen(int.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2])));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.ToString());
+                currentShop.VarSmen.Add(new TipSmen(5, 2, 1));
+                currentShop.VarSmen.Add(new TipSmen(5, 2, 2));
+                currentShop.VarSmen.Add(new TipSmen(4, 3, 3));
+                currentShop.VarSmen.Add(new TipSmen(4, 3, 4));
+                currentShop.VarSmen.Add(new TipSmen(5, 2, 10));
+                currentShop.VarSmen.Add(new TipSmen(4, 3, 11));
+                currentShop.VarSmen.Add(new TipSmen(2, 2, 12));
+                currentShop.VarSmen.Add(new TipSmen(0, 0, 0));
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+
+                    foreach (TipSmen ts in currentShop.VarSmen)
+                        sw.WriteLine(ts.getR() + "#" + ts.getV() + "#" + ts.getTip());
+                }
+
+            }
+
+        }
+
+
+        public static bool CreateSmens()
+        {
+            if (currentShop.MouthPrognozT.Count == 0) {
+                
+                MessageBox.Show("Ошибка создания прогноза");
+                return false;
+            }
+            List<employee> emplo = currentShop.employes.FindAll((t => (t.getTip() == 1) || (t.getTip() == 2)||(t.getTip() == 3) || (t.getTip() == 4)));
+            foreach (employee emp in emplo)
+            {
+                int dlina = currentShop.VarSmen.Find(x => x.getTip() == emp.getTip()).getSrednee();
+
+                foreach (TemplateWorkingDay wd in currentShop.MouthPrognozT)
                 {
                     switch (emp.getTip())
                     {
 
 
-                        case 1: dlina = 8;
-                            switch (wd.getTip())
+                        case 1:
+                            switch (wd.DS.getTip())
                             {
-                                case 1: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 2: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 3: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 4: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 5: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
+                                case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 4: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 5: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
                                 default: break;
                             }; break;
                         case 2:
-                            dlina = 8;
-
-                            switch (wd.getTip())
+                            switch (wd.DS.getTip())
                             {
-                                case 1: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 2: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 3: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 4: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 5: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
+                                case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 4: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 5: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
                                 default: break;
                             }; break;
                         case 3:
-                            dlina = 11;
-                            switch (wd.getWeekDay())
+                            switch (wd.DS.getWeekDay())
                             {
-                                case 4: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 5: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 6: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 7: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
+                                case 4: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
+                                case 5: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
+                                case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
 
                                 default: break;
                             }; break;
                         case 4:
-                            dlina = 11;
-                            switch (wd.getWeekDay())
+                            switch (wd.DS.getWeekDay())
                             {
-                                case 1: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 2: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 6: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 7: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
+                                case 1: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
+                                case 2: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
+                                case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
                                 default: break;
                             }; break;
-
+                        
                     }
                 }
+                emp.setStatus(2);
+
+            }
+            
+            
+            List<employee> le = new List<employee>();
+            le = currentShop.employes.FindAll((t => (t.getTip() == 5) || t.getTip() == 6));
+            if (le.Count != 0)
+            {
+              //  MessageBox.Show("5 & 6");
+                foreach (employee emp in le)
+                {
+                   // Program.Pereshet();
+                    foreach (TemplateWorkingDay wd in currentShop.MouthPrognozT)
+                    {
+                        switch (emp.getTip())
+                        {
+
+                            case 5:
+                                {
+                                    if ((wd.getData().Day % 4 == 1) || (wd.getData().Day % 4 == 2) && (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Count != 0))
+                                    {
+                                        emp.smens.Add(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss[0]); break;
+                                    }
+                                    break;
+                                }
+                            case 6:
+                                if ((wd.getData().Day % 4 == 3)||(wd.getData().Day % 2 == 0) && (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Count != 0))
+                                {
+                                    emp.smens.Add(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss[0]); break;
+                                }
+                                break;
+                            case 7:
+                                if ((wd.getData().Day % 4 == 3) || (wd.getData().Day % 2 == 0) && (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Count != 0))
+                                {
+                                    emp.smens.Add(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss[0]); break;
+                                }
+                                break;
+                            case 8:
+                                if ((wd.getData().Day % 4 == 3) || (wd.getData().Day % 2 == 0) && (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Count != 0))
+                                {
+                                    emp.smens.Add(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss[0]); break;
+                                }
+                                break;
+                            case 9:
+                                if ((wd.getData().Day % 4 == 3) || (wd.getData().Day % 2 == 0) && (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Count != 0))
+                                {
+                                    emp.smens.Add(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss[0]); break;
+                                }
+                                break;
+                        }
+                    }
+
+
+                    emp.setStatus(2);
+
+                }
+              
+            }
+            
+            //Pereshet();
+
+            le.Clear();
+            le = currentShop.employes.FindAll((t => t.getTip() == 0));
+           // MessageBox.Show(le.Count+" le");
+            int c = 1;
+
+            foreach (employee emp in le)
+            {
+              //  MessageBox.Show("0");
+                //
+                if (le.Count != 0)
+                {
+
+                    foreach (TemplateWorkingDay wd in currentShop.MouthPrognozT)
+                    {
+                        if ((c % le.Count == 0) || (c % le.Count == 1))
+                        {
+                            Smena s = currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getLenght() > 5) && (t.getLenght() < 9) && (t.getStartSmena() != wd.DS.getStartDaySale() && (t.getEndSmena() != wd.DS.getStartDaySale())));
+                            if (s != null)
+                            {
+                              //  MessageBox.Show(s.getData() + " " + s.getStartSmena() + " " + s.getEndSmena());
+
+                                emp.smens.Add(s);
+
+                                currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Remove(s);
+                            }
+                            else{
+                            	emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale()+3, 7));
+                            	}
+                            //  emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
+                        }
+                        else {
+                            Smena s = currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find((t=>t.getLenght() < 13) );
+                            if (s != null)
+                            {
+                             //   MessageBox.Show(s.getData() + " " + s.getStartSmena() + " " + s.getEndSmena());
+
+                                emp.smens.Add(s);
+
+                                currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Remove(s);
+                            }else{
+                            		 emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale() + 3, 7));
+                            }
+                        }
+                    c++;
+                }
+                        
+                    
+                }
+               
+
+
+
+
+
+                emp.setStatus(2);
+
+            }
+            le.Clear();
+            le = currentShop.employes.FindAll((t => t.getStatus() == 2));
+           
+               // MessageBox.Show("2");
+                foreach (employee emp in le)
+                {
+
+                    int k = 14;
+                while (emp.getNormRab() > normchas)
+                {
+                   // MessageBox.Show("Больше");
+                    if (emp.smens.Find(t => t.getLenght() > k) != null)
+                    {
+                        emp.smens.Remove(emp.smens.Find(t => t.getLenght() > k));
+                    }
+                    else
+                        k--;
+
+
+                }
+
+
+                while (emp.getNormRab() < normchas)
+                {
+                    // MessageBox.Show("Меньше");
+                    Smena s = emp.smens.Find(t=>t.getLenght()<6);
+                    if (s != null)
+                    { s.addChas(currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData())); }
+                    else
+                    {
+                        foreach (Smena sm in emp.smens)
+                        {
+                            if (sm != null)
+                                // {
+                                sm.addChas(currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm.getData()));
+                            // }else { MessageBox.Show(emp.smens.Count+"count  id=" +emp.getID()); }
+                            if (emp.getNormRab() == normchas) break;
+                        }
+                    }
+
+                }
+
+                emp.setStatus(1);
+                //MessageBox.Show("status " + emp.getID());
+            }
+
+            le.Clear();
+            le = currentShop.employes.FindAll((t => (t.getTip() == 10)|| (t.getTip() == 11)|| (t.getTip() == 12)));
+           // MessageBox.Show(le.Count+" =le");
+            foreach (employee emp in le)
+            {
+                int dlina = 8;
+
+                foreach (TemplateWorkingDay wd in currentShop.MouthPrognozT)
+                {
+                    switch (emp.getTip())
+                    {
+
+
+                        case 10:
+                          //  MessageBox.Show("10");
+                            if (emp.getID() % 2 == 0)
+                            {
+                                switch (wd.DS.getTip())
+                                {
+                                    case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 4: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 5: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    default: break;
+                                };
+                            }
+                            else{
+                                switch (wd.DS.getTip())
+                                {
+                                    case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 4: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 5: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    default: break;
+                                }
+                    }
+                
+                        break;
+                        case 11:
+                          //  MessageBox.Show("11");
+                            if (emp.getID() % 2 == 0)
+                            {
+                                switch (wd.DS.getTip())
+                                {
+                                    case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 8: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 5: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 9: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    default: break;
+                                };
+                            }
+                            else
+                            {
+                                switch (wd.DS.getTip())
+                                {
+                                    case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 4: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 9: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 8: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    default: break;
+                                }
+                            }
+
+                            break;
+                        case 12:
+                         //   MessageBox.Show("12");
+                            if (emp.getID() % 2 == 0)
+                            {
+                                switch (wd.DS.getTip())
+                                {
+                                    case 8: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 4: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                
+                                    case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 9: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    default: break;
+                                };
+                            }
+                            else
+                            {
+                                switch (wd.DS.getTip())
+                                {
+                                    case 9: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 1: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 3: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 8: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 2: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                    case 5: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                    default: break;
+                                }
+                            }
+
+                            break;
+
+                    };
+                            
+                              
+
+
+                    
+                }
+                emp.setStatus(3);
 
                
 
-                emp.setStatus(1);
+                    int k = 14;
+                    while (emp.getNormRab() > normchas)
+                    {
+                       //  MessageBox.Show("Больше");
+                        if (emp.smens.Find(t => t.getLenght() > k) != null)
+                        {
+                            emp.smens.Remove(emp.smens.Find(t => t.getLenght() > k));
+                        }
+                        else
+                            k--;
+
+
+                    }
+
+
+                    while (emp.getNormRab() < normchas)
+                    {
+                      //   MessageBox.Show("Меньше");
+                        foreach (Smena sm in emp.smens)
+                        {
+                            sm.addChas(currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm.getData()));
+
+                            if (emp.getNormRab() == normchas) break;
+                        }
+
+                    }
+
+                    emp.setStatus(1);
+                   // MessageBox.Show("status " + emp.getID());
+                
+
+
+            }
+            itogChass();
+            return true;
+ }
+        public static void itogChass() {
+            foreach (employee e in currentShop.employes) {
+
+                foreach (TemplateWorkingDay twd in currentShop.MouthPrognozT) {
+                    if (e.smens.Find(t => t.getData() == twd.getData())!=null) {
+                        e.smens.Find(t => t.getData() == twd.getData()).addChas(twd);
+                    }
+                }
             }
         }
 
-            static void CreateSmens()
-        {
 
-            foreach (employee emp in currentShop.employes)
-            {
-                int dlina = currentShop.VarSmen.Find(x => x.getTip() == emp.getTip()).getSrednee();
+        public static void createPrognoz(){
+            currentShop.MouthPrognoz.Clear();
+            currentShop.MouthPrognozT.Clear();
+        	DateTime ydt= DateTime.Now.AddDays(-1);
+            DateTime tdt = DateTime.Today;
+            List<PrognDaySale> PDSs= new List<PrognDaySale>();
+            DateTime d2 = DateTime.Now.AddDays(-30);
 
-                foreach (WorkingDay wd in currentShop.workingDays)
-                {
-                    switch (emp.getTip()) {
-
-                        
-                        case 1: switch (wd.getTip()) {
-                                case 1: emp.smens.Add(new Smena(currentShop.getIdShop(),wd.getData(),wd.getStartWorkingDay(),dlina)); break;
-                                case 2: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 3: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 4: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 5: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                default: break;
-                            }; break;
-                        case 2:
-                            switch (wd.getTip()) {
-                                case 1: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay()-dlina), dlina)); break;
-                                case 2: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 3: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 4: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 5: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                default: break;
-                            }; break;
-                        case 3:
-                            switch (wd.getWeekDay()) {
-                                case 4: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 5: emp.smens.Add(currentShop.templates.Find(t => t.getData()== wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay() )); break;
-                                case 6: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-                                case 7: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), wd.getStartWorkingDay(), dlina)); break;
-
-                                default: break;
-                            }; break;
-                        case 4:
-                            switch (wd.getWeekDay()) {
-                                case 1: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 2: emp.smens.Add(currentShop.templates.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.getStartWorkingDay())); break;
-                                case 6: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                case 7: emp.smens.Add(new Smena(currentShop.getIdShop(), wd.getData(), (wd.getEndWorkingDay() - dlina), dlina)); break;
-                                default: break;
-                            }; break;
-
-                    }
-                }
-
-                while (emp.getNormRab() < normchas) {
-                    int rarn = normchas - emp.getNormRab();
-                    foreach(Smena sm in emp.smens){
-                        sm.addChas(currentShop.workingDays.Find(f => f.getData() == sm.getData() ));
-                        emp.setNormRab(emp.getNormRab() + 1);
-                        if (emp.getNormRab() < normchas) break;
-                    }
-
-                }
-
-                emp.setStatus(1);
-            }
-            List<employee> le = new List<employee>();
-            le = currentShop.employes.FindAll(t => t.getStatus() != 1);
-            foreach (employee emp in le)
-            {
-                Program.Pereshet();
-                foreach (WorkingDay wd in currentShop.workingDays)
-                {
-                    switch (emp.getTip()) {
-
-                        //case 5:
-                        //case 6:
-                        
-
-
-                }
-                }
-                while (emp.getNormRab() < normchas) {
-                    int rarn = normchas - emp.getNormRab();
-                    foreach (Smena sm in emp.smens) {
-                        sm.addChas(currentShop.workingDays.Find(f => f.getData() == sm.getData()));
-                        emp.setNormRab(emp.getNormRab() + 1);
-                        if (emp.getNormRab() < normchas) break;
-                    }
-
-                }
-
-                emp.setStatus(1) ;
-            }
-        }
-
-            static void ExportSheduleToExel(){
-        	Excel.Application exApp = new Excel.Application();
-            exApp.Visible = false;
-            exApp.Workbooks.Add();
-         //   Worksheet workSheet = (Worksheet)exApp.ActiveSheet;
-          //  workSheet.Cells[1, 1] = "ID";
-           // workSheet.Cells[1, 2] = "Name";
-           // workSheet.Cells[1, 3] = "Age";
-            int rowExcel = 2;
-           //for (int i = 0; i < dataGridViewFactors.Rows.Count; i++)
-            {
-               // workSheet.Cells[rowExcel, "A"] = dataGridViewFactors.Rows[i].Cells["ID"].Value;
-               // workSheet.Cells[rowExcel, "B"] = dataGridViewFactors.Rows[i].Cells["Name"].Value;
-                //workSheet.Cells[rowExcel, "C"] = dataGridViewFactors.Rows[i].Cells["Age"].Value;
-                ++rowExcel;
-            }
-           //SaveFileDialog
-           // workSheet.SaveAs("MyFile.xls");
-            exApp.Quit();
-        }
-        
-       public static void createPrognoz(){
-        	DateTime tdt= DateTime.Today;
-        	List<PrognDaySale> PDSs= new List<PrognDaySale>();
-            DateTime d2;
-
-            if (tdt.Month!=1){
-        		 d2= new DateTime(tdt.Year,tdt.Month-1,tdt.Day);
-        	}else{
-        		 d2 = new DateTime(tdt.Year-1,12,tdt.Day);
-        	}
+            
         	currentShop.daysSale.Clear();
-        	createListDaySale(d2,tdt);
+        	SozdanPrognoz= createListDaySale(d2,ydt);
         	
         	foreach(daySale ds in currentShop.daysSale ){
-        		ds.setTip(currentShop.DFCs.Find(x => x.getData()==ds.getData()).getTip());
+        		ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString()==ds.getData().ToShortDateString()).getTip());
         		
         			
         		}
@@ -1121,6 +2130,7 @@ namespace shedule
         	
         	
         	foreach(PrognDaySale pds in PDSs){
+
         		for(int i=7;i<24;i++){
         		    
         			int Sclick=0;
@@ -1140,32 +2150,179 @@ namespace shedule
         		
         		
         	}
+
+            
         
-        	
-        	for (int i=1; i<= DateTime.DaysInMonth(fd.Year,fd.Month); i++) {
-                
-        		daySale d= new daySale(currentShop.getIdShop(),new DateTime(fd.Year, fd.Month, i));
-        		d.whatTip();
-        		d.hoursSale=PDSs[d.getTip()].hoursSale;
-        		currentShop.MouthPrognoz.Add(d);
-        		
-        	}
+                for (int i = 1; i <= DateTime.DaysInMonth(fd.Year, fd.Month); i++) {
+
+                    daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
+                    d.whatTip();
+                    d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                    currentShop.MouthPrognoz.Add(d);
+
+                }
+            
         	
         	foreach(daySale ds in currentShop.MouthPrognoz){
-        		createTemplate(ds);
+        		createPrognozTemplate(ds);
         	}
+        
         	
         }
-        
-        
-        
-		
-		static public void createListDaySale( DateTime n, DateTime k){
+
+        public static void createPrognoz3()
+        {
+            currentShop.MouthPrognoz.Clear();
+            currentShop.MouthPrognozT.Clear();
+            DateTime ydt = DateTime.Now.AddDays(-1);
+            DateTime tdt = DateTime.Today;
+            List<PrognDaySale> PDSs = new List<PrognDaySale>();
+            DateTime d2 = DateTime.Now.AddDays(-30);
+
+
+            currentShop.daysSale.Clear();
+            createListDaySale(d2, ydt);
+
+            foreach (daySale ds in currentShop.daysSale)
+            {
+                ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
+
+
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
+                foreach (daySale ds in currentShop.daysSale)
+                {
+                    if (ds.getTip() == i)
+                    {
+                        foreach (hourSale hs in ds.hoursSale)
+                        {
+
+                            PDSs.Find(t => t.getTip() == i).hss.Add(hs);
+
+
+                        }
+                    }
+                }
+
+            }
+            
+
+
+            foreach (PrognDaySale pds in PDSs)
+            {
+
+                for (int i = 7; i < 24; i++)
+                {
+
+                    int Sclick = 0;
+                    int Scheck = 0;
+                    List<hourSale> h = pds.hss.FindAll(t => t.getNHour() == i.ToString());
+                    if (h.Count != 0)
+                    {
+                        foreach (hourSale hs in h)
+                        {
+                            Sclick += hs.getCountClick();
+                            Scheck += hs.getCountCheck();
+                        }
+
+                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
+                    }
+                }
+
+
+            }
+
+            DateTime fd1;
+            DateTime fd2;
+            DateTime fd3;
+
+            if (tdt.Month < 10)
+            {
+                fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+            }
+            else
+            {   if (tdt.Month == 10)
+                {
+                    fd1 = new DateTime(tdt.Year, 11, 1);
+                    fd2 = new DateTime(tdt.Year, 12, 1);
+                    fd3 = new DateTime(tdt.Year+1, 1, 1);
+                }
+                else if (tdt.Month == 11)
+                {
+                    fd1 = new DateTime(tdt.Year, 12, 1);
+                    fd2 = new DateTime(tdt.Year+1, 1, 1);
+                    fd3 = new DateTime(tdt.Year+1, 2, 1);
+                }
+                else if (tdt.Month == 12)
+                {
+                    fd1 = new DateTime(tdt.Year+1, 1, 1);
+                    fd2 = new DateTime(tdt.Year+1, 2, 1);
+                    fd3 = new DateTime(tdt.Year+1, 3, 1);
+                }
+                else {
+
+                    fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    MessageBox.Show("Ошибка построения прогноза");
+                }
+            }
+
+            for (int i = 1; i <= DateTime.DaysInMonth(fd1.Year, fd1.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd1.Year, fd1.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+
+            for (int i = 1; i <= DateTime.DaysInMonth(fd2.Year, fd2.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd2.Year, fd2.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+            for (int i = 1; i <= DateTime.DaysInMonth(fd3.Year, fd3.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd3.Year, fd3.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+
+
+
+            foreach (daySale ds in currentShop.MouthPrognoz)
+            {
+                createPrognozTemplate(ds);
+            }
+
+
+        }
+
+
+
+
+        static public bool createListDaySale( DateTime n, DateTime k){
 			
             var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2=k.Year+"/" + k.Day+"/" +k.Month;
-              string sql = "select * from dbo.get_StatisticByShopsDayHour('"+Program.currentShop.getIdShop()+"', '"+s1+"', '"+s2+" 23:59:00')";
+            string sql;
+            if (currentShop.getIdShop() == 0) {sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
+            else {  sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShop() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
             //string sql = "select * from dbo.get_StatisticByShopsDayHour('301','17/01/01', '2017/01/20 23:59:00')";
             //string sql = "select * from dbo.get_StatisticByShopsDayHour('103','2017/05/01', '2017/15/09 23:59:00')";
             //MessageBox.Show(sql);
@@ -1192,7 +2349,8 @@ namespace shedule
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
-                    MessageBox.Show("Ошибка соединения с базой данных" + ex);
+                    MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
+                    return false;
                 }
                 
             }
@@ -1200,7 +2358,8 @@ namespace shedule
 			 TimeSpan ts = k - n;
             
 			DateTime d = n;
-			for(int i=0;i<ts.Days;i++){
+
+			for(int i=0;i<=ts.Days+1;i++){
 				
 				 ds = new daySale(Program.currentShop.getIdShop(),d);
 				currentShop.daysSale.Add(ds);
@@ -1211,12 +2370,12 @@ namespace shedule
 			foreach(hourSale hs in hss){
 
 
-                currentShop.daysSale.Find(x => x.getData() == hs.getData()).Add(hs);
+                currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
 				
 			}
-           // MessageBox.Show("Колтичество дней добавлено"+currentShop.daysSale.Count.ToString());
 
 
+            return true;
         } 
 		
 		/*static List<ForChart> createSaleForChart(){
@@ -1340,7 +2499,12 @@ namespace shedule
 
        static public Smena addRecl(Smena sm)
         {
-
+            int K;
+            if (currentShop.factors.Find(t => t.getName() == "KoefKassira")!=null)
+            {
+                 K = currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+            }
+            else {  K = KoefKassira; }
             int EndSmena = sm.getStartSmena()+sm.getLenght()+1;
            
             for (int i = sm.getStartSmena(); i < EndSmena; i++)
@@ -1350,7 +2514,7 @@ namespace shedule
                // MessageBox.Show("temp1="+temp.getNHour()+" "+temp.getMinut());
                 if (!(temp == null))
                 {
-                    int t=temp.getMinut() - speed;
+                    int t=temp.getMinut() - K;
                     Raznica.Add(new hourSale(currentShop.getIdShop(), sm.getData(), i.ToString(), t));
                    // MessageBox.Show("Count Razniza=" + Raznica.Count);
                     Raznica.Remove(temp);
@@ -1418,8 +2582,35 @@ namespace shedule
          
         }
 
+        static public void createPrognozTemplate(daySale ds)
+        {
+            //createDaySale(id, data);
+            //DateTime data2= data.AddDays(10.0d);
+            int id = currentShop.getIdShop();
+            //createListDaySale(data,data2);
+
+            Raznica = new List<hourSale>(ds.hoursSale);
+
+
+            TemplateWorkingDay twd = new TemplateWorkingDay(ds);
+            twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
+            twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
+            while (checkGraph())
+            {
+
+                twd.AddSmena(addRecl(OptimRec(ds.getData())));
+                //   MessageBox.Show("Количество смен="+twd.lss.Count);
+
+            }
+
+            currentShop.MouthPrognozT.Add(twd);
+            //MessageBox.Show("Шаблон магазина" + id + "за дату" + ds.getData() + "создан");
+
+
+        }
+
         static public void refreshFoldersShops() {
-            foreach (Shop shop in Program.listShops) {
+            foreach (mShop shop in Program.listShops) {
                 string pyth= Environment.CurrentDirectory +"/Shops/"+ shop.getIdShop().ToString();
                 if (!Directory.Exists(pyth)) {
                     Directory.CreateDirectory(pyth);
@@ -1428,63 +2619,9 @@ namespace shedule
             }
         }
 
-        static public void readTSR()
-        {
-            String readPath = Environment.CurrentDirectory + @"\TSR.txt";
-            try
-            {
+      
 
-
-                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-                {
-
-                    for (int i = 0; i < 4; i++)
-                    {
-                        currentShop.tsr[i] = new TSR(sr.ReadLine(), int.Parse(sr.ReadLine()), int.Parse(sr.ReadLine()), int.Parse(sr.ReadLine()));
-                        
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                for (int i = 0; i < 4; i++)
-                {
-                    currentShop.tsr[i] = new TSR("", 0, 0, 0);
-
-                }
-            }
-
-        }
-
-        static public void readFactors()
-        {
-            String readPath = Environment.CurrentDirectory + @"\factors.txt";
-            try
-            {
-
-
-                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-                {
-
-                    foreach(Factor f in currentShop.factors)
-                    {
-                        currentShop.factors.Add( new Factor(sr.ReadLine(), int.Parse(sr.ReadLine()), bool.Parse(sr.ReadLine()), DateTime.Parse(sr.ReadLine()), int.Parse(sr.ReadLine())));
-
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
-            }
-
-        }
+       
 
         static private void CreateXML() {
             String readPath = Environment.CurrentDirectory + "TSR";
@@ -1544,8 +2681,9 @@ namespace shedule
 
         static public void getListDate(int year)
         {
-
-            string readPath = Environment.CurrentDirectory+ "/Shops/"+Program.currentShop.getIdShop() +"/CalendarSmen.txt";
+            currentShop.DFCs.Clear();
+            string readPath = Environment.CurrentDirectory+ @"\Shops\"+currentShop.getIdShop() +@"\Calendar";
+           // MessageBox.Show(readPath);
             try
             {
 
@@ -1554,17 +2692,35 @@ namespace shedule
                 {
                     string line;
                     string[] s = new string[4];
+                   
                     while ((line = sr.ReadLine()) != null) {
                         s = line.Split('#');
                         DataForCalendary d = new DataForCalendary(DateTime.Parse( s[0]),int.Parse(s[1]),int.Parse(s[2]),int.Parse(s[3]));
+                       // MessageBox.Show(DateTime.Parse(s[0]).Month.ToString());
+                        switch (int.Parse(s[1])) {
+                            case 1: RD[DateTime.Parse(s[0]).Month-1]++; break;
+                            case 2: RD[DateTime.Parse(s[0]).Month-1]++; break;
+                            case 3: RD[DateTime.Parse(s[0]).Month-1]++; break;
+                            case 4: RD[DateTime.Parse(s[0]).Month-1]++; break;
+                            case 5: RD[DateTime.Parse(s[0]).Month-1]++; break;
+                          
+                            case 9: PHD[DateTime.Parse(s[0]).Month-1]++; break;
+                       
+                        }
+                        
                         currentShop.DFCs.Add(d);
                     }
+                 //   MessageBox.Show("DFCs.Add 1");
                 }
+
+                
 
             }
             catch (Exception ex)
             {
-                Program.ReadCalendarFromXML();
+              //  MessageBox.Show(ex.Message);
+                
+                Program.ReadCalendarFromXML(DateTime.Today.Year );
                 for (int i = 1; i <= 12; i++)
                 {
                     RD[i - 1] = 0;
@@ -1574,28 +2730,37 @@ namespace shedule
                     {
                         DataForCalendary dfc = new DataForCalendary(new DateTime(year, i, k));
                         int t = dfc.getTip();
-                        if (t == 1) { RD[i - 1]++; }
-                        if (t == 5) { PHD[i - 1]++; }
-                        currentShop.DFCs.Add(dfc);
+                        if ((t == 1)||(t==2)||(t==3)||(t==4)||(t==5)) { RD[i - 1]++; }
+                        if (t == 9) { PHD[i - 1]++; }
 
+                        if (currentShop.DFCs.Find(x =>x.getData()==dfc.getData())!=null) {
+                            
+                        }else currentShop.DFCs.Add(dfc);
 
                     }
                 }
+              //  MessageBox.Show("DFCs.Add ex");
                 foreach (DataForCalendary dfc in currentShop.DFCs)
                 {
                     switch (dfc.getTip())
                     {
-                        case 1: dfc.setTimeBaE(7, 23); break;
-                        case 2: dfc.setTimeBaE(9, 22); break;
-                        case 3: dfc.setTimeBaE(9, 22); break;
-                        case 4: dfc.setTimeBaE(9, 22); break;
-                        case 5: dfc.setTimeBaE(9, 22); break;
+                        case 1: dfc.setTimeBaE(8, 23); break;
+                        case 2: dfc.setTimeBaE(8, 23); break;
+                        case 3: dfc.setTimeBaE(8, 23); break;
+                        case 4: dfc.setTimeBaE(8, 23); break;
+                        case 5: dfc.setTimeBaE(8, 23); break;
+                        case 6: dfc.setTimeBaE(9, 22); break;
+                        case 7: dfc.setTimeBaE(9, 22); break;
+                        case 8: dfc.setTimeBaE(9, 22); break;
+                        case 9: dfc.setTimeBaE(9, 22); break;
+                        case 10: dfc.setTimeBaE(9, 22); break;
                         default: dfc.setTimeBaE(0, 0); break;
                     }
                 }
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
+                   
                     foreach (DataForCalendary d in currentShop.DFCs)
                         sw.WriteLine(d.getData()+"#"+d.getTip()+"#"+d.getTimeStart()+"#"+d.getTimeEnd() );
                 }
@@ -1616,7 +2781,7 @@ namespace shedule
         {
             String[] months = new String[12];
             months[0] = "Январь";
-            months[1] = "Феврвль";
+            months[1] = "Февраль";
             months[2] = "Март";
             months[3] = "Апрель";
             months[4] = "Май";
@@ -1628,6 +2793,39 @@ namespace shedule
             months[10] = "Ноябрь";
             months[11] = "Декабрь";
             return months;
+
+        }
+
+
+        static public string getMonths(int m)
+        {
+            switch (m) {
+
+                case 1: return "Январь";
+                case 2:
+                    return  "Февраль";
+                case 3:
+                    return  "Март";
+                case 4:
+                    return  "Апрель";
+                case 5:
+                    return  "Май";
+                case 6:
+                    return  "Июнь";
+                case 7:
+                    return  "Июль";
+                case 8:
+                    return "Август";
+                case 9:
+                    return  "Сентябрь";
+                case 10:
+                    return "Октябрь";
+                case 11:
+                    return "Ноябрь";
+                case 12: return "Декабрь";
+                default: return"";
+        }
+           
 
         }
 
@@ -1650,11 +2848,11 @@ namespace shedule
             }
         }
 
-        static public void ReadCalendarFromXML()
+        static public void ReadCalendarFromXML(int years)
         {
 
             XmlDocument xDoc = new XmlDocument();
-            String readPath = Environment.CurrentDirectory + @"\Calendars\2017.xml";
+            String readPath = Environment.CurrentDirectory + @"\Calendars\"+years+".xml";
             xDoc.Load(readPath);
             // получим корневой элемент
             XmlElement xRoot = xDoc.DocumentElement;
@@ -1671,14 +2869,24 @@ namespace shedule
                 foreach (XmlNode childnode in attr.ChildNodes)
                 {
                     // если узел - company
-                    if (childnode.Name == "day")
+                    if ((childnode.Name == "day" )&&(childnode.Attributes.GetNamedItem("t").Value=="1"))
                     {
                         //MessageBox.Show(childnode.Attributes.GetNamedItem("d").Value);
                         //MessageBox.Show(xRoot.Attributes.GetNamedItem("year").Value);
                         string d_m = childnode.Attributes.GetNamedItem("d").Value;
                         string[] d_and_m = new string[2];
                         d_and_m = d_m.Split('.');
-                        holydays.Add(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])));
+                        currentShop.DFCs.Add(new DataForCalendary(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])),8));
+                    }
+                    
+                     if ((childnode.Name == "day" )&&(childnode.Attributes.GetNamedItem("t").Value=="2"))
+                    {
+                        //MessageBox.Show(childnode.Attributes.GetNamedItem("d").Value);
+                        //MessageBox.Show(xRoot.Attributes.GetNamedItem("year").Value);
+                        string d_m = childnode.Attributes.GetNamedItem("d").Value;
+                        string[] d_and_m = new string[2];
+                        d_and_m = d_m.Split('.');
+                        currentShop.DFCs.Add(new DataForCalendary(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])),9));
                     }
 
                 }
@@ -1687,292 +2895,9 @@ namespace shedule
 
             }
         }
+        
+        
 
-
-
-        static public void Kass()
-        {
-
-
-            String readPath = Environment.CurrentDirectory + @"\kass.txt";
-            try
-            {
-                int count = File.ReadAllLines(readPath).Length;
-                // listShops = new Shop[count];
-                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-                {
-                    for (int j = 0; j < 15; j++)
-                    {
-                        int nd = 1;
-                        int d = 0;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 6; break;
-                                case 1: nd = 13; break;
-                                case 2: nd = 20; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-
-                        for (int i = 0; i < 3; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 7; break;
-                                case 1: nd = 14; break;
-                                case 2: nd = 21; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 1; break;
-                                case 1: nd = 8; break;
-                                case 2: nd = 15; break;
-                                case 3: nd = 22; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 2; break;
-                                case 1: nd = 9; break;
-                                case 2: nd = 16; break;
-                                case 3: nd = 23; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 3; break;
-                                case 1: nd = 10; break;
-                                case 2: nd = 17; break;
-                                case 3: nd = 24; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 4; break;
-                                case 1: nd = 11; break;
-                                case 2: nd = 18; break;
-                                case 3: nd = 25; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 3; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 5; break;
-                                case 1: nd = 12; break;
-                                case 2: nd = 19; break;
-                            }
-                            CountCheck[nd - 1, j] = d;
-
-                        }
-                    }
-
-                    //Количество кликов
-
-                    for (int j = 0; j < 15; j++)
-                    {
-                        int nd = 1;
-                        int d = 0;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 6; break;
-                                case 1: nd = 13; break;
-                                case 2: nd = 20; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-
-                        for (int i = 0; i < 3; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 7; break;
-                                case 1: nd = 14; break;
-                                case 2: nd = 21; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 1; break;
-                                case 1: nd = 8; break;
-                                case 2: nd = 15; break;
-                                case 3: nd = 22; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 2; break;
-                                case 1: nd = 9; break;
-                                case 2: nd = 16; break;
-                                case 3: nd = 23; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 3; break;
-                                case 1: nd = 10; break;
-                                case 2: nd = 17; break;
-                                case 3: nd = 24; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 4; i++)
-                        {
-                            string line = sr.ReadLine();
-                            try
-                            {
-                                d = Convert.ToInt16(line);
-                            }
-                            catch (Exception ex) { MessageBox.Show(line + " " + i + " " + j); }
-                            switch (i)
-                            {
-                                case 0: nd = 4; break;
-                                case 1: nd = 11; break;
-                                case 2: nd = 18; break;
-                                case 3: nd = 25; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-                        for (int i = 0; i < 3; i++)
-                        {
-                            string line = sr.ReadLine();
-
-                            d = Convert.ToInt16(line);
-
-                            switch (i)
-                            {
-                                case 0: nd = 5; break;
-                                case 1: nd = 12; break;
-                                case 2: nd = 19; break;
-                            }
-                            CountClick[nd - 1, j] = d;
-
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                setListShops();
-
-            }
-        }
-
-        static public void getSm()
-        {
-
-            String readPath = Environment.CurrentDirectory + @"\Sm.txt";
-            try
-            {
-
-
-                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-                {
-                    for (int j = 0; j < 25; j++)
-                    {
-                        for (int i = 0; i < 15; i++)
-                        {
-                            CountS[j, i] = Convert.ToInt16(sr.ReadLine());
-                        }
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                setListShops();
-
-            }
-        }
 
         static public void ReadTekChedule(string fileName)
         {
@@ -2024,7 +2949,7 @@ namespace shedule
                 DateTime dt = ObjWorkSheet.get_Range(3, x).Text;
                 int cc = ObjWorkSheet.get_Range(5, x).Text;
                 int cs = ObjWorkSheet.get_Range(6, x).Text;
-                HSS.Add(new hourSale(1, dt, t, dn, cc, cs));
+               // HSS.Add(new hourSale(1, dt, t, dn, cc, cs));
                 x++;
                 range = ObjWorkSheet.get_Range(1, x);
                 Application.DoEvents();
@@ -2088,7 +3013,7 @@ namespace shedule
                         int idSh = Convert.ToInt16(s[0]);
                         string Sh = s[1];
 
-                        listShops.Add(new Shop(idSh, Sh));
+                        listShops.Add(new mShop(idSh, Sh));
                         i++;
                     }
                 }
@@ -2106,7 +3031,7 @@ namespace shedule
         static public void setListShops()
         {
 
-            Shop h;
+            mShop h;
             var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
             string sql = "select * from get_shops() order by КодМагазина";
 
@@ -2122,12 +3047,13 @@ namespace shedule
 
                     while (reader.Read())
                     {
-                        h = new Shop(reader.GetInt16(0), reader.GetString(1));
+                       // MessageBox.Show(reader.GetInt16(0)+" "+ reader.GetString(1));
+                        h = new mShop(reader.GetInt16(0), reader.GetString(1));
                         listShops.Add(h);
                         string writePath = Environment.CurrentDirectory + @"\Shops.txt";
                         using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
                         {
-                            foreach (Shop s in listShops)
+                            foreach (mShop s in listShops)
                                 sw.WriteLine(s.getIdShop() + "_" + s.getAddress());
                         }
                     }
@@ -2147,7 +3073,7 @@ namespace shedule
 
         public static bool isConnect() { return connect; }
 
-        public static void isConnected(string l, string p)
+        public static bool isConnected(string l, string p)
         {
             var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
 
@@ -2157,8 +3083,8 @@ namespace shedule
                try
                 {
                     connection.Open();
-                    if (connection.State == System.Data.ConnectionState.Open) { connect= true; }
-                    else { connect= false; }
+                    if (connection.State == System.Data.ConnectionState.Open) { connect= true; return connect; }
+                    else { connect= false; return connect; }
 
                 }
                 catch (System.Data.SqlClient.SqlException ex)
@@ -2166,12 +3092,63 @@ namespace shedule
                     
                     MessageBox.Show(ex.Message);
                     connect = false;
+                    return connect;
                 }
             }
 
         
     }
+       /* public static void Http(int year){
+        	try{
+        		string content;
+        	using (var request = new HttpRequest())
+				{
+  				  request.UserAgent = Http.ChromeUserAgent();
+
+   					 // Отправляем запрос.
+  				  HttpResponse response = request.Get("http://xmlcalendar.ru/data/ru/"+year+"/calendar.xml");
+   					 // Принимаем тело сообщения в виде строки.
+   							content = response.ToString();
+					}
+        	 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    
         
+                        sw.Write( content);
+                }
+        	
+        	
+        	}
+                catch (SmtpException ex)
+                    {
+                     Console.WriteLine("Произошла ошибка при работе с HTTP-сервером: {0}", ex.Message);
+
+                      switch (ex.Status)
+                      {
+                        case HttpExceptionStatus.Other:
+                      Console.WriteLine("Неизвестная ошибка");
+                     break;
+
+                      case HttpExceptionStatus.ProtocolError:
+                       Console.WriteLine("Код состояния: {0}", (int)ex.HttpStatusCode);
+                       break;
+
+        case HttpExceptionStatus.ConnectFailure:
+            Console.WriteLine("Не удалось соединиться с HTTP-сервером.");
+            break;
+
+        case HttpExceptionStatus.SendFailure:
+            Console.WriteLine("Не удалось отправить запрос HTTP-серверу.");
+            break;
+
+        case HttpExceptionStatus.ReceiveFailure:
+            Console.WriteLine("Не удалось загрузить ответ от HTTP-сервера.");
+            break;
+    }
+}
+
+
+        }*/
             
 
         static public string[] collectionweekday = { "понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье" };
