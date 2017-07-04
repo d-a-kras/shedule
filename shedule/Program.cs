@@ -1276,14 +1276,14 @@ namespace shedule
         {
             if (this.Minute == 0)
             {
-                return (this.getCountCheck() * Program.TimeClick + this.getCountClick() * Program.TimeClick) * 100 / Program.KoefKassira;
+                return (this.getCountCheck() * Program.TimeRech + this.getCountClick() * Program.TimeClick) * Program.KoefKassira / 100;
             }
             else return this.Minute;
         }
 
         public int getTime()
         {
-            return (this.getCountCheck() * Program.TimeClick + this.getCountClick() * Program.TimeClick);            
+            return (this.getCountCheck() * Program.TimeRech + this.getCountClick() * Program.TimeClick);            
         }
 
     }
@@ -1685,7 +1685,7 @@ namespace shedule
 
             int CountProd = ((tc * TimeObrTov * 100) / (normchas * 3600 * KoefObr));
 
-            int CountKassirov = ((ob * K / (normchas * K * 3600))) + ParametrOptimization;
+            int CountKassirov = ((ob * K / (normchas * 3600))) + ParametrOptimization;
             MessageBox.Show("Param " + ParametrOptimization + "Count Kass " + CountKassirov);
             //MessageBox.Show(Program.currentShop.MouthPrognozT.Count+" Количество продавцов=" +CountProd+" Количество кассиров=" + CountKassirov);
             if (CountKassirov < 8) { CountKassirov = 8; }
@@ -1694,27 +1694,27 @@ namespace shedule
             for (int i = 100; i < 104; i++)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 10), "Продавец 1", "Сменный график");
+           //     employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 10), "Продавец 1", "Сменный график");
 
-                currentShop.employes.Add(e);
+           //     currentShop.employes.Add(e);
                 CountProd--;
             }
 
             for (int i = 104; i < 108; i++)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 11), "Продавец 2", "Сменный график");
+           //     employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 11), "Продавец 2", "Сменный график");
 
-                currentShop.employes.Add(e);
+        //        currentShop.employes.Add(e);
                 CountProd--;
             }
 
             for (int i = 108; CountProd > 0; i++, CountProd--)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 12), "Продавец 3", "Сменный график");
+          //      employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 12), "Продавец 3", "Сменный график");
 
-                currentShop.employes.Add(e);
+          //      currentShop.employes.Add(e);
                 CountProd--;
             }
 
@@ -1722,16 +1722,16 @@ namespace shedule
             for (int i = 0; i < 2; i++)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1), "Кассир 1", "Сменный график");
+             //   employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1), "Кассир 1", "Сменный график");
 
-                currentShop.employes.Add(e);
+        //        currentShop.employes.Add(e);
             }
             for (int i = 2; i < 4; i++)
             {
 
-                employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 2), "Кассир 1", "Сменный график");
+          //      employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 2), "Кассир 1", "Сменный график");
 
-                currentShop.employes.Add(e);
+         //       currentShop.employes.Add(e);
             }
             for (int i = 4; i < 6; i++)
             {
@@ -1894,7 +1894,7 @@ namespace shedule
                                 default: break;
                             }; break;
                         case 3:
-                            MessageBox.Show(" TipDn" + wd.DS.getTip() + " Count= " + currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.FindAll(t => t.getStartSmena() != wd.DS.getStartDaySale()).Count);
+                          //  MessageBox.Show(" TipDn" + wd.DS.getTip() + " Count= " + currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.FindAll(t => t.getStartSmena() != wd.DS.getStartDaySale()).Count);
                             switch (wd.DS.getTip())
                             {
 
@@ -1911,7 +1911,7 @@ namespace shedule
                                 default: break;
                             }; break;
                         case 4:
-                            MessageBox.Show("Count= " + currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.FindAll(t => t.getStartSmena() != wd.DS.getStartDaySale()).Count);
+                          //  MessageBox.Show("Count= " + currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.FindAll(t => t.getStartSmena() != wd.DS.getStartDaySale()).Count);
                             switch (wd.DS.getTip())
                             {
                                 case 8: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
@@ -2325,7 +2325,7 @@ namespace shedule
 
         }
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 1; i < 10; i++)
         {
             PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
             foreach (daySale ds in currentShop.daysSale)
@@ -2371,9 +2371,9 @@ namespace shedule
                         Sclick += hs.getCountClick();
                         Scheck += hs.getCountCheck();
                     }
-                    Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                    Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                    pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
+                    Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) /100) * ((100 + snig_reklam) / 100);
+                    Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) /100) * ((100 + snig_reklam) / 100);
+                    pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Scheck, Sclick)); 
                 }
             }
 
@@ -2767,7 +2767,7 @@ namespace shedule
             // MessageBox.Show("temp1="+temp.getNHour()+" "+temp.getMinut());
             if (!(temp == null))
             {
-                int t = temp.getMinut() - K * 3;
+                int t = temp.getTime() - (K * 36);
                 Raznica.Add(new hourSale(currentShop.getIdShop(), sm.getData(), i.ToString(), t));
                 // MessageBox.Show("Count Razniza=" + Raznica.Count);
                 Raznica.Remove(temp);
