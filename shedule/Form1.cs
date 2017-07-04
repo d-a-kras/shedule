@@ -1560,7 +1560,7 @@ namespace shedule
 
         private void radioButtonMinFondOpl_CheckedChanged(object sender, EventArgs e)
         {
-            Program.ParametrOptimization = 1;
+            Program.ParametrOptimization = 0;
         }
 
         private void radioButtonMinTime_CheckedChanged(object sender, EventArgs e)
@@ -1570,7 +1570,7 @@ namespace shedule
 
         private void radioButtonObRabTime_CheckedChanged(object sender, EventArgs e)
         {
-            Program.ParametrOptimization = 3;
+            Program.ParametrOptimization = 1;
         }
 
         private void buttonApplyParamsOptim_Click(object sender, EventArgs e)
