@@ -13,6 +13,7 @@ using System.Threading;
 using System.ComponentModel;
 using System.IO.Compression;
 using Ionic.Zip;
+using shedule.Code;
 
 
 namespace shedule
@@ -933,10 +934,6 @@ namespace shedule
             string writePath = @"C:\1\Hours.txt";
             using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
             {
-
-
-
-
                 List<hourSale> hSs = new List<hourSale>();
                 hourSale h;
                 var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
@@ -1173,9 +1170,74 @@ namespace shedule
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "*|*.xls";
             openFileDialog.RestoreDirectory = true;
+            string filepath = "";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filepyth = openFileDialog.FileName;
+                filepath = openFileDialog.FileName;
+            }
+
+            List<hourSale> hourSales = Helper.FillHourSalesList(filepath, );
+
+
+            string writePath = @"C:\1\Hours.txt";
+            using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+            {
+                List<hourSale> hSs = new List<hourSale>();
+                hourSale h;
+                var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+                string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    try
+                    {
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        command.CommandTimeout = 300;
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                            hSs.Add(h);
+
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException ex)
+                    {
+                        MessageBox.Show("Ошибка соединения с базой данных" + ex);
+                    }
+                }
+
+                List<hourSale>[,] hss = new List<hourSale>[7, 24];
+                for (int i = 0; i < Program.collectionweekday.Length; i++)
+                {
+                    for (int j = 0; j < Program.collectionHours.Length; j++)
+                    {
+                        int max = 0;
+                        int min = 100000;
+                        float sr = 0;
+                        hss[i, j] = hSs.FindAll(t => ((t.getWeekday() == Program.collectionweekday[i]) && (t.getNHour() == Program.collectionHours[j])));
+                        if (hss[i, j].Count != 0)
+                        {
+                            foreach (hourSale hh in hss[i, j])
+                            {
+                                if (hh.getMinut() < min)
+                                    min = hh.getMinut();
+                                if (hh.getMinut() > max)
+                                    max = hh.getMinut();
+                                sr += hh.getMinut();
+                                // sw.WriteLine(hh.getWeekday()+" "+hh.getNHour()+" "+hh.getCountClick());
+                            }
+                            sr = sr / (hss[i, j].Count);
+                            sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] + " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min + " максимум=" + max);
+                        }
+
+                    }
+
+
+                }
+                MessageBox.Show("Запись завершена");
             }
 
         }

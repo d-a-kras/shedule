@@ -1,1 +1,6 @@
 shedule/obj/
+shedule/bin/
+packages/
+ScheduleTests/obj/
+ScheduleTests/bin/
+.vs/
