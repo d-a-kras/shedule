@@ -9,6 +9,14 @@ namespace shedule.Code
 {
     public static class Helper
     {
+        /// <summary>
+        /// Парсит xls файл с часами/днями/прочим.
+        /// Если значение даты или количества чеков или количества сканов 
+        /// или количества товаров отсутствует в строке - пропускает ее 
+        /// </summary>
+        /// <param name="filepath">Путь до xls файла</param>
+        /// <param name="shopId">Id магазина</param>
+        /// <returns></returns>
         public static List<hourSale> FillHourSalesList(string filepath, int shopId)
         {
             List<hourSale> hourSales = new List<hourSale>();
@@ -34,28 +42,55 @@ namespace shedule.Code
                     int scansCount = 0;
                     double productCount = 0;
 
-                    //если эти ячейки не смогли преобразоваться в нормальный тип данных - скорее всего там какое-то говнище
+                    //если эти ячейки не смогли преобразоваться в нормальный тип данных - скорее всего там какое-то говнище, такую пропускаем
                     var resultDt = DateTime.TryParse(dateS, out dt);
                     var resultChCount = int.TryParse(checkS, out checkCount);
                     var resultScCount = int.TryParse(scansS, out scansCount);
                     var resultPrCount = double.TryParse(productS, out productCount);
+                    var resultDayOfWeek = DayOfWeeksDictionary.ContainsKey(dayOfWeek);
+                    bool resultHour = !(time.Split(':').Length < 1);
 
-                    if (resultDt && resultChCount && resultScCount && resultPrCount)
+                    if (resultDt && resultChCount && resultScCount && resultPrCount && resultDayOfWeek && resultHour)
                     {
-                        hourSales.Add(new hourSale(shopId, dt, time, dayOfWeek, checkCount, scansCount, productCount));
+                        hourSales.Add(new hourSale(shopId, dt, time.Split(':')[0], DayOfWeeksDictionary[dayOfWeek], checkCount, scansCount, productCount));
                     }
                     else
                     {
                         Console.WriteLine($"Не удалось распарсить данные либо отсутствуют данные в строке {cntr}");
                     }
-                    
+                }
+                if (hourSales.Count == 0)
+                {
+                    throw new Exception("Не было найдено ни одной строки в нужном формате");
                 }
                 return hourSales;
             }
-            else
-            {
-                throw new FileNotFoundException();
-            }
+            throw new FileNotFoundException();
         }
+
+        private static readonly Dictionary<string, string> DayOfWeeksDictionary = new Dictionary<string, string>
+        {
+            {
+                "Пн", "понедельник"
+            },
+            {
+                "Вт", "вторник"
+            },
+            {
+                "Ср", "среда"
+            },
+            {
+                "Чт", "четверг"
+            },
+            {
+                "Пт", "пятница"
+            },
+            {
+                "Сб", "суббота"
+            },
+            {
+                "Вс", "воскресенье"
+            }
+        };
     }
 }

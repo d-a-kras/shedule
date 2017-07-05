@@ -89,7 +89,7 @@ namespace shedule
                             Program.createPrognoz();
                             bg.ReportProgress(4);
                             MessageBox.Show("Время создание примерно 2 минуты");
-                      
+
 
                             // 
                             Program.OptimCountSotr();
@@ -97,7 +97,8 @@ namespace shedule
 
 
                             //  
-                            if (!Program.CreateSmens()) {
+                            if (!Program.CreateSmens())
+                            {
                                 MessageBox.Show("Расписание не создано");
                                 bw.CancelAsync();
                             }
@@ -118,216 +119,217 @@ namespace shedule
                             bw.CancelAsync();
                             return;
                         }
-                      //  System.Drawing.Color color;
-                            Excel.Range excelcells;
-                            Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-                            Microsoft.Office.Interop.Excel.Workbook ObjWorkBook;
-                            Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+                        //  System.Drawing.Color color;
+                        Excel.Range excelcells;
+                        Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                        Microsoft.Office.Interop.Excel.Workbook ObjWorkBook;
+                        Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
 
-                            ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
+                        ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
 
-                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-                            ObjWorkSheet.Name = "График";
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
-                            excelcells.Font.Size = 10;
-                            excelcells.NumberFormat = "@";
-                            bg.ReportProgress(10);
-                            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                            int i = 7;
+                        ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                        ObjWorkSheet.Name = "График";
+                        excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                        excelcells.Font.Size = 10;
+                        excelcells.NumberFormat = "@";
+                        bg.ReportProgress(10);
+                        excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
+                        excelcells.VerticalAlignment = Excel.Constants.xlCenter;
+                        int i = 7;
+                        foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                        {
+
+                            ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
+                            ObjWorkSheet.Cells[2, i] = twd.getData().Day;
+                            i++;
+                        }
+                        Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AL50");
+                        excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
+                        bg.ReportProgress(12);
+
+
+                        ObjWorkSheet.Cells[2, 1] = "Адрес";
+
+                        ObjWorkSheet.Cells[2, 2] = "Должность";
+                        ObjWorkSheet.Cells[2, 3] = "Тип занятости";
+                        ObjWorkSheet.Cells[2, 4] = "Оклад";
+                        ObjWorkSheet.Cells[2, 5] = "Общее число часов";
+                        ObjWorkSheet.Cells[2, 6] = "Количество смен";
+
+                        // MessageBox.Show(Program.currentShop.employes.Count+" count");
+                        int j = 3;
+                        foreach (employee emp in Program.currentShop.employes)
+                        {
+
+                            i = 6;
+                            foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                            {
+                                //  MessageBox.Show(emp.getTip() + "");
+                                /*  switch (emp.GetTip())
+                                  {
+                                      case 1: color = System.Drawing.Color.BlueViolet; break;
+                                      case 2: color = System.Drawing.Color.BlueViolet; break;
+                                      case 3: color = System.Drawing.Color.BlueViolet; break;
+                                      case 4: color = System.Drawing.Color.BlueViolet; break;
+                                      case 5: color = System.Drawing.Color.BlueViolet; break;
+                                      case 6: color = System.Drawing.Color.BlueViolet; break;
+                                      case 7: color = System.Drawing.Color.BlueViolet; break;
+                                      case 10: color = System.Drawing.Color.BlueViolet; break;
+                                      case 11: color = System.Drawing.Color.BlueViolet; break;
+                                      case 12: color = System.Drawing.Color.BlueViolet; break;
+                                      default: color = System.Drawing.Color.White; break;
+
+                                  }
+                                  ObjWorkSheet.Cells[j, i].Interior.Color = color;*/
+
+                                if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
+                                {
+                                    // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
+
+                                    ObjWorkSheet.Cells[j, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
+                                }
+                                //else
+                                // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
+                                i++;
+
+                                ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                                //ObjWorkSheet.Cells[j, 1].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
+                                // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
+                                if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
+                                {
+                                    ObjWorkSheet.Cells[j, 4] = Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
+                                }
+                                ObjWorkSheet.Cells[j, 5] = Program.normchas;
+                                ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.BlueViolet;
+                                ObjWorkSheet.Cells[j, 6] = emp.smens.Count;
+                                //   ObjWorkSheet.Cells[j, 6].Interior.Color = color;
+
+                            }
+
+                            j++;
+
+                        }
+                        bg.ReportProgress(14);
+
+                        ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
+
+                        ObjWorkSheet.Name = "Часы";
+
+                        excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                        excelcells.Font.Size = 10;
+                        excelcells.NumberFormat = "@";
+
+                        excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
+                        excelcells.VerticalAlignment = Excel.Constants.xlCenter;
+                        i = 7;
+                        foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                        {
+
+                            ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
+                            ObjWorkSheet.Cells[2, i] = twd.getData().Day;
+                            i++;
+                        }
+                        Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
+                        excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
+
+                        bg.ReportProgress(16);
+
+
+                        ObjWorkSheet.Cells[2, 1] = "Адрес";
+
+                        ObjWorkSheet.Cells[2, 2] = "Должность";
+                        ObjWorkSheet.Cells[2, 3] = "Тип занятости";
+                        ObjWorkSheet.Cells[2, 4] = "Оклад";
+                        ObjWorkSheet.Cells[2, 5] = "Общее число часов";
+                        ObjWorkSheet.Cells[2, 6] = "Количество смен";
+
+                        // MessageBox.Show(Program.currentShop.employes.Count+" count");
+                        j = 3;
+                        foreach (employee emp in Program.currentShop.employes)
+                        {
+
+                            i = 6;
                             foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                             {
 
-                                ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
-                                ObjWorkSheet.Cells[2, i] = twd.getData().Day;
-                                i++;
-                            }
-                            Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
-                            bg.ReportProgress(12);
+                                /* switch (emp.GetTip())
+                                 {
+                                     case 1: color = System.Drawing.Color.BlueViolet; break;
+                                     case 2: color = System.Drawing.Color.BlueViolet; break;
+                                     case 3: color = System.Drawing.Color.BlueViolet; break;
+                                     case 4: color = System.Drawing.Color.BlueViolet; break;
+                                     case 5: color = System.Drawing.Color.BlueViolet; break;
+                                     case 6: color = System.Drawing.Color.BlueViolet; break;
+                                     case 7: color = System.Drawing.Color.BlueViolet; break;
+                                     case 10: color = System.Drawing.Color.BlueViolet; break;
+                                     case 11: color = System.Drawing.Color.BlueViolet; break;
+                                     case 12: color = System.Drawing.Color.BlueViolet; break;
+                                     default: color = System.Drawing.Color.White; break;
 
+                                 }*/
 
-                            ObjWorkSheet.Cells[2, 1] = "Адрес";
-
-                            ObjWorkSheet.Cells[2, 2] = "Должность";
-                            ObjWorkSheet.Cells[2, 3] = "Тип занятости";
-                        ObjWorkSheet.Cells[2, 4] = "Оклад";
-                        ObjWorkSheet.Cells[2, 5] = "Общее число часов";
-                            ObjWorkSheet.Cells[2, 6] = "Количество смен";
-
-                            // MessageBox.Show(Program.currentShop.employes.Count+" count");
-                            int j = 3;
-                            foreach (employee emp in Program.currentShop.employes)
-                            {
-
-                                i = 6;
-                                foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                                if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
                                 {
-                                  //  MessageBox.Show(emp.getTip() + "");
-                                  /*  switch (emp.GetTip())
-                                    {
-                                        case 1: color = System.Drawing.Color.BlueViolet; break;
-                                        case 2: color = System.Drawing.Color.BlueViolet; break;
-                                        case 3: color = System.Drawing.Color.BlueViolet; break;
-                                        case 4: color = System.Drawing.Color.BlueViolet; break;
-                                        case 5: color = System.Drawing.Color.BlueViolet; break;
-                                        case 6: color = System.Drawing.Color.BlueViolet; break;
-                                        case 7: color = System.Drawing.Color.BlueViolet; break;
-                                        case 10: color = System.Drawing.Color.BlueViolet; break;
-                                        case 11: color = System.Drawing.Color.BlueViolet; break;
-                                        case 12: color = System.Drawing.Color.BlueViolet; break;
-                                        default: color = System.Drawing.Color.White; break;
-
-                                    }
-                                    ObjWorkSheet.Cells[j, i].Interior.Color = color;*/
-
-                                    if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
-                                    {
-                                        // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
-
-                                        ObjWorkSheet.Cells[j, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
-                                    }
-                                    //else
-                                    // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
-                                    i++;
-
-                                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
-                                    //ObjWorkSheet.Cells[j, 1].Interior.Color = color;
-                                    ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                                   // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
-                                    ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
-                                    if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost())!=null) {
-                                        ObjWorkSheet.Cells[j, 4] = Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
-                                    }
-                                    ObjWorkSheet.Cells[j, 5] = Program.normchas;
-                                    ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.BlueViolet;
-                                    ObjWorkSheet.Cells[j, 6] = emp.smens.Count;
-                                 //   ObjWorkSheet.Cells[j, 6].Interior.Color = color;
-
+                                    // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
+                                    //  ObjWorkSheet.Cells[j, i].Interior.Color = color;
+                                    ObjWorkSheet.Cells[j, i] = (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
                                 }
-
-                                j++;
-
-                            }
-                            bg.ReportProgress(14);
-
-                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
-
-                            ObjWorkSheet.Name = "Часы";
-
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
-                            excelcells.Font.Size = 10;
-                            excelcells.NumberFormat = "@";
-
-                            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                            i = 7;
-                            foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
-                            {
-
-                                ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
-                                ObjWorkSheet.Cells[2, i] = twd.getData().Day;
+                                //else
+                                // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
                                 i++;
-                            }
-                            Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
 
-                            bg.ReportProgress(16);
-
-
-                            ObjWorkSheet.Cells[2, 1] = "Адрес";
-
-                            ObjWorkSheet.Cells[2, 2] = "Должность";
-                            ObjWorkSheet.Cells[2, 3] = "Тип занятости";
-                        ObjWorkSheet.Cells[2, 4] = "Оклад";
-                        ObjWorkSheet.Cells[2, 5] = "Общее число часов";
-                            ObjWorkSheet.Cells[2, 6] = "Количество смен";
-
-                            // MessageBox.Show(Program.currentShop.employes.Count+" count");
-                            j = 3;
-                            foreach (employee emp in Program.currentShop.employes)
-                            {
-
-                                i = 6;
-                                foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
-                                {
-
-                                   /* switch (emp.GetTip())
-                                    {
-                                        case 1: color = System.Drawing.Color.BlueViolet; break;
-                                        case 2: color = System.Drawing.Color.BlueViolet; break;
-                                        case 3: color = System.Drawing.Color.BlueViolet; break;
-                                        case 4: color = System.Drawing.Color.BlueViolet; break;
-                                        case 5: color = System.Drawing.Color.BlueViolet; break;
-                                        case 6: color = System.Drawing.Color.BlueViolet; break;
-                                        case 7: color = System.Drawing.Color.BlueViolet; break;
-                                        case 10: color = System.Drawing.Color.BlueViolet; break;
-                                        case 11: color = System.Drawing.Color.BlueViolet; break;
-                                        case 12: color = System.Drawing.Color.BlueViolet; break;
-                                        default: color = System.Drawing.Color.White; break;
-
-                                    }*/
-
-                                    if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
-                                    {
-                                        // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
-                                      //  ObjWorkSheet.Cells[j, i].Interior.Color = color;
-                                        ObjWorkSheet.Cells[j, i] = (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
-                                    }
-                                    //else
-                                    // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
-                                    i++;
-
-                                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
-                                  //  ObjWorkSheet.Cells[j, 1].Interior.Color = color;
-                                    ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                                   // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
-                                    ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
-                                   // ObjWorkSheet.Cells[j, 3].Interior.Color = color;
-                                    ObjWorkSheet.Cells[j, 4] = Program.normchas;
-                                    ObjWorkSheet.Cells[j, 4].Interior.Color = System.Drawing.Color.BlueViolet;
-                                    ObjWorkSheet.Cells[j, 5] = emp.smens.Count;
-                                   // ObjWorkSheet.Cells[j, 5].Interior.Color = color;
-
-                                }
-
-                                j++;
+                                ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                                //  ObjWorkSheet.Cells[j, 1].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
+                                // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
+                                // ObjWorkSheet.Cells[j, 3].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 4] = Program.normchas;
+                                ObjWorkSheet.Cells[j, 4].Interior.Color = System.Drawing.Color.BlueViolet;
+                                ObjWorkSheet.Cells[j, 5] = emp.smens.Count;
+                                // ObjWorkSheet.Cells[j, 5].Interior.Color = color;
 
                             }
-                            bg.ReportProgress(18);
+
+                            j++;
+
+                        }
+                        bg.ReportProgress(18);
 
 
 
 
 
-                            ObjExcel.Visible = false;
-                            ObjExcel.UserControl = true;
-                            ObjExcel.DisplayAlerts = false;
-                            ObjWorkBook.Saved = true;
-                            try
-                            {
+                        ObjExcel.Visible = false;
+                        ObjExcel.UserControl = true;
+                        ObjExcel.DisplayAlerts = false;
+                        ObjWorkBook.Saved = true;
+                        try
+                        {
 
-                                ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
-                                // ObjWorkBook.SaveAs(filename);
-
-
-                                ObjWorkBook.Close();
-
-                                ObjExcel.Quit();
-                                MessageBox.Show("Расписание создано");
-
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Ошибка записи в файл");
-                                ObjWorkBook.Close(0);
-                                ObjExcel.Quit();
-                            }
-                            bg.ReportProgress(18);
+                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            // ObjWorkBook.SaveAs(filename);
 
 
-                        
-                       
+                            ObjWorkBook.Close();
+
+                            ObjExcel.Quit();
+                            MessageBox.Show("Расписание создано");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Ошибка записи в файл");
+                            ObjWorkBook.Close(0);
+                            ObjExcel.Quit();
+                        }
+                        bg.ReportProgress(18);
+
+
+
+
                         break;
                     }
                 case 1:
@@ -336,7 +338,8 @@ namespace shedule
                         BackgroundWorker bg = sender as BackgroundWorker;
                         bg.ReportProgress(2);
                         Program.createPrognoz3();
-                        foreach (TemplateWorkingDay t in Program.currentShop.MouthPrognozT) {
+                        foreach (TemplateWorkingDay t in Program.currentShop.MouthPrognozT)
+                        {
                             t.createChartTemplate();
                             t.DS.CreateChartDaySale();
                         }
@@ -352,7 +355,7 @@ namespace shedule
                         {
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[i];
                             ObjWorkSheet.Name = "Прогноз" + twd.getData().ToShortDateString();
-                                 excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
                             excelcells.Font.Size = 10;
                             //  excelcells.NumberFormat = "@";
                             bg.ReportProgress(10);
@@ -764,26 +767,26 @@ namespace shedule
             DataColumn colCountDayInMonth = new DataColumn("Количество рабочих дней", typeof(string));
             DataColumn colCountDayRab = new DataColumn("Количество выходных дней", typeof(Int16));
             DataColumn colCountDayVuh = new DataColumn("действует на текущую дату", typeof(bool));
-            
+
 
             //добавляем колонки в таблицу
 
             dt.Columns.Add(colCountDayInMonth);
             dt.Columns.Add(colCountDayRab);
             dt.Columns.Add(colCountDayVuh);
-            
+
             DataRow row = null;
             //создаём новую строку
 
             //заполняем строку значениями
-          
+
             foreach (VarSmen f in Program.currentShop.VarSmenBP)
             {
                 row = dt.NewRow();
                 row["Количество рабочих дней"] = f.ts.getR();
                 row["Количество выходных дней"] = f.ts.getV();
                 row["действует на текущую дату"] = f.ts.getDeistvie();
-            
+
                 dt.Rows.Add(row);
             }
             return dt;
@@ -1038,7 +1041,7 @@ namespace shedule
 
         private void buttonFactors_Click(object sender, EventArgs e)
         {
-           
+
             buttonFactors.BackColor = Color.MistyRose;
             buttonVariantsSmen.BackColor = Color.White;
             buttonParamOptimiz.BackColor = Color.White;
@@ -1100,9 +1103,9 @@ namespace shedule
         }
 
 
-       
 
-      
+
+
 
         private void textBox11_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -1176,70 +1179,60 @@ namespace shedule
                 filepath = openFileDialog.FileName;
             }
 
-            List<hourSale> hourSales = Helper.FillHourSalesList(filepath, );
-
-
-            string writePath = @"C:\1\Hours.txt";
-            using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+            try
             {
-                List<hourSale> hSs = new List<hourSale>();
-                hourSale h;
-                var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-                string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
+                List<hourSale> hourSales = Helper.FillHourSalesList(filepath, Program.currentShop.getIdShop());
+                
+                //Если вдруг папки нет, надо создать
+                string writePath = @"C:\1\Hours.txt";
 
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                if (!Directory.Exists(@"C:\1\"))
                 {
-                    try
-                    {
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        command.CommandTimeout = 300;
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                            hSs.Add(h);
-
-                        }
-                    }
-                    catch (System.Data.SqlClient.SqlException ex)
-                    {
-                        MessageBox.Show("Ошибка соединения с базой данных" + ex);
-                    }
+                    Directory.CreateDirectory(@"C:\1\");
                 }
-
-                List<hourSale>[,] hss = new List<hourSale>[7, 24];
-                for (int i = 0; i < Program.collectionweekday.Length; i++)
+                
+                using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
                 {
-                    for (int j = 0; j < Program.collectionHours.Length; j++)
+                    List<hourSale>[,] hss = new List<hourSale>[7, 24];
+                    for (int i = 0; i < Program.collectionweekday.Length; i++)
                     {
-                        int max = 0;
-                        int min = 100000;
-                        float sr = 0;
-                        hss[i, j] = hSs.FindAll(t => ((t.getWeekday() == Program.collectionweekday[i]) && (t.getNHour() == Program.collectionHours[j])));
-                        if (hss[i, j].Count != 0)
+                        for (int j = 0; j < Program.collectionHours.Length; j++)
                         {
-                            foreach (hourSale hh in hss[i, j])
+                            int max = 0;
+                            int min = 100000;
+                            float sr = 0;
+                            hss[i, j] = hourSales.FindAll(t => ((t.getWeekday() == Program.collectionweekday[i]) && (t.getNHour() == Program.collectionHours[j])));
+                            if (hss[i, j].Count != 0)
                             {
-                                if (hh.getMinut() < min)
-                                    min = hh.getMinut();
-                                if (hh.getMinut() > max)
-                                    max = hh.getMinut();
-                                sr += hh.getMinut();
-                                // sw.WriteLine(hh.getWeekday()+" "+hh.getNHour()+" "+hh.getCountClick());
+                                foreach (hourSale hh in hss[i, j])
+                                {
+                                    if (hh.getMinut() < min)
+                                        min = hh.getMinut();
+                                    if (hh.getMinut() > max)
+                                        max = hh.getMinut();
+                                    sr += hh.getMinut();
+                                    // sw.WriteLine(hh.getWeekday()+" "+hh.getNHour()+" "+hh.getCountClick());
+                                }
+                                sr = sr / (hss[i, j].Count);
+                                sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] + " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min + " максимум=" + max);
                             }
-                            sr = sr / (hss[i, j].Count);
-                            sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] + " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min + " максимум=" + max);
                         }
-
                     }
-
-
+                    MessageBox.Show("Запись завершена");
                 }
-                MessageBox.Show("Запись завершена");
             }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show($"Файл {ex.FileName} поврежден или не найден");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                radioButtonIzBD.Checked = true;
+                radioButtonIzFile.Checked = false;
 
+            }
+            
         }
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
@@ -1563,8 +1556,8 @@ namespace shedule
             panelMultShops.BringToFront();
             Program.shops = new List<Shop>();
             Program.currentShop = null;
-            
-            
+
+
             Program.currentShop = new Shop(0, "");
             Program.getListDate(DateTime.Today.Year);
             Program.readTSR();
@@ -1603,7 +1596,7 @@ namespace shedule
             if (ss != "")
             {
                 listBoxMPartShops.Items.Add(ss);
-                Program.shops.Add(new Shop(0,aaa[1], int.Parse(aaa[0])));
+                Program.shops.Add(new Shop(0, aaa[1], int.Parse(aaa[0])));
             }
 
         }
@@ -1668,7 +1661,8 @@ namespace shedule
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
             saveFileDialog1.Title = "Выберите папку для сохранения расписания";
 
-            if (radioButtonMinFondOpl.Checked) {
+            if (radioButtonMinFondOpl.Checked)
+            {
                 Program.ParametrOptimization = 0;
             }
 
@@ -1688,7 +1682,8 @@ namespace shedule
                 case 0: saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" + Program.getMonths(DateTime.Now.AddMonths(1).Month); Program.TipExporta = 0; break;
                 case 1: saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress(); Program.TipExporta = 1; break;
                 case 2: saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress(); Program.TipExporta = 2; break;
-                case 3: saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress(); Program.TipExporta = 3;
+                case 3:
+                    saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress(); Program.TipExporta = 3;
                     break;
             }
 
@@ -1719,7 +1714,8 @@ namespace shedule
 
         }
 
-        public void ReadTipOptimizacii() {
+        public void ReadTipOptimizacii()
+        {
 
             if (radioButtonMinFondOpl.Checked) { Program.ParametrOptimization = 0; }
             if (radioButtonMinTime.Checked) { Program.ParametrOptimization = 2; }
@@ -1743,11 +1739,14 @@ namespace shedule
             switch (comboBox3.SelectedIndex)
             {
                 case 0: Program.tipDiagram = 0; MessageBox.Show("Для графика доступен только экспорт в excel"); break;
-                case 1: Program.tipDiagram = 1; f5 = new Form5();
+                case 1:
+                    Program.tipDiagram = 1; f5 = new Form5();
                     f5.Show(); break;
-                case 2: Program.tipDiagram = 2; f5 = new Form5();
+                case 2:
+                    Program.tipDiagram = 2; f5 = new Form5();
                     f5.Show(); break;
-                case 3: Program.tipDiagram = 3; f5 = new Form5();
+                case 3:
+                    Program.tipDiagram = 3; f5 = new Form5();
                     f5.Show(); break;
             }
 
@@ -1756,13 +1755,14 @@ namespace shedule
 
         private void dataGridViewForTSR_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            switch (e.ColumnIndex) {
+            switch (e.ColumnIndex)
+            {
                 case 1: Program.currentShop.tsr.Find(t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString()).setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
                 case 2: Program.currentShop.tsr.Find(t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString()).setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
                 case 3: Program.currentShop.tsr.Find(t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString()).setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
 
             }
-         }
+        }
 
         private void dataGridViewFactors_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -1801,8 +1801,8 @@ namespace shedule
             button8.BackColor = Color.White;
             button5.BackColor = Color.White;
             panel4.BringToFront();
-            
-            dataGridViewMVarSmen.DataSource = viewVarSmen(); 
+
+            dataGridViewMVarSmen.DataSource = viewVarSmen();
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -1812,13 +1812,14 @@ namespace shedule
 
         private void button13_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Program.shops.Count+"");
+            MessageBox.Show(Program.shops.Count + "");
             CreateZip();
         }
 
 
-        public void CreateZip() {
-            
+        public void CreateZip()
+        {
+
             listBox1.Enabled = false;
             progressBar1.Visible = true;
 
@@ -1827,13 +1828,13 @@ namespace shedule
             progressBar1.Maximum = 20;
             progressBar1.Minimum = 0;
             progressBar1.Step = 2;
-           Program.TipExporta = comboBox1.SelectedIndex;
+            Program.TipExporta = comboBox1.SelectedIndex;
 
 
-                bw1.RunWorkerAsync();
+            bw1.RunWorkerAsync();
 
-            
-           
+
+
         }
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -1875,9 +1876,9 @@ namespace shedule
 
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
-            int progr = 10/Program.shops.Count;
+            int progr = 10 / Program.shops.Count;
             BackgroundWorker bg = sender as BackgroundWorker;
-            
+
             foreach (Shop shop in Program.shops)
             {
                 Program.currentShop = shop;
@@ -1890,24 +1891,24 @@ namespace shedule
                     VarSmen.CreateVarSmen();
                 }
                 bg.ReportProgress(progr += progr);
-                
+
                 filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getIdShopFM() + ".xls";
                 switch (Program.TipExporta)
                 {
                     case 0:
                         {
-                            
-                           
+
+
                             try
                             {
                                 Program.createPrognoz();
-                               
+
                                 // MessageBox.Show("Время создание примерно 2 минуты");
 
 
                                 // 
                                 Program.OptimCountSotr();
-                               
+
 
 
                                 //  
@@ -1916,7 +1917,7 @@ namespace shedule
                                     MessageBox.Show("Расписание не создано");
                                     bw.CancelAsync();
                                 }
-                                
+
                             }
                             catch (Exception ex)
                             {
@@ -1946,7 +1947,7 @@ namespace shedule
                             excelcells = ObjWorkSheet.get_Range("A3", "AL40");
                             excelcells.Font.Size = 10;
                             excelcells.NumberFormat = "@";
-                            
+
                             excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
                             excelcells.VerticalAlignment = Excel.Constants.xlCenter;
                             int i = 7;
@@ -1959,7 +1960,7 @@ namespace shedule
                             }
                             Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AL50");
                             excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
-                            
+
 
 
                             ObjWorkSheet.Cells[2, 1] = "Адрес";
@@ -2025,7 +2026,7 @@ namespace shedule
                                 j++;
 
                             }
-                            
+
 
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
 
@@ -2048,7 +2049,7 @@ namespace shedule
                             Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
                             excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
 
-                            
+
 
 
                             ObjWorkSheet.Cells[2, 1] = "Адрес";
@@ -2110,7 +2111,7 @@ namespace shedule
                                 j++;
 
                             }
-                            
+
 
 
 
@@ -2130,7 +2131,7 @@ namespace shedule
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
-                              //  MessageBox.Show("Расписание создано");
+                                //  MessageBox.Show("Расписание создано");
 
                             }
                             catch (Exception ex)
@@ -2139,7 +2140,7 @@ namespace shedule
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                             }
-                           
+
 
 
 
@@ -2149,17 +2150,17 @@ namespace shedule
 
                     case 2:
                         {
-                           
+
                             try
                             {
                                 Program.createPrognoz();
-                               
+
 
 
 
                                 // 
                                 Program.OptimCountSotr();
-                                
+
                             }
                             catch (Exception ex) { MessageBox.Show(ex.Message); }
                             object misValue = System.Reflection.Missing.Value;
@@ -2180,7 +2181,7 @@ namespace shedule
                             excelcells = ObjWorkSheet.get_Range("A3", "AL40");
                             excelcells.Font.Size = 10;
                             // excelcells.NumberFormat = "@";
-                            
+
                             excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
                             excelcells.VerticalAlignment = Excel.Constants.xlCenter;
 
@@ -2207,7 +2208,7 @@ namespace shedule
 
 
 
-                            
+
 
                             Excel.Range chartRange;
 
@@ -2229,7 +2230,7 @@ namespace shedule
 
 
 
-                           
+
 
 
 
@@ -2259,7 +2260,7 @@ namespace shedule
                             }
 
 
-                            
+
 
 
 
@@ -2267,17 +2268,17 @@ namespace shedule
                         }
                     case 3:
                         {
-                            
+
                             try
                             {
                                 Program.createPrognoz();
-                               
+
 
 
 
                                 // 
                                 Program.OptimCountSotr();
-                                
+
                             }
                             catch (Exception ex) { MessageBox.Show(ex.Message); }
                             object misValue = System.Reflection.Missing.Value;
@@ -2298,7 +2299,7 @@ namespace shedule
                             excelcells = ObjWorkSheet.get_Range("A3", "AL40");
                             excelcells.Font.Size = 10;
                             // excelcells.NumberFormat = "@";
-                           
+
                             excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
                             excelcells.VerticalAlignment = Excel.Constants.xlCenter;
 
@@ -2325,7 +2326,7 @@ namespace shedule
 
 
 
-                           
+
 
                             Excel.Range chartRange;
 
@@ -2347,7 +2348,7 @@ namespace shedule
 
 
 
-                           
+
 
 
 
@@ -2377,7 +2378,7 @@ namespace shedule
                             }
 
 
-                           
+
 
 
 
