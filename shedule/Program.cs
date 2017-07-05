@@ -2323,9 +2323,9 @@ namespace shedule
                 SozdanPrognoz = ExistFile;
                 
             }
-            else {
-                MessageBox.Show("Загрузите данные из файла или установите соединение с БД");
-                return;
+            else
+            {
+                throw new Exception("Загрузите данные из файла или установите соединение с БД");
             }
 
             foreach (daySale ds in currentShop.daysSale)
