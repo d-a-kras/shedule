@@ -1283,7 +1283,7 @@ namespace shedule
 
         public int getTime()
         {
-            return (this.getCountCheck() * Program.TimeRech + this.getCountClick() * Program.TimeClick);            
+            return (this.getCountCheck() * Program.TimeClick + this.getCountClick() * Program.TimeClick);
         }
 
     }
@@ -1615,7 +1615,7 @@ namespace shedule
                 currentShop.factors.Add(new Factor("Otkr_konkurenta", "Открытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("zakr_konkurenta", "Закрытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("snig_reklam", "Реклама конкурента (%)", 2, false, new DateTime(2100, 1, 1), 0));
-                currentShop.factors.Add(new Factor("rost_reklam", "Собственная рекламная активность (%)",2 , false, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("rost_reklam", "Собственная рекламная активность (%)", 2, false, new DateTime(2100, 1, 1), 0));
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
@@ -1905,8 +1905,8 @@ namespace shedule
                                 case 5: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
                                 case 9: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
                                 case 8: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
-                                 case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
-                                 case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
+                                case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina)); break;
 
                                 default: break;
                             }; break;
@@ -1920,8 +1920,8 @@ namespace shedule
                                 case 5: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
                                 case 1: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getEndDaySale())); break;
                                 case 2: emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() != wd.DS.getStartDaySale())); break;
-                                   case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
-                                 case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 6: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
+                                case 7: emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getEndDaySale() - dlina), dlina)); break;
                                 default: break;
                             }; break;
 
@@ -2293,7 +2293,7 @@ namespace shedule
 
                 switch (f.getName())
                 {
-                    case "otkr_konkurenta": { if (f.getDeistvie()) { otkr_konkurenta = f.getTZnach(); } else { otkr_konkurenta = 0; }; break; } 
+                    case "otkr_konkurenta": { if (f.getDeistvie()) { otkr_konkurenta = f.getTZnach(); } else { otkr_konkurenta = 0; }; break; }
                     case "zakr_konkurenta": if (f.getDeistvie()) { zakr_konkurenta = f.getTZnach(); } else { zakr_konkurenta = 0; } break;
                     case "rost_reklam": if (f.getDeistvie()) { rost_reklam = f.getTZnach(); } else { rost_reklam = 0; } break;
                     case "snig_reklam": if (f.getDeistvie()) { snig_reklam = f.getTZnach(); } else { snig_reklam = 0; } break;
@@ -2301,1146 +2301,1146 @@ namespace shedule
             }
 
         }
-    
 
 
-    public static void createPrognoz()
-    {
-        CheckDeistvFactors();
-        currentShop.MouthPrognoz.Clear();
-        currentShop.MouthPrognozT.Clear();
-        DateTime ydt = DateTime.Now.AddDays(-1);
-        DateTime tdt = DateTime.Today;
-        List<PrognDaySale> PDSs = new List<PrognDaySale>();
-        DateTime d2 = DateTime.Now.AddDays(-30);
 
-
-        currentShop.daysSale.Clear();
-        SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
-
-        foreach (daySale ds in currentShop.daysSale)
+        public static void createPrognoz()
         {
-            ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
+            CheckDeistvFactors();
+            currentShop.MouthPrognoz.Clear();
+            currentShop.MouthPrognozT.Clear();
+            DateTime ydt = DateTime.Now.AddDays(-1);
+            DateTime tdt = DateTime.Today;
+            List<PrognDaySale> PDSs = new List<PrognDaySale>();
+            DateTime d2 = DateTime.Now.AddDays(-30);
 
 
-        }
+            currentShop.daysSale.Clear();
+            SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
 
-        for (int i = 1; i < 10; i++)
-        {
-            PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
             foreach (daySale ds in currentShop.daysSale)
             {
-                if (ds.getTip() == i)
+                ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
+
+
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
+                foreach (daySale ds in currentShop.daysSale)
                 {
-                    foreach (hourSale hs in ds.hoursSale)
+                    if (ds.getTip() == i)
                     {
+                        foreach (hourSale hs in ds.hoursSale)
+                        {
 
-                        PDSs.Find(t => t.getTip() == i).hss.Add(hs);
+                            PDSs.Find(t => t.getTip() == i).hss.Add(hs);
 
 
+                        }
                     }
                 }
+
             }
+            DateTime fd;
 
-        }
-        DateTime fd;
-
-        if (tdt.Month != 12)
-        {
-            fd = new DateTime(tdt.Year, tdt.Month + 1, 1);
-        }
-        else
-        {
-            fd = new DateTime(tdt.Year + 1, 1, 1);
-        }
-
-
-        foreach (PrognDaySale pds in PDSs)
-        {
-
-            for (int i = 7; i < 24; i++)
+            if (tdt.Month != 12)
             {
-
-                int Sclick = 0;
-                int Scheck = 0;
-                List<hourSale> h = pds.hss.FindAll(t => t.getNHour() == i.ToString());
-                if (h.Count != 0)
-                {
-                    foreach (hourSale hs in h)
-                    {
-                        Sclick += hs.getCountClick();
-                        Scheck += hs.getCountCheck();
-                    }
-                    Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) /100) * ((100 + snig_reklam) / 100);
-                    Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) /100) * ((100 + snig_reklam) / 100);
-                    pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Scheck, Sclick)); 
-                }
-            }
-
-
-        }
-
-
-
-        for (int i = 1; i <= DateTime.DaysInMonth(fd.Year, fd.Month); i++)
-        {
-
-            daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
-            d.whatTip();
-            d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-            currentShop.MouthPrognoz.Add(d);
-
-        }
-
-
-        foreach (daySale ds in currentShop.MouthPrognoz)
-        {
-            createPrognozTemplate(ds);
-        }
-
-
-    }
-
-    public static void createPrognoz3()
-    {
-        currentShop.MouthPrognoz.Clear();
-        currentShop.MouthPrognozT.Clear();
-        DateTime ydt = DateTime.Now.AddDays(-1);
-        DateTime tdt = DateTime.Today;
-        List<PrognDaySale> PDSs = new List<PrognDaySale>();
-        DateTime d2 = DateTime.Now.AddDays(-30);
-
-
-        currentShop.daysSale.Clear();
-        createListDaySale(d2, ydt, currentShop.getIdShop());
-
-        foreach (daySale ds in currentShop.daysSale)
-        {
-            ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
-
-
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
-            foreach (daySale ds in currentShop.daysSale)
-            {
-                if (ds.getTip() == i)
-                {
-                    foreach (hourSale hs in ds.hoursSale)
-                    {
-
-                        PDSs.Find(t => t.getTip() == i).hss.Add(hs);
-
-
-                    }
-                }
-            }
-
-        }
-
-
-
-        foreach (PrognDaySale pds in PDSs)
-        {
-
-            for (int i = 7; i < 24; i++)
-            {
-
-                int Sclick = 0;
-                int Scheck = 0;
-                List<hourSale> h = pds.hss.FindAll(t => t.getNHour() == i.ToString());
-                if (h.Count != 0)
-                {
-                    foreach (hourSale hs in h)
-                    {
-                        Sclick += hs.getCountClick();
-                        Scheck += hs.getCountCheck();
-                    }
-
-                    Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                    Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                    pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
-                }
-            }
-
-
-        }
-
-        DateTime fd1;
-        DateTime fd2;
-        DateTime fd3;
-
-        if (tdt.Month < 10)
-        {
-            fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-            fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-            fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-        }
-        else
-        {
-            if (tdt.Month == 10)
-            {
-                fd1 = new DateTime(tdt.Year, 11, 1);
-                fd2 = new DateTime(tdt.Year, 12, 1);
-                fd3 = new DateTime(tdt.Year + 1, 1, 1);
-            }
-            else if (tdt.Month == 11)
-            {
-                fd1 = new DateTime(tdt.Year, 12, 1);
-                fd2 = new DateTime(tdt.Year + 1, 1, 1);
-                fd3 = new DateTime(tdt.Year + 1, 2, 1);
-            }
-            else if (tdt.Month == 12)
-            {
-                fd1 = new DateTime(tdt.Year + 1, 1, 1);
-                fd2 = new DateTime(tdt.Year + 1, 2, 1);
-                fd3 = new DateTime(tdt.Year + 1, 3, 1);
+                fd = new DateTime(tdt.Year, tdt.Month + 1, 1);
             }
             else
             {
+                fd = new DateTime(tdt.Year + 1, 1, 1);
+            }
 
+
+            foreach (PrognDaySale pds in PDSs)
+            {
+
+                for (int i = 7; i < 24; i++)
+                {
+
+                    int Sclick = 0;
+                    int Scheck = 0;
+                    List<hourSale> h = pds.hss.FindAll(t => t.getNHour() == i.ToString());
+                    if (h.Count != 0)
+                    {
+                        foreach (hourSale hs in h)
+                        {
+                            Sclick += hs.getCountClick();
+                            Scheck += hs.getCountCheck();
+                        }
+                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
+                        Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
+                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
+                    }
+                }
+
+
+            }
+
+
+
+            for (int i = 1; i <= DateTime.DaysInMonth(fd.Year, fd.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+
+
+            foreach (daySale ds in currentShop.MouthPrognoz)
+            {
+                createPrognozTemplate(ds);
+            }
+
+
+        }
+
+        public static void createPrognoz3()
+        {
+            currentShop.MouthPrognoz.Clear();
+            currentShop.MouthPrognozT.Clear();
+            DateTime ydt = DateTime.Now.AddDays(-1);
+            DateTime tdt = DateTime.Today;
+            List<PrognDaySale> PDSs = new List<PrognDaySale>();
+            DateTime d2 = DateTime.Now.AddDays(-30);
+
+
+            currentShop.daysSale.Clear();
+            createListDaySale(d2, ydt, currentShop.getIdShop());
+
+            foreach (daySale ds in currentShop.daysSale)
+            {
+                ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
+
+
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
+                foreach (daySale ds in currentShop.daysSale)
+                {
+                    if (ds.getTip() == i)
+                    {
+                        foreach (hourSale hs in ds.hoursSale)
+                        {
+
+                            PDSs.Find(t => t.getTip() == i).hss.Add(hs);
+
+
+                        }
+                    }
+                }
+
+            }
+
+
+
+            foreach (PrognDaySale pds in PDSs)
+            {
+
+                for (int i = 7; i < 24; i++)
+                {
+
+                    int Sclick = 0;
+                    int Scheck = 0;
+                    List<hourSale> h = pds.hss.FindAll(t => t.getNHour() == i.ToString());
+                    if (h.Count != 0)
+                    {
+                        foreach (hourSale hs in h)
+                        {
+                            Sclick += hs.getCountClick();
+                            Scheck += hs.getCountCheck();
+                        }
+
+                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
+                        Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
+                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
+                    }
+                }
+
+
+            }
+
+            DateTime fd1;
+            DateTime fd2;
+            DateTime fd3;
+
+            if (tdt.Month < 10)
+            {
                 fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
                 fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
                 fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                MessageBox.Show("Ошибка построения прогноза");
             }
+            else
+            {
+                if (tdt.Month == 10)
+                {
+                    fd1 = new DateTime(tdt.Year, 11, 1);
+                    fd2 = new DateTime(tdt.Year, 12, 1);
+                    fd3 = new DateTime(tdt.Year + 1, 1, 1);
+                }
+                else if (tdt.Month == 11)
+                {
+                    fd1 = new DateTime(tdt.Year, 12, 1);
+                    fd2 = new DateTime(tdt.Year + 1, 1, 1);
+                    fd3 = new DateTime(tdt.Year + 1, 2, 1);
+                }
+                else if (tdt.Month == 12)
+                {
+                    fd1 = new DateTime(tdt.Year + 1, 1, 1);
+                    fd2 = new DateTime(tdt.Year + 1, 2, 1);
+                    fd3 = new DateTime(tdt.Year + 1, 3, 1);
+                }
+                else
+                {
+
+                    fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    MessageBox.Show("Ошибка построения прогноза");
+                }
+            }
+
+            for (int i = 1; i <= DateTime.DaysInMonth(fd1.Year, fd1.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd1.Year, fd1.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+
+            for (int i = 1; i <= DateTime.DaysInMonth(fd2.Year, fd2.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd2.Year, fd2.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+            for (int i = 1; i <= DateTime.DaysInMonth(fd3.Year, fd3.Month); i++)
+            {
+
+                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd3.Year, fd3.Month, i));
+                d.whatTip();
+                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                currentShop.MouthPrognoz.Add(d);
+
+            }
+
+
+
+            foreach (daySale ds in currentShop.MouthPrognoz)
+            {
+                createPrognozTemplate(ds);
+            }
+
+
         }
 
-        for (int i = 1; i <= DateTime.DaysInMonth(fd1.Year, fd1.Month); i++)
+
+
+
+        public static bool createListDaySale(DateTime n, DateTime k, int id)
         {
 
-            daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd1.Year, fd1.Month, i));
-            d.whatTip();
-            d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-            currentShop.MouthPrognoz.Add(d);
+            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            string s1 = n.Year + "/" + n.Day + "/" + n.Month;
+            string s2 = k.Year + "/" + k.Day + "/" + k.Month;
+            string sql;
+            // if (currentShop.getIdShop() == 0) {sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
+            sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
+            //string sql = "select * from dbo.get_StatisticByShopsDayHour('301','17/01/01', '2017/01/20 23:59:00')";
+            //string sql = "select * from dbo.get_StatisticByShopsDayHour('103','2017/05/01', '2017/15/09 23:59:00')";
+            //MessageBox.Show(sql);
+            currentShop.daysSale = new List<daySale>();
+            List<hourSale> hss = new List<hourSale>();
+            daySale ds;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    command.CommandTimeout = 300;
+                    SqlDataReader reader = command.ExecuteReader();
+
+
+                    while (reader.Read())
+                    {
+                        hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+
+                        hss.Add(h);
+
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
+                    return false;
+                }
+
+            }
+            //посчитать количество дней 
+            TimeSpan ts = k - n;
+
+            DateTime d = n;
+
+            for (int i = 0; i <= ts.Days + 1; i++)
+            {
+
+                ds = new daySale(Program.currentShop.getIdShop(), d);
+                currentShop.daysSale.Add(ds);
+                d = d.AddDays(1.0d);
+            }
+            // MessageBox.Show("Количество дней по ts " + ts.Days.ToString());
+            //  MessageBox.Show("Количество часов "+hss.Count.ToString());
+            foreach (hourSale hs in hss)
+            {
+
+
+                currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
+
+            }
+
+
+            return true;
+        }
+
+        /*static List<ForChart> createSaleForChart(){
+
+
+            foreach(daySale ds in currentShop.daysSale){
+                foreach(hourSale hs in ds.hoursSale){
+
+                }
+            }
+
+        }*/
+
+        static void Pohog(int idSh)
+        {
+
+            createListDaySale(DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-30), idSh);
 
         }
 
-        for (int i = 1; i <= DateTime.DaysInMonth(fd2.Year, fd2.Month); i++)
+        static void readTemplateForShop()
         {
-
-            daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd2.Year, fd2.Month, i));
-            d.whatTip();
-            d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-            currentShop.MouthPrognoz.Add(d);
-
-        }
-        for (int i = 1; i <= DateTime.DaysInMonth(fd3.Year, fd3.Month); i++)
-        {
-
-            daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd3.Year, fd3.Month, i));
-            d.whatTip();
-            d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-            currentShop.MouthPrognoz.Add(d);
-
-        }
-
-
-
-        foreach (daySale ds in currentShop.MouthPrognoz)
-        {
-            createPrognozTemplate(ds);
-        }
-
-
-    }
-
-
-
-
-    static public bool createListDaySale(DateTime n, DateTime k, int id)
-    {
-
-        var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-        string s1 = n.Year + "/" + n.Day + "/" + n.Month;
-        string s2 = k.Year + "/" + k.Day + "/" + k.Month;
-        string sql;
-        // if (currentShop.getIdShop() == 0) {sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
-        sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
-        //string sql = "select * from dbo.get_StatisticByShopsDayHour('301','17/01/01', '2017/01/20 23:59:00')";
-        //string sql = "select * from dbo.get_StatisticByShopsDayHour('103','2017/05/01', '2017/15/09 23:59:00')";
-        //MessageBox.Show(sql);
-        currentShop.daysSale = new List<daySale>();
-        List<hourSale> hss = new List<hourSale>();
-        daySale ds;
-
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
+            String readPath = Environment.CurrentDirectory + "/Shops" + currentShop.getIdShop() + "/Templates.txt";
             try
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.CommandTimeout = 300;
-                SqlDataReader reader = command.ExecuteReader();
 
 
-                while (reader.Read())
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
-                    hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
 
-                    hss.Add(h);
-
-                }
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
-                return false;
-            }
-
-        }
-        //посчитать количество дней 
-        TimeSpan ts = k - n;
-
-        DateTime d = n;
-
-        for (int i = 0; i <= ts.Days + 1; i++)
-        {
-
-            ds = new daySale(Program.currentShop.getIdShop(), d);
-            currentShop.daysSale.Add(ds);
-            d = d.AddDays(1.0d);
-        }
-        // MessageBox.Show("Количество дней по ts " + ts.Days.ToString());
-        //  MessageBox.Show("Количество часов "+hss.Count.ToString());
-        foreach (hourSale hs in hss)
-        {
-
-
-            currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
-
-        }
-
-
-        return true;
-    }
-
-    /*static List<ForChart> createSaleForChart(){
-
-
-        foreach(daySale ds in currentShop.daysSale){
-            foreach(hourSale hs in ds.hoursSale){
-
-            }
-        }
-
-    }*/
-
-    static void Pohog(int idSh)
-    {
-
-        createListDaySale(DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-30), idSh);
-
-    }
-
-    static void readTemplateForShop()
-    {
-        String readPath = Environment.CurrentDirectory + "/Shops" + currentShop.getIdShop() + "/Templates.txt";
-        try
-        {
-
-
-            using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-            {
-
-                string line;
-                string[] s = new string[4];
-                TemplateWorkingDay twd;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    daySale wd = new daySale(int.Parse(sr.ReadLine()), DateTime.Parse(sr.ReadLine()));
-                    twd = new TemplateWorkingDay(wd);
-                    while ((line = sr.ReadLine()) != "*****")
+                    string line;
+                    string[] s = new string[4];
+                    TemplateWorkingDay twd;
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        s = line.Split('#');
-                        Smena sm = new Smena(int.Parse(s[0]), DateTime.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3]));
-                        twd.AddSmena(sm);
-                    }
-                    currentShop.AddTemplate(twd);
-
-                }
-
-
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.ToString());
-
-        }
-    }
-
-    static void writeTemplateForShop()
-    {
-        String readPath = Environment.CurrentDirectory + "/Shops" + currentShop.getIdShop() + "/Templates.txt";
-        using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-        {
-            foreach (TemplateWorkingDay t in currentShop.templates)
-            {
-                sw.WriteLine(t.DS.getIdShop());
-                sw.WriteLine(t.getData());
-                sw.WriteLine(t.DS.getStartDaySale());
-                sw.WriteLine(t.DS.getEndDaySale());
-
-                foreach (Smena s in t.lss)
-                {
-                    sw.WriteLine(t.DS.getIdShop() + "#" + t.getData() + "#" + s.getStartSmena() + "#" + s.getLenght());
-                }
-                sw.WriteLine("*****");
-            }
-        }
-    }
-
-    static public List<hourSale> createDaySale(int idShop, DateTime dt)
-    {
-        var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-        string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
-
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            try
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.CommandTimeout = 300;
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                    SaleDay.Add(h);
-
-                }
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                MessageBox.Show("Ошибка соединения с базой данных" + ex);
-            }
-
-
-            return Raznica = SaleDay;
-        }
-    }
-
-    static public Smena OptimRec(DateTime data)
-    {
-
-        int lenght;
-        int min = 100;
-        int max = -1;
-        foreach (hourSale hs in Raznica)
-        {
-            if (hs.getMinut() > 0)
-            {
-                if (min > int.Parse(hs.getNHour()))
-                {
-                    min = int.Parse(hs.getNHour());
-
-                }
-                if (max < int.Parse(hs.getNHour()))
-                {
-                    max = int.Parse(hs.getNHour());
-                }
-            }
-        }
-        lenght = max - min;
-        // MessageBox.Show("Nachalo="+min+ " Dlina="+lenght );
-        return new Smena(min, lenght, data);
-    }
-
-    static public Smena addRecl(Smena sm)
-    {
-        int K;
-        if (currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
-        {
-            K = currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
-        }
-        else { K = KoefKassira; }
-        int EndSmena = sm.getStartSmena() + sm.getLenght() + 1;
-
-        for (int i = sm.getStartSmena(); i < EndSmena; i++)
-        {
-
-            hourSale temp = Raznica.Find(x => x.getNHour() == i.ToString());
-            // MessageBox.Show("temp1="+temp.getNHour()+" "+temp.getMinut());
-            if (!(temp == null))
-            {
-                int t = temp.getTime() - (K * 36);
-                Raznica.Add(new hourSale(currentShop.getIdShop(), sm.getData(), i.ToString(), t));
-                // MessageBox.Show("Count Razniza=" + Raznica.Count);
-                Raznica.Remove(temp);
-                // MessageBox.Show("temp2=" + temp.getNHour()+" " + t+" Count Razniza=" + Raznica.Count);
-            }
-            else { Raznica.Add(new hourSale(currentShop.getIdShop(), sm.getData(), i.ToString(), 0)); }
-
-
-            // MessageBox.Show(t.ToString());
-            // Raznica.Remove(Raznica.Find(x => x.getNHour() == i.ToString())) ;
-            // Raznica.Add(new hourSale(temp.getIdShop(), temp.getData(), temp.getNHour(), t));
-
-        }
-        return sm;
-    }
-
-
-    static bool checkGraph()
-    {
-        // MessageBox.Show("Razniza="+Raznica.Count.ToString());
-        foreach (hourSale hs in Raznica)
-        {
-            // MessageBox.Show("разница="+ hs.getNHour()+" " + hs.getMinut().ToString());
-
-            if (hs.getMinut() > 0)
-            {
-                // MessageBox.Show("true");
-                return true;
-
-            }
-
-
-
-        }
-
-        return false;
-
-
-    }
-
-    static public void createTemplate(daySale ds)
-    {
-        //createDaySale(id, data);
-        //DateTime data2= data.AddDays(10.0d);
-        int id = currentShop.getIdShop();
-        //createListDaySale(data,data2);
-
-        Raznica = new List<hourSale>(ds.hoursSale);
-
-
-        TemplateWorkingDay twd = new TemplateWorkingDay(ds);
-        twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
-        twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
-        while (checkGraph())
-        {
-
-            twd.AddSmena(addRecl(OptimRec(ds.getData())));
-            //   MessageBox.Show("Количество смен="+twd.lss.Count);
-
-        }
-
-        currentShop.templates.Add(twd);
-        //MessageBox.Show("Шаблон магазина" + id + "за дату" + ds.getData() + "создан");
-
-
-    }
-
-    static public void createPrognozTemplate(daySale ds)
-    {
-        //createDaySale(id, data);
-        //DateTime data2= data.AddDays(10.0d);
-        int id = currentShop.getIdShop();
-        //createListDaySale(data,data2);
-
-        Raznica = new List<hourSale>(ds.hoursSale);
-
-
-        TemplateWorkingDay twd = new TemplateWorkingDay(ds);
-        twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
-        twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
-        while (checkGraph())
-        {
-
-            twd.AddSmena(addRecl(OptimRec(ds.getData())));
-            //   MessageBox.Show("Количество смен="+twd.lss.Count);
-
-        }
-
-        currentShop.MouthPrognozT.Add(twd);
-        //MessageBox.Show("Шаблон магазина" + id + "за дату" + ds.getData() + "создан");
-
-
-    }
-
-    static public void refreshFoldersShops()
-    {
-        foreach (mShop shop in Program.listShops)
-        {
-            string pyth = Environment.CurrentDirectory + "/Shops/" + shop.getIdShop().ToString();
-            if (!Directory.Exists(pyth))
-            {
-                Directory.CreateDirectory(pyth);
-            }
-
-        }
-    }
-
-
-
-
-
-    static private void CreateXML()
-    {
-        String readPath = Environment.CurrentDirectory + "TSR";
-        XDocument xdoc = new XDocument();
-        // создаем первый элемент
-        XElement iphone6 = new XElement("phone");
-        // создаем атрибут
-        XAttribute iphoneNameAttr = new XAttribute("name", "iPhone 6");
-        XElement iphoneCompanyElem = new XElement("company", "Apple");
-        XElement iphonePriceElem = new XElement("price", "40000");
-        // добавляем атрибут и элементы в первый элемент
-        iphone6.Add(iphoneNameAttr);
-        iphone6.Add(iphoneCompanyElem);
-        iphone6.Add(iphonePriceElem);
-
-        XElement phones = new XElement("phones");
-        // добавляем в корневой элемент
-        phones.Add(iphone6);
-        // добавляем корневой элемент в документ
-        xdoc.Add(phones);
-        //сохраняем документ
-        xdoc.Save("phones.xml");
-    }
-
-
-
-    static private DataTable CreateTable()
-    {
-        //создаём таблицу
-        string[] months = Program.getMonths();
-        DataTable dt = new DataTable("norm");
-
-        DataColumn Mounth = new DataColumn("Должность", typeof(string));
-        DataColumn colCountDayInMonth = new DataColumn("Количество", typeof(string));
-        DataColumn colCountDayRab = new DataColumn("Зарплата", typeof(Int16));
-        DataColumn colCountDayVuh = new DataColumn("Зарплата за 1/2", typeof(Int16));
-
-        //добавляем колонки в таблицу
-        dt.Columns.Add(Mounth);
-        dt.Columns.Add(colCountDayInMonth);
-        dt.Columns.Add(colCountDayRab);
-        dt.Columns.Add(colCountDayVuh);
-        DataRow row = null;
-
-
-        for (int i = 1; i <= 12; i++)
-        {
-            row = dt.NewRow();
-            row["Должность"] = months[i - 1];
-            row["Количество"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
-            row["Зарплата"] = Program.RD[i - 1];
-            row["Зарплата за 1/2"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1];
-            dt.Rows.Add(row);
-        }
-        return dt;
-    }
-
-    static public void getListDate(int year)
-    {
-        currentShop.DFCs.Clear();
-        string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + @"\Calendar";
-        // MessageBox.Show(readPath);
-        try
-        {
-
-
-            using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-            {
-                string line;
-                string[] s = new string[4];
-
-                while ((line = sr.ReadLine()) != null)
-                {
-                    s = line.Split('#');
-                    DataForCalendary d = new DataForCalendary(DateTime.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3]));
-                    // MessageBox.Show(DateTime.Parse(s[0]).Month.ToString());
-                    switch (int.Parse(s[1]))
-                    {
-                        case 1: RD[DateTime.Parse(s[0]).Month - 1]++; break;
-                        case 2: RD[DateTime.Parse(s[0]).Month - 1]++; break;
-                        case 3: RD[DateTime.Parse(s[0]).Month - 1]++; break;
-                        case 4: RD[DateTime.Parse(s[0]).Month - 1]++; break;
-                        case 5: RD[DateTime.Parse(s[0]).Month - 1]++; break;
-
-                        case 9: PHD[DateTime.Parse(s[0]).Month - 1]++; break;
+                        daySale wd = new daySale(int.Parse(sr.ReadLine()), DateTime.Parse(sr.ReadLine()));
+                        twd = new TemplateWorkingDay(wd);
+                        while ((line = sr.ReadLine()) != "*****")
+                        {
+                            s = line.Split('#');
+                            Smena sm = new Smena(int.Parse(s[0]), DateTime.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3]));
+                            twd.AddSmena(sm);
+                        }
+                        currentShop.AddTemplate(twd);
 
                     }
 
-                    currentShop.DFCs.Add(d);
+
                 }
-                //   MessageBox.Show("DFCs.Add 1");
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
 
-
-
+            }
         }
-        catch (Exception ex)
+
+        static void writeTemplateForShop()
         {
-            //  MessageBox.Show(ex.Message);
-
-            Program.ReadCalendarFromXML(DateTime.Today.Year);
-            for (int i = 1; i <= 12; i++)
-            {
-                RD[i - 1] = 0;
-                PHD[i - 1] = 0;
-                int countDays = DateTime.DaysInMonth(year, i);
-                for (int k = 1; k <= countDays; k++)
-                {
-                    DataForCalendary dfc = new DataForCalendary(new DateTime(year, i, k));
-                    int t = dfc.getTip();
-                    if ((t == 1) || (t == 2) || (t == 3) || (t == 4) || (t == 5)) { RD[i - 1]++; }
-                    if (t == 9) { PHD[i - 1]++; }
-
-                    if (currentShop.DFCs.Find(x => x.getData() == dfc.getData()) != null)
-                    {
-
-                    }
-                    else currentShop.DFCs.Add(dfc);
-
-                }
-            }
-            //  MessageBox.Show("DFCs.Add ex");
-            foreach (DataForCalendary dfc in currentShop.DFCs)
-            {
-                switch (dfc.getTip())
-                {
-                    case 1: dfc.setTimeBaE(8, 23); break;
-                    case 2: dfc.setTimeBaE(8, 23); break;
-                    case 3: dfc.setTimeBaE(8, 23); break;
-                    case 4: dfc.setTimeBaE(8, 23); break;
-                    case 5: dfc.setTimeBaE(8, 23); break;
-                    case 6: dfc.setTimeBaE(9, 22); break;
-                    case 7: dfc.setTimeBaE(9, 22); break;
-                    case 8: dfc.setTimeBaE(9, 22); break;
-                    case 9: dfc.setTimeBaE(9, 22); break;
-                    case 10: dfc.setTimeBaE(9, 22); break;
-                    default: dfc.setTimeBaE(0, 0); break;
-                }
-            }
-
+            String readPath = Environment.CurrentDirectory + "/Shops" + currentShop.getIdShop() + "/Templates.txt";
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-
-                foreach (DataForCalendary d in currentShop.DFCs)
-                    sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
-            }
-
-        }
-
-
-
-
-    }
-
-    static public void ReadConfigShop(int id)
-    {
-
-
-    }
-    static public string[] getMonths()
-    {
-        String[] months = new String[12];
-        months[0] = "Январь";
-        months[1] = "Февраль";
-        months[2] = "Март";
-        months[3] = "Апрель";
-        months[4] = "Май";
-        months[5] = "Июнь";
-        months[6] = "Июль";
-        months[7] = "Август";
-        months[8] = "Сентябрь";
-        months[9] = "Октябрь";
-        months[10] = "Ноябрь";
-        months[11] = "Декабрь";
-        return months;
-
-    }
-
-
-    static public string getMonths(int m)
-    {
-        switch (m)
-        {
-
-            case 1: return "Январь";
-            case 2:
-                return "Февраль";
-            case 3:
-                return "Март";
-            case 4:
-                return "Апрель";
-            case 5:
-                return "Май";
-            case 6:
-                return "Июнь";
-            case 7:
-                return "Июль";
-            case 8:
-                return "Август";
-            case 9:
-                return "Сентябрь";
-            case 10:
-                return "Октябрь";
-            case 11:
-                return "Ноябрь";
-            case 12: return "Декабрь";
-            default: return "";
-        }
-
-
-    }
-
-    static public string getMonthInString(int nm)
-    {
-
-        switch (nm)
-        {
-            case 1: return "Января";
-            case 2: return "Февраля";
-            case 3: return "Марта";
-            case 4: return "Апреля";
-            case 5: return "Мая";
-            case 6: return "Июня";
-            case 7: return "Июля";
-            case 8: return "Августа";
-            case 9: return "Сентбря";
-            case 10: return "Октября";
-            case 11: return "Ноября";
-            case 12: return "Декабря";
-            default: return "Ошибка чтения даты";
-        }
-    }
-
-    static public void ReadCalendarFromXML(int years)
-    {
-
-        XmlDocument xDoc = new XmlDocument();
-        String readPath = Environment.CurrentDirectory + @"\Calendars\" + years + ".xml";
-        xDoc.Load(readPath);
-        // получим корневой элемент
-        XmlElement xRoot = xDoc.DocumentElement;
-
-        // обход всех узлов в корневом элементе
-
-        // получаем атрибут name
-        if (xRoot.Attributes.Count > 0)
-        {
-
-            XmlNode attr = xRoot.LastChild;
-
-            // обходим все дочерние узлы элемента user
-            foreach (XmlNode childnode in attr.ChildNodes)
-            {
-                // если узел - company
-                if ((childnode.Name == "day") && (childnode.Attributes.GetNamedItem("t").Value == "1"))
+                foreach (TemplateWorkingDay t in currentShop.templates)
                 {
-                    //MessageBox.Show(childnode.Attributes.GetNamedItem("d").Value);
-                    //MessageBox.Show(xRoot.Attributes.GetNamedItem("year").Value);
-                    string d_m = childnode.Attributes.GetNamedItem("d").Value;
-                    string[] d_and_m = new string[2];
-                    d_and_m = d_m.Split('.');
-                    currentShop.DFCs.Add(new DataForCalendary(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])), 8));
-                }
+                    sw.WriteLine(t.DS.getIdShop());
+                    sw.WriteLine(t.getData());
+                    sw.WriteLine(t.DS.getStartDaySale());
+                    sw.WriteLine(t.DS.getEndDaySale());
 
-                if ((childnode.Name == "day") && (childnode.Attributes.GetNamedItem("t").Value == "2"))
-                {
-                    //MessageBox.Show(childnode.Attributes.GetNamedItem("d").Value);
-                    //MessageBox.Show(xRoot.Attributes.GetNamedItem("year").Value);
-                    string d_m = childnode.Attributes.GetNamedItem("d").Value;
-                    string[] d_and_m = new string[2];
-                    d_and_m = d_m.Split('.');
-                    currentShop.DFCs.Add(new DataForCalendary(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])), 9));
-                }
-
-            }
-
-
-
-        }
-    }
-
-
-
-
-    static public void ReadTekChedule(string fileName)
-    {
-
-
-
-        Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-        //Открываем книгу.                                                                                                                                                        
-        Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(fileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-        //Выбираем таблицу(лист).
-        Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
-        ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-
-        //Очищаем от старого текста окно вывода.
-
-
-        for (int i = 1; i < 101; i++)
-        {
-            //Выбираем область таблицы. (в нашем случае просто ячейку)
-            Microsoft.Office.Interop.Excel.Range range = ObjWorkSheet.get_Range(11, 11);
-            //Добавляем полученный из ячейки текст.
-
-            Application.DoEvents();
-        }
-
-        //Удаляем приложение (выходим из экселя) - ато будет висеть в процессах!
-        ObjExcel.Quit();
-
-    }
-
-    static public void ReadOperFromExel(string fileName)
-    {
-
-
-
-        Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-        //Открываем книгу.                                                                                                                                                        
-        Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(fileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-        //Выбираем таблицу(лист).
-        Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
-        ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-        int x = 3;
-        Microsoft.Office.Interop.Excel.Range range = ObjWorkSheet.get_Range(1, x);
-        while (range.Text != "")
-        {
-
-            string dn = ObjWorkSheet.get_Range(1, x).Text;
-            string t = ObjWorkSheet.get_Range(1, x).Text;
-            DateTime dt = ObjWorkSheet.get_Range(3, x).Text;
-            int cc = ObjWorkSheet.get_Range(5, x).Text;
-            int cs = ObjWorkSheet.get_Range(6, x).Text;
-            // HSS.Add(new hourSale(1, dt, t, dn, cc, cs));
-            x++;
-            range = ObjWorkSheet.get_Range(1, x);
-            Application.DoEvents();
-        }
-
-        //Удаляем приложение (выходим из экселя) - ато будет висеть в процессах!
-        ObjExcel.Quit();
-
-    }
-
-
-
-    static public string getStatus()
-    {
-        String readPath = Environment.CurrentDirectory + @"\Status.txt";
-        try
-        {
-
-
-            using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-            {
-
-
-                CountObr = sr.ReadLine();
-
-
-
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.ToString());
-
-        }
-        return CountObr;
-    }
-
-
-    static public void WriteStatus()
-    {
-
-    }
-
-
-    static public void ReadListShops()
-    {
-
-        String readPath = Environment.CurrentDirectory + @"\Shops.txt";
-        try
-        {
-            int count = File.ReadAllLines(readPath).Length;
-            // listShops = new Shop[count];
-            using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
-            {
-                string line;
-                int i = 0;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    string[] s = new string[2];
-                    s = line.Split('_');
-                    int idSh = Convert.ToInt16(s[0]);
-                    string Sh = s[1];
-
-                    listShops.Add(new mShop(idSh, Sh));
-                    i++;
+                    foreach (Smena s in t.lss)
+                    {
+                        sw.WriteLine(t.DS.getIdShop() + "#" + t.getData() + "#" + s.getStartSmena() + "#" + s.getLenght());
+                    }
+                    sw.WriteLine("*****");
                 }
             }
         }
-        catch (Exception ex)
+
+        static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
-            MessageBox.Show(ex.ToString());
-            setListShops();
+            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    command.CommandTimeout = 300;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                        SaleDay.Add(h);
+
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    MessageBox.Show("Ошибка соединения с базой данных" + ex);
+                }
+
+
+                return Raznica = SaleDay;
+            }
+        }
+
+        static public Smena OptimRec(DateTime data)
+        {
+
+            int lenght;
+            int min = 100;
+            int max = -1;
+            foreach (hourSale hs in Raznica)
+            {
+                if (hs.getMinut() > 0)
+                {
+                    if (min > int.Parse(hs.getNHour()))
+                    {
+                        min = int.Parse(hs.getNHour());
+
+                    }
+                    if (max < int.Parse(hs.getNHour()))
+                    {
+                        max = int.Parse(hs.getNHour());
+                    }
+                }
+            }
+            lenght = max - min;
+            // MessageBox.Show("Nachalo="+min+ " Dlina="+lenght );
+            return new Smena(min, lenght, data);
+        }
+
+        static public Smena addRecl(Smena sm)
+        {
+            int K;
+            if (currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
+            {
+                K = currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
+            }
+            else { K = KoefKassira; }
+            int EndSmena = sm.getStartSmena() + sm.getLenght() + 1;
+
+            for (int i = sm.getStartSmena(); i < EndSmena; i++)
+            {
+
+                hourSale temp = Raznica.Find(x => x.getNHour() == i.ToString());
+                // MessageBox.Show("temp1="+temp.getNHour()+" "+temp.getMinut());
+                if (!(temp == null))
+                {
+                    int t = temp.getMinut() - K * 3;
+                    Raznica.Add(new hourSale(currentShop.getIdShop(), sm.getData(), i.ToString(), t));
+                    // MessageBox.Show("Count Razniza=" + Raznica.Count);
+                    Raznica.Remove(temp);
+                    // MessageBox.Show("temp2=" + temp.getNHour()+" " + t+" Count Razniza=" + Raznica.Count);
+                }
+                else { Raznica.Add(new hourSale(currentShop.getIdShop(), sm.getData(), i.ToString(), 0)); }
+
+
+                // MessageBox.Show(t.ToString());
+                // Raznica.Remove(Raznica.Find(x => x.getNHour() == i.ToString())) ;
+                // Raznica.Add(new hourSale(temp.getIdShop(), temp.getData(), temp.getNHour(), t));
+
+            }
+            return sm;
+        }
+
+
+        static bool checkGraph()
+        {
+            // MessageBox.Show("Razniza="+Raznica.Count.ToString());
+            foreach (hourSale hs in Raznica)
+            {
+                // MessageBox.Show("разница="+ hs.getNHour()+" " + hs.getMinut().ToString());
+
+                if (hs.getMinut() > 0)
+                {
+                    // MessageBox.Show("true");
+                    return true;
+
+                }
+
+
+
+            }
+
+            return false;
+
 
         }
-    }
 
-
-
-    static public void setListShops()
-    {
-
-        mShop h;
-        var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-        string sql = "select * from get_shops() order by КодМагазина";
-
-        using (connection = new SqlConnection(connectionString))
+        static public void createTemplate(daySale ds)
         {
+            //createDaySale(id, data);
+            //DateTime data2= data.AddDays(10.0d);
+            int id = currentShop.getIdShop();
+            //createListDaySale(data,data2);
+
+            Raznica = new List<hourSale>(ds.hoursSale);
+
+
+            TemplateWorkingDay twd = new TemplateWorkingDay(ds);
+            twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
+            twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
+            while (checkGraph())
+            {
+
+                twd.AddSmena(addRecl(OptimRec(ds.getData())));
+                //   MessageBox.Show("Количество смен="+twd.lss.Count);
+
+            }
+
+            currentShop.templates.Add(twd);
+            //MessageBox.Show("Шаблон магазина" + id + "за дату" + ds.getData() + "создан");
+
+
+        }
+
+        static public void createPrognozTemplate(daySale ds)
+        {
+            //createDaySale(id, data);
+            //DateTime data2= data.AddDays(10.0d);
+            int id = currentShop.getIdShop();
+            //createListDaySale(data,data2);
+
+            Raznica = new List<hourSale>(ds.hoursSale);
+
+
+            TemplateWorkingDay twd = new TemplateWorkingDay(ds);
+            twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
+            twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
+            while (checkGraph())
+            {
+
+                twd.AddSmena(addRecl(OptimRec(ds.getData())));
+                //   MessageBox.Show("Количество смен="+twd.lss.Count);
+
+            }
+
+            currentShop.MouthPrognozT.Add(twd);
+            //MessageBox.Show("Шаблон магазина" + id + "за дату" + ds.getData() + "создан");
+
+
+        }
+
+        static public void refreshFoldersShops()
+        {
+            foreach (mShop shop in Program.listShops)
+            {
+                string pyth = Environment.CurrentDirectory + "/Shops/" + shop.getIdShop().ToString();
+                if (!Directory.Exists(pyth))
+                {
+                    Directory.CreateDirectory(pyth);
+                }
+
+            }
+        }
+
+
+
+
+
+        static private void CreateXML()
+        {
+            String readPath = Environment.CurrentDirectory + "TSR";
+            XDocument xdoc = new XDocument();
+            // создаем первый элемент
+            XElement iphone6 = new XElement("phone");
+            // создаем атрибут
+            XAttribute iphoneNameAttr = new XAttribute("name", "iPhone 6");
+            XElement iphoneCompanyElem = new XElement("company", "Apple");
+            XElement iphonePriceElem = new XElement("price", "40000");
+            // добавляем атрибут и элементы в первый элемент
+            iphone6.Add(iphoneNameAttr);
+            iphone6.Add(iphoneCompanyElem);
+            iphone6.Add(iphonePriceElem);
+
+            XElement phones = new XElement("phones");
+            // добавляем в корневой элемент
+            phones.Add(iphone6);
+            // добавляем корневой элемент в документ
+            xdoc.Add(phones);
+            //сохраняем документ
+            xdoc.Save("phones.xml");
+        }
+
+
+
+        static private DataTable CreateTable()
+        {
+            //создаём таблицу
+            string[] months = Program.getMonths();
+            DataTable dt = new DataTable("norm");
+
+            DataColumn Mounth = new DataColumn("Должность", typeof(string));
+            DataColumn colCountDayInMonth = new DataColumn("Количество", typeof(string));
+            DataColumn colCountDayRab = new DataColumn("Зарплата", typeof(Int16));
+            DataColumn colCountDayVuh = new DataColumn("Зарплата за 1/2", typeof(Int16));
+
+            //добавляем колонки в таблицу
+            dt.Columns.Add(Mounth);
+            dt.Columns.Add(colCountDayInMonth);
+            dt.Columns.Add(colCountDayRab);
+            dt.Columns.Add(colCountDayVuh);
+            DataRow row = null;
+
+
+            for (int i = 1; i <= 12; i++)
+            {
+                row = dt.NewRow();
+                row["Должность"] = months[i - 1];
+                row["Количество"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
+                row["Зарплата"] = Program.RD[i - 1];
+                row["Зарплата за 1/2"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1];
+                dt.Rows.Add(row);
+            }
+            return dt;
+        }
+
+        static public void getListDate(int year)
+        {
+            currentShop.DFCs.Clear();
+            string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + @"\Calendar";
+            // MessageBox.Show(readPath);
             try
             {
-                listShops.Clear();
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.CommandTimeout = 300;
-                SqlDataReader reader = command.ExecuteReader();
 
-                while (reader.Read())
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
-                    // MessageBox.Show(reader.GetInt16(0)+" "+ reader.GetString(1));
-                    h = new mShop(reader.GetInt16(0), reader.GetString(1));
-                    listShops.Add(h);
-                    string writePath = Environment.CurrentDirectory + @"\Shops.txt";
-                    using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                    string line;
+                    string[] s = new string[4];
+
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        foreach (mShop s in listShops)
-                            sw.WriteLine(s.getIdShop() + "_" + s.getAddress());
+                        s = line.Split('#');
+                        DataForCalendary d = new DataForCalendary(DateTime.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]), int.Parse(s[3]));
+                        // MessageBox.Show(DateTime.Parse(s[0]).Month.ToString());
+                        switch (int.Parse(s[1]))
+                        {
+                            case 1: RD[DateTime.Parse(s[0]).Month - 1]++; break;
+                            case 2: RD[DateTime.Parse(s[0]).Month - 1]++; break;
+                            case 3: RD[DateTime.Parse(s[0]).Month - 1]++; break;
+                            case 4: RD[DateTime.Parse(s[0]).Month - 1]++; break;
+                            case 5: RD[DateTime.Parse(s[0]).Month - 1]++; break;
+
+                            case 9: PHD[DateTime.Parse(s[0]).Month - 1]++; break;
+
+                        }
+
+                        currentShop.DFCs.Add(d);
+                    }
+                    //   MessageBox.Show("DFCs.Add 1");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                //  MessageBox.Show(ex.Message);
+
+                Program.ReadCalendarFromXML(DateTime.Today.Year);
+                for (int i = 1; i <= 12; i++)
+                {
+                    RD[i - 1] = 0;
+                    PHD[i - 1] = 0;
+                    int countDays = DateTime.DaysInMonth(year, i);
+                    for (int k = 1; k <= countDays; k++)
+                    {
+                        DataForCalendary dfc = new DataForCalendary(new DateTime(year, i, k));
+                        int t = dfc.getTip();
+                        if ((t == 1) || (t == 2) || (t == 3) || (t == 4) || (t == 5)) { RD[i - 1]++; }
+                        if (t == 9) { PHD[i - 1]++; }
+
+                        if (currentShop.DFCs.Find(x => x.getData() == dfc.getData()) != null)
+                        {
+
+                        }
+                        else currentShop.DFCs.Add(dfc);
+
+                    }
+                }
+                //  MessageBox.Show("DFCs.Add ex");
+                foreach (DataForCalendary dfc in currentShop.DFCs)
+                {
+                    switch (dfc.getTip())
+                    {
+                        case 1: dfc.setTimeBaE(8, 23); break;
+                        case 2: dfc.setTimeBaE(8, 23); break;
+                        case 3: dfc.setTimeBaE(8, 23); break;
+                        case 4: dfc.setTimeBaE(8, 23); break;
+                        case 5: dfc.setTimeBaE(8, 23); break;
+                        case 6: dfc.setTimeBaE(9, 22); break;
+                        case 7: dfc.setTimeBaE(9, 22); break;
+                        case 8: dfc.setTimeBaE(9, 22); break;
+                        case 9: dfc.setTimeBaE(9, 22); break;
+                        case 10: dfc.setTimeBaE(9, 22); break;
+                        default: dfc.setTimeBaE(0, 0); break;
                     }
                 }
 
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+
+                    foreach (DataForCalendary d in currentShop.DFCs)
+                        sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
+                }
 
             }
-            catch (System.Data.SqlClient.SqlException ex)
+
+
+
+
+        }
+
+        static public void ReadConfigShop(int id)
+        {
+
+
+        }
+        static public string[] getMonths()
+        {
+            String[] months = new String[12];
+            months[0] = "Январь";
+            months[1] = "Февраль";
+            months[2] = "Март";
+            months[3] = "Апрель";
+            months[4] = "Май";
+            months[5] = "Июнь";
+            months[6] = "Июль";
+            months[7] = "Август";
+            months[8] = "Сентябрь";
+            months[9] = "Октябрь";
+            months[10] = "Ноябрь";
+            months[11] = "Декабрь";
+            return months;
+
+        }
+
+
+        static public string getMonths(int m)
+        {
+            switch (m)
             {
-                MessageBox.Show("Ошибка соединения с базой данных");
-                // ReadListShops();
+
+                case 1: return "Январь";
+                case 2:
+                    return "Февраль";
+                case 3:
+                    return "Март";
+                case 4:
+                    return "Апрель";
+                case 5:
+                    return "Май";
+                case 6:
+                    return "Июнь";
+                case 7:
+                    return "Июль";
+                case 8:
+                    return "Август";
+                case 9:
+                    return "Сентябрь";
+                case 10:
+                    return "Октябрь";
+                case 11:
+                    return "Ноябрь";
+                case 12: return "Декабрь";
+                default: return "";
+            }
+
+
+        }
+
+        static public string getMonthInString(int nm)
+        {
+
+            switch (nm)
+            {
+                case 1: return "Января";
+                case 2: return "Февраля";
+                case 3: return "Марта";
+                case 4: return "Апреля";
+                case 5: return "Мая";
+                case 6: return "Июня";
+                case 7: return "Июля";
+                case 8: return "Августа";
+                case 9: return "Сентбря";
+                case 10: return "Октября";
+                case 11: return "Ноября";
+                case 12: return "Декабря";
+                default: return "Ошибка чтения даты";
+            }
+        }
+
+        static public void ReadCalendarFromXML(int years)
+        {
+
+            XmlDocument xDoc = new XmlDocument();
+            String readPath = Environment.CurrentDirectory + @"\Calendars\" + years + ".xml";
+            xDoc.Load(readPath);
+            // получим корневой элемент
+            XmlElement xRoot = xDoc.DocumentElement;
+
+            // обход всех узлов в корневом элементе
+
+            // получаем атрибут name
+            if (xRoot.Attributes.Count > 0)
+            {
+
+                XmlNode attr = xRoot.LastChild;
+
+                // обходим все дочерние узлы элемента user
+                foreach (XmlNode childnode in attr.ChildNodes)
+                {
+                    // если узел - company
+                    if ((childnode.Name == "day") && (childnode.Attributes.GetNamedItem("t").Value == "1"))
+                    {
+                        //MessageBox.Show(childnode.Attributes.GetNamedItem("d").Value);
+                        //MessageBox.Show(xRoot.Attributes.GetNamedItem("year").Value);
+                        string d_m = childnode.Attributes.GetNamedItem("d").Value;
+                        string[] d_and_m = new string[2];
+                        d_and_m = d_m.Split('.');
+                        currentShop.DFCs.Add(new DataForCalendary(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])), 8));
+                    }
+
+                    if ((childnode.Name == "day") && (childnode.Attributes.GetNamedItem("t").Value == "2"))
+                    {
+                        //MessageBox.Show(childnode.Attributes.GetNamedItem("d").Value);
+                        //MessageBox.Show(xRoot.Attributes.GetNamedItem("year").Value);
+                        string d_m = childnode.Attributes.GetNamedItem("d").Value;
+                        string[] d_and_m = new string[2];
+                        d_and_m = d_m.Split('.');
+                        currentShop.DFCs.Add(new DataForCalendary(new DateTime(Int16.Parse(xRoot.Attributes.GetNamedItem("year").Value), Int16.Parse(d_and_m[0]), Int16.Parse(d_and_m[1])), 9));
+                    }
+
+                }
+
+
+
             }
         }
 
 
 
-    }
 
-    public static bool isConnect() { return connect; }
-
-    public static bool isConnected(string l, string p)
-    {
-        var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
-
-        //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-        using (connection = new SqlConnection(connectionString))
+        static public void ReadTekChedule(string fileName)
         {
+
+
+
+            Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+            //Открываем книгу.                                                                                                                                                        
+            Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(fileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+            //Выбираем таблицу(лист).
+            Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+
+            //Очищаем от старого текста окно вывода.
+
+
+            for (int i = 1; i < 101; i++)
+            {
+                //Выбираем область таблицы. (в нашем случае просто ячейку)
+                Microsoft.Office.Interop.Excel.Range range = ObjWorkSheet.get_Range(11, 11);
+                //Добавляем полученный из ячейки текст.
+
+                Application.DoEvents();
+            }
+
+            //Удаляем приложение (выходим из экселя) - ато будет висеть в процессах!
+            ObjExcel.Quit();
+
+        }
+
+        static public void ReadOperFromExel(string fileName)
+        {
+
+
+
+            Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+            //Открываем книгу.                                                                                                                                                        
+            Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(fileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+            //Выбираем таблицу(лист).
+            Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+            int x = 3;
+            Microsoft.Office.Interop.Excel.Range range = ObjWorkSheet.get_Range(1, x);
+            while (range.Text != "")
+            {
+
+                string dn = ObjWorkSheet.get_Range(1, x).Text;
+                string t = ObjWorkSheet.get_Range(1, x).Text;
+                DateTime dt = ObjWorkSheet.get_Range(3, x).Text;
+                int cc = ObjWorkSheet.get_Range(5, x).Text;
+                int cs = ObjWorkSheet.get_Range(6, x).Text;
+                // HSS.Add(new hourSale(1, dt, t, dn, cc, cs));
+                x++;
+                range = ObjWorkSheet.get_Range(1, x);
+                Application.DoEvents();
+            }
+
+            //Удаляем приложение (выходим из экселя) - ато будет висеть в процессах!
+            ObjExcel.Quit();
+
+        }
+
+
+
+        static public string getStatus()
+        {
+            String readPath = Environment.CurrentDirectory + @"\Status.txt";
             try
             {
-                connection.Open();
-                if (connection.State == System.Data.ConnectionState.Open) { connect = true; return connect; }
-                else { connect = false; return connect; }
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+
+
+                    CountObr = sr.ReadLine();
+
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
 
             }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
+            return CountObr;
+        }
 
-                MessageBox.Show(ex.Message);
-                connect = false;
-                return connect;
+
+        static public void WriteStatus()
+        {
+
+        }
+
+
+        static public void ReadListShops()
+        {
+
+            String readPath = Environment.CurrentDirectory + @"\Shops.txt";
+            try
+            {
+                int count = File.ReadAllLines(readPath).Length;
+                // listShops = new Shop[count];
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                    string line;
+                    int i = 0;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] s = new string[2];
+                        s = line.Split('_');
+                        int idSh = Convert.ToInt16(s[0]);
+                        string Sh = s[1];
+
+                        listShops.Add(new mShop(idSh, Sh));
+                        i++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                setListShops();
+
             }
         }
 
 
-    }
-    /* public static void Http(int year){
-         try{
-             string content;
-         using (var request = new HttpRequest())
-             {
-               request.UserAgent = Http.ChromeUserAgent();
 
-                  // Отправляем запрос.
-               HttpResponse response = request.Get("http://xmlcalendar.ru/data/ru/"+year+"/calendar.xml");
-                  // Принимаем тело сообщения в виде строки.
-                         content = response.ToString();
-                 }
-          using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-             {
+        static public void setListShops()
+        {
+
+            mShop h;
+            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            string sql = "select * from get_shops() order by КодМагазина";
+
+            using (connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    listShops.Clear();
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    command.CommandTimeout = 300;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        // MessageBox.Show(reader.GetInt16(0)+" "+ reader.GetString(1));
+                        h = new mShop(reader.GetInt16(0), reader.GetString(1));
+                        listShops.Add(h);
+                        string writePath = Environment.CurrentDirectory + @"\Shops.txt";
+                        using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                        {
+                            foreach (mShop s in listShops)
+                                sw.WriteLine(s.getIdShop() + "_" + s.getAddress());
+                        }
+                    }
 
 
-                     sw.Write( content);
-             }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    MessageBox.Show("Ошибка соединения с базой данных");
+                    // ReadListShops();
+                }
+            }
 
 
-         }
-             catch (SmtpException ex)
+
+        }
+
+        public static bool isConnect() { return connect; }
+
+        public static bool isConnected(string l, string p)
+        {
+            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
+
+            //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            using (connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    if (connection.State == System.Data.ConnectionState.Open) { connect = true; return connect; }
+                    else { connect = false; return connect; }
+
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                    connect = false;
+                    return connect;
+                }
+            }
+
+
+        }
+        /* public static void Http(int year){
+             try{
+                 string content;
+             using (var request = new HttpRequest())
                  {
-                  Console.WriteLine("Произошла ошибка при работе с HTTP-сервером: {0}", ex.Message);
+                   request.UserAgent = Http.ChromeUserAgent();
 
-                   switch (ex.Status)
-                   {
-                     case HttpExceptionStatus.Other:
-                   Console.WriteLine("Неизвестная ошибка");
-                  break;
-
-                   case HttpExceptionStatus.ProtocolError:
-                    Console.WriteLine("Код состояния: {0}", (int)ex.HttpStatusCode);
-                    break;
-
-     case HttpExceptionStatus.ConnectFailure:
-         Console.WriteLine("Не удалось соединиться с HTTP-сервером.");
-         break;
-
-     case HttpExceptionStatus.SendFailure:
-         Console.WriteLine("Не удалось отправить запрос HTTP-серверу.");
-         break;
-
-     case HttpExceptionStatus.ReceiveFailure:
-         Console.WriteLine("Не удалось загрузить ответ от HTTP-сервера.");
-         break;
- }
-}
+                      // Отправляем запрос.
+                   HttpResponse response = request.Get("http://xmlcalendar.ru/data/ru/"+year+"/calendar.xml");
+                      // Принимаем тело сообщения в виде строки.
+                             content = response.ToString();
+                     }
+              using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                 {
 
 
-     }*/
+                         sw.Write( content);
+                 }
 
 
-    static public string[] collectionweekday = { "понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье" };
+             }
+                 catch (SmtpException ex)
+                     {
+                      Console.WriteLine("Произошла ошибка при работе с HTTP-сервером: {0}", ex.Message);
 
-    static public string[] collectionHours = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" };
+                       switch (ex.Status)
+                       {
+                         case HttpExceptionStatus.Other:
+                       Console.WriteLine("Неизвестная ошибка");
+                      break;
+
+                       case HttpExceptionStatus.ProtocolError:
+                        Console.WriteLine("Код состояния: {0}", (int)ex.HttpStatusCode);
+                        break;
+
+         case HttpExceptionStatus.ConnectFailure:
+             Console.WriteLine("Не удалось соединиться с HTTP-сервером.");
+             break;
+
+         case HttpExceptionStatus.SendFailure:
+             Console.WriteLine("Не удалось отправить запрос HTTP-серверу.");
+             break;
+
+         case HttpExceptionStatus.ReceiveFailure:
+             Console.WriteLine("Не удалось загрузить ответ от HTTP-сервера.");
+             break;
+     }
+    }
+
+
+         }*/
+
+
+        static public string[] collectionweekday = { "понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье" };
+
+        static public string[] collectionHours = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" };
 
 
 
 
 
 
-    /// <summary>
-    /// Главная точка входа для приложения.
-    /// </summary>
-    [STAThread]
+        /// <summary>
+        /// Главная точка входа для приложения.
+        /// </summary>
+        [STAThread]
 
-    static void Main()
-    {
-        Application.EnableVisualStyles();
-        Application.SetCompatibleTextRenderingDefault(false);
-        Application.Run(new Form1());
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+        }
+
+
+
     }
 
 
 
-}
 
-
-
-   
 }
