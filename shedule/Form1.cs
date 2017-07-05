@@ -161,7 +161,7 @@ namespace shedule
                         foreach (employee emp in Program.currentShop.employes)
                         {
 
-                            i = 6;
+                            i = 7;
                             foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                             {
                                 //  MessageBox.Show(emp.getTip() + "");

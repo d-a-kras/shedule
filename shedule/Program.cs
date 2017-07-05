@@ -1653,12 +1653,12 @@ namespace shedule
 
         public static void OptimCountSotr()
         {
-            if (!SozdanPrognoz)
+           /* if (!SozdanPrognoz)
             {
                 MessageBox.Show("Прогноз не создан");
                 return;
 
-            }
+            }*/
             currentShop.employes.Clear();
             int K, KP;
             if (currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
@@ -2316,19 +2316,19 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
-            if (connect)
+         //   if (connect)
             {
                 currentShop.daysSale.Clear();
                 SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
             }
-            else if(ExistFile) {
+         //   else if(ExistFile) {
                 SozdanPrognoz = ExistFile;
                 
-            }
-            else {
-                MessageBox.Show("Загрузите данные из файла или установите соединение с БД");
-                return;
-            }
+          //  }
+         //   else {
+         //       MessageBox.Show("Загрузите данные из файла или установите соединение с БД");
+      //          return;
+      //      }
 
             foreach (daySale ds in currentShop.daysSale)
             {
@@ -2337,7 +2337,7 @@ namespace shedule
 
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
                 PDSs.Add(new PrognDaySale(currentShop.getIdShop(), tdt, i));
                 foreach (daySale ds in currentShop.daysSale)
@@ -2383,9 +2383,12 @@ namespace shedule
                             Sclick += hs.getCountClick();
                             Scheck += hs.getCountCheck();
                         }
-                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                        Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
+                  
+
+                        Sclick = (int)Math.Ceiling((double)((Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100)));
+                        Scheck = (int)Math.Ceiling((double)((Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100)));
+                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Scheck, Sclick));
+                        //MessageBox.Show(Scheck+" ");
                     }
                 }
 
@@ -2471,8 +2474,8 @@ namespace shedule
                             Scheck += hs.getCountCheck();
                         }
 
-                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
-                        Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) * 100) * ((100 + snig_reklam) / 100);
+                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) /100) * ((100 + snig_reklam) / 100);
+                        Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100);
                         pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
                     }
                 }
