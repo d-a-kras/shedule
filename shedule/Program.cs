@@ -1474,6 +1474,8 @@ namespace shedule
         static public int rost_reklam = 4;
         static public int snig_reklam = 4;
         static public int progress = 0;
+        static public bool ExistFile = false;
+        
 
 
         // static public List<hourSale> HSS = new List<hourSale>();
@@ -2314,9 +2316,19 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
-
-            currentShop.daysSale.Clear();
-            SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
+            if (connect)
+            {
+                currentShop.daysSale.Clear();
+                SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
+            }
+            else if(ExistFile) {
+                SozdanPrognoz = ExistFile;
+                
+            }
+            else {
+                MessageBox.Show("Загрузите данные из файла или установите соединение с БД");
+                return;
+            }
 
             foreach (daySale ds in currentShop.daysSale)
             {

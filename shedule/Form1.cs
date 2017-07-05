@@ -1182,8 +1182,21 @@ namespace shedule
             try
             {
                 List<hourSale> hourSales = Helper.FillHourSalesList(filepath, Program.currentShop.getIdShop());
+                foreach (hourSale hs in hourSales) {
+                    if (Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()) != null)
+                    {
+                        Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()).Add(hs);
+                    }
+                    else {
+                        Program.currentShop.daysSale.Add(new daySale(Program.currentShop.getIdShop(),hs.getData()));
+                        Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()).Add(hs);
+                    }
+                }
+                MessageBox.Show("Чтение завершено");
+                Program.ExistFile = true;
                 
-                //Если вдруг папки нет, надо создать
+                
+               /* //Если вдруг папки нет, надо создать
                 string writePath = @"C:\1\Hours.txt";
 
                 if (!Directory.Exists(@"C:\1\"))
@@ -1219,7 +1232,7 @@ namespace shedule
                         }
                     }
                     MessageBox.Show("Запись завершена");
-                }
+                }*/
             }
             catch (FileNotFoundException ex)
             {
@@ -1262,6 +1275,7 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
+            Program.ExistFile = false;
             if (Program.currentShop.VarSmenBP.Count == 0)
             {
                 VarSmen.CreateVarSmen();
