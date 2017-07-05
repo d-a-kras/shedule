@@ -27,6 +27,7 @@ namespace shedule
         static public int[] chartY1;
         static public int Nday = 0;
         static string filename;
+        private bool errorOnExecuting = false;
 
         /*  public void ShowProizvCalendar() {
               foreach (DataForCalendary d in  Program.currentShop.DFCs)
@@ -101,6 +102,10 @@ namespace shedule
                             {
                                 MessageBox.Show("Расписание не создано");
                                 bw.CancelAsync();
+                                bw1.ReportProgress(0);
+                                bw.ReportProgress(0);
+                                bw1.CancelAsync();
+                                errorOnExecuting = true;
                             }
                             bg.ReportProgress(8);
                         }
@@ -109,7 +114,7 @@ namespace shedule
 
                             //  label3.Visible = false;
                             //  progressBar1.Visible = false;
-                            MessageBox.Show(ex.ToString());
+                            MessageBox.Show(ex.Message);
                             string[] s = new string[2];
                             // s = listBox1.Text.Split('_');
                             //  Program.currentShop = new Shop(Int16.Parse(s[0]), s[1]);
@@ -117,6 +122,10 @@ namespace shedule
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
                             bw.CancelAsync();
+                            bw.ReportProgress(0);
+                            bw1.ReportProgress(0);
+                            bw1.CancelAsync();
+                            errorOnExecuting = true;
                             return;
                         }
                         //  System.Drawing.Color color;
@@ -1557,6 +1566,17 @@ namespace shedule
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
             String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\TSR.txt";
+            if (!String.IsNullOrEmpty(tbKassirCount.Text) && !String.IsNullOrEmpty(tbLastHour.Text))
+            {
+                int kassirCount;
+                int lastHour;
+
+                if (int.TryParse(tbKassirCount.Text, out kassirCount) && int.TryParse(tbLastHour.Text, out lastHour))
+                {
+                    Program.MinKassirCount = kassirCount;
+                    Program.LastHourInInterval = lastHour;
+                }
+            }
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
 
@@ -1853,15 +1873,7 @@ namespace shedule
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Cancelled == true)
-            {
-
-            }
-            else if (!(e.Error == null))
-            {
-
-            }
-            else
+            if (!errorOnExecuting)
             {
                 progressBar1.Value = progressBar1.Maximum;
 
@@ -1930,6 +1942,10 @@ namespace shedule
                                 {
                                     MessageBox.Show("Расписание не создано");
                                     bw.CancelAsync();
+                                    bw.ReportProgress(0);
+                                    bw1.ReportProgress(0);
+                                    bw1.CancelAsync();
+                                    errorOnExecuting = true;
                                 }
 
                             }
@@ -1938,7 +1954,7 @@ namespace shedule
 
                                 //  label3.Visible = false;
                                 //  progressBar1.Visible = false;
-                                MessageBox.Show(ex.ToString());
+                                MessageBox.Show(ex.Message);
                                 string[] s = new string[2];
                                 // s = listBox1.Text.Split('_');
                                 //  Program.currentShop = new Shop(Int16.Parse(s[0]), s[1]);
@@ -1946,13 +1962,17 @@ namespace shedule
                                 Program.readTSR();
                                 MessageBox.Show("Расписание не создано");
                                 bw.CancelAsync();
+                                bw.ReportProgress(0);
+                                bw1.ReportProgress(0);
+                                bw1.CancelAsync();
+                                errorOnExecuting = true;
                                 return;
                             }
                             //  System.Drawing.Color color;
                             Excel.Range excelcells;
-                            Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-                            Microsoft.Office.Interop.Excel.Workbook ObjWorkBook;
-                            Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+                            Excel.Application ObjExcel = new Excel.Application();
+                            Workbook ObjWorkBook;
+                            Worksheet ObjWorkSheet;
 
                             ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
 
@@ -2121,27 +2141,18 @@ namespace shedule
                                     // ObjWorkSheet.Cells[j, 5].Interior.Color = color;
 
                                 }
-
                                 j++;
-
                             }
-
-
-
-
-
-
+                            
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
                             ObjExcel.DisplayAlerts = false;
                             ObjWorkBook.Saved = true;
                             try
                             {
-
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
-
-
+                                
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
@@ -2154,33 +2165,28 @@ namespace shedule
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                             }
-
-
-
-
-
                             break;
                         }
-
                     case 2:
                         {
 
                             try
                             {
                                 Program.createPrognoz();
-
-
-
-
                                 // 
                                 Program.OptimCountSotr();
 
                             }
-                            catch (Exception ex) { MessageBox.Show(ex.Message); }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                                bw.ReportProgress(0);
+                                bw.CancelAsync();
+                                bw1.ReportProgress(0);
+                                bw1.CancelAsync();
+                                errorOnExecuting = true;
+                            }
                             object misValue = System.Reflection.Missing.Value;
-
-
-
 
                             Excel.Range excelcells;
                             Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -2214,48 +2220,25 @@ namespace shedule
                                 ObjWorkSheet.Cells[3, i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
                                 i++;
                             }
-
-
-
-
-
-
-
-
-
-
+                            
                             Excel.Range chartRange;
 
-
-
                             Excel.ChartObjects xlCharts = (Excel.ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
-
                             Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
-
                             Excel.Chart chartPage = myChart.Chart;
-
-
 
                             chartRange = ObjWorkSheet.get_Range("a1", "c" + i);
 
                             chartPage.SetSourceData(chartRange, misValue);
 
                             chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-
-
-
-
-
-
-
-
+                            
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
                             ObjExcel.DisplayAlerts = false;
                             ObjWorkBook.Saved = true;
                             try
                             {
-
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
 
@@ -2273,11 +2256,6 @@ namespace shedule
                                 ObjExcel.Quit();
                             }
 
-
-
-
-
-
                             break;
                         }
                     case 3:
@@ -2286,19 +2264,20 @@ namespace shedule
                             try
                             {
                                 Program.createPrognoz();
-
-
-
-
                                 // 
                                 Program.OptimCountSotr();
 
                             }
-                            catch (Exception ex) { MessageBox.Show(ex.Message); }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                                bw.ReportProgress(0);
+                                bw.CancelAsync();
+                                bw1.ReportProgress(0);
+                                bw1.CancelAsync();
+                                errorOnExecuting = true;
+                            }
                             object misValue = System.Reflection.Missing.Value;
-
-
-
 
                             Excel.Range excelcells;
                             Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
@@ -2332,16 +2311,6 @@ namespace shedule
                                 ObjWorkSheet.Cells[3, i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
                                 i++;
                             }
-
-
-
-
-
-
-
-
-
-
                             Excel.Range chartRange;
 
 
@@ -2359,13 +2328,6 @@ namespace shedule
                             chartPage.SetSourceData(chartRange, misValue);
 
                             chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-
-
-
-
-
-
-
 
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
@@ -2391,14 +2353,17 @@ namespace shedule
                                 ObjExcel.Quit();
                             }
 
-
-
-
-
-
                             break;
                         }
-                    default: break;
+                    default:
+                    {
+                            bw.ReportProgress(0);
+                            bw.CancelAsync();
+                            bw1.ReportProgress(0);
+                            bw1.CancelAsync();
+                            errorOnExecuting = true;
+                            break;
+                    }
                 }
 
             }
