@@ -118,6 +118,11 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbKassirCount = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbLastHour = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -786,9 +791,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -886,6 +891,11 @@
             // 
             // panelDopusVarSmen
             // 
+            this.panelDopusVarSmen.Controls.Add(this.label8);
+            this.panelDopusVarSmen.Controls.Add(this.tbLastHour);
+            this.panelDopusVarSmen.Controls.Add(this.label7);
+            this.panelDopusVarSmen.Controls.Add(this.tbKassirCount);
+            this.panelDopusVarSmen.Controls.Add(this.label6);
             this.panelDopusVarSmen.Controls.Add(this.dataGridViewVarSmen);
             this.panelDopusVarSmen.Controls.Add(this.label1);
             this.panelDopusVarSmen.Controls.Add(this.buttonAplyVarSmen);
@@ -1041,6 +1051,47 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(360, 49);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(114, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Мин. число кассиров";
+            // 
+            // tbKassirCount
+            // 
+            this.tbKassirCount.Location = new System.Drawing.Point(364, 65);
+            this.tbKassirCount.Name = "tbKassirCount";
+            this.tbKassirCount.Size = new System.Drawing.Size(100, 20);
+            this.tbKassirCount.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(363, 93);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "в";
+            // 
+            // tbLastHour
+            // 
+            this.tbLastHour.Location = new System.Drawing.Point(378, 90);
+            this.tbLastHour.Name = "tbLastHour";
+            this.tbLastHour.Size = new System.Drawing.Size(29, 20);
+            this.tbLastHour.TabIndex = 6;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(413, 93);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(36, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "часов";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1190,6 +1241,11 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tbLastHour;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbKassirCount;
+        private System.Windows.Forms.Label label6;
     }
 }
 

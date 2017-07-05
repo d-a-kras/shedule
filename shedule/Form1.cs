@@ -1557,6 +1557,17 @@ namespace shedule
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
             String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\TSR.txt";
+            if (!String.IsNullOrEmpty(tbKassirCount.Text) && !String.IsNullOrEmpty(tbLastHour.Text))
+            {
+                int kassirCount;
+                int lastHour;
+
+                if (int.TryParse(tbKassirCount.Text, out kassirCount) && int.TryParse(tbLastHour.Text, out lastHour))
+                {
+                    Program.MinKassirCount = kassirCount;
+                    Program.LastHourInInterval = lastHour;
+                }
+            }
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
 
