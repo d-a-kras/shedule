@@ -2315,17 +2315,17 @@ namespace shedule
             DateTime d2 = DateTime.Now.AddDays(-30);
 
          //   if (connect)
-            {
+          //  {
                 currentShop.daysSale.Clear();
                 SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
-            }
+       //     }
          //   else if(ExistFile) {
-                SozdanPrognoz = ExistFile;
+        //        SozdanPrognoz = ExistFile;
                 
           //  }
-            else
-            {
-                throw new Exception("Загрузите данные из файла или установите соединение с БД");
+        //    else
+         //   {
+             //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
       //      }
 
             foreach (daySale ds in currentShop.daysSale)

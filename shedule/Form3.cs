@@ -36,6 +36,10 @@ namespace shedule
 
 
         }
-        
+
+        private void Form3_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ((Form1)this.Owner).Enabled = true;
+        }
     }
 }

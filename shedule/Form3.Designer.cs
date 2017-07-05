@@ -99,7 +99,7 @@
             this.MinimizeBox = false;
             this.Name = "Form3";
             this.Text = "Введите данные для доступа к БД";
-            this.Load += new System.EventHandler(this.Form3_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form3_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
