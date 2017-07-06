@@ -53,12 +53,10 @@ namespace shedule
             else
             {
                 progressBar1.Value = progressBar1.Maximum;
-
                 progressBar1.Visible = false;
                 label3.Visible = false;
-                listBox1.Enabled = true;
-
             }
+            EnableControlsOnFinish();
         }
 
 
@@ -307,21 +305,15 @@ namespace shedule
                         }
                         bg.ReportProgress(18);
 
-
-
-
-
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
                         ObjExcel.DisplayAlerts = false;
                         ObjWorkBook.Saved = true;
                         try
                         {
-
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                             // ObjWorkBook.SaveAs(filename);
-
-
+                            
                             ObjWorkBook.Close();
 
                             ObjExcel.Quit();
@@ -335,10 +327,6 @@ namespace shedule
                             ObjExcel.Quit();
                         }
                         bg.ReportProgress(18);
-
-
-
-
                         break;
                     }
                 case 1:
@@ -379,10 +367,6 @@ namespace shedule
                                 j++;
                             }
 
-
-
-
-
                             bg.ReportProgress(12);
 
                             Excel.Range chartRange;
@@ -406,10 +390,7 @@ namespace shedule
 
                         }
                         bg.ReportProgress(18);
-
-
-
-
+                        
 
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
@@ -437,11 +418,6 @@ namespace shedule
 
 
                         bg.ReportProgress(18);
-
-
-
-
-
                         break;
                     }
 
@@ -453,10 +429,7 @@ namespace shedule
                         {
                             Program.createPrognoz();
                             bg.ReportProgress(4);
-
-
-
-                            // 
+                           
                             Program.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
@@ -1252,9 +1225,7 @@ namespace shedule
                 MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 radioButtonIzBD.Checked = true;
                 radioButtonIzFile.Checked = false;
-
             }
-            
         }
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
@@ -1264,16 +1235,17 @@ namespace shedule
 
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
         {
-            buttonImportKasOper.Visible = false;
-            Form3 f3 = new Form3();
-            f3.Show(this);
-            this.Enabled = false;
+            if (radioButtonIzBD.Checked)
+            {
+                buttonImportKasOper.Visible = false;
+                Form3 f3 = new Form3();
+                f3.Show(this);
+                this.Enabled = false;
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-
             // Program.ReadConfigShop();
             //MessageBox.Show(listBox1.Text);
             Program.currentShop = null;
@@ -1337,9 +1309,7 @@ namespace shedule
         {
             Program.ReadTekChedule(openFileDialog1.FileName);
         }
-
-
-
+        
         private void buttonReadTekShedule_Click(object sender, EventArgs e)
         {
             // openFileDialog1.ShowDialog();
@@ -1356,8 +1326,6 @@ namespace shedule
 
         }
 
-
-
         private void buttonReadCalendarFromXML_Click(object sender, EventArgs e)
         {
             //  Program.ReadCalendarFromXML();
@@ -1369,17 +1337,13 @@ namespace shedule
             buttonRaspisanie.BackColor = Color.White;
             buttonKassov.BackColor = Color.White;
             panelCalendar.BringToFront();
-
-
+            
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
             Form4 f4 = new Form4();
             f4.Show();
         }
-
-
-
-
+        
         private void buttonTest_Click(object sender, EventArgs e)
         {
             Excel.Application xlApp;
@@ -1843,8 +1807,7 @@ namespace shedule
 
         public void CreateZip()
         {
-
-            listBox1.Enabled = false;
+            DisableControlsOnStart();
             progressBar1.Visible = true;
 
             label3.Text = "";
@@ -1854,12 +1817,9 @@ namespace shedule
             progressBar1.Step = 2;
             Program.TipExporta = comboBox1.SelectedIndex;
 
-
             bw1.RunWorkerAsync();
-
-
-
         }
+
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1872,6 +1832,7 @@ namespace shedule
                 listBox1.Enabled = true;
                 MessageBox.Show("Архив создан");
             }
+            EnableControlsOnFinish();
         }
 
 
@@ -2395,5 +2356,24 @@ namespace shedule
 
             }
         }
+
+
+        #region ControlsControl
+
+        public void DisableControlsOnStart()
+        {
+            listBox1.Enabled = false;
+            buttonMadd.Enabled = false;
+            buttonMdel.Enabled = false;
+        }
+
+        public void EnableControlsOnFinish()
+        {
+            listBox1.Enabled = true;
+            buttonMadd.Enabled = true;
+            buttonMdel.Enabled = true;
+        }
+
+        #endregion
     }
 }
