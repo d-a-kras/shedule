@@ -128,7 +128,7 @@ namespace shedule
                             errorOnExecuting = true;
                             return;
                         }
-                        //  System.Drawing.Color color;
+                          System.Drawing.Color color;
                         Excel.Range excelcells;
                         Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
                         Microsoft.Office.Interop.Excel.Workbook ObjWorkBook;
@@ -174,22 +174,17 @@ namespace shedule
                             foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                             {
                                 //  MessageBox.Show(emp.getTip() + "");
-                                /*  switch (emp.GetTip())
+                                  switch (emp.getID()/100)
                                   {
-                                      case 1: color = System.Drawing.Color.BlueViolet; break;
-                                      case 2: color = System.Drawing.Color.BlueViolet; break;
-                                      case 3: color = System.Drawing.Color.BlueViolet; break;
-                                      case 4: color = System.Drawing.Color.BlueViolet; break;
-                                      case 5: color = System.Drawing.Color.BlueViolet; break;
-                                      case 6: color = System.Drawing.Color.BlueViolet; break;
-                                      case 7: color = System.Drawing.Color.BlueViolet; break;
-                                      case 10: color = System.Drawing.Color.BlueViolet; break;
-                                      case 11: color = System.Drawing.Color.BlueViolet; break;
-                                      case 12: color = System.Drawing.Color.BlueViolet; break;
+                                      case 0: color = System.Drawing.Color.LightSkyBlue; break;
+                                      case 1: color = System.Drawing.Color.LightGreen; break;
+                                      case 2: color = System.Drawing.Color.DarkSeaGreen; break;
+                                      case 3: color = System.Drawing.Color.PaleGoldenrod; break;
+                                      
                                       default: color = System.Drawing.Color.White; break;
 
                                   }
-                                  ObjWorkSheet.Cells[j, i].Interior.Color = color;*/
+                                  ObjWorkSheet.Cells[j, i].Interior.Color = color;
 
                                 if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
                                 {
@@ -202,18 +197,18 @@ namespace shedule
                                 i++;
 
                                 ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
-                                //ObjWorkSheet.Cells[j, 1].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                                // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+                                 ObjWorkSheet.Cells[j, 2].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
                                 if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
                                 {
                                     ObjWorkSheet.Cells[j, 4] = Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
                                 }
                                 ObjWorkSheet.Cells[j, 5] = Program.normchas;
-                                ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.BlueViolet;
+                                ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.LightSkyBlue; ;
                                 ObjWorkSheet.Cells[j, 6] = emp.smens.Count;
-                                //   ObjWorkSheet.Cells[j, 6].Interior.Color = color;
+                                  ObjWorkSheet.Cells[j, 6].Interior.Color = color;
 
                             }
 
@@ -373,9 +368,9 @@ namespace shedule
                             int j = 1;
                             foreach (int x in twd.Chart.X)
                             {
-                                ObjWorkSheet.Cells[1, j] = x.ToString();
-                                ObjWorkSheet.Cells[2, j] = twd.DS.Chart.Y[j - 1];
-                                ObjWorkSheet.Cells[3, j] = twd.Chart.Y[j - 1];
+                                ObjWorkSheet.Cells[1, j] = x.ToString()+":00";
+                                ObjWorkSheet.Cells[2, j] = twd.DS.ChartCheck.Y[j - 1];
+                                ObjWorkSheet.Cells[3, j] = twd.DS.ChartClick.Y[j - 1];
                                 j++;
                             }
 
@@ -385,7 +380,8 @@ namespace shedule
 
                             bg.ReportProgress(12);
 
-                            Excel.Range chartRange;
+                            Excel.Range chartRange1;
+                            
 
 
 
@@ -397,11 +393,12 @@ namespace shedule
 
 
 
-                            chartRange = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
+                            chartRange1 = ObjWorkSheet.get_Range("a1", "C" + twd.DS.hoursSale.Count);
+                           // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
 
-                            chartPage.SetSourceData(chartRange, misValue);
+                            chartPage.SetSourceData(chartRange1, misValue);
 
-                            chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
+                            chartPage.ChartType = Excel.XlChartType.xlLineMarkers;
                             i++;
 
                         }
@@ -2395,5 +2392,7 @@ namespace shedule
 
             }
         }
+
+     
     }
 }
