@@ -1477,6 +1477,7 @@ namespace shedule
         static public int snig_reklam = 4;
         static public int progress = 0;
         static public bool ExistFile = false;
+        public static bool IsMpRezhim = false;
 
         public static int MinKassirCount = 2;
         public static int LastHourInInterval = -1;
@@ -2348,7 +2349,7 @@ namespace shedule
 
 
 
-        public static void createPrognoz()
+        public static void createPrognoz(bool isMp=false)
         {
             CheckDeistvFactors();
             currentShop.MouthPrognoz.Clear();
@@ -2361,7 +2362,15 @@ namespace shedule
          //   if (connect)
           //  {
                 currentShop.daysSale.Clear();
+            if (isMp)
+            {
+                SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShopFM());
+            }
+            else
+            {
                 SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
+            }
+            
        //     }
          //   else if(ExistFile) {
         //        SozdanPrognoz = ExistFile;
@@ -2614,8 +2623,8 @@ namespace shedule
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
             string sql;
-            // if (currentShop.getIdShop() == 0) {sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
+            if (currentShop.getIdShop() == 0) { sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
             //string sql = "select * from dbo.get_StatisticByShopsDayHour('301','17/01/01', '2017/01/20 23:59:00')";
             //string sql = "select * from dbo.get_StatisticByShopsDayHour('103','2017/05/01', '2017/15/09 23:59:00')";
             //MessageBox.Show(sql);

@@ -36,6 +36,8 @@ namespace shedule
                 ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
                 isConnected = true;
                 ((Form1)this.Owner).isConnected = true;
+                Program.login = login;
+                Program.password = password;
 
                 if (isThisTypeOfFunction)
                 {

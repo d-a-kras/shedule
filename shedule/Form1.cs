@@ -1297,7 +1297,7 @@ namespace shedule
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
         {
-            if (isConnected)
+            if (radioButtonIzFile.Checked)
             {
                 buttonImportKasOper.Visible = true;
             }
@@ -1621,7 +1621,7 @@ namespace shedule
             panelMultShops.BringToFront();
             Program.shops = new List<Shop>();
             Program.currentShop = null;
-
+            Program.IsMpRezhim = true;
 
             Program.currentShop = new Shop(0, "");
             Program.getListDate(DateTime.Today.Year);
@@ -1641,6 +1641,7 @@ namespace shedule
         private void buttonSingleShop_Click(object sender, EventArgs e)
         {
             panelSingleShop.BringToFront();
+            Program.IsMpRezhim = false;
             //Program.shops = new List<Shop>();
         }
 
@@ -1778,7 +1779,7 @@ namespace shedule
                 MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
                 return;
             }
-            if (!Program.ExistFile)
+            if (radioButtonIzFile.Checked && !Program.ExistFile)
             {
                 MessageBox.Show("Загрузите данные из файла");
                 return;
@@ -1853,7 +1854,7 @@ namespace shedule
                 MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
                 return;
             }
-            else if (!Program.ExistFile)
+            else if (radioButtonIzFile.Checked && !Program.ExistFile)
             {
                 MessageBox.Show("Загрузите данные из файла");
                 return;
@@ -2010,16 +2011,20 @@ namespace shedule
             }
             else if (e.Error != null)
             {
-                CloseProcessOnError();
+                
             }
             else
             {
-                progressBar1.Value = progressBar1.Maximum;
+                if (!errorOnExecuting)
+                {
+                    progressBar1.Value = progressBar1.Maximum;
 
-                progressBar1.Visible = false;
-                label3.Visible = false;
-                listBox1.Enabled = true;
-                MessageBox.Show("Архив создан");
+                    progressBar1.Visible = false;
+                    label3.Visible = false;
+                    listBox1.Enabled = true;
+                    MessageBox.Show("Архив создан");
+                }
+                
             }
             EnableControlsOnFinish();
 
@@ -2076,7 +2081,7 @@ namespace shedule
 
                             try
                             {
-                                Program.createPrognoz();
+                                Program.createPrognoz(Program.IsMpRezhim);
 
                                 // MessageBox.Show("Время создание примерно 2 минуты");
 
@@ -2556,6 +2561,8 @@ namespace shedule
 
         private void EnableControlsOnFinish()
         {
+            progressBar1.Visible = false;
+            label3.Visible = false;
             listBox1.Enabled = true;
             buttonMadd.Enabled = true;
             buttonMdel.Enabled = true;
@@ -2572,6 +2579,7 @@ namespace shedule
             bw.CancelAsync();
             bw1.ReportProgress(0);
             bw1.CancelAsync();
+            errorOnExecuting = true;
         }
 
         #endregion
