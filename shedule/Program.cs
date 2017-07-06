@@ -1479,6 +1479,8 @@ namespace shedule
         static public bool ExistFile = false;
         public static bool IsMpRezhim = false;
 
+        public static int BgProgress = 0;
+
         public static int MinKassirCount = 2;
         public static int LastHourInInterval = -1;
 

@@ -123,6 +123,7 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.lbProgressMessages = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -495,6 +496,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.lbProgressMessages);
             this.tabPage4.Controls.Add(this.label2);
             this.tabPage4.Controls.Add(this.progressBar2);
             this.tabPage4.Controls.Add(this.button13);
@@ -540,7 +542,7 @@
             "график на месяц",
             "Потребность в персонале",
             "Экономический эффект"});
-            this.comboBox1.Location = new System.Drawing.Point(131, 69);
+            this.comboBox1.Location = new System.Drawing.Point(146, 65);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(204, 21);
             this.comboBox1.TabIndex = 4;
@@ -549,12 +551,12 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label5.Location = new System.Drawing.Point(128, 12);
+            this.label5.Location = new System.Drawing.Point(121, 14);
             this.label5.MaximumSize = new System.Drawing.Size(250, 50);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(249, 34);
+            this.label5.Size = new System.Drawing.Size(248, 34);
             this.label5.TabIndex = 1;
-            this.label5.Text = "Что образить (с учетом факторов и параметров оптимизации)";
+            this.label5.Text = "Что отобразить (с учетом факторов и параметров оптимизации)";
             // 
             // buttonSingleShop
             // 
@@ -1095,6 +1097,15 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
+            // lbProgressMessages
+            // 
+            this.lbProgressMessages.AutoSize = true;
+            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
+            this.lbProgressMessages.Name = "lbProgressMessages";
+            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
+            this.lbProgressMessages.TabIndex = 9;
+            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1249,6 +1260,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbKassirCount;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbProgressMessages;
     }
 }
 

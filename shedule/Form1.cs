@@ -1007,14 +1007,15 @@ namespace shedule
         {
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
-            bw.DoWork += new DoWorkEventHandler(bw_DoWork);
-            bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
-            bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
+            bw.DoWork += bw_DoWork;
+            bw.ProgressChanged += bw_ProgressChanged;
+            bw.RunWorkerCompleted += bw_RunWorkerCompleted;
+
             bw1.WorkerReportsProgress = true;
             bw1.WorkerSupportsCancellation = true;
-            bw1.DoWork += new DoWorkEventHandler(bw1_DoWork);
-            bw1.ProgressChanged += new ProgressChangedEventHandler(bw1_ProgressChanged);
-            bw1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw1_RunWorkerCompleted);
+            bw1.DoWork += bw1_DoWork;
+            //bw1.ProgressChanged += bw1_ProgressChanged;
+            bw1.RunWorkerCompleted += bw1_RunWorkerCompleted;
             radioButtonObRabTime.Checked = true;
             Program.ReadListShops();
             // Program.setListShops();
@@ -1301,7 +1302,7 @@ namespace shedule
             {
                 buttonImportKasOper.Visible = true;
             }
-            
+
         }
 
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
@@ -1669,13 +1670,15 @@ namespace shedule
 
         private void buttonMdel_Click(object sender, EventArgs e)
         {
-            string ss = listBoxMPartShops.Text;
-            string[] aaa = new string[2];
+            string shopAddress = listBoxMPartShops.SelectedItem.ToString().Split('_')[1];
             if (listBoxMPartShops.Text != "")
             {
                 listBoxMPartShops.Items.Remove(listBoxMPartShops.SelectedItem);
-                Shop s = Program.shops.Find(t => t.getIdShopFM() == int.Parse(aaa[0]));
-                Program.shops.Remove(s);
+                Shop s = Program.shops.Find(t => t.getAddress() == shopAddress);
+                if (s != null && Program.shops.Contains(s))
+                {
+                    Program.shops.Remove(s);
+                }
             }
         }
 
@@ -2002,7 +2005,7 @@ namespace shedule
 
             bw1.RunWorkerAsync();
         }
-        
+
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled == true)
@@ -2011,7 +2014,7 @@ namespace shedule
             }
             else if (e.Error != null)
             {
-                
+
             }
             else
             {
@@ -2024,43 +2027,44 @@ namespace shedule
                     listBox1.Enabled = true;
                     MessageBox.Show("Архив создан");
                 }
-                
+
             }
             EnableControlsOnFinish();
 
         }
-
-
-
-        private void bw1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        
+        private void bg_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            switch (e.ProgressPercentage)
-            {
-                case 2:
-                    label3.Text = "Создание прогноза продаж";
-                    break;
-                case 4:
-                    label3.Text = "Подсчет оптимальной загруженности";
-                    break;
-                case 6:
-                    label3.Text = "Оптимальная расстановка смен";
-                    break;
-                case 8:
-                    label3.Text = "Запись в Excel";
-                    break;
-
-            }
             progressBar2.Value = e.ProgressPercentage;
         }
-
-
+        
+        private delegate void updateLabel3Delegate(string text);
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
-            int progr = 10 / Program.shops.Count;
+            int ShopStep = 100 / Program.shops.Count;
+            int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
+            
+            bg.ProgressChanged += bg_ProgressChanged;
 
+            switch (Program.TipExporta)
+            {
+                case 0:
+                    {
+                        TaskStep = ShopStep / 4;
+                        break;
+                    }
+                default:
+                {
+                        TaskStep = ShopStep / 3;
+                        break;
+                    }
+            }
+            int shopCounter = 0;
             foreach (Shop shop in Program.shops)
             {
+                shopCounter++;
+
                 Program.currentShop = shop;
                 Program.getListDate(DateTime.Today.Year);
                 Program.readTSR();
@@ -2070,32 +2074,31 @@ namespace shedule
                 {
                     VarSmen.CreateVarSmen();
                 }
-                bg.ReportProgress(progr += progr);
 
                 filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getIdShopFM() + ".xls";
                 switch (Program.TipExporta)
                 {
                     case 0:
                         {
-
-
                             try
                             {
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
+
                                 Program.createPrognoz(Program.IsMpRezhim);
+                                
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
 
-                                // MessageBox.Show("Время создание примерно 2 минуты");
-
-
-                                // 
                                 Program.OptimCountSotr();
-
-
-
-                                //  
+                                
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
                                 if (!Program.CreateSmens())
                                 {
                                     MessageBox.Show("Расписание не создано");
                                 }
+                                
 
                             }
                             catch (Exception ex)
@@ -2110,8 +2113,8 @@ namespace shedule
                                 //  Program.getListDate(DateTime.Today.Year);
                                 Program.readTSR();
                                 MessageBox.Show("Расписание не создано");
-                                CloseProcessOnError();
-                                return;
+                                //CloseProcessOnError();
+                                //return;
                             }
                             //  System.Drawing.Color color;
                             Excel.Range excelcells;
@@ -2302,12 +2305,15 @@ namespace shedule
                             ObjWorkBook.Saved = true;
                             try
                             {
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
 
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
+                                
                                 //  MessageBox.Show("Расписание создано");
 
                             }
@@ -2324,9 +2330,14 @@ namespace shedule
 
                             try
                             {
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
                                 Program.createPrognoz();
-                                // 
+                                
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
                                 Program.OptimCountSotr();
+                                
 
                             }
                             catch (Exception ex)
@@ -2387,15 +2398,14 @@ namespace shedule
                             ObjWorkBook.Saved = true;
                             try
                             {
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
-
-
+                                
                                 ObjWorkBook.Close(0);
-
                                 ObjExcel.Quit();
                                 MessageBox.Show("Файл создан");
-
                             }
                             catch (Exception ex)
                             {
@@ -2411,9 +2421,15 @@ namespace shedule
 
                             try
                             {
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
                                 Program.createPrognoz();
-                                // 
+
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
                                 Program.OptimCountSotr();
+                               
+                                
 
                             }
                             catch (Exception ex)
@@ -2481,11 +2497,11 @@ namespace shedule
                             ObjWorkBook.Saved = true;
                             try
                             {
-
+                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
+                                bg.ReportProgress(Program.BgProgress += TaskStep);
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
-
-
+                                
                                 ObjWorkBook.Close(0);
 
                                 ObjExcel.Quit();
@@ -2507,7 +2523,7 @@ namespace shedule
                             break;
                         }
                 }
-
+                bg.ReportProgress(ShopStep * shopCounter);
             }
             string startPath = Environment.CurrentDirectory + @"\mult\";
             string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
@@ -2548,6 +2564,12 @@ namespace shedule
             }
         }
 
+        private void ChangeLabel3Text(string text)
+        {
+            lbProgressMessages.Visible = true;
+            lbProgressMessages.Text = text;
+        }
+
 
 
         #region ControlsControl
@@ -2557,11 +2579,14 @@ namespace shedule
             listBox1.Enabled = false;
             buttonMadd.Enabled = false;
             buttonMdel.Enabled = false;
+            lbProgressMessages.Visible = true;
         }
 
         private void EnableControlsOnFinish()
         {
             progressBar1.Visible = false;
+            progressBar2.Visible = false;
+            lbProgressMessages.Visible = false;
             label3.Visible = false;
             listBox1.Enabled = true;
             buttonMadd.Enabled = true;
