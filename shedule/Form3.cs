@@ -13,8 +13,15 @@ namespace shedule
     public partial class Form3 : Form
     {
         private bool isConnected = false;
+        private bool isThisTypeOfFunction = false;
         public Form3()
         {
+            InitializeComponent();
+        }
+
+        public Form3(bool typeOfFunction)
+        {
+            isThisTypeOfFunction = typeOfFunction;
             InitializeComponent();
         }
 
@@ -30,6 +37,15 @@ namespace shedule
                 ((Form1)this.Owner).Enabled = true;
                 ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
                 isConnected = true;
+                ((Form1)this.Owner).isConnected = true;
+                Program.login = login;
+                Program.password = password;
+
+                if (isThisTypeOfFunction)
+                {
+                    ((Form1)this.Owner).CreateZip();
+                }
+
                 this.Close();
             }
             else
