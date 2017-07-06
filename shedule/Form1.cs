@@ -53,12 +53,10 @@ namespace shedule
             else
             {
                 progressBar1.Value = progressBar1.Maximum;
-
                 progressBar1.Visible = false;
                 label3.Visible = false;
-                listBox1.Enabled = true;
-
             }
+            EnableControlsOnFinish();
         }
 
 
@@ -420,11 +418,6 @@ namespace shedule
 
 
                         bg.ReportProgress(18);
-
-
-
-
-
                         break;
                     }
 
@@ -436,10 +429,7 @@ namespace shedule
                         {
                             Program.createPrognoz();
                             bg.ReportProgress(4);
-
-
-
-                            // 
+                           
                             Program.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
@@ -1827,8 +1817,7 @@ namespace shedule
 
         public void CreateZip()
         {
-
-            listBox1.Enabled = false;
+            DisableControlsOnStart();
             progressBar1.Visible = true;
 
             label3.Text = "";
@@ -1838,12 +1827,9 @@ namespace shedule
             progressBar1.Step = 2;
             Program.TipExporta = comboBox1.SelectedIndex;
 
-
             bw1.RunWorkerAsync();
-
-
-
         }
+
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1856,6 +1842,7 @@ namespace shedule
                 listBox1.Enabled = true;
                 MessageBox.Show("Архив создан");
             }
+            EnableControlsOnFinish();
         }
 
 
@@ -2348,5 +2335,24 @@ namespace shedule
             zf.AddDirectory(startPath);
             zf.Save(); //Сохраняем архив.
         }
+
+
+        #region ControlsControl
+
+        public void DisableControlsOnStart()
+        {
+            listBox1.Enabled = false;
+            buttonMadd.Enabled = false;
+            buttonMdel.Enabled = false;
+        }
+
+        public void EnableControlsOnFinish()
+        {
+            listBox1.Enabled = true;
+            buttonMadd.Enabled = true;
+            buttonMdel.Enabled = true;
+        }
+
+        #endregion
     }
 }
