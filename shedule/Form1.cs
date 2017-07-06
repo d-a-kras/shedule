@@ -1566,17 +1566,7 @@ namespace shedule
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
             String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\TSR.txt";
-            if (!String.IsNullOrEmpty(tbKassirCount.Text) && !String.IsNullOrEmpty(tbLastHour.Text))
-            {
-                int kassirCount;
-                int lastHour;
-
-                if (int.TryParse(tbKassirCount.Text, out kassirCount) && int.TryParse(tbLastHour.Text, out lastHour))
-                {
-                    Program.MinKassirCount = kassirCount;
-                    Program.LastHourInInterval = lastHour;
-                }
-            }
+           
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
 
@@ -2373,6 +2363,37 @@ namespace shedule
             ZipFile zf = new ZipFile(zipPath);
             zf.AddDirectory(startPath);
             zf.Save(); //Сохраняем архив.
+        }
+
+        private void tbKassirCount_TextChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(tbKassirCount.Text) )
+            {
+                int kassirCount;
+              
+                if (int.TryParse(tbKassirCount.Text, out kassirCount) )
+                {
+                    Program.currentShop.CountMin = kassirCount;
+                    
+                }
+
+            }
+            
+        }
+
+        private void tbLastHour_TextChanged(object sender, EventArgs e)
+        {
+            if ( !String.IsNullOrEmpty(tbLastHour.Text))
+            {
+               
+                int lastHour;
+                if ( int.TryParse(tbLastHour.Text, out lastHour))
+                {
+                   
+                    Program.currentShop.TimeMinRab = lastHour;
+                }
+
+            }
         }
     }
 }

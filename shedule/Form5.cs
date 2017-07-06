@@ -94,15 +94,22 @@ namespace shedule
             chart1.Series.Clear();
              chart1.Series.Add(new Series("Прогнозное количество кликов"));
             chart1.Series.Add(new Series("Прогнозное количество чеков"));
+            chart1.Series.Add(new Series("Прогнозное количество кликов2"));
+            chart1.Series.Add(new Series("Прогнозное количество чеков2"));
 
-            chart1.Series["Прогнозное количество кликов"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Renko;
+            chart1.Series["Прогнозное количество кликов"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             chart1.Series["Прогнозное количество кликов"].Color = System.Drawing.Color.Green;
-            chart1.Series["Прогнозное количество чеков"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Renko;
+            chart1.Series["Прогнозное количество чеков"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             chart1.Series["Прогнозное количество чеков"].Color = System.Drawing.Color.Red;
+            chart1.Series["Прогнозное количество кликов2"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            chart1.Series["Прогнозное количество кликов2"].Color = System.Drawing.Color.Green;
+            chart1.Series["Прогнозное количество чеков2"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            chart1.Series["Прогнозное количество чеков2"].Color = System.Drawing.Color.Red;
 
             chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
             chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
-
+           // chart1.Series["Прогнозное количество кликов2"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+           // chart1.Series["Прогнозное количество чеков2"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
 
         }
 

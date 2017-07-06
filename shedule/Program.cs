@@ -1053,6 +1053,8 @@ namespace shedule
 
         private int idShop;
         int idFM;
+        public int CountMin ;
+        public int TimeMinRab ; 
         private String address;
         public int getIdShop() { return idShop; }
         public int getIdShopFM() { return idFM; }
@@ -1508,6 +1510,48 @@ namespace shedule
         static public short ParametrOptimization;
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
+
+        static public void ReadMinRab() {
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
+
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                    string[] str = new string[2];
+                    string s;
+
+                    while ((s = sr.ReadLine()) != null)
+                    {
+
+                        str = s.Split('_');
+                       currentShop.CountMin = int.Parse(str[0]);
+                        currentShop.TimeMinRab = int.Parse(str[1]);
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                currentShop.CountMin = 2;
+                currentShop.TimeMinRab = 10; 
+                
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.Write(currentShop.CountMin+"_"+currentShop.TimeMinRab);
+                    
+                }
+                // MessageBox.Show(ex.ToString());
+
+            }
+        }
+
+       
 
 
         static public void newShop()
