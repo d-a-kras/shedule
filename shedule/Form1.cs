@@ -307,21 +307,15 @@ namespace shedule
                         }
                         bg.ReportProgress(18);
 
-
-
-
-
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
                         ObjExcel.DisplayAlerts = false;
                         ObjWorkBook.Saved = true;
                         try
                         {
-
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                             // ObjWorkBook.SaveAs(filename);
-
-
+                            
                             ObjWorkBook.Close();
 
                             ObjExcel.Quit();
@@ -335,10 +329,6 @@ namespace shedule
                             ObjExcel.Quit();
                         }
                         bg.ReportProgress(18);
-
-
-
-
                         break;
                     }
                 case 1:
@@ -379,10 +369,6 @@ namespace shedule
                                 j++;
                             }
 
-
-
-
-
                             bg.ReportProgress(12);
 
                             Excel.Range chartRange;
@@ -406,10 +392,7 @@ namespace shedule
 
                         }
                         bg.ReportProgress(18);
-
-
-
-
+                        
 
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
@@ -1364,17 +1347,13 @@ namespace shedule
             buttonRaspisanie.BackColor = Color.White;
             buttonKassov.BackColor = Color.White;
             panelCalendar.BringToFront();
-
-
+            
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
             Form4 f4 = new Form4();
             f4.Show();
         }
-
-
-
-
+        
         private void buttonTest_Click(object sender, EventArgs e)
         {
             Excel.Application xlApp;

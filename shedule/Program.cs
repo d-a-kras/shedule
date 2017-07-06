@@ -3032,18 +3032,23 @@ namespace shedule
                     }
                 }
 
+                string directoryPath = readPath.Split(new string[] {"\\"}, StringSplitOptions.None)
+                    .Reverse()
+                    .Skip(1)
+                    .Reverse()
+                    .Aggregate((prev, current) => prev + "\\" + current);
+
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-
                     foreach (DataForCalendary d in currentShop.DFCs)
                         sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
                 }
 
             }
-
-
-
-
         }
 
         static public void ReadConfigShop(int id)
