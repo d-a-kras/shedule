@@ -2059,13 +2059,15 @@ namespace shedule
             int progr = 10 / Program.shops.Count;
             BackgroundWorker bg = sender as BackgroundWorker;
 
+            Program.currentShop = new Shop(0,"");
+            Program.getListDate(DateTime.Today.Year);
+            Program.readTSR();
+            Program.readFactors();
+            Program.readVarSmen();
+
             foreach (Shop shop in Program.shops)
             {
-                Program.currentShop = shop;
-                Program.getListDate(DateTime.Today.Year);
-                Program.readTSR();
-                Program.readFactors();
-                Program.readVarSmen();
+                Program.currentShop.setIdShop( shop.getIdShopFM());
                 if (Program.currentShop.VarSmenBP.Count == 0)
                 {
                     VarSmen.CreateVarSmen();
