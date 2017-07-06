@@ -28,6 +28,7 @@ namespace shedule
         static public int Nday = 0;
         static string filename;
         private bool errorOnExecuting = false;
+        public bool isConnected = false;
 
         /*  public void ShowProizvCalendar() {
               foreach (DataForCalendary d in  Program.currentShop.DFCs)
@@ -1291,19 +1292,21 @@ namespace shedule
             {
                 MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                radioButtonIzBD.Checked = true;
-                radioButtonIzFile.Checked = false;
             }
         }
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
         {
-            buttonImportKasOper.Visible = true;
+            if (isConnected)
+            {
+                buttonImportKasOper.Visible = true;
+            }
+            
         }
 
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonIzBD.Checked)
+            if (radioButtonIzBD.Checked && !isConnected)
             {
                 buttonImportKasOper.Visible = false;
                 Form3 f3 = new Form3();
@@ -1840,6 +1843,11 @@ namespace shedule
 
         private void button6_Click_1(object sender, EventArgs e)
         {
+            if (comboBox3.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите что отобразить!");
+                return;
+            }
             if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
             {
                 MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");

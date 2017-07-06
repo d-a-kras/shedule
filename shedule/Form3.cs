@@ -35,6 +35,7 @@ namespace shedule
                 ((Form1)this.Owner).Enabled = true;
                 ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
                 isConnected = true;
+                ((Form1)this.Owner).isConnected = true;
 
                 if (isThisTypeOfFunction)
                 {
@@ -55,7 +56,7 @@ namespace shedule
 
         private void Form3_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (isConnected)
+            if (!isConnected)
             {
                 ((Form1)this.Owner).radioButtonIzFile.Checked = true;
             }
