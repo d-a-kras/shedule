@@ -12,6 +12,7 @@ namespace shedule
 {
     public partial class Form3 : Form
     {
+        private bool isConnected = false;
         public Form3()
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace shedule
             {
                 ((Form1)this.Owner).Enabled = true;
                 ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
+                isConnected = true;
                 this.Close();
             }
             else
@@ -40,7 +42,11 @@ namespace shedule
 
         private void Form3_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ((Form1) this.Owner).radioButtonIzFile.Checked = true;
+            if (isConnected)
+            {
+                ((Form1)this.Owner).radioButtonIzFile.Checked = true;
+            }
+            
             ((Form1)this.Owner).Enabled = true;
         }
     }
