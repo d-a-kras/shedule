@@ -30,6 +30,7 @@ namespace shedule
             }
             else
             {
+                ((Form1)this.Owner).radioButtonIzFile.Checked = true;
                 ((Form1)this.Owner).Enabled = true;
                 this.Close();
             }
@@ -39,6 +40,7 @@ namespace shedule
 
         private void Form3_FormClosed(object sender, FormClosedEventArgs e)
         {
+            ((Form1) this.Owner).radioButtonIzFile.Checked = true;
             ((Form1)this.Owner).Enabled = true;
         }
     }
