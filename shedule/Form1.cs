@@ -123,10 +123,10 @@ namespace shedule
                             //  Program.getListDate(DateTime.Today.Year);
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
-
+                            CloseProcessOnError();
                             return;
                         }
-                          System.Drawing.Color color;
+                        System.Drawing.Color color;
                         Excel.Range excelcells;
                         Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
                         Microsoft.Office.Interop.Excel.Workbook ObjWorkBook;
@@ -172,17 +172,17 @@ namespace shedule
                             foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                             {
                                 //  MessageBox.Show(emp.getTip() + "");
-                                  switch (emp.getID()/100)
-                                  {
-                                      case 0: color = System.Drawing.Color.LightSkyBlue; break;
-                                      case 1: color = System.Drawing.Color.LightGreen; break;
-                                      case 2: color = System.Drawing.Color.DarkSeaGreen; break;
-                                      case 3: color = System.Drawing.Color.PaleGoldenrod; break;
-                                      
-                                      default: color = System.Drawing.Color.White; break;
+                                switch (emp.getID() / 100)
+                                {
+                                    case 0: color = System.Drawing.Color.LightSkyBlue; break;
+                                    case 1: color = System.Drawing.Color.LightGreen; break;
+                                    case 2: color = System.Drawing.Color.DarkSeaGreen; break;
+                                    case 3: color = System.Drawing.Color.PaleGoldenrod; break;
 
-                                  }
-                                  ObjWorkSheet.Cells[j, i].Interior.Color = color;
+                                    default: color = System.Drawing.Color.White; break;
+
+                                }
+                                ObjWorkSheet.Cells[j, i].Interior.Color = color;
 
                                 if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
                                 {
@@ -199,7 +199,7 @@ namespace shedule
                                 ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
                                 ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                                 ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 2].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
                                 if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
                                 {
@@ -209,7 +209,7 @@ namespace shedule
                                 ObjWorkSheet.Cells[j, 5] = Program.normchas;
                                 ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.LightSkyBlue; ;
                                 ObjWorkSheet.Cells[j, 6] = emp.smens.Count;
-                                  ObjWorkSheet.Cells[j, 6].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 6].Interior.Color = color;
 
                             }
 
@@ -360,7 +360,7 @@ namespace shedule
                             int j = 1;
                             foreach (int x in twd.Chart.X)
                             {
-                                ObjWorkSheet.Cells[1, j] = x.ToString()+":00";
+                                ObjWorkSheet.Cells[1, j] = x.ToString() + ":00";
                                 ObjWorkSheet.Cells[2, j] = twd.DS.ChartCheck.Y[j - 1];
                                 ObjWorkSheet.Cells[3, j] = twd.DS.ChartClick.Y[j - 1];
                                 j++;
@@ -369,7 +369,7 @@ namespace shedule
                             bg.ReportProgress(12);
 
                             Excel.Range chartRange1;
-                            
+
 
 
 
@@ -382,7 +382,7 @@ namespace shedule
 
 
                             chartRange1 = ObjWorkSheet.get_Range("a1", "C" + twd.DS.hoursSale.Count);
-                           // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
+                            // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
 
                             chartPage.SetSourceData(chartRange1, misValue);
 
@@ -436,6 +436,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
+                            CloseProcessOnError();
                             MessageBox.Show(ex.Message);
                         }
                         object misValue = System.Reflection.Missing.Value;
@@ -560,6 +561,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
+                            CloseProcessOnError();
                             MessageBox.Show(ex.Message);
                         }
                         object misValue = System.Reflection.Missing.Value;
@@ -1715,6 +1717,11 @@ namespace shedule
 
         private void buttonExport1_Click(object sender, EventArgs e)
         {
+            if (comboBox3.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите что отобразить!");
+                return;
+            }
             saveFileDialog1.DefaultExt = ".XLS";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
@@ -1763,20 +1770,37 @@ namespace shedule
                 return;
             // получаем выбранный файл
 
-            filename = saveFileDialog1.FileName;
-            listBox1.Enabled = false;
-            progressBar1.Visible = true;
+            if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
+            {
+                MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
+                return;
+            }
+            if (!Program.ExistFile)
+            {
+                MessageBox.Show("Загрузите данные из файла");
+                return;
+            }
 
-            label3.Text = "";
-            label3.Visible = true;
-            progressBar1.Maximum = 20;
-            progressBar1.Minimum = 0;
-            progressBar1.Step = 2;
-            ReadTipOptimizacii();
+            try
+            {
+                filename = saveFileDialog1.FileName;
+                listBox1.Enabled = false;
+                progressBar1.Visible = true;
 
-            bw.RunWorkerAsync();
+                label3.Text = "";
+                label3.Visible = true;
+                progressBar1.Maximum = 20;
+                progressBar1.Minimum = 0;
+                progressBar1.Step = 2;
+                ReadTipOptimizacii();
 
-
+                bw.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            {
+                CloseProcessOnError();
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
@@ -1821,7 +1845,8 @@ namespace shedule
                 MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
                 return;
             }
-            else if(!Program.ExistFile){
+            else if (!Program.ExistFile)
+            {
                 MessageBox.Show("Загрузите данные из файла");
                 return;
             }
@@ -1940,7 +1965,17 @@ namespace shedule
         private void button13_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Program.shops.Count + "");
-            CreateZip();
+            if (Program.isConnected(Program.login, Program.password))
+            {
+                CreateZip();
+            }
+            else
+            {
+                Form3 f3 = new Form3(true);
+                f3.Show(this);
+                this.Enabled = false;
+            }
+
         }
 
 
@@ -1958,8 +1993,7 @@ namespace shedule
 
             bw1.RunWorkerAsync();
         }
-
-
+        
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled == true)
@@ -2063,6 +2097,7 @@ namespace shedule
                                 //  Program.getListDate(DateTime.Today.Year);
                                 Program.readTSR();
                                 MessageBox.Show("Расписание не создано");
+                                CloseProcessOnError();
                                 return;
                             }
                             //  System.Drawing.Color color;
@@ -2370,6 +2405,7 @@ namespace shedule
                             }
                             catch (Exception ex)
                             {
+                                CloseProcessOnError();
                                 MessageBox.Show(ex.Message);
                             }
                             object misValue = System.Reflection.Missing.Value;
@@ -2454,7 +2490,7 @@ namespace shedule
                         }
                     default:
                         {
-
+                            CloseProcessOnError();
                             break;
                         }
                 }
@@ -2499,7 +2535,7 @@ namespace shedule
             }
         }
 
-     
+
 
         #region ControlsControl
 
