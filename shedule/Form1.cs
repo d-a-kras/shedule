@@ -1252,9 +1252,7 @@ namespace shedule
                 MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 radioButtonIzBD.Checked = true;
                 radioButtonIzFile.Checked = false;
-
             }
-            
         }
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
@@ -1264,16 +1262,17 @@ namespace shedule
 
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
         {
-            buttonImportKasOper.Visible = false;
-            Form3 f3 = new Form3();
-            f3.Show(this);
-            this.Enabled = false;
+            if (radioButtonIzBD.Checked)
+            {
+                buttonImportKasOper.Visible = false;
+                Form3 f3 = new Form3();
+                f3.Show(this);
+                this.Enabled = false;
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-
             // Program.ReadConfigShop();
             //MessageBox.Show(listBox1.Text);
             Program.currentShop = null;
@@ -1337,9 +1336,7 @@ namespace shedule
         {
             Program.ReadTekChedule(openFileDialog1.FileName);
         }
-
-
-
+        
         private void buttonReadTekShedule_Click(object sender, EventArgs e)
         {
             // openFileDialog1.ShowDialog();
@@ -1355,8 +1352,6 @@ namespace shedule
 
 
         }
-
-
 
         private void buttonReadCalendarFromXML_Click(object sender, EventArgs e)
         {
