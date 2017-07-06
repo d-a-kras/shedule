@@ -46,19 +46,18 @@ namespace shedule
             {
 
             }
-            else if (!(e.Error == null))
+            else if (e.Error != null)
             {
-
+                CloseProcessOnError();
             }
             else
             {
                 progressBar1.Value = progressBar1.Maximum;
-
                 progressBar1.Visible = false;
                 label3.Visible = false;
-                listBox1.Enabled = true;
-
             }
+
+            EnableControlsOnFinish();
         }
 
 
@@ -67,10 +66,18 @@ namespace shedule
         {
             switch (e.ProgressPercentage)
             {
-                case 2: label3.Text = "Создание прогноза продаж"; break;
-                case 4: label3.Text = "Подсчет оптимальной загруженности"; break;
-                case 6: label3.Text = "Оптимальная расстановка смен"; break;
-                case 8: label3.Text = "Запись в Excel"; break;
+                case 2:
+                    label3.Text = "Создание прогноза продаж";
+                    break;
+                case 4:
+                    label3.Text = "Подсчет оптимальной загруженности";
+                    break;
+                case 6:
+                    label3.Text = "Оптимальная расстановка смен";
+                    break;
+                case 8:
+                    label3.Text = "Запись в Excel";
+                    break;
 
             }
             progressBar1.Value = e.ProgressPercentage;
@@ -101,11 +108,6 @@ namespace shedule
                             if (!Program.CreateSmens())
                             {
                                 MessageBox.Show("Расписание не создано");
-                                bw.CancelAsync();
-                                bw1.ReportProgress(0);
-                                bw.ReportProgress(0);
-                                bw1.CancelAsync();
-                                errorOnExecuting = true;
                             }
                             bg.ReportProgress(8);
                         }
@@ -121,11 +123,7 @@ namespace shedule
                             //  Program.getListDate(DateTime.Today.Year);
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
-                            bw.CancelAsync();
-                            bw.ReportProgress(0);
-                            bw1.ReportProgress(0);
-                            bw1.CancelAsync();
-                            errorOnExecuting = true;
+
                             return;
                         }
                           System.Drawing.Color color;
@@ -190,7 +188,9 @@ namespace shedule
                                 {
                                     // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
 
-                                    ObjWorkSheet.Cells[j, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
+                                    ObjWorkSheet.Cells[j, i] =
+                                        emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " +
+                                        emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
                                 }
                                 //else
                                 // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
@@ -203,7 +203,8 @@ namespace shedule
                                 ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
                                 if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
                                 {
-                                    ObjWorkSheet.Cells[j, 4] = Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
+                                    ObjWorkSheet.Cells[j, 4] =
+                                        Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
                                 }
                                 ObjWorkSheet.Cells[j, 5] = Program.normchas;
                                 ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.LightSkyBlue; ;
@@ -278,7 +279,8 @@ namespace shedule
                                 {
                                     // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
                                     //  ObjWorkSheet.Cells[j, i].Interior.Color = color;
-                                    ObjWorkSheet.Cells[j, i] = (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
+                                    ObjWorkSheet.Cells[j, i] =
+                                        (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
                                 }
                                 //else
                                 // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
@@ -302,20 +304,14 @@ namespace shedule
                         }
                         bg.ReportProgress(18);
 
-
-
-
-
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
                         ObjExcel.DisplayAlerts = false;
                         ObjWorkBook.Saved = true;
                         try
                         {
-
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                             // ObjWorkBook.SaveAs(filename);
-
 
                             ObjWorkBook.Close();
 
@@ -330,10 +326,6 @@ namespace shedule
                             ObjExcel.Quit();
                         }
                         bg.ReportProgress(18);
-
-
-
-
                         break;
                     }
                 case 1:
@@ -374,10 +366,6 @@ namespace shedule
                                 j++;
                             }
 
-
-
-
-
                             bg.ReportProgress(12);
 
                             Excel.Range chartRange1;
@@ -403,9 +391,6 @@ namespace shedule
 
                         }
                         bg.ReportProgress(18);
-
-
-
 
 
                         ObjExcel.Visible = false;
@@ -434,11 +419,6 @@ namespace shedule
 
 
                         bg.ReportProgress(18);
-
-
-
-
-
                         break;
                     }
 
@@ -451,13 +431,13 @@ namespace shedule
                             Program.createPrognoz();
                             bg.ReportProgress(4);
 
-
-
-                            // 
                             Program.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
-                        catch (Exception ex) { MessageBox.Show(ex.Message); }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                         object misValue = System.Reflection.Missing.Value;
 
 
@@ -492,7 +472,8 @@ namespace shedule
                             // chartY1[i] = tsr.getCount() * tsr.getZarp();
                             ObjWorkSheet.Cells[2, i] = tsr.getCount();
                             //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
-                            ObjWorkSheet.Cells[3, i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
+                            ObjWorkSheet.Cells[3, i] =
+                                Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
                             i++;
                         }
 
@@ -577,7 +558,10 @@ namespace shedule
                             Program.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
-                        catch (Exception ex) { MessageBox.Show(ex.Message); }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
                         object misValue = System.Reflection.Missing.Value;
 
 
@@ -612,7 +596,8 @@ namespace shedule
                             // chartY1[i] = tsr.getCount() * tsr.getZarp();
                             ObjWorkSheet.Cells[2, i] = tsr.getCount() * tsr.getZarp();
                             //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
-                            ObjWorkSheet.Cells[3, i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
+                            ObjWorkSheet.Cells[3, i] =
+                                Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
                             i++;
                         }
 
@@ -682,7 +667,8 @@ namespace shedule
 
                         break;
                     }
-                default: break;
+                default:
+                    break;
             }
 
         }
@@ -889,9 +875,11 @@ namespace shedule
             for (int i = 0; i < count; i++)
             {
 
-                System.Drawing.Point point1 = new System.Drawing.Point(Convert.ToInt32(x * kx), Convert.ToInt32(y[i] * ky));
+                System.Drawing.Point point1 = new System.Drawing.Point(Convert.ToInt32(x * kx),
+                    Convert.ToInt32(y[i] * ky));
                 x++;
-                System.Drawing.Point point2 = new System.Drawing.Point(Convert.ToInt32(kx * x), Convert.ToInt32(y[i + 1] * ky));
+                System.Drawing.Point point2 = new System.Drawing.Point(Convert.ToInt32(kx * x),
+                    Convert.ToInt32(y[i + 1] * ky));
                 //   g.DrawLine(myPen, point1, point2);
 
 
@@ -945,7 +933,8 @@ namespace shedule
             {
                 List<hourSale> hSs = new List<hourSale>();
                 hourSale h;
-                var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+                var connectionString =
+                    "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
                 string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -959,7 +948,8 @@ namespace shedule
 
                         while (reader.Read())
                         {
-                            h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                            h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2),
+                                reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
                             hSs.Add(h);
 
                         }
@@ -978,7 +968,11 @@ namespace shedule
                         int max = 0;
                         int min = 100000;
                         float sr = 0;
-                        hss[i, j] = hSs.FindAll(t => ((t.getWeekday() == Program.collectionweekday[i]) && (t.getNHour() == Program.collectionHours[j])));
+                        hss[i, j] =
+                            hSs.FindAll(
+                                t =>
+                                    ((t.getWeekday() == Program.collectionweekday[i]) &&
+                                     (t.getNHour() == Program.collectionHours[j])));
                         if (hss[i, j].Count != 0)
                         {
                             foreach (hourSale hh in hss[i, j])
@@ -991,7 +985,9 @@ namespace shedule
                                 // sw.WriteLine(hh.getWeekday()+" "+hh.getNHour()+" "+hh.getCountClick());
                             }
                             sr = sr / (hss[i, j].Count);
-                            sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] + " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min + " максимум=" + max);
+                            sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] +
+                                         " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min +
+                                         " максимум=" + max);
                         }
 
                     }
@@ -1040,7 +1036,9 @@ namespace shedule
 
 
             //if (/*Program.isConnect()*/true) {   }
-            labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count; labelStatus2.Text = " режим работы локальный"; radioButtonIzFile.Checked = true;
+            labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count;
+            labelStatus2.Text = " режим работы локальный";
+            radioButtonIzFile.Checked = true;
         }
 
 
@@ -1079,7 +1077,9 @@ namespace shedule
             buttonFactors.BackColor = Color.White;
             buttonVariantsSmen.BackColor = Color.White;
             panelParamOptim.BringToFront();
-            String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/parametrOptimization.txt"; ;
+            String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() +
+                              "/parametrOptimization.txt";
+            ;
             try
             {
                 using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
@@ -1099,11 +1099,20 @@ namespace shedule
 
             switch (Program.ParametrOptimization)
             {
-                case 0: break;
-                case 1: radioButtonMinFondOpl.Select(); break;
-                case 2: radioButtonMinTime.Select(); break;
-                case 3: radioButtonObRabTime.Select(); break;
-                default: Program.ParametrOptimization = 0; break;
+                case 0:
+                    break;
+                case 1:
+                    radioButtonMinFondOpl.Select();
+                    break;
+                case 2:
+                    radioButtonMinTime.Select();
+                    break;
+                case 3:
+                    radioButtonObRabTime.Select();
+                    break;
+                default:
+                    Program.ParametrOptimization = 0;
+                    break;
             }
 
         }
@@ -1116,61 +1125,91 @@ namespace shedule
         private void textBox11_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox12_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox21_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox22_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox31_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox32_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox41_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox42_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox51_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void textBox52_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!(Char.IsDigit(number) || number == (char)Keys.Back)) { e.Handled = true; }
+            if (!(Char.IsDigit(number) || number == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void buttonImportKasOper_Click(object sender, EventArgs e)
@@ -1188,57 +1227,59 @@ namespace shedule
             try
             {
                 List<hourSale> hourSales = Helper.FillHourSalesList(filepath, Program.currentShop.getIdShop());
-                foreach (hourSale hs in hourSales) {
+                foreach (hourSale hs in hourSales)
+                {
                     if (Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()) != null)
                     {
                         Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()).Add(hs);
                     }
-                    else {
-                        Program.currentShop.daysSale.Add(new daySale(Program.currentShop.getIdShop(),hs.getData()));
+                    else
+                    {
+                        Program.currentShop.daysSale.Add(new daySale(Program.currentShop.getIdShop(), hs.getData()));
                         Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()).Add(hs);
                     }
                 }
                 MessageBox.Show("Чтение завершено");
                 Program.ExistFile = true;
-                
-                
-               /* //Если вдруг папки нет, надо создать
-                string writePath = @"C:\1\Hours.txt";
 
-                if (!Directory.Exists(@"C:\1\"))
-                {
-                    Directory.CreateDirectory(@"C:\1\");
-                }
-                
-                using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
-                {
-                    List<hourSale>[,] hss = new List<hourSale>[7, 24];
-                    for (int i = 0; i < Program.collectionweekday.Length; i++)
-                    {
-                        for (int j = 0; j < Program.collectionHours.Length; j++)
-                        {
-                            int max = 0;
-                            int min = 100000;
-                            float sr = 0;
-                            hss[i, j] = hourSales.FindAll(t => ((t.getWeekday() == Program.collectionweekday[i]) && (t.getNHour() == Program.collectionHours[j])));
-                            if (hss[i, j].Count != 0)
-                            {
-                                foreach (hourSale hh in hss[i, j])
-                                {
-                                    if (hh.getMinut() < min)
-                                        min = hh.getMinut();
-                                    if (hh.getMinut() > max)
-                                        max = hh.getMinut();
-                                    sr += hh.getMinut();
-                                    // sw.WriteLine(hh.getWeekday()+" "+hh.getNHour()+" "+hh.getCountClick());
-                                }
-                                sr = sr / (hss[i, j].Count);
-                                sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] + " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min + " максимум=" + max);
-                            }
-                        }
-                    }
-                    MessageBox.Show("Запись завершена");
-                }*/
+
+                /* //Если вдруг папки нет, надо создать
+                 string writePath = @"C:\1\Hours.txt";
+ 
+                 if (!Directory.Exists(@"C:\1\"))
+                 {
+                     Directory.CreateDirectory(@"C:\1\");
+                 }
+                 
+                 using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                 {
+                     List<hourSale>[,] hss = new List<hourSale>[7, 24];
+                     for (int i = 0; i < Program.collectionweekday.Length; i++)
+                     {
+                         for (int j = 0; j < Program.collectionHours.Length; j++)
+                         {
+                             int max = 0;
+                             int min = 100000;
+                             float sr = 0;
+                             hss[i, j] = hourSales.FindAll(t => ((t.getWeekday() == Program.collectionweekday[i]) && (t.getNHour() == Program.collectionHours[j])));
+                             if (hss[i, j].Count != 0)
+                             {
+                                 foreach (hourSale hh in hss[i, j])
+                                 {
+                                     if (hh.getMinut() < min)
+                                         min = hh.getMinut();
+                                     if (hh.getMinut() > max)
+                                         max = hh.getMinut();
+                                     sr += hh.getMinut();
+                                     // sw.WriteLine(hh.getWeekday()+" "+hh.getNHour()+" "+hh.getCountClick());
+                                 }
+                                 sr = sr / (hss[i, j].Count);
+                                 sw.WriteLine(Program.collectionweekday[i] + " Время=" + Program.collectionHours[j + 1] + " Количество данных=" + hss[i, j].Count + " среднее=" + sr + " минимум=" + min + " максимум=" + max);
+                             }
+                         }
+                     }
+                     MessageBox.Show("Запись завершена");
+                 }*/
             }
             catch (FileNotFoundException ex)
             {
@@ -1246,12 +1287,11 @@ namespace shedule
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 radioButtonIzBD.Checked = true;
                 radioButtonIzFile.Checked = false;
-
             }
-            
         }
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
@@ -1261,16 +1301,17 @@ namespace shedule
 
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
         {
-            buttonImportKasOper.Visible = false;
-            Form3 f3 = new Form3();
-            f3.Show(this);
-            this.Enabled = false;
+            if (radioButtonIzBD.Checked)
+            {
+                buttonImportKasOper.Visible = false;
+                Form3 f3 = new Form3();
+                f3.Show(this);
+                this.Enabled = false;
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-
             // Program.ReadConfigShop();
             //MessageBox.Show(listBox1.Text);
             Program.currentShop = null;
@@ -1327,15 +1368,17 @@ namespace shedule
                 Program.currentShop.templates[Nday].DS.CreateChartDaySale();
 
             }
-            else { Nday--; MessageBox.Show("Больше данных нет"); }
+            else
+            {
+                Nday--;
+                MessageBox.Show("Больше данных нет");
+            }
         }
 
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Program.ReadTekChedule(openFileDialog1.FileName);
         }
-
-
 
         private void buttonReadTekShedule_Click(object sender, EventArgs e)
         {
@@ -1353,8 +1396,6 @@ namespace shedule
 
         }
 
-
-
         private void buttonReadCalendarFromXML_Click(object sender, EventArgs e)
         {
             //  Program.ReadCalendarFromXML();
@@ -1367,15 +1408,11 @@ namespace shedule
             buttonKassov.BackColor = Color.White;
             panelCalendar.BringToFront();
 
-
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
             Form4 f4 = new Form4();
             f4.Show();
         }
-
-
-
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
@@ -1469,7 +1506,9 @@ namespace shedule
 
 
 
-            xlWorkBook.SaveAs(@"C:\1\csharp.net-informations.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.SaveAs(@"C:\1\csharp.net-informations.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue,
+                misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue,
+                misValue, misValue);
 
             xlWorkBook.Close(true, misValue, misValue);
 
@@ -1563,7 +1602,7 @@ namespace shedule
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
             String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\TSR.txt";
-           
+
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
 
@@ -1679,7 +1718,8 @@ namespace shedule
             saveFileDialog1.DefaultExt = ".XLS";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
+            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
+                                               Program.currentShop.getIdShop();
             saveFileDialog1.Title = "Выберите папку для сохранения расписания";
 
             if (radioButtonMinFondOpl.Checked)
@@ -1700,11 +1740,22 @@ namespace shedule
             switch (comboBox3.SelectedIndex)
 
             {
-                case 0: saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" + Program.getMonths(DateTime.Now.AddMonths(1).Month); Program.TipExporta = 0; break;
-                case 1: saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress(); Program.TipExporta = 1; break;
-                case 2: saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress(); Program.TipExporta = 2; break;
+                case 0:
+                    saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
+                                               Program.getMonths(DateTime.Now.AddMonths(1).Month);
+                    Program.TipExporta = 0;
+                    break;
+                case 1:
+                    saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress();
+                    Program.TipExporta = 1;
+                    break;
+                case 2:
+                    saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress();
+                    Program.TipExporta = 2;
+                    break;
                 case 3:
-                    saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress(); Program.TipExporta = 3;
+                    saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress();
+                    Program.TipExporta = 3;
                     break;
             }
 
@@ -1738,9 +1789,18 @@ namespace shedule
         public void ReadTipOptimizacii()
         {
 
-            if (radioButtonMinFondOpl.Checked) { Program.ParametrOptimization = 0; }
-            if (radioButtonMinTime.Checked) { Program.ParametrOptimization = 2; }
-            if (radioButtonObRabTime.Checked) { Program.ParametrOptimization = 1; }
+            if (radioButtonMinFondOpl.Checked)
+            {
+                Program.ParametrOptimization = 0;
+            }
+            if (radioButtonMinTime.Checked)
+            {
+                Program.ParametrOptimization = 2;
+            }
+            if (radioButtonObRabTime.Checked)
+            {
+                Program.ParametrOptimization = 1;
+            }
 
         }
 
@@ -1756,31 +1816,61 @@ namespace shedule
 
         private void button6_Click_1(object sender, EventArgs e)
         {
+            if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
+            {
+                MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
+                return;
+            }
+            else if(!Program.ExistFile){
+                MessageBox.Show("Загрузите данные из файла");
+                return;
+            }
+
             Form5 f5;
             switch (comboBox3.SelectedIndex)
             {
-                case 0: Program.tipDiagram = 0; MessageBox.Show("Для графика доступен только экспорт в excel"); break;
+                case 0:
+                    Program.tipDiagram = 0;
+                    MessageBox.Show("Для графика доступен только экспорт в excel");
+                    break;
                 case 1:
-                    Program.tipDiagram = 1; f5 = new Form5();
-                    f5.Show(); break;
+                    Program.tipDiagram = 1;
+                    f5 = new Form5();
+                    f5.Show();
+                    break;
                 case 2:
-                    Program.tipDiagram = 2; f5 = new Form5();
-                    f5.Show(); break;
+                    Program.tipDiagram = 2;
+                    f5 = new Form5();
+                    f5.Show();
+                    break;
                 case 3:
-                    Program.tipDiagram = 3; f5 = new Form5();
-                    f5.Show(); break;
+                    Program.tipDiagram = 3;
+                    f5 = new Form5();
+                    f5.Show();
+                    break;
             }
-
-
         }
+
 
         private void dataGridViewForTSR_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             switch (e.ColumnIndex)
             {
-                case 1: Program.currentShop.tsr.Find(t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString()).setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
-                case 2: Program.currentShop.tsr.Find(t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString()).setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
-                case 3: Program.currentShop.tsr.Find(t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString()).setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
+                case 1:
+                    Program.currentShop.tsr.Find(
+                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                        .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 2:
+                    Program.currentShop.tsr.Find(
+                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                        .setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 3:
+                    Program.currentShop.tsr.Find(
+                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                        .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
 
             }
         }
@@ -1789,10 +1879,26 @@ namespace shedule
         {
             switch (e.ColumnIndex)
             {
-                case 1: Program.currentShop.factors.Find(t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString()).setTZnach(int.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
-                case 2: Program.currentShop.factors.Find(t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString()).setDeistvie(bool.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
-                case 3: Program.currentShop.factors.Find(t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString()).setData(DateTime.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
-                case 4: Program.currentShop.factors.Find(t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString()).setNewZnach(int.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString())); break;
+                case 1:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString())
+                        .setTZnach(int.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 2:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString())
+                        .setDeistvie(bool.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 3:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString())
+                        .setData(DateTime.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 4:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridViewFactors[0, e.RowIndex].Value.ToString())
+                        .setNewZnach(int.Parse(dataGridViewFactors[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
 
             }
         }
@@ -1840,8 +1946,7 @@ namespace shedule
 
         public void CreateZip()
         {
-
-            listBox1.Enabled = false;
+            DisableControlsOnStart();
             progressBar1.Visible = true;
 
             label3.Text = "";
@@ -1851,16 +1956,21 @@ namespace shedule
             progressBar1.Step = 2;
             Program.TipExporta = comboBox1.SelectedIndex;
 
-
             bw1.RunWorkerAsync();
-
-
-
         }
+
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (!errorOnExecuting)
+            if (e.Cancelled == true)
+            {
+
+            }
+            else if (e.Error != null)
+            {
+                CloseProcessOnError();
+            }
+            else
             {
                 progressBar1.Value = progressBar1.Maximum;
 
@@ -1869,6 +1979,8 @@ namespace shedule
                 listBox1.Enabled = true;
                 MessageBox.Show("Архив создан");
             }
+            EnableControlsOnFinish();
+
         }
 
 
@@ -1877,10 +1989,18 @@ namespace shedule
         {
             switch (e.ProgressPercentage)
             {
-                case 2: label3.Text = "Создание прогноза продаж"; break;
-                case 4: label3.Text = "Подсчет оптимальной загруженности"; break;
-                case 6: label3.Text = "Оптимальная расстановка смен"; break;
-                case 8: label3.Text = "Запись в Excel"; break;
+                case 2:
+                    label3.Text = "Создание прогноза продаж";
+                    break;
+                case 4:
+                    label3.Text = "Подсчет оптимальной загруженности";
+                    break;
+                case 6:
+                    label3.Text = "Оптимальная расстановка смен";
+                    break;
+                case 8:
+                    label3.Text = "Запись в Excel";
+                    break;
 
             }
             progressBar2.Value = e.ProgressPercentage;
@@ -1928,11 +2048,6 @@ namespace shedule
                                 if (!Program.CreateSmens())
                                 {
                                     MessageBox.Show("Расписание не создано");
-                                    bw.CancelAsync();
-                                    bw.ReportProgress(0);
-                                    bw1.ReportProgress(0);
-                                    bw1.CancelAsync();
-                                    errorOnExecuting = true;
                                 }
 
                             }
@@ -1948,11 +2063,6 @@ namespace shedule
                                 //  Program.getListDate(DateTime.Today.Year);
                                 Program.readTSR();
                                 MessageBox.Show("Расписание не создано");
-                                bw.CancelAsync();
-                                bw.ReportProgress(0);
-                                bw1.ReportProgress(0);
-                                bw1.CancelAsync();
-                                errorOnExecuting = true;
                                 return;
                             }
                             //  System.Drawing.Color color;
@@ -2018,11 +2128,14 @@ namespace shedule
                                       }
                                       ObjWorkSheet.Cells[j, i].Interior.Color = color;*/
 
-                                    if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
+                                    if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) &&
+                                        (emp.smens.Count != 0))
                                     {
                                         // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
 
-                                        ObjWorkSheet.Cells[j, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
+                                        ObjWorkSheet.Cells[j, i] =
+                                            emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " +
+                                            emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
                                     }
                                     //else
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
@@ -2035,7 +2148,9 @@ namespace shedule
                                     ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
                                     if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
                                     {
-                                        ObjWorkSheet.Cells[j, 4] = Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
+                                        ObjWorkSheet.Cells[j, 4] =
+                                            Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost())
+                                                .getZarp();
                                     }
                                     ObjWorkSheet.Cells[j, 5] = Program.normchas;
                                     ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.BlueViolet;
@@ -2106,11 +2221,13 @@ namespace shedule
 
                                      }*/
 
-                                    if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
+                                    if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) &&
+                                        (emp.smens.Count != 0))
                                     {
                                         // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
                                         //  ObjWorkSheet.Cells[j, i].Interior.Color = color;
-                                        ObjWorkSheet.Cells[j, i] = (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
+                                        ObjWorkSheet.Cells[j, i] =
+                                            (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
                                     }
                                     //else
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
@@ -2130,7 +2247,7 @@ namespace shedule
                                 }
                                 j++;
                             }
-                            
+
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
                             ObjExcel.DisplayAlerts = false;
@@ -2139,7 +2256,7 @@ namespace shedule
                             {
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
-                                
+
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
@@ -2167,11 +2284,6 @@ namespace shedule
                             catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message);
-                                bw.ReportProgress(0);
-                                bw.CancelAsync();
-                                bw1.ReportProgress(0);
-                                bw1.CancelAsync();
-                                errorOnExecuting = true;
                             }
                             object misValue = System.Reflection.Missing.Value;
 
@@ -2204,10 +2316,11 @@ namespace shedule
                                 // chartY1[i] = tsr.getCount() * tsr.getZarp();
                                 ObjWorkSheet.Cells[2, i] = tsr.getCount();
                                 //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
-                                ObjWorkSheet.Cells[3, i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
+                                ObjWorkSheet.Cells[3, i] =
+                                    Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
                                 i++;
                             }
-                            
+
                             Excel.Range chartRange;
 
                             Excel.ChartObjects xlCharts = (Excel.ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
@@ -2219,7 +2332,7 @@ namespace shedule
                             chartPage.SetSourceData(chartRange, misValue);
 
                             chartPage.ChartType = Excel.XlChartType.xlColumnClustered;
-                            
+
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
                             ObjExcel.DisplayAlerts = false;
@@ -2258,11 +2371,6 @@ namespace shedule
                             catch (Exception ex)
                             {
                                 MessageBox.Show(ex.Message);
-                                bw.ReportProgress(0);
-                                bw.CancelAsync();
-                                bw1.ReportProgress(0);
-                                bw1.CancelAsync();
-                                errorOnExecuting = true;
                             }
                             object misValue = System.Reflection.Missing.Value;
 
@@ -2295,7 +2403,9 @@ namespace shedule
                                 // chartY1[i] = tsr.getCount() * tsr.getZarp();
                                 ObjWorkSheet.Cells[2, i] = tsr.getCount() * tsr.getZarp();
                                 //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
-                                ObjWorkSheet.Cells[3, i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
+                                ObjWorkSheet.Cells[3, i] =
+                                    Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count *
+                                    tsr.getZarp();
                                 i++;
                             }
                             Excel.Range chartRange;
@@ -2343,14 +2453,10 @@ namespace shedule
                             break;
                         }
                     default:
-                    {
-                            bw.ReportProgress(0);
-                            bw.CancelAsync();
-                            bw1.ReportProgress(0);
-                            bw1.CancelAsync();
-                            errorOnExecuting = true;
+                        {
+
                             break;
-                    }
+                        }
                 }
 
             }
@@ -2364,29 +2470,29 @@ namespace shedule
 
         private void tbKassirCount_TextChanged(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(tbKassirCount.Text) )
+            if (!String.IsNullOrEmpty(tbKassirCount.Text))
             {
                 int kassirCount;
-              
-                if (int.TryParse(tbKassirCount.Text, out kassirCount) )
+
+                if (int.TryParse(tbKassirCount.Text, out kassirCount))
                 {
                     Program.currentShop.CountMin = kassirCount;
-                    
+
                 }
 
             }
-            
+
         }
 
         private void tbLastHour_TextChanged(object sender, EventArgs e)
         {
-            if ( !String.IsNullOrEmpty(tbLastHour.Text))
+            if (!String.IsNullOrEmpty(tbLastHour.Text))
             {
-               
+
                 int lastHour;
-                if ( int.TryParse(tbLastHour.Text, out lastHour))
+                if (int.TryParse(tbLastHour.Text, out lastHour))
                 {
-                   
+
                     Program.currentShop.TimeMinRab = lastHour;
                 }
 
@@ -2394,5 +2500,37 @@ namespace shedule
         }
 
      
+
+        #region ControlsControl
+
+        private void DisableControlsOnStart()
+        {
+            listBox1.Enabled = false;
+            buttonMadd.Enabled = false;
+            buttonMdel.Enabled = false;
+        }
+
+        private void EnableControlsOnFinish()
+        {
+            listBox1.Enabled = true;
+            buttonMadd.Enabled = true;
+            buttonMdel.Enabled = true;
+        }
+
+        #endregion
+
+
+        #region FinalizeWorkers
+
+        private void CloseProcessOnError()
+        {
+            bw.ReportProgress(0);
+            bw.CancelAsync();
+            bw1.ReportProgress(0);
+            bw1.CancelAsync();
+        }
+
+        #endregion
     }
 }
+

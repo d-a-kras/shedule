@@ -1190,7 +1190,7 @@
         private System.Windows.Forms.Panel panelKassOper;
         private System.Windows.Forms.Button buttonImportKasOper;
         private System.Windows.Forms.RadioButton radioButtonIzBD;
-        private System.Windows.Forms.RadioButton radioButtonIzFile;
+        public System.Windows.Forms.RadioButton radioButtonIzFile;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panelGruz;
         private System.Windows.Forms.Panel panelUpravlenie;

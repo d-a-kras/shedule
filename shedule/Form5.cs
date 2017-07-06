@@ -121,7 +121,7 @@ namespace shedule
             {
 
             }
-            else if (!(e.Error == null))
+            else if (e.Error != null)
             {
 
             }
@@ -140,8 +140,6 @@ namespace shedule
 
                 progressBar1.Visible = false;
                 label3.Visible = false;
-                
-
             }
         }
 
