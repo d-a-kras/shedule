@@ -29,6 +29,7 @@ namespace shedule
         static string filename;
         private bool errorOnExecuting = false;
         public bool isConnected = false;
+        public string PathToZip = "";
 
         /*  public void ShowProizvCalendar() {
               foreach (DataForCalendary d in  Program.currentShop.DFCs)
@@ -97,7 +98,7 @@ namespace shedule
                         {
                             Program.createPrognoz();
                             bg.ReportProgress(4);
-                            MessageBox.Show("Время создание примерно 2 минуты");
+                            //MessageBox.Show("Время создание примерно 2 минуты");
 
 
                             // 
@@ -1993,7 +1994,24 @@ namespace shedule
 
         public void CreateZip()
         {
+            saveFileDialog1.DefaultExt = ".zip";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.Filter = "Архив|*.zip";
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog1.Title = "Выберите папку для сохранения архива";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                PathToZip = Path.GetFullPath(saveFileDialog1.FileName);
+            }
+            else
+            {
+                return;
+            }
+
+
             DisableControlsOnStart();
+            MessageBox.Show( $"Выбрано {Program.shops.Count} магазинов, примерное время ожидания {Program.shops.Count * 2} минут");
             progressBar1.Visible = true;
 
             label3.Text = "";
@@ -2526,9 +2544,9 @@ namespace shedule
                 bg.ReportProgress(ShopStep * shopCounter);
             }
             string startPath = Environment.CurrentDirectory + @"\mult\";
-            string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
+            //string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
 
-            ZipFile zf = new ZipFile(zipPath);
+            ZipFile zf = new ZipFile(PathToZip);
             zf.AddDirectory(startPath);
             zf.Save(); //Сохраняем архив.
         }

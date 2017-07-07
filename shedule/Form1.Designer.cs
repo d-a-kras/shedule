@@ -66,6 +66,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lbProgressMessages = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.button13 = new System.Windows.Forms.Button();
@@ -123,7 +124,6 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.lbProgressMessages = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -242,7 +242,7 @@
             this.button_refresh_list_shops.Name = "button_refresh_list_shops";
             this.button_refresh_list_shops.Size = new System.Drawing.Size(75, 49);
             this.button_refresh_list_shops.TabIndex = 10;
-            this.button_refresh_list_shops.Text = "обновить список магазинов";
+            this.button_refresh_list_shops.Text = "Обновить список магазинов";
             this.button_refresh_list_shops.UseVisualStyleBackColor = true;
             this.button_refresh_list_shops.Click += new System.EventHandler(this.button_refresh_list_shops_Click);
             // 
@@ -321,8 +321,8 @@
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.button8);
-            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
@@ -430,9 +430,9 @@
             // 
             this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
             this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(24, 32);
+            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(50, 32);
             this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
-            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(387, 150);
+            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(361, 131);
             this.dataGridViewMVarSmen.TabIndex = 2;
             // 
             // label14
@@ -446,7 +446,7 @@
             // 
             // button23
             // 
-            this.button23.Location = new System.Drawing.Point(283, 203);
+            this.button23.Location = new System.Drawing.Point(335, 169);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(76, 23);
             this.button23.TabIndex = 0;
@@ -491,7 +491,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(20, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(405, 210);
+            this.dataGridView1.Size = new System.Drawing.Size(408, 185);
             this.dataGridView1.TabIndex = 2;
             // 
             // tabPage4
@@ -509,6 +509,15 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // lbProgressMessages
+            // 
+            this.lbProgressMessages.AutoSize = true;
+            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
+            this.lbProgressMessages.Name = "lbProgressMessages";
+            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
+            this.lbProgressMessages.TabIndex = 9;
+            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label2
             // 
@@ -794,9 +803,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -918,7 +927,7 @@
             // 
             // tbLastHour
             // 
-            this.tbLastHour.Location = new System.Drawing.Point(378, 90);
+            this.tbLastHour.Location = new System.Drawing.Point(382, 90);
             this.tbLastHour.Name = "tbLastHour";
             this.tbLastHour.Size = new System.Drawing.Size(29, 20);
             this.tbLastHour.TabIndex = 6;
@@ -929,9 +938,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(363, 93);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.Size = new System.Drawing.Size(19, 13);
             this.label7.TabIndex = 5;
-            this.label7.Text = "в";
+            this.label7.Text = "до";
             // 
             // tbKassirCount
             // 
@@ -955,7 +964,7 @@
             this.dataGridViewVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVarSmen.Location = new System.Drawing.Point(15, 31);
             this.dataGridViewVarSmen.Name = "dataGridViewVarSmen";
-            this.dataGridViewVarSmen.Size = new System.Drawing.Size(342, 150);
+            this.dataGridViewVarSmen.Size = new System.Drawing.Size(339, 138);
             this.dataGridViewVarSmen.TabIndex = 2;
             // 
             // label1
@@ -1016,7 +1025,7 @@
             this.dataGridViewFactors.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewFactors.Name = "dataGridViewFactors";
             this.dataGridViewFactors.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewFactors.Size = new System.Drawing.Size(464, 210);
+            this.dataGridViewFactors.Size = new System.Drawing.Size(464, 194);
             this.dataGridViewFactors.TabIndex = 2;
             this.dataGridViewFactors.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFactors_CellEndEdit);
             // 
@@ -1049,7 +1058,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(195, 173);
+            this.label3.Location = new System.Drawing.Point(74, 152);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 8;
@@ -1097,15 +1106,6 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
-            // lbProgressMessages
-            // 
-            this.lbProgressMessages.AutoSize = true;
-            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
-            this.lbProgressMessages.Name = "lbProgressMessages";
-            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
-            this.lbProgressMessages.TabIndex = 9;
-            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1116,8 +1116,8 @@
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
-            this.Controls.Add(this.panelMultShops);
             this.Controls.Add(this.panelSingleShop);
+            this.Controls.Add(this.panelMultShops);
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
