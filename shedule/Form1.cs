@@ -2063,6 +2063,7 @@ namespace shedule
             int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
             
+            Program.currentShop = new Shop(0,"");
             bg.ProgressChanged += bg_ProgressChanged;
 
             switch (Program.TipExporta)
@@ -2079,15 +2080,16 @@ namespace shedule
                     }
             }
             int shopCounter = 0;
-            foreach (Shop shop in Program.shops)
-            {
                 shopCounter++;
 
-                Program.currentShop = shop;
-                Program.getListDate(DateTime.Today.Year);
-                Program.readTSR();
-                Program.readFactors();
-                Program.readVarSmen();
+            Program.getListDate(DateTime.Today.Year);
+            Program.readTSR();
+            Program.readFactors();
+            Program.readVarSmen();
+
+            foreach (Shop shop in Program.shops)
+            {
+                Program.currentShop.setIdShop( shop.getIdShopFM());
                 if (Program.currentShop.VarSmenBP.Count == 0)
                 {
                     VarSmen.CreateVarSmen();

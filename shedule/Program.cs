@@ -1103,6 +1103,9 @@ namespace shedule
             return this.workingDays;
         }
 
+        public void setIdShop(int x) {
+            this.idFM = x;
+        }
 
     }
 
