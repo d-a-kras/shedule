@@ -2161,7 +2161,7 @@ namespace shedule
                                 i++;
                             }
                             Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
+                            excelcells2.ColumnWidth = shop.getAddress().Length;
 
 
 
@@ -2212,7 +2212,7 @@ namespace shedule
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
                                     i++;
 
-                                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                                    ObjWorkSheet.Cells[j, 1] = shop.getAddress();
                                     //ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                     ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
                                     // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
@@ -2254,7 +2254,7 @@ namespace shedule
                                 i++;
                             }
                             Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
+                            excelcells3.ColumnWidth = shop.getAddress().Length;
 
 
 
@@ -2304,7 +2304,7 @@ namespace shedule
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
                                     i++;
 
-                                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                                    ObjWorkSheet.Cells[j, 1] = shop.getAddress();
                                     //  ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                     ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
                                     // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
