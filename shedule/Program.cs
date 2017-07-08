@@ -1510,6 +1510,7 @@ namespace shedule
         static public string password = "";
         static public int tipDiagram = 0;
         static public bool TSRTG = true;
+         static public bool exit = true;
 
 
         static public Shop currentShop;

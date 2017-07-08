@@ -29,6 +29,7 @@ namespace shedule
         static string filename;
         private bool errorOnExecuting = false;
         public bool isConnected = false;
+        public string PathToZip = "";
 
         /*  public void ShowProizvCalendar() {
               foreach (DataForCalendary d in  Program.currentShop.DFCs)
@@ -97,7 +98,7 @@ namespace shedule
                         {
                             Program.createPrognoz();
                             bg.ReportProgress(4);
-                            MessageBox.Show("Время создание примерно 2 минуты");
+                            //MessageBox.Show("Время создание примерно 2 минуты");
 
 
                             // 
@@ -2013,7 +2014,24 @@ namespace shedule
 
         public void CreateZip()
         {
+            saveFileDialog1.DefaultExt = ".zip";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.Filter = "Архив|*.zip";
+            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            saveFileDialog1.Title = "Выберите папку для сохранения архива";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                PathToZip = Path.GetFullPath(saveFileDialog1.FileName);
+            }
+            else
+            {
+                return;
+            }
+
+
             DisableControlsOnStart();
+            MessageBox.Show( $"Выбрано {Program.shops.Count} магазинов, примерное время ожидания {Program.shops.Count * 2} минут");
             progressBar1.Visible = true;
 
             label3.Text = "";
@@ -2163,7 +2181,7 @@ namespace shedule
                                 i++;
                             }
                             Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
+                            excelcells2.ColumnWidth = shop.getAddress().Length;
 
 
 
@@ -2214,7 +2232,7 @@ namespace shedule
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
                                     i++;
 
-                                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                                    ObjWorkSheet.Cells[j, 1] = shop.getAddress();
                                     //ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                     ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
                                     // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
@@ -2256,7 +2274,7 @@ namespace shedule
                                 i++;
                             }
                             Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
+                            excelcells3.ColumnWidth = shop.getAddress().Length;
 
 
 
@@ -2306,7 +2324,7 @@ namespace shedule
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
                                     i++;
 
-                                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                                    ObjWorkSheet.Cells[j, 1] = shop.getAddress();
                                     //  ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                     ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
                                     // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
@@ -2548,9 +2566,9 @@ namespace shedule
                 bg.ReportProgress(ShopStep * shopCounter);
             }
             string startPath = Environment.CurrentDirectory + @"\mult\";
-            string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
+            //string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
 
-            ZipFile zf = new ZipFile(zipPath);
+            ZipFile zf = new ZipFile(PathToZip);
             zf.AddDirectory(startPath);
             zf.Save(); //Сохраняем архив.
         }

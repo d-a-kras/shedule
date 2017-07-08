@@ -106,6 +106,9 @@ namespace shedule
             chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
            
 
+            var l = chart1.Legends;
+            chart1.Series[2].IsVisibleInLegend = false;
+            chart1.Series[3].IsVisibleInLegend = false;
         }
 
 
