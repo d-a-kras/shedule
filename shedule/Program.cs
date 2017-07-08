@@ -288,7 +288,7 @@ namespace shedule
         int b;
         int v;
         int DenVych;
-        int srvden;
+        
         bool deistvie;
 
         public void setR(int r)
@@ -371,7 +371,6 @@ namespace shedule
         int tip;
         TipSmen TipSm;
         int NormRab;
-        int koef = 2;
         string Dolgnost;
         string TipGraf;
         public List<Smena> smens;
@@ -1302,7 +1301,7 @@ namespace shedule
         int endDaySale;
         int lenghtDaySale;
         int tip;
-        int DayWeek;
+       
         public ForChart Chart;
         public ForChart ChartClick;
         public ForChart ChartCheck;
@@ -1469,7 +1468,7 @@ namespace shedule
         static public int normchas = 0;
         static public bool connect = false;
         static public SqlConnection connection;
-        static public int CountSmen;
+        
         static public bool SozdanPrognoz = false;
         static public List<mShop> listShops = new List<mShop>();
         static public int TipOptimizacii = 0;
@@ -1500,8 +1499,8 @@ namespace shedule
         static public int[] RD = new int[12];
         static public int[] PHD = new int[12];
 
-        static public int KoefKassira = 50;
-        static public int KoefObr = 20;
+        static public int KoefKassira = 100;
+        static public int KoefObr = 100;
         static public int TimeClick = 4;
         static public int TimeRech = 25;
         static public int TimeObrTov = 14;
@@ -1540,7 +1539,7 @@ namespace shedule
 
                 }
             }
-            catch (Exception ex)
+            catch 
             {
 
                 currentShop.CountMin = 2;
@@ -1568,7 +1567,8 @@ namespace shedule
 
         static public void readTSR()
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+            currentShop.tsr.Clear();
+           String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
 
             try
             {
@@ -1590,7 +1590,7 @@ namespace shedule
 
                 }
             }
-            catch (Exception ex)
+            catch 
             {
 
                 currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
@@ -1628,7 +1628,7 @@ namespace shedule
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка записи");
+                MessageBox.Show("Ошибка записи " + ex.Message);
             }
         }
 
@@ -1659,15 +1659,15 @@ namespace shedule
 
                 }
             }
-            catch (Exception ex)
+            catch 
             {
 
                 currentShop.factors.Add(new Factor("TimeClick", "Время Клика", 4, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeRech", "Голосовой интерфейс", 25, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeObrTov", "Время на нелиннейные операции", 14, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeObrTov", "Позиций в чеке", 5, true, new DateTime(2100, 1, 1), 0));
-                currentShop.factors.Add(new Factor("KoefKassira", "Коэффициент эффективности кассиров (%)", 50, true, new DateTime(2100, 1, 1), 0));
-                currentShop.factors.Add(new Factor("KoefObr", "Коэффициент эффетивности продавцов (%)", 20, true, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("KoefKassira", "Коэффициент эффективности кассиров (%)", 100, true, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("KoefObr", "Коэффициент эффетивности продавцов (%)", 100, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("Otkr_konkurenta", "Открытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("zakr_konkurenta", "Закрытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("snig_reklam", "Реклама конкурента (%)", 2, false, new DateTime(2100, 1, 1), 0));
@@ -1700,7 +1700,7 @@ namespace shedule
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка записи");
+                MessageBox.Show("Ошибка записи " + ex.Message);
             }
         }
 
@@ -1885,7 +1885,7 @@ namespace shedule
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 //MessageBox.Show(ex.ToString());
                 currentShop.VarSmen.Add(new TipSmen(5, 2, 1));
@@ -3032,7 +3032,7 @@ namespace shedule
 
 
             }
-            catch (Exception ex)
+            catch 
             {
                 //  MessageBox.Show(ex.Message);
 
@@ -3281,7 +3281,8 @@ namespace shedule
                 Application.DoEvents();
             }
 
-            //Удаляем приложение (выходим из экселя) - ато будет висеть в процессах!
+            
+           
             ObjExcel.Quit();
 
         }
@@ -3388,7 +3389,7 @@ namespace shedule
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
-                    MessageBox.Show("Ошибка соединения с базой данных");
+                    MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
                     // ReadListShops();
                 }
             }

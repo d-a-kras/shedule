@@ -169,8 +169,8 @@ namespace shedule
                     bg.ReportProgress(4);
                     Program.createPrognoz();
                     bg.ReportProgress(8);
-                    Program.OptimCountSotr(); break;
-                    bg.ReportProgress(12);
+                    Program.OptimCountSotr();
+                    bg.ReportProgress(12);break;
             }
         }
 

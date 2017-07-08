@@ -256,30 +256,26 @@ namespace shedule
                         foreach (employee emp in Program.currentShop.employes)
                         {
 
-                            i = 6;
+                            i = 7;
                             foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                             {
+                                switch (emp.getID() / 100)
+                                {
+                                    case 0: color = System.Drawing.Color.LightSkyBlue; break;
+                                    case 1: color = System.Drawing.Color.LightGreen; break;
+                                    case 2: color = System.Drawing.Color.DarkSeaGreen; break;
+                                    case 3: color = System.Drawing.Color.PaleGoldenrod; break;
 
-                                /* switch (emp.GetTip())
-                                 {
-                                     case 1: color = System.Drawing.Color.BlueViolet; break;
-                                     case 2: color = System.Drawing.Color.BlueViolet; break;
-                                     case 3: color = System.Drawing.Color.BlueViolet; break;
-                                     case 4: color = System.Drawing.Color.BlueViolet; break;
-                                     case 5: color = System.Drawing.Color.BlueViolet; break;
-                                     case 6: color = System.Drawing.Color.BlueViolet; break;
-                                     case 7: color = System.Drawing.Color.BlueViolet; break;
-                                     case 10: color = System.Drawing.Color.BlueViolet; break;
-                                     case 11: color = System.Drawing.Color.BlueViolet; break;
-                                     case 12: color = System.Drawing.Color.BlueViolet; break;
-                                     default: color = System.Drawing.Color.White; break;
+                                    default: color = System.Drawing.Color.White; break;
 
-                                 }*/
+                                }
+                                ObjWorkSheet.Cells[j, i].Interior.Color = color;
+
 
                                 if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
                                 {
                                     // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
-                                    //  ObjWorkSheet.Cells[j, i].Interior.Color = color;
+                                     ObjWorkSheet.Cells[j, i].Interior.Color = color;
                                     ObjWorkSheet.Cells[j, i] =
                                         (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
                                 }
@@ -292,11 +288,15 @@ namespace shedule
                                 ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
                                 // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
-                                // ObjWorkSheet.Cells[j, 3].Interior.Color = color;
-                                ObjWorkSheet.Cells[j, 4] = Program.normchas;
-                                ObjWorkSheet.Cells[j, 4].Interior.Color = System.Drawing.Color.BlueViolet;
-                                ObjWorkSheet.Cells[j, 5] = emp.smens.Count;
-                                // ObjWorkSheet.Cells[j, 5].Interior.Color = color;
+                                if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
+                                {
+                                    ObjWorkSheet.Cells[j, 4] =
+                                        Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()).getZarp();
+                                }
+                                ObjWorkSheet.Cells[j, 5] = Program.normchas;
+                                ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.LightSkyBlue; ;
+                                ObjWorkSheet.Cells[j, 6] = emp.smens.Count;
+                                ObjWorkSheet.Cells[j, 6].Interior.Color = color;
 
                             }
 
@@ -322,7 +322,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ошибка записи в файл");
+                            MessageBox.Show("Ошибка записи в файл "+ ex.Message);
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
@@ -413,7 +413,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ошибка записи в файл");
+                            MessageBox.Show("Ошибка записи в файл "+ ex.Message);
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
@@ -533,7 +533,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ошибка записи в файл");
+                            MessageBox.Show("Ошибка записи в файл " + ex.Message);
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
@@ -658,7 +658,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ошибка записи в файл");
+                            MessageBox.Show("Ошибка записи в файл " + ex.Message);
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
@@ -791,7 +791,7 @@ namespace shedule
         public void getChart()
         {
 
-            DateTime d = new DateTime();
+           
             List<hourSale> Hss = new List<hourSale>();
             // MessageBox.Show(Program.HSS[1].getData().Date.ToString());
             // Hss=HSS.FindAll(p => p.getData().Date == );
@@ -1092,7 +1092,7 @@ namespace shedule
                     Program.ParametrOptimization = short.Parse(sr.ReadLine());
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
@@ -1289,7 +1289,7 @@ namespace shedule
             {
                 MessageBox.Show($"Файл {ex.FileName} поврежден или не найден");
             }
-            catch (Exception ex)
+            catch 
             {
                 MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -2321,7 +2321,7 @@ namespace shedule
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Ошибка записи в файл");
+                                MessageBox.Show("Ошибка записи в файл " + ex.Message);
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                             }
@@ -2411,7 +2411,7 @@ namespace shedule
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Ошибка записи в файл");
+                                MessageBox.Show("Ошибка записи в файл " + ex.Message);
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                             }
@@ -2512,7 +2512,7 @@ namespace shedule
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Ошибка записи в файл");
+                                MessageBox.Show("Ошибка записи в файл " + ex.Message);
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                             }
