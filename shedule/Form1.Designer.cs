@@ -66,6 +66,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.lbProgressMessages = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.button13 = new System.Windows.Forms.Button();
@@ -123,7 +124,8 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.lbProgressMessages = new System.Windows.Forms.Label();
+            this.buttonTSRPG = new System.Windows.Forms.Button();
+            this.buttonExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -510,6 +512,15 @@
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // lbProgressMessages
+            // 
+            this.lbProgressMessages.AutoSize = true;
+            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
+            this.lbProgressMessages.Name = "lbProgressMessages";
+            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
+            this.lbProgressMessages.TabIndex = 9;
+            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -636,9 +647,9 @@
             this.tabPage1.Controls.Add(this.buttonRaspisanie);
             this.tabPage1.Controls.Add(this.buttonCalendar);
             this.tabPage1.Controls.Add(this.buttonKassov);
+            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
-            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -741,6 +752,7 @@
             // 
             // panelTRasp
             // 
+            this.panelTRasp.Controls.Add(this.buttonTSRPG);
             this.panelTRasp.Controls.Add(this.buttonPTSR);
             this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
             this.panelTRasp.Location = new System.Drawing.Point(23, 55);
@@ -794,9 +806,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -1097,14 +1109,26 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
-            // lbProgressMessages
+            // buttonTSRPG
             // 
-            this.lbProgressMessages.AutoSize = true;
-            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
-            this.lbProgressMessages.Name = "lbProgressMessages";
-            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
-            this.lbProgressMessages.TabIndex = 9;
-            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTSRPG.Location = new System.Drawing.Point(214, 216);
+            this.buttonTSRPG.Name = "buttonTSRPG";
+            this.buttonTSRPG.Size = new System.Drawing.Size(119, 23);
+            this.buttonTSRPG.TabIndex = 2;
+            this.buttonTSRPG.Text = "На следующий год";
+            this.buttonTSRPG.UseVisualStyleBackColor = true;
+            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click);
+            // 
+            // buttonExit
+            // 
+            this.buttonExit.BackColor = System.Drawing.Color.Red;
+            this.buttonExit.Location = new System.Drawing.Point(834, 4);
+            this.buttonExit.Name = "buttonExit";
+            this.buttonExit.Size = new System.Drawing.Size(39, 23);
+            this.buttonExit.TabIndex = 14;
+            this.buttonExit.Text = "Exit";
+            this.buttonExit.UseVisualStyleBackColor = false;
+            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // Form1
             // 
@@ -1113,6 +1137,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(886, 490);
+            this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
@@ -1261,6 +1286,8 @@
         private System.Windows.Forms.TextBox tbKassirCount;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbProgressMessages;
+        private System.Windows.Forms.Button buttonTSRPG;
+        private System.Windows.Forms.Button buttonExit;
     }
 }
 

@@ -699,15 +699,30 @@ namespace shedule
             //создаём новую строку
 
             //заполняем строку значениями
-
-            foreach (TSR tsr in Program.currentShop.tsr)
+            switch (Program.TSRTG)
             {
-                row = dt.NewRow();
-                row["Должность"] = tsr.getOtobragenie();
-                row["Количество"] = tsr.getCount();
-                row["Зарплата"] = tsr.getZarp();
-                row["Зарплата за 1/2"] = tsr.getZarp1_2();
-                dt.Rows.Add(row);
+                case true:
+                    foreach (TSR tsr in Program.currentShop.tsr)
+                    {
+                        row = dt.NewRow();
+                        row["Должность"] = tsr.getOtobragenie();
+                        row["Количество"] = tsr.getCount();
+                        row["Зарплата"] = tsr.getZarp();
+                        row["Зарплата за 1/2"] = tsr.getZarp1_2();
+                        dt.Rows.Add(row);
+                    }
+                    break;
+                case false:
+                    foreach (TSR tsr in Program.currentShop.tsrBG)
+                    {
+                        row = dt.NewRow();
+                        row["Должность"] = tsr.getOtobragenie();
+                        row["Количество"] = tsr.getCount();
+                        row["Зарплата"] = tsr.getZarp();
+                        row["Зарплата за 1/2"] = tsr.getZarp1_2();
+                        dt.Rows.Add(row);
+                    }
+                    break;
             }
             return dt;
         }
@@ -1005,6 +1020,8 @@ namespace shedule
 
         private void Form1_Load(object sender, EventArgs e)
         {
+           
+
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
             bw.DoWork += bw_DoWork;
@@ -1422,6 +1439,7 @@ namespace shedule
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
+            
             Excel.Application xlApp;
 
             Excel.Workbook xlWorkBook;
@@ -1544,7 +1562,7 @@ namespace shedule
 
         private void buttonRaspisanie_Click(object sender, EventArgs e)
         {
-
+            Program.TSRTG = true;
             buttonRaspisanie.BackColor = Color.MistyRose;
             buttonCalendar.BackColor = Color.White;
             buttonKassov.BackColor = Color.White;
@@ -1607,11 +1625,13 @@ namespace shedule
 
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
-            String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\TSR.txt";
+            String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\VarSmen";
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-
+                foreach (VarSmen vs in Program.currentShop.VarSmenBP) {
+                    sw.WriteLine(vs.ts.getR()+"#"+vs.ts.getV());
+                }
 
             }
             MessageBox.Show("Данные сохранены");
@@ -2610,6 +2630,26 @@ namespace shedule
         }
 
         #endregion
+
+        private void buttonTSRPG_Click(object sender, EventArgs e)
+        {
+            Program.TSRTG = false;
+            dataGridViewForTSR.DataSource = viewTSR();
+            dataGridViewForTSR.Columns[0].ReadOnly = true;
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            if (Program.exit)
+            {
+
+            }
+            else
+            {
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+            }
+        }
     }
 }
 

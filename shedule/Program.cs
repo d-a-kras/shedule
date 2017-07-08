@@ -1045,6 +1045,7 @@ namespace shedule
         public List<Factor> factors = new List<Factor>();
         public List<DataForCalendary> DFCs = new List<DataForCalendary>();
         public List<TSR> tsr = new List<TSR>();
+        public List<TSR> tsrBG = new List<TSR>();
         public List<daySale> MouthPrognoz = new List<daySale>();
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<TipSmen> VarSmen = new List<TipSmen>();
@@ -1508,7 +1509,7 @@ namespace shedule
         static public string login = "";
         static public string password = "";
         static public int tipDiagram = 0;
-
+        static public bool TSRTG = true;
 
 
         static public Shop currentShop;
@@ -1614,21 +1615,51 @@ namespace shedule
 
         static public void WriteTSR()
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
-
-            try
+            String readPath;
+            switch (TSRTG)
             {
-                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-                {
+                case true:
+                    readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
 
-                    foreach (TSR f in currentShop.tsr)
-                        sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
-                }
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка записи " + ex.Message);
+
+                    try
+                    {
+                        using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                        {
+
+                            foreach (TSR f in currentShop.tsr)
+                                sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка записи " + ex.Message);
+                    }
+                    break;
+                case false: {
+
+                        readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
+
+
+
+                        try
+                        {
+                            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                            {
+
+                                foreach (TSR f in currentShop.tsrBG)
+                                    sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Ошибка записи " + ex.Message);
+                        }
+
+                    } break;
             }
         }
 

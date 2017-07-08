@@ -199,7 +199,7 @@ namespace shedule
                  chart1.Series["s1"].Points.DataBindXY(chartX, chartY1);
                  chart1.Series["s2"].Points.DataBindXY(chartX, chartY2);
                  */
-                label1.Text = Program.currentShop.MouthPrognozT[Nday].getData().ToString();
+                label1.Text = Program.currentShop.MouthPrognozT[Nday].getData().ToShortDateString().ToString();
                 Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleCheck();
                 Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleClick();
 
