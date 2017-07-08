@@ -2525,74 +2525,60 @@ namespace shedule
 
             }
 
-            DateTime fd1;
-            DateTime fd2;
-            DateTime fd3;
+            DateTime[] fd = new DateTime[3];
+           // DateTime fd2;
+           // DateTime fd3;
 
             if (tdt.Month < 10)
             {
-                fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                fd[0] = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                fd[1] = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                fd[2] = new DateTime(tdt.Year, tdt.Month + 1, 1);
             }
             else
             {
                 if (tdt.Month == 10)
                 {
-                    fd1 = new DateTime(tdt.Year, 11, 1);
-                    fd2 = new DateTime(tdt.Year, 12, 1);
-                    fd3 = new DateTime(tdt.Year + 1, 1, 1);
+                    fd[0] = new DateTime(tdt.Year, 11, 1);
+                    fd[1] = new DateTime(tdt.Year, 12, 1);
+                    fd[2] = new DateTime(tdt.Year + 1, 1, 1);
                 }
                 else if (tdt.Month == 11)
                 {
-                    fd1 = new DateTime(tdt.Year, 12, 1);
-                    fd2 = new DateTime(tdt.Year + 1, 1, 1);
-                    fd3 = new DateTime(tdt.Year + 1, 2, 1);
+                    fd[0] = new DateTime(tdt.Year, 12, 1);
+                    fd[1] = new DateTime(tdt.Year + 1, 1, 1);
+                    fd[2] = new DateTime(tdt.Year + 1, 2, 1);
                 }
                 else if (tdt.Month == 12)
                 {
-                    fd1 = new DateTime(tdt.Year + 1, 1, 1);
-                    fd2 = new DateTime(tdt.Year + 1, 2, 1);
-                    fd3 = new DateTime(tdt.Year + 1, 3, 1);
+                    fd[0] = new DateTime(tdt.Year + 1, 1, 1);
+                    fd[1] = new DateTime(tdt.Year + 1, 2, 1);
+                    fd[2] = new DateTime(tdt.Year + 1, 3, 1);
                 }
                 else
                 {
 
-                    fd1 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                    fd2 = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                    fd3 = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd[0] = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd[1] = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                    fd[2] = new DateTime(tdt.Year, tdt.Month + 1, 1);
                     MessageBox.Show("Ошибка построения прогноза");
                 }
             }
-
-            for (int i = 1; i <= DateTime.DaysInMonth(fd1.Year, fd1.Month); i++)
+            for (int j = 0; j < 3; j++)
             {
+                for (int i = 1; i <= DateTime.DaysInMonth(fd[j].Year, fd[j].Month); i++)
+                {
 
-                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd1.Year, fd1.Month, i));
-                d.whatTip();
-                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-                currentShop.MouthPrognoz.Add(d);
+                    daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd[j].Year, fd[j].Month, i));
+                    d.whatTip();
+                    d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                    currentShop.MouthPrognoz.Add(d);
 
+                }
             }
 
-            for (int i = 1; i <= DateTime.DaysInMonth(fd2.Year, fd2.Month); i++)
-            {
-
-                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd2.Year, fd2.Month, i));
-                d.whatTip();
-                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-                currentShop.MouthPrognoz.Add(d);
-
-            }
-            for (int i = 1; i <= DateTime.DaysInMonth(fd3.Year, fd3.Month); i++)
-            {
-
-                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd3.Year, fd3.Month, i));
-                d.whatTip();
-                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-                currentShop.MouthPrognoz.Add(d);
-
-            }
+            
+            
 
 
 
