@@ -46,6 +46,7 @@
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
             this.textBoxLogin.TabIndex = 0;
+            this.textBoxLogin.Text = "VShleyev";
             // 
             // textBoxPassword
             // 
@@ -53,6 +54,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.textBoxPassword.TabIndex = 1;
+            this.textBoxPassword.Text = "gjkrjdybr@93";
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // labelLogin

@@ -52,15 +52,15 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.dataGridViewMVarSmen = new System.Windows.Forms.DataGridView();
+            this.label14 = new System.Windows.Forms.Label();
+            this.button23 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button11 = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.dataGridViewMVarSmen = new System.Windows.Forms.DataGridView();
-            this.label14 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -79,30 +79,12 @@
             this.panelSingleShop = new System.Windows.Forms.Panel();
             this.buttonMultShops = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.buttonRaspisanie = new System.Windows.Forms.Button();
-            this.buttonCalendar = new System.Windows.Forms.Button();
-            this.buttonKassov = new System.Windows.Forms.Button();
-            this.panelKassOper = new System.Windows.Forms.Panel();
-            this.buttonImportKasOper = new System.Windows.Forms.Button();
-            this.radioButtonIzBD = new System.Windows.Forms.RadioButton();
-            this.radioButtonIzFile = new System.Windows.Forms.RadioButton();
-            this.panelCalendar = new System.Windows.Forms.Panel();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.panelTRasp = new System.Windows.Forms.Panel();
-            this.buttonPTSR = new System.Windows.Forms.Button();
-            this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelGruz = new System.Windows.Forms.Panel();
             this.panelUpravlenie = new System.Windows.Forms.Panel();
             this.buttonParamOptimiz = new System.Windows.Forms.Button();
             this.buttonVariantsSmen = new System.Windows.Forms.Button();
             this.buttonFactors = new System.Windows.Forms.Button();
-            this.panelParamOptim = new System.Windows.Forms.Panel();
-            this.buttonApplyParamsOptim = new System.Windows.Forms.Button();
-            this.radioButtonObRabTime = new System.Windows.Forms.RadioButton();
-            this.radioButtonMinTime = new System.Windows.Forms.RadioButton();
-            this.radioButtonMinFondOpl = new System.Windows.Forms.RadioButton();
             this.panelDopusVarSmen = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.tbLastHour = new System.Windows.Forms.TextBox();
@@ -116,6 +98,11 @@
             this.buttonAplyFactors = new System.Windows.Forms.Button();
             this.buttonClearFactors = new System.Windows.Forms.Button();
             this.dataGridViewFactors = new System.Windows.Forms.DataGridView();
+            this.panelParamOptim = new System.Windows.Forms.Panel();
+            this.buttonApplyParamsOptim = new System.Windows.Forms.Button();
+            this.radioButtonObRabTime = new System.Windows.Forms.RadioButton();
+            this.radioButtonMinTime = new System.Windows.Forms.RadioButton();
+            this.radioButtonMinFondOpl = new System.Windows.Forms.RadioButton();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button6 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -123,9 +110,21 @@
             this.buttonExport1 = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonRaspisanie = new System.Windows.Forms.Button();
+            this.buttonCalendar = new System.Windows.Forms.Button();
+            this.buttonKassov = new System.Windows.Forms.Button();
+            this.panelKassOper = new System.Windows.Forms.Panel();
+            this.buttonImportKasOper = new System.Windows.Forms.Button();
+            this.radioButtonIzBD = new System.Windows.Forms.RadioButton();
+            this.radioButtonIzFile = new System.Windows.Forms.RadioButton();
+            this.panelCalendar = new System.Windows.Forms.Panel();
+            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.panelTRasp = new System.Windows.Forms.Panel();
             this.buttonTSRPG = new System.Windows.Forms.Button();
-            this.lbProgressMessages = new System.Windows.Forms.Label();
+            this.buttonPTSR = new System.Windows.Forms.Button();
+            this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.buttonExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -134,27 +133,27 @@
             this.tabControl2.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).BeginInit();
+            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.panelSingleShop.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.panelUpravlenie.SuspendLayout();
+            this.panelDopusVarSmen.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVarSmen)).BeginInit();
+            this.panelFactors.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).BeginInit();
+            this.panelParamOptim.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelKassOper.SuspendLayout();
             this.panelCalendar.SuspendLayout();
             this.panelTRasp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            this.panelUpravlenie.SuspendLayout();
-            this.panelParamOptim.SuspendLayout();
-            this.panelDopusVarSmen.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVarSmen)).BeginInit();
-            this.panelFactors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).BeginInit();
-            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // getStatisticByShopsDayHourBindingSource
@@ -365,6 +364,43 @@
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.dataGridViewMVarSmen);
+            this.panel4.Controls.Add(this.label14);
+            this.panel4.Controls.Add(this.button23);
+            this.panel4.Location = new System.Drawing.Point(3, 57);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(462, 245);
+            this.panel4.TabIndex = 2;
+            // 
+            // dataGridViewMVarSmen
+            // 
+            this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
+            this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(50, 32);
+            this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
+            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(361, 131);
+            this.dataGridViewMVarSmen.TabIndex = 2;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(89, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Варианты смен:";
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(335, 169);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(76, 23);
+            this.button23.TabIndex = 0;
+            this.button23.Text = "Применить";
+            this.button23.UseVisualStyleBackColor = true;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.button11);
@@ -418,43 +454,6 @@
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Минимизировать фонд оплаты труда";
             this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.dataGridViewMVarSmen);
-            this.panel4.Controls.Add(this.label14);
-            this.panel4.Controls.Add(this.button23);
-            this.panel4.Location = new System.Drawing.Point(3, 57);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(462, 245);
-            this.panel4.TabIndex = 2;
-            // 
-            // dataGridViewMVarSmen
-            // 
-            this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
-            this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(50, 32);
-            this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
-            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(361, 131);
-            this.dataGridViewMVarSmen.TabIndex = 2;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(89, 13);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "Варианты смен:";
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(335, 169);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(76, 23);
-            this.button23.TabIndex = 0;
-            this.button23.Text = "Применить";
-            this.button23.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -643,146 +642,6 @@
             this.tabControl1.TabIndex = 6;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.buttonRaspisanie);
-            this.tabPage1.Controls.Add(this.buttonCalendar);
-            this.tabPage1.Controls.Add(this.buttonKassov);
-            this.tabPage1.Controls.Add(this.panelTRasp);
-            this.tabPage1.Controls.Add(this.panelKassOper);
-            this.tabPage1.Controls.Add(this.panelCalendar);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(510, 342);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Вводные";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // buttonRaspisanie
-            // 
-            this.buttonRaspisanie.BackColor = System.Drawing.Color.White;
-            this.buttonRaspisanie.Location = new System.Drawing.Point(287, 12);
-            this.buttonRaspisanie.Name = "buttonRaspisanie";
-            this.buttonRaspisanie.Size = new System.Drawing.Size(120, 40);
-            this.buttonRaspisanie.TabIndex = 2;
-            this.buttonRaspisanie.Text = "Текущее штатное расписание";
-            this.buttonRaspisanie.UseVisualStyleBackColor = false;
-            this.buttonRaspisanie.Click += new System.EventHandler(this.buttonRaspisanie_Click);
-            // 
-            // buttonCalendar
-            // 
-            this.buttonCalendar.BackColor = System.Drawing.Color.White;
-            this.buttonCalendar.Location = new System.Drawing.Point(161, 12);
-            this.buttonCalendar.Name = "buttonCalendar";
-            this.buttonCalendar.Size = new System.Drawing.Size(120, 40);
-            this.buttonCalendar.TabIndex = 1;
-            this.buttonCalendar.Text = "Производственный календарь";
-            this.buttonCalendar.UseVisualStyleBackColor = false;
-            this.buttonCalendar.Click += new System.EventHandler(this.buttonCalendar_Click);
-            // 
-            // buttonKassov
-            // 
-            this.buttonKassov.BackColor = System.Drawing.Color.MistyRose;
-            this.buttonKassov.Location = new System.Drawing.Point(36, 12);
-            this.buttonKassov.Name = "buttonKassov";
-            this.buttonKassov.Size = new System.Drawing.Size(120, 40);
-            this.buttonKassov.TabIndex = 0;
-            this.buttonKassov.Text = "Кассовые операции";
-            this.buttonKassov.UseVisualStyleBackColor = false;
-            this.buttonKassov.Click += new System.EventHandler(this.buttonKassov_Click);
-            // 
-            // panelKassOper
-            // 
-            this.panelKassOper.Controls.Add(this.buttonImportKasOper);
-            this.panelKassOper.Controls.Add(this.radioButtonIzBD);
-            this.panelKassOper.Controls.Add(this.radioButtonIzFile);
-            this.panelKassOper.Location = new System.Drawing.Point(20, 55);
-            this.panelKassOper.Name = "panelKassOper";
-            this.panelKassOper.Size = new System.Drawing.Size(437, 266);
-            this.panelKassOper.TabIndex = 2;
-            // 
-            // buttonImportKasOper
-            // 
-            this.buttonImportKasOper.Location = new System.Drawing.Point(29, 127);
-            this.buttonImportKasOper.Name = "buttonImportKasOper";
-            this.buttonImportKasOper.Size = new System.Drawing.Size(75, 23);
-            this.buttonImportKasOper.TabIndex = 2;
-            this.buttonImportKasOper.Text = "загрузить";
-            this.buttonImportKasOper.UseVisualStyleBackColor = true;
-            this.buttonImportKasOper.Click += new System.EventHandler(this.buttonImportKasOper_Click);
-            // 
-            // radioButtonIzBD
-            // 
-            this.radioButtonIzBD.AutoSize = true;
-            this.radioButtonIzBD.Location = new System.Drawing.Point(29, 49);
-            this.radioButtonIzBD.Name = "radioButtonIzBD";
-            this.radioButtonIzBD.Size = new System.Drawing.Size(193, 17);
-            this.radioButtonIzBD.TabIndex = 0;
-            this.radioButtonIzBD.TabStop = true;
-            this.radioButtonIzBD.Text = "Загружать автоматически из БД";
-            this.radioButtonIzBD.UseVisualStyleBackColor = true;
-            this.radioButtonIzBD.CheckedChanged += new System.EventHandler(this.radioButtonIzBD_CheckedChanged);
-            // 
-            // radioButtonIzFile
-            // 
-            this.radioButtonIzFile.AutoSize = true;
-            this.radioButtonIzFile.Location = new System.Drawing.Point(29, 97);
-            this.radioButtonIzFile.Name = "radioButtonIzFile";
-            this.radioButtonIzFile.Size = new System.Drawing.Size(351, 17);
-            this.radioButtonIzFile.TabIndex = 1;
-            this.radioButtonIzFile.TabStop = true;
-            this.radioButtonIzFile.Text = "Загрузить вручную файл по отдельному магазину в формате xls";
-            this.radioButtonIzFile.UseVisualStyleBackColor = true;
-            this.radioButtonIzFile.CheckedChanged += new System.EventHandler(this.radioButtonIzFile_CheckedChanged);
-            // 
-            // panelCalendar
-            // 
-            this.panelCalendar.BackColor = System.Drawing.Color.White;
-            this.panelCalendar.Controls.Add(this.monthCalendar1);
-            this.panelCalendar.Location = new System.Drawing.Point(20, 55);
-            this.panelCalendar.Name = "panelCalendar";
-            this.panelCalendar.Size = new System.Drawing.Size(437, 266);
-            this.panelCalendar.TabIndex = 3;
-            // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(141, 49);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 0;
-            // 
-            // panelTRasp
-            // 
-            this.panelTRasp.Controls.Add(this.buttonTSRPG);
-            this.panelTRasp.Controls.Add(this.buttonPTSR);
-            this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
-            this.panelTRasp.Location = new System.Drawing.Point(23, 55);
-            this.panelTRasp.Name = "panelTRasp";
-            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
-            this.panelTRasp.TabIndex = 4;
-            // 
-            // buttonPTSR
-            // 
-            this.buttonPTSR.Location = new System.Drawing.Point(339, 216);
-            this.buttonPTSR.Name = "buttonPTSR";
-            this.buttonPTSR.Size = new System.Drawing.Size(75, 23);
-            this.buttonPTSR.TabIndex = 1;
-            this.buttonPTSR.Text = "Применить";
-            this.buttonPTSR.UseVisualStyleBackColor = true;
-            this.buttonPTSR.Click += new System.EventHandler(this.buttonPTSR_Click);
-            // 
-            // dataGridViewForTSR
-            // 
-            this.dataGridViewForTSR.AllowUserToAddRows = false;
-            this.dataGridViewForTSR.AllowUserToDeleteRows = false;
-            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
-            this.dataGridViewForTSR.Name = "dataGridViewForTSR";
-            this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
-            this.dataGridViewForTSR.TabIndex = 0;
-            this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panelGruz);
@@ -807,9 +666,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -847,63 +706,6 @@
             this.buttonFactors.Text = "Факторы";
             this.buttonFactors.UseVisualStyleBackColor = false;
             this.buttonFactors.Click += new System.EventHandler(this.buttonFactors_Click);
-            // 
-            // panelParamOptim
-            // 
-            this.panelParamOptim.Controls.Add(this.buttonApplyParamsOptim);
-            this.panelParamOptim.Controls.Add(this.radioButtonObRabTime);
-            this.panelParamOptim.Controls.Add(this.radioButtonMinTime);
-            this.panelParamOptim.Controls.Add(this.radioButtonMinFondOpl);
-            this.panelParamOptim.Location = new System.Drawing.Point(6, 57);
-            this.panelParamOptim.Name = "panelParamOptim";
-            this.panelParamOptim.Size = new System.Drawing.Size(474, 248);
-            this.panelParamOptim.TabIndex = 8;
-            // 
-            // buttonApplyParamsOptim
-            // 
-            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(253, 111);
-            this.buttonApplyParamsOptim.Name = "buttonApplyParamsOptim";
-            this.buttonApplyParamsOptim.Size = new System.Drawing.Size(75, 23);
-            this.buttonApplyParamsOptim.TabIndex = 3;
-            this.buttonApplyParamsOptim.Text = "применить ";
-            this.buttonApplyParamsOptim.UseVisualStyleBackColor = true;
-            this.buttonApplyParamsOptim.Click += new System.EventHandler(this.buttonApplyParamsOptim_Click);
-            // 
-            // radioButtonObRabTime
-            // 
-            this.radioButtonObRabTime.AutoSize = true;
-            this.radioButtonObRabTime.Location = new System.Drawing.Point(33, 42);
-            this.radioButtonObRabTime.Name = "radioButtonObRabTime";
-            this.radioButtonObRabTime.Size = new System.Drawing.Size(332, 17);
-            this.radioButtonObRabTime.TabIndex = 2;
-            this.radioButtonObRabTime.TabStop = true;
-            this.radioButtonObRabTime.Text = "Общее рабочее время, отработанное персоналом магазина";
-            this.radioButtonObRabTime.UseVisualStyleBackColor = true;
-            this.radioButtonObRabTime.CheckedChanged += new System.EventHandler(this.radioButtonObRabTime_CheckedChanged);
-            // 
-            // radioButtonMinTime
-            // 
-            this.radioButtonMinTime.AutoSize = true;
-            this.radioButtonMinTime.Location = new System.Drawing.Point(33, 65);
-            this.radioButtonMinTime.Name = "radioButtonMinTime";
-            this.radioButtonMinTime.Size = new System.Drawing.Size(310, 17);
-            this.radioButtonMinTime.TabIndex = 1;
-            this.radioButtonMinTime.TabStop = true;
-            this.radioButtonMinTime.Text = "Минимизировать время ожидания покупателя на кассе";
-            this.radioButtonMinTime.UseVisualStyleBackColor = true;
-            this.radioButtonMinTime.CheckedChanged += new System.EventHandler(this.radioButtonMinTime_CheckedChanged);
-            // 
-            // radioButtonMinFondOpl
-            // 
-            this.radioButtonMinFondOpl.AutoSize = true;
-            this.radioButtonMinFondOpl.Location = new System.Drawing.Point(33, 19);
-            this.radioButtonMinFondOpl.Name = "radioButtonMinFondOpl";
-            this.radioButtonMinFondOpl.Size = new System.Drawing.Size(213, 17);
-            this.radioButtonMinFondOpl.TabIndex = 0;
-            this.radioButtonMinFondOpl.TabStop = true;
-            this.radioButtonMinFondOpl.Text = "Минимизировать фонд оплаты труда";
-            this.radioButtonMinFondOpl.UseVisualStyleBackColor = true;
-            this.radioButtonMinFondOpl.CheckedChanged += new System.EventHandler(this.radioButtonMinFondOpl_CheckedChanged);
             // 
             // panelDopusVarSmen
             // 
@@ -1033,6 +835,63 @@
             this.dataGridViewFactors.TabIndex = 2;
             this.dataGridViewFactors.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFactors_CellEndEdit);
             // 
+            // panelParamOptim
+            // 
+            this.panelParamOptim.Controls.Add(this.buttonApplyParamsOptim);
+            this.panelParamOptim.Controls.Add(this.radioButtonObRabTime);
+            this.panelParamOptim.Controls.Add(this.radioButtonMinTime);
+            this.panelParamOptim.Controls.Add(this.radioButtonMinFondOpl);
+            this.panelParamOptim.Location = new System.Drawing.Point(6, 57);
+            this.panelParamOptim.Name = "panelParamOptim";
+            this.panelParamOptim.Size = new System.Drawing.Size(474, 248);
+            this.panelParamOptim.TabIndex = 8;
+            // 
+            // buttonApplyParamsOptim
+            // 
+            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(253, 111);
+            this.buttonApplyParamsOptim.Name = "buttonApplyParamsOptim";
+            this.buttonApplyParamsOptim.Size = new System.Drawing.Size(75, 23);
+            this.buttonApplyParamsOptim.TabIndex = 3;
+            this.buttonApplyParamsOptim.Text = "применить ";
+            this.buttonApplyParamsOptim.UseVisualStyleBackColor = true;
+            this.buttonApplyParamsOptim.Click += new System.EventHandler(this.buttonApplyParamsOptim_Click);
+            // 
+            // radioButtonObRabTime
+            // 
+            this.radioButtonObRabTime.AutoSize = true;
+            this.radioButtonObRabTime.Location = new System.Drawing.Point(33, 42);
+            this.radioButtonObRabTime.Name = "radioButtonObRabTime";
+            this.radioButtonObRabTime.Size = new System.Drawing.Size(332, 17);
+            this.radioButtonObRabTime.TabIndex = 2;
+            this.radioButtonObRabTime.TabStop = true;
+            this.radioButtonObRabTime.Text = "Общее рабочее время, отработанное персоналом магазина";
+            this.radioButtonObRabTime.UseVisualStyleBackColor = true;
+            this.radioButtonObRabTime.CheckedChanged += new System.EventHandler(this.radioButtonObRabTime_CheckedChanged);
+            // 
+            // radioButtonMinTime
+            // 
+            this.radioButtonMinTime.AutoSize = true;
+            this.radioButtonMinTime.Location = new System.Drawing.Point(33, 65);
+            this.radioButtonMinTime.Name = "radioButtonMinTime";
+            this.radioButtonMinTime.Size = new System.Drawing.Size(310, 17);
+            this.radioButtonMinTime.TabIndex = 1;
+            this.radioButtonMinTime.TabStop = true;
+            this.radioButtonMinTime.Text = "Минимизировать время ожидания покупателя на кассе";
+            this.radioButtonMinTime.UseVisualStyleBackColor = true;
+            this.radioButtonMinTime.CheckedChanged += new System.EventHandler(this.radioButtonMinTime_CheckedChanged);
+            // 
+            // radioButtonMinFondOpl
+            // 
+            this.radioButtonMinFondOpl.AutoSize = true;
+            this.radioButtonMinFondOpl.Location = new System.Drawing.Point(33, 19);
+            this.radioButtonMinFondOpl.Name = "radioButtonMinFondOpl";
+            this.radioButtonMinFondOpl.Size = new System.Drawing.Size(213, 17);
+            this.radioButtonMinFondOpl.TabIndex = 0;
+            this.radioButtonMinFondOpl.TabStop = true;
+            this.radioButtonMinFondOpl.Text = "Минимизировать фонд оплаты труда";
+            this.radioButtonMinFondOpl.UseVisualStyleBackColor = true;
+            this.radioButtonMinFondOpl.CheckedChanged += new System.EventHandler(this.radioButtonMinFondOpl_CheckedChanged);
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.button6);
@@ -1110,20 +969,152 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
-            // lbProgressMessages
-            this.buttonTSRPG.Location = new System.Drawing.Point(214, 216);
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.buttonRaspisanie);
+            this.tabPage1.Controls.Add(this.buttonCalendar);
+            this.tabPage1.Controls.Add(this.buttonKassov);
+            this.tabPage1.Controls.Add(this.panelKassOper);
+            this.tabPage1.Controls.Add(this.panelCalendar);
+            this.tabPage1.Controls.Add(this.panelTRasp);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(510, 342);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Вводные";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // buttonRaspisanie
+            // 
+            this.buttonRaspisanie.BackColor = System.Drawing.Color.White;
+            this.buttonRaspisanie.Location = new System.Drawing.Point(287, 12);
+            this.buttonRaspisanie.Name = "buttonRaspisanie";
+            this.buttonRaspisanie.Size = new System.Drawing.Size(120, 40);
+            this.buttonRaspisanie.TabIndex = 2;
+            this.buttonRaspisanie.Text = "Текущее штатное расписание";
+            this.buttonRaspisanie.UseVisualStyleBackColor = false;
+            this.buttonRaspisanie.Click += new System.EventHandler(this.buttonRaspisanie_Click);
+            // 
+            // buttonCalendar
+            // 
+            this.buttonCalendar.BackColor = System.Drawing.Color.White;
+            this.buttonCalendar.Location = new System.Drawing.Point(161, 12);
+            this.buttonCalendar.Name = "buttonCalendar";
+            this.buttonCalendar.Size = new System.Drawing.Size(120, 40);
+            this.buttonCalendar.TabIndex = 1;
+            this.buttonCalendar.Text = "Производственный календарь";
+            this.buttonCalendar.UseVisualStyleBackColor = false;
+            this.buttonCalendar.Click += new System.EventHandler(this.buttonCalendar_Click);
+            // 
+            // buttonKassov
+            // 
+            this.buttonKassov.BackColor = System.Drawing.Color.MistyRose;
+            this.buttonKassov.Location = new System.Drawing.Point(36, 12);
+            this.buttonKassov.Name = "buttonKassov";
+            this.buttonKassov.Size = new System.Drawing.Size(120, 40);
+            this.buttonKassov.TabIndex = 0;
+            this.buttonKassov.Text = "Кассовые операции";
+            this.buttonKassov.UseVisualStyleBackColor = false;
+            this.buttonKassov.Click += new System.EventHandler(this.buttonKassov_Click);
+            // 
+            // panelKassOper
+            // 
+            this.panelKassOper.Controls.Add(this.buttonImportKasOper);
+            this.panelKassOper.Controls.Add(this.radioButtonIzBD);
+            this.panelKassOper.Controls.Add(this.radioButtonIzFile);
+            this.panelKassOper.Location = new System.Drawing.Point(20, 55);
+            this.panelKassOper.Name = "panelKassOper";
+            this.panelKassOper.Size = new System.Drawing.Size(437, 266);
+            this.panelKassOper.TabIndex = 2;
+            // 
+            // buttonImportKasOper
+            // 
+            this.buttonImportKasOper.Location = new System.Drawing.Point(29, 127);
+            this.buttonImportKasOper.Name = "buttonImportKasOper";
+            this.buttonImportKasOper.Size = new System.Drawing.Size(75, 23);
+            this.buttonImportKasOper.TabIndex = 2;
+            this.buttonImportKasOper.Text = "загрузить";
+            this.buttonImportKasOper.UseVisualStyleBackColor = true;
+            this.buttonImportKasOper.Click += new System.EventHandler(this.buttonImportKasOper_Click);
+            // 
+            // radioButtonIzBD
+            // 
+            this.radioButtonIzBD.AutoSize = true;
+            this.radioButtonIzBD.Location = new System.Drawing.Point(29, 49);
+            this.radioButtonIzBD.Name = "radioButtonIzBD";
+            this.radioButtonIzBD.Size = new System.Drawing.Size(193, 17);
+            this.radioButtonIzBD.TabIndex = 0;
+            this.radioButtonIzBD.TabStop = true;
+            this.radioButtonIzBD.Text = "Загружать автоматически из БД";
+            this.radioButtonIzBD.UseVisualStyleBackColor = true;
+            this.radioButtonIzBD.CheckedChanged += new System.EventHandler(this.radioButtonIzBD_CheckedChanged);
+            // 
+            // radioButtonIzFile
+            // 
+            this.radioButtonIzFile.AutoSize = true;
+            this.radioButtonIzFile.Location = new System.Drawing.Point(29, 97);
+            this.radioButtonIzFile.Name = "radioButtonIzFile";
+            this.radioButtonIzFile.Size = new System.Drawing.Size(351, 17);
+            this.radioButtonIzFile.TabIndex = 1;
+            this.radioButtonIzFile.TabStop = true;
+            this.radioButtonIzFile.Text = "Загрузить вручную файл по отдельному магазину в формате xls";
+            this.radioButtonIzFile.UseVisualStyleBackColor = true;
+            this.radioButtonIzFile.CheckedChanged += new System.EventHandler(this.radioButtonIzFile_CheckedChanged);
+            // 
+            // panelCalendar
+            // 
+            this.panelCalendar.BackColor = System.Drawing.Color.White;
+            this.panelCalendar.Controls.Add(this.monthCalendar1);
+            this.panelCalendar.Location = new System.Drawing.Point(20, 55);
+            this.panelCalendar.Name = "panelCalendar";
+            this.panelCalendar.Size = new System.Drawing.Size(437, 266);
+            this.panelCalendar.TabIndex = 3;
+            // 
+            // monthCalendar1
+            // 
+            this.monthCalendar1.Location = new System.Drawing.Point(141, 49);
+            this.monthCalendar1.Name = "monthCalendar1";
+            this.monthCalendar1.TabIndex = 0;
+            // 
+            // panelTRasp
+            // 
+            this.panelTRasp.Controls.Add(this.buttonTSRPG);
+            this.panelTRasp.Controls.Add(this.buttonPTSR);
+            this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
+            this.panelTRasp.Location = new System.Drawing.Point(23, 55);
+            this.panelTRasp.Name = "panelTRasp";
+            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
+            this.panelTRasp.TabIndex = 4;
+            // 
+            // buttonTSRPG
+            // 
+            this.buttonTSRPG.Location = new System.Drawing.Point(0, 0);
             this.buttonTSRPG.Name = "buttonTSRPG";
-            this.buttonTSRPG.Size = new System.Drawing.Size(119, 23);
-            this.buttonTSRPG.TabIndex = 2;
-            this.buttonTSRPG.Text = "На следующий год";
-            this.buttonTSRPG.UseVisualStyleBackColor = true;
-            this.lbProgressMessages.AutoSize = true;
-            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
-            this.lbProgressMessages.Name = "lbProgressMessages";
-            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
-            this.lbProgressMessages.TabIndex = 9;
-            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click);
+            this.buttonTSRPG.Size = new System.Drawing.Size(75, 23);
+            this.buttonTSRPG.TabIndex = 0;
+            // 
+            // buttonPTSR
+            // 
+            this.buttonPTSR.Location = new System.Drawing.Point(339, 216);
+            this.buttonPTSR.Name = "buttonPTSR";
+            this.buttonPTSR.Size = new System.Drawing.Size(75, 23);
+            this.buttonPTSR.TabIndex = 1;
+            this.buttonPTSR.Text = "Применить";
+            this.buttonPTSR.UseVisualStyleBackColor = true;
+            this.buttonPTSR.Click += new System.EventHandler(this.buttonPTSR_Click);
+            // 
+            // dataGridViewForTSR
+            // 
+            this.dataGridViewForTSR.AllowUserToAddRows = false;
+            this.dataGridViewForTSR.AllowUserToDeleteRows = false;
+            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
+            this.dataGridViewForTSR.Name = "dataGridViewForTSR";
+            this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
+            this.dataGridViewForTSR.TabIndex = 0;
+            this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
             // 
             // buttonExit
             // 
@@ -1135,6 +1126,7 @@
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = false;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1162,34 +1154,34 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.panelSingleShop.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.panelUpravlenie.ResumeLayout(false);
+            this.panelDopusVarSmen.ResumeLayout(false);
+            this.panelDopusVarSmen.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVarSmen)).EndInit();
+            this.panelFactors.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).EndInit();
+            this.panelParamOptim.ResumeLayout(false);
+            this.panelParamOptim.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.panelKassOper.ResumeLayout(false);
             this.panelKassOper.PerformLayout();
             this.panelCalendar.ResumeLayout(false);
             this.panelTRasp.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.panelUpravlenie.ResumeLayout(false);
-            this.panelParamOptim.ResumeLayout(false);
-            this.panelParamOptim.PerformLayout();
-            this.panelDopusVarSmen.ResumeLayout(false);
-            this.panelDopusVarSmen.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVarSmen)).EndInit();
-            this.panelFactors.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
