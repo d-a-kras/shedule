@@ -2115,7 +2115,7 @@ namespace shedule
                 }
             }
             
-            int ShopStep = 200 / Program.shops.Count;
+            int ShopStep = 100 / Program.shops.Count;
             int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
             
