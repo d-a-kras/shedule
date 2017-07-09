@@ -276,7 +276,7 @@ namespace shedule
                                 if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
                                 {
                                     // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
-                                     ObjWorkSheet.Cells[j, i].Interior.Color = color;
+                                    ObjWorkSheet.Cells[j, i].Interior.Color = color;
                                     ObjWorkSheet.Cells[j, i] =
                                         (emp.smens.Find(t => t.getData() == twd.getData()).getLenght() - 1).ToString();
                                 }
@@ -323,7 +323,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ошибка записи в файл "+ ex.Message);
+                            MessageBox.Show("Ошибка записи в файл " + ex.Message);
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
@@ -414,7 +414,7 @@ namespace shedule
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ошибка записи в файл "+ ex.Message);
+                            MessageBox.Show("Ошибка записи в файл " + ex.Message);
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
@@ -807,7 +807,7 @@ namespace shedule
         public void getChart()
         {
 
-           
+
             List<hourSale> Hss = new List<hourSale>();
             // MessageBox.Show(Program.HSS[1].getData().Date.ToString());
             // Hss=HSS.FindAll(p => p.getData().Date == );
@@ -1021,7 +1021,7 @@ namespace shedule
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+
 
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
@@ -1042,6 +1042,7 @@ namespace shedule
             progressBar1.Visible = false;
             label3.Visible = false;
 
+            SetDataGridViewValidating();
 
 
             if (Program.listShops != null)
@@ -1110,7 +1111,7 @@ namespace shedule
                     Program.ParametrOptimization = short.Parse(sr.ReadLine());
                 }
             }
-            catch 
+            catch
             {
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
@@ -1307,7 +1308,7 @@ namespace shedule
             {
                 MessageBox.Show($"Файл {ex.FileName} поврежден или не найден");
             }
-            catch 
+            catch
             {
                 MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -1440,7 +1441,7 @@ namespace shedule
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
-            
+
             Excel.Application xlApp;
 
             Excel.Workbook xlWorkBook;
@@ -1570,7 +1571,10 @@ namespace shedule
             panelTRasp.BringToFront();
             dataGridViewForTSR.DataSource = viewTSR();
             dataGridViewForTSR.Columns[0].ReadOnly = true;
+
         }
+
+
 
         public void writeTSR()
         {
@@ -1630,8 +1634,9 @@ namespace shedule
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-                foreach (VarSmen vs in Program.currentShop.VarSmenBP) {
-                    sw.WriteLine(vs.ts.getR()+"#"+vs.ts.getV());
+                foreach (VarSmen vs in Program.currentShop.VarSmenBP)
+                {
+                    sw.WriteLine(vs.ts.getR() + "#" + vs.ts.getV());
                 }
 
             }
@@ -2031,7 +2036,7 @@ namespace shedule
 
 
             DisableControlsOnStart();
-            MessageBox.Show( $"Выбрано {Program.shops.Count} магазинов, примерное время ожидания {Program.shops.Count * 2} минут");
+            MessageBox.Show($"Выбрано {Program.shops.Count} магазинов, примерное время ожидания {Program.shops.Count * 2} минут");
             progressBar1.Visible = true;
 
             label3.Text = "";
@@ -2070,20 +2075,20 @@ namespace shedule
             EnableControlsOnFinish();
 
         }
-        
+
         private void bg_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar2.Value = e.ProgressPercentage;
         }
-        
+
         private delegate void updateLabel3Delegate(string text);
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
             int ShopStep = 100 / Program.shops.Count;
             int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
-            
-            Program.currentShop = new Shop(0,"");
+
+            Program.currentShop = new Shop(0, "");
             bg.ProgressChanged += bg_ProgressChanged;
 
             switch (Program.TipExporta)
@@ -2094,13 +2099,13 @@ namespace shedule
                         break;
                     }
                 default:
-                {
+                    {
                         TaskStep = ShopStep / 3;
                         break;
                     }
             }
             int shopCounter = 0;
-                shopCounter++;
+            shopCounter++;
 
             Program.getListDate(DateTime.Today.Year);
             Program.readTSR();
@@ -2109,13 +2114,14 @@ namespace shedule
 
             foreach (Shop shop in Program.shops)
             {
-                Program.currentShop.setIdShop( shop.getIdShopFM());
+                Program.currentShop.setIdShop(shop.getIdShopFM());
                 if (Program.currentShop.VarSmenBP.Count == 0)
                 {
                     VarSmen.CreateVarSmen();
                 }
 
-                if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\")) {
+                if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
+                {
                     Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
                 }
 
@@ -2130,19 +2136,19 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
                                 Program.createPrognoz(Program.IsMpRezhim);
-                                
+
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
 
                                 Program.OptimCountSotr();
-                                
+
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
                                 if (!Program.CreateSmens())
                                 {
                                     MessageBox.Show("Расписание не создано");
                                 }
-                                
+
 
                             }
                             catch (Exception ex)
@@ -2261,7 +2267,7 @@ namespace shedule
 
 
 
-                            
+
                             ObjWorkSheet = (Worksheet)ObjWorkBook.Sheets[2];
 
                             ObjWorkSheet.Name = "Часы";
@@ -2360,7 +2366,7 @@ namespace shedule
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
-                                
+
                                 //  MessageBox.Show("Расписание создано");
 
                             }
@@ -2380,11 +2386,11 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
                                 Program.createPrognoz();
-                                
+
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
                                 Program.OptimCountSotr();
-                                
+
 
                             }
                             catch (Exception ex)
@@ -2449,7 +2455,7 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
-                                
+
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                                 MessageBox.Show("Файл создан");
@@ -2475,8 +2481,8 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 Program.OptimCountSotr();
-                               
-                                
+
+
 
                             }
                             catch (Exception ex)
@@ -2548,7 +2554,7 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
                                 // ObjWorkBook.SaveAs(filename);
-                                
+
                                 ObjWorkBook.Close(0);
 
                                 ObjExcel.Quit();
@@ -2689,6 +2695,87 @@ namespace shedule
         {
 
         }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        #region ValidatingDataGridView
+
+        void SetDataGridViewValidating()
+        {
+            dataGridViewForTSR.DataError += dataGridViewForTSR_DataError;
+            dataGridViewFactors.DataError += dataGridViewFactors_DataError;
+            dataGridViewVarSmen.DataError += dataGridViewVarSmen_DataError;
+            dataGridView1.DataError += dataGridViewFactors_DataError;
+            dataGridViewMVarSmen.DataError += dataGridViewVarSmen_DataError;
+        }
+
+        void dataGridViewForTSR_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // you can obtain current editing value like this:
+            //string value = null;
+            //var ctl = dataGridViewForTSR.EditingControl as DataGridViewTextBoxEditingControl;
+
+            //if (ctl != null)
+            //    value = ctl.Text;
+
+            // you can obtain the current commited value
+            object current = dataGridViewForTSR.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            string message;
+            switch (e.ColumnIndex)
+            {
+                // other columns
+                default:
+                    message = "Введите число!";
+                    break;
+            }
+
+            MessageBox.Show(message);
+        }
+
+        void dataGridViewFactors_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            string message;
+            switch (e.ColumnIndex)
+            {
+                case 1:
+                    {
+                        message = "Введите число!";
+                        break;
+                    }
+                case 3:
+                    {
+                        message = "Введите дату в формате 01.01.1970!";
+                        break;
+                    }
+                case 4:
+                    {
+                        message = "Введите число!";
+                        break;
+                    }
+                default:
+                    message = "Введите число!";
+                    break;
+            }
+
+            MessageBox.Show(message);
+        }
+
+        void dataGridViewVarSmen_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            string message;
+            switch (e.ColumnIndex)
+            {
+                default:
+                    message = "Введите число!";
+                    break;
+            }
+
+            MessageBox.Show(message);
+        }
+        #endregion
     }
 }
 
