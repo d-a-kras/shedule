@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Sotrudniki.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\Helper.cs" />
     <Compile Include="DataSet1.Designer.cs">

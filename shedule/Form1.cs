@@ -102,15 +102,13 @@ namespace shedule
 
 
                             // 
-                            Program.OptimCountSotr();
+                            Sotrudniki.OptimCountSotr();
                             bg.ReportProgress(6);
 
 
                             //  
-                            if (!Program.CreateSmens())
-                            {
-                                MessageBox.Show("Расписание не создано");
-                            }
+                            Sotrudniki.CreateSmens();
+                           
                             bg.ReportProgress(8);
                         }
                         catch (Exception ex)
@@ -433,7 +431,7 @@ namespace shedule
                             Program.createPrognoz();
                             bg.ReportProgress(4);
 
-                            Program.OptimCountSotr();
+                            Sotrudniki.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
                         catch (Exception ex)
@@ -476,7 +474,7 @@ namespace shedule
                             ObjWorkSheet.Cells[2, i] = tsr.getCount();
                             //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
                             ObjWorkSheet.Cells[3, i] =
-                                Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
+                                Program.currentShop.employes.FindAll(t => t.GetTip() == tsr.getTip()).Count;
                             i++;
                         }
 
@@ -558,7 +556,7 @@ namespace shedule
 
 
                             // 
-                            Program.OptimCountSotr();
+                           Sotrudniki.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
                         catch (Exception ex)
@@ -601,7 +599,7 @@ namespace shedule
                             ObjWorkSheet.Cells[2, i] = tsr.getCount() * tsr.getZarp();
                             //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
                             ObjWorkSheet.Cells[3, i] =
-                                Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
+                                Program.currentShop.employes.FindAll(t => t.GetTip() == tsr.getTip()).Count * tsr.getZarp();
                             i++;
                         }
 
@@ -791,12 +789,12 @@ namespace shedule
 
             //заполняем строку значениями
 
-            foreach (VarSmen f in Program.currentShop.VarSmenBP)
+            foreach (VarSmen f in Program.currentShop.VarSmens)
             {
                 row = dt.NewRow();
-                row["Количество рабочих дней"] = f.ts.getR();
-                row["Количество выходных дней"] = f.ts.getV();
-                row["действует на текущую дату"] = f.ts.getDeistvie();
+                row["Количество рабочих дней"] = f.getR();
+                row["Количество выходных дней"] = f.getV();
+                row["действует на текущую дату"] = f.getDeistvie();
 
                 dt.Rows.Add(row);
             }
@@ -1347,9 +1345,9 @@ namespace shedule
             Program.readFactors();
             Program.readVarSmen();
             Program.ExistFile = false;
-            if (Program.currentShop.VarSmenBP.Count == 0)
+            if (Program.currentShop.VarSmens.Count == 0)
             {
-                VarSmen.CreateVarSmen();
+              //  VarSmen.CreateVarSmen();
             }
             tabControl1.Visible = true;
         }
@@ -1630,8 +1628,8 @@ namespace shedule
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-                foreach (VarSmen vs in Program.currentShop.VarSmenBP) {
-                    sw.WriteLine(vs.ts.getR()+"#"+vs.ts.getV());
+                foreach (VarSmen vs in Program.currentShop.VarSmens) {
+                    sw.WriteLine(vs.getR()+"#"+vs.getV()+ "#" + vs.getDeistvie());
                 }
 
             }
@@ -1650,9 +1648,9 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
-            if (Program.currentShop.VarSmenBP.Count == 0)
+            if (Program.currentShop.VarSmens.Count == 0)
             {
-                VarSmen.CreateVarSmen();
+               // VarSmen.CreateVarSmen();
             }
             tabControl1.Visible = true;
 
@@ -2110,9 +2108,9 @@ namespace shedule
             foreach (Shop shop in Program.shops)
             {
                 Program.currentShop.setIdShop( shop.getIdShopFM());
-                if (Program.currentShop.VarSmenBP.Count == 0)
+                if (Program.currentShop.VarSmens.Count == 0)
                 {
-                    VarSmen.CreateVarSmen();
+                  //  VarSmen.CreateVarSmen();
                 }
 
                 filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getIdShopFM() + ".xls";
@@ -2130,15 +2128,12 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
 
-                                Program.OptimCountSotr();
+                              Sotrudniki.OptimCountSotr();
                                 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
-                                if (!Program.CreateSmens())
-                                {
-                                    MessageBox.Show("Расписание не создано");
-                                }
-                                
+                                Sotrudniki.CreateSmens();
+                              
 
                             }
                             catch (Exception ex)
@@ -2376,7 +2371,7 @@ namespace shedule
                                 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
-                                Program.OptimCountSotr();
+                               Sotrudniki.OptimCountSotr();
                                 
 
                             }
@@ -2416,7 +2411,7 @@ namespace shedule
                                 ObjWorkSheet.Cells[2, i] = tsr.getCount();
                                 //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
                                 ObjWorkSheet.Cells[3, i] =
-                                    Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count;
+                                    Program.currentShop.employes.FindAll(t => t.GetTip() == tsr.getTip()).Count;
                                 i++;
                             }
 
@@ -2467,7 +2462,7 @@ namespace shedule
 
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
-                                Program.OptimCountSotr();
+                                Sotrudniki.OptimCountSotr();
                                
                                 
 
@@ -2509,7 +2504,7 @@ namespace shedule
                                 ObjWorkSheet.Cells[2, i] = tsr.getCount() * tsr.getZarp();
                                 //chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
                                 ObjWorkSheet.Cells[3, i] =
-                                    Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count *
+                                    Program.currentShop.employes.FindAll(t => t.GetTip() == tsr.getTip()).Count *
                                     tsr.getZarp();
                                 i++;
                             }

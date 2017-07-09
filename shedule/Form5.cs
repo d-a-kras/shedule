@@ -40,7 +40,7 @@ namespace shedule
                 chartXStr[i] = tsr.getOtobragenie();
                 chartY1[i] = tsr.getCount() * tsr.getZarp();
 
-                chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count * tsr.getZarp();
+                chartY2[i] = Program.currentShop.employes.FindAll(t => t.GetTip() == tsr.getTip()).Count * tsr.getZarp();
 
                 i++;
             }
@@ -71,7 +71,7 @@ namespace shedule
                 chartXStr[i] = tsr.getOtobragenie();
                 chartY1[i] = tsr.getCount();
 
-                chartY2[i] = Program.currentShop.employes.FindAll(t => t.getTip() == tsr.getTip()).Count ;
+                chartY2[i] = Program.currentShop.employes.FindAll(t => t.GetTip() == tsr.getTip()).Count ;
 
                 i++;
             }
@@ -167,12 +167,12 @@ namespace shedule
                     bg.ReportProgress(4);
                     Program.createPrognoz();
                     bg.ReportProgress(8);
-                    Program.OptimCountSotr(); bg.ReportProgress(12); break;
+                    Code.Sotrudniki.OptimCountSotr(); bg.ReportProgress(12); break;
                 case 2:
                     bg.ReportProgress(4);
                     Program.createPrognoz();
                     bg.ReportProgress(8);
-                    Program.OptimCountSotr();
+                   Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12);break;
             }
         }
