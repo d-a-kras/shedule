@@ -2115,6 +2115,10 @@ namespace shedule
                     VarSmen.CreateVarSmen();
                 }
 
+                if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\")) {
+                    Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
+                }
+
                 filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getIdShopFM() + ".xls";
                 switch (Program.TipExporta)
                 {
@@ -2164,6 +2168,7 @@ namespace shedule
 
                             ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
 
+                            ObjWorkBook.Sheets.Add();
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
                             ObjWorkSheet.Name = "График";
                             excelcells = ObjWorkSheet.get_Range("A3", "AL40");
@@ -2255,7 +2260,9 @@ namespace shedule
                             }
 
 
-                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
+
+                            
+                            ObjWorkSheet = (Worksheet)ObjWorkBook.Sheets[2];
 
                             ObjWorkSheet.Name = "Часы";
 
@@ -2565,6 +2572,10 @@ namespace shedule
                 }
                 bg.ReportProgress(ShopStep * shopCounter);
             }
+            if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
+            {
+                Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
+            }
             string startPath = Environment.CurrentDirectory + @"\mult\";
             //string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
 
@@ -2667,6 +2678,16 @@ namespace shedule
                 this.Visible = false;
                 this.ShowInTaskbar = false;
             }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -2634,10 +2634,10 @@ namespace shedule
         {
 
             var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-            //string s1 = n.Year + "/" + n.Day + "/" + n.Month;
-            //string s2 = k.Year + "/" + k.Day + "/" + k.Month;
-            string s1 = "2016"+ "/" + "9" + "/" + "6";
-            string s2 = "2016" + "/" + "8" + "/" + "7";
+            string s1 = n.Year + "/" + n.Day + "/" + n.Month;
+            string s2 = k.Year + "/" + k.Day + "/" + k.Month;
+            //string s1 = "2016"+ "/" + "9" + "/" + "6";
+            //string s2 = "2016" + "/" + "8" + "/" + "7";
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
             if (currentShop.getIdShop() == 0) { sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
@@ -2698,7 +2698,7 @@ namespace shedule
 
             }
 
-            using (StreamWriter sm = new StreamWriter(@"C:\Users\Oleg\Desktop\test\test.txt"))
+            using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
             {
                 foreach (var s in results)
                 {
