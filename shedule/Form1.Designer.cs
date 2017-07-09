@@ -126,7 +126,6 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.buttonExit = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -1121,21 +1120,10 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
-            // buttonExit
-            // 
-            this.buttonExit.BackColor = System.Drawing.Color.Red;
-            this.buttonExit.Location = new System.Drawing.Point(834, 4);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(39, 23);
-            this.buttonExit.TabIndex = 14;
-            this.buttonExit.Text = "Exit";
-            this.buttonExit.UseVisualStyleBackColor = false;
-            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // Form1
@@ -1145,7 +1133,6 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(886, 490);
-            this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
@@ -1295,7 +1282,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbProgressMessages;
         private System.Windows.Forms.Button buttonTSRPG;
-        private System.Windows.Forms.Button buttonExit;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
