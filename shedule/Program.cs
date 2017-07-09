@@ -1488,9 +1488,6 @@ namespace shedule
         public static int MinKassirCount = 2;
         public static int LastHourInInterval = -1;
 
-
-
-
         // static public List<hourSale> HSS = new List<hourSale>();
         static public string CountObr = "";
 

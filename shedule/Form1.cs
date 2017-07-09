@@ -20,7 +20,6 @@ namespace shedule
 {
     public partial class Form1 : Form
     {
-        private bool EbatKostylFirstVhod = true;
         private BackgroundWorker bw = new BackgroundWorker();
         private BackgroundWorker bw1 = new BackgroundWorker();
         static public int[] chartX;
@@ -864,9 +863,25 @@ namespace shedule
         public Form1()
         {
             InitializeComponent();
-            //    Program.Connect();
+            FormClosing += Form1_FormClosing;
+        }
+        
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.WindowsShutDown && Program.IsMpRezhim)
+            {
+                WindowState = FormWindowState.Minimized;
+                e.Cancel = true;
+                Hide();
+                notifyIcon1.Visible = true;
+            }
+            else
+            {
+                System.Windows.Forms.Application.Exit();
+            }
 
         }
+        
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -2100,7 +2115,7 @@ namespace shedule
                 }
             }
             
-            int ShopStep = 100 / Program.shops.Count;
+            int ShopStep = 200 / Program.shops.Count;
             int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
             
@@ -2801,6 +2816,13 @@ namespace shedule
             MessageBox.Show(message);
         }
         #endregion
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
+        }
     }
 }
 
