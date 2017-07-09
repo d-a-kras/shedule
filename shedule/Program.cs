@@ -2647,7 +2647,7 @@ namespace shedule
             currentShop.daysSale = new List<daySale>();
             List<hourSale> hss = new List<hourSale>();
             daySale ds;
-            List<string> results = new List<string>();
+            //List<string> results = new List<string>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -2662,7 +2662,7 @@ namespace shedule
                     while (reader.Read())
                     {
                         hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                        results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
+                        //results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
                         hss.Add(h);
 
                     }
@@ -2692,19 +2692,16 @@ namespace shedule
             //  MessageBox.Show("Количество часов "+hss.Count.ToString());
             foreach (hourSale hs in hss)
             {
-
-
                 currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
-
             }
 
-            using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
-            {
-                foreach (var s in results)
-                {
-                    sm.WriteLine(s);
-                }
-            }
+            //using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
+            //{
+            //    foreach (var s in results)
+            //    {
+            //        sm.WriteLine(s);
+            //    }
+            //}
 
             return true;
         }
@@ -3449,9 +3446,8 @@ namespace shedule
                     else { connect = false; return connect; }
 
                 }
-                catch (System.Data.SqlClient.SqlException ex)
+                catch (SqlException ex)
                 {
-
                     MessageBox.Show(ex.Message);
                     connect = false;
                     return connect;

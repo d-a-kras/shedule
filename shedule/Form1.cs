@@ -20,6 +20,7 @@ namespace shedule
 {
     public partial class Form1 : Form
     {
+        private bool EbatKostylFirstVhod = true;
         private BackgroundWorker bw = new BackgroundWorker();
         private BackgroundWorker bw1 = new BackgroundWorker();
         static public int[] chartX;
@@ -1696,16 +1697,21 @@ namespace shedule
 
         private void buttonMdel_Click(object sender, EventArgs e)
         {
-            string shopAddress = listBoxMPartShops.SelectedItem.ToString().Split('_')[1];
-            if (listBoxMPartShops.Text != "")
+            try
             {
-                listBoxMPartShops.Items.Remove(listBoxMPartShops.SelectedItem);
-                Shop s = Program.shops.Find(t => t.getAddress() == shopAddress);
-                if (s != null && Program.shops.Contains(s))
+                string shopAddress = listBoxMPartShops.SelectedItem.ToString().Split('_')[1];
+                if (listBoxMPartShops.Text != "")
                 {
-                    Program.shops.Remove(s);
+                    listBoxMPartShops.Items.Remove(listBoxMPartShops.SelectedItem);
+                    Shop s = Program.shops.Find(t => t.getAddress() == shopAddress);
+                    if (s != null && Program.shops.Contains(s))
+                    {
+                        Program.shops.Remove(s);
+                    }
                 }
             }
+            catch{}
+
         }
 
         private void radioButtonMinFondOpl_CheckedChanged(object sender, EventArgs e)
@@ -2002,7 +2008,7 @@ namespace shedule
 
         private void button13_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Program.shops.Count + "");
+            //MessageBox.Show(Program.shops.Count + "");
             if (Program.isConnected(Program.login, Program.password))
             {
                 CreateZip();
@@ -2044,9 +2050,12 @@ namespace shedule
             progressBar1.Maximum = 20;
             progressBar1.Minimum = 0;
             progressBar1.Step = 2;
-            Program.TipExporta = comboBox1.SelectedIndex;
+            progressBar2.Visible = true;
 
+            Program.TipExporta = comboBox1.SelectedIndex;
             bw1.RunWorkerAsync();
+            
+            
         }
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -2064,7 +2073,6 @@ namespace shedule
                 if (!errorOnExecuting)
                 {
                     progressBar1.Value = progressBar1.Maximum;
-
                     progressBar1.Visible = false;
                     label3.Visible = false;
                     listBox1.Enabled = true;
@@ -2084,12 +2092,21 @@ namespace shedule
         private delegate void updateLabel3Delegate(string text);
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
+            if (Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
+            {
+                foreach (var file in Directory.GetFiles(Environment.CurrentDirectory + @"\mult\"))
+                {
+                    File.Delete(file);
+                }
+            }
+            
             int ShopStep = 100 / Program.shops.Count;
             int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
-
+            
             Program.currentShop = new Shop(0, "");
             bg.ProgressChanged += bg_ProgressChanged;
+            Program.BgProgress = 0;
 
             switch (Program.TipExporta)
             {
@@ -2585,9 +2602,17 @@ namespace shedule
             string startPath = Environment.CurrentDirectory + @"\mult\";
             //string zipPath = Environment.CurrentDirectory + @"\mult\result.zip";
 
+            if (File.Exists(PathToZip))
+            {
+                File.Delete(PathToZip);
+            }
+
             ZipFile zf = new ZipFile(PathToZip);
             zf.AddDirectory(startPath);
+            bg.ReportProgress(100);
+
             zf.Save(); //Сохраняем архив.
+            
         }
 
         private void tbKassirCount_TextChanged(object sender, EventArgs e)
