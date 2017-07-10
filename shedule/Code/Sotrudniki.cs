@@ -83,7 +83,7 @@ namespace shedule.Code
 
             //((tc * TimeObrTov * 100) / (normchas * 3600 * KoefObr));
             int CountProd = LProd.Sum(o => o.getCount());
-            int CountKassirov = ((ob * K / (Program.normchas * 3 * 3600))) + Program.ParametrOptimization;
+            int CountKassirov = ((ob * K / (Program.normchas*6  * 3600))) + Program.ParametrOptimization;
 
             if (CountKassirov < 6) { CountKassirov = 6; }
             if (CountProd < 6) { CountProd = 6; }
@@ -99,7 +99,7 @@ namespace shedule.Code
 
             for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
             {
-                employee e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(nvs)], LProd[shiftProd(nkass)].getOtobragenie(), "Сменный график");
+                employee e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(nvs)], LKass[shiftKass(nkass)].getOtobragenie(), "Сменный график");
 
                 Program.currentShop.employes.Add(e);
 
@@ -124,10 +124,10 @@ namespace shedule.Code
                     {
                         start = wd.DS.getStartDaySale();
 
-                        if (emp.getOtrabotal() < emp.getVS().getR())
+                        if (emp.getOtrabotal() >0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
-                            emp.OtrabotalDay();
+                           
                             emp.TipTekSmen = 1;
                             wd.minSotrUtr--;
                         }
@@ -138,10 +138,10 @@ namespace shedule.Code
                     {
                         start = wd.DS.getEndDaySale() - dlina;
 
-                        if (emp.getOtrabotal() < emp.getVS().getR())
+                        if (emp.getOtrabotal() >0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
-                            emp.OtrabotalDay();
+                           
                             emp.TipTekSmen = 3;
                             wd.minSotrVech--;
                         }
@@ -151,11 +151,12 @@ namespace shedule.Code
                     else if (emp.getOtrabotal() < emp.getVS().getR())
                     {
                         emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
-                        emp.OtrabotalDay();
+                       
                         emp.TipTekSmen = 2;
 
                     }
 
+                    emp.OtrabotalDay();
 
                 }
                 emp.setStatus(1);
@@ -177,10 +178,10 @@ namespace shedule.Code
                     {
 
 
-                        if (emp.getOtrabotal() < emp.getVS().getR())
+                        if (emp.getOtrabotal() >0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
-                            emp.OtrabotalDay();
+                           
                             emp.TipTekSmen = 2;
 
                         }
@@ -191,25 +192,25 @@ namespace shedule.Code
                     {
                         start = wd.DS.getEndDaySale() - dlina;
 
-                        if (emp.getOtrabotal() < emp.getVS().getR())
+                        if (emp.getOtrabotal() >0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
-                            emp.OtrabotalDay();
+                          
                             emp.TipTekSmen = 3;
 
                         }
 
                     }
 
-                    else if (emp.getOtrabotal() < emp.getVS().getR())
+                    else if (emp.getOtrabotal() >0)
                     {
                         start = wd.DS.getStartDaySale();
                         emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
-                        emp.OtrabotalDay();
+                       
                         emp.TipTekSmen = 1;
 
                     }
-
+                    emp.OtrabotalDay();
                 }
                 emp.setStatus(1);
             }
