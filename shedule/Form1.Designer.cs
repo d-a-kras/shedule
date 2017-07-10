@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.getStatisticByShopsDayHourBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet1 = new shedule.DataSet1();
             this.button1 = new System.Windows.Forms.Button();
@@ -57,14 +58,14 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.dataGridViewMVarSmen = new System.Windows.Forms.DataGridView();
-            this.label14 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.dataGridViewMVarSmen = new System.Windows.Forms.DataGridView();
+            this.label14 = new System.Windows.Forms.Label();
+            this.button23 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lbProgressMessages = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -90,6 +91,7 @@
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.panelTRasp = new System.Windows.Forms.Panel();
+            this.buttonTSRPG = new System.Windows.Forms.Button();
             this.buttonPTSR = new System.Windows.Forms.Button();
             this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -124,9 +126,7 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.buttonTSRPG = new System.Windows.Forms.Button();
-            this.lbProgressMessages = new System.Windows.Forms.Label();
-            this.buttonExit = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -135,10 +135,10 @@
             this.tabPage6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.panelSingleShop.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -324,9 +324,9 @@
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.button8);
-            this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.panel4);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(472, 304);
@@ -384,6 +384,7 @@
             this.button11.TabIndex = 3;
             this.button11.Text = "применить ";
             this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // radioButton1
             // 
@@ -406,6 +407,7 @@
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Минимизировать время ожидания покупателя на кассе";
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton3
             // 
@@ -418,43 +420,6 @@
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "Минимизировать фонд оплаты труда";
             this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.dataGridViewMVarSmen);
-            this.panel4.Controls.Add(this.label14);
-            this.panel4.Controls.Add(this.button23);
-            this.panel4.Location = new System.Drawing.Point(3, 57);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(462, 245);
-            this.panel4.TabIndex = 2;
-            // 
-            // dataGridViewMVarSmen
-            // 
-            this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
-            this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(50, 32);
-            this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
-            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(361, 131);
-            this.dataGridViewMVarSmen.TabIndex = 2;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(89, 13);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "Варианты смен:";
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(335, 169);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(76, 23);
-            this.button23.TabIndex = 0;
-            this.button23.Text = "Применить";
-            this.button23.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -496,6 +461,44 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(408, 185);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.dataGridViewMVarSmen);
+            this.panel4.Controls.Add(this.label14);
+            this.panel4.Controls.Add(this.button23);
+            this.panel4.Location = new System.Drawing.Point(3, 57);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(462, 245);
+            this.panel4.TabIndex = 2;
+            // 
+            // dataGridViewMVarSmen
+            // 
+            this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
+            this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(50, 32);
+            this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
+            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(361, 131);
+            this.dataGridViewMVarSmen.TabIndex = 2;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(89, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "Варианты смен:";
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(335, 169);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(76, 23);
+            this.button23.TabIndex = 0;
+            this.button23.Text = "Применить";
+            this.button23.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
@@ -648,9 +651,9 @@
             this.tabPage1.Controls.Add(this.buttonRaspisanie);
             this.tabPage1.Controls.Add(this.buttonCalendar);
             this.tabPage1.Controls.Add(this.buttonKassov);
-            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
+            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -761,6 +764,13 @@
             this.panelTRasp.Size = new System.Drawing.Size(437, 266);
             this.panelTRasp.TabIndex = 4;
             // 
+            // buttonTSRPG
+            // 
+            this.buttonTSRPG.Location = new System.Drawing.Point(0, 0);
+            this.buttonTSRPG.Name = "buttonTSRPG";
+            this.buttonTSRPG.Size = new System.Drawing.Size(75, 23);
+            this.buttonTSRPG.TabIndex = 0;
+            // 
             // buttonPTSR
             // 
             this.buttonPTSR.Location = new System.Drawing.Point(339, 216);
@@ -807,9 +817,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -1110,31 +1120,12 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
             // 
-            // lbProgressMessages
-            this.buttonTSRPG.Location = new System.Drawing.Point(214, 216);
-            this.buttonTSRPG.Name = "buttonTSRPG";
-            this.buttonTSRPG.Size = new System.Drawing.Size(119, 23);
-            this.buttonTSRPG.TabIndex = 2;
-            this.buttonTSRPG.Text = "На следующий год";
-            this.buttonTSRPG.UseVisualStyleBackColor = true;
-            this.lbProgressMessages.AutoSize = true;
-            this.lbProgressMessages.Location = new System.Drawing.Point(70, 153);
-            this.lbProgressMessages.Name = "lbProgressMessages";
-            this.lbProgressMessages.Size = new System.Drawing.Size(0, 13);
-            this.lbProgressMessages.TabIndex = 9;
-            this.lbProgressMessages.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click);
+            // notifyIcon1
             // 
-            // buttonExit
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Кировский.Смены";
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            this.buttonExit.BackColor = System.Drawing.Color.Red;
-            this.buttonExit.Location = new System.Drawing.Point(834, 4);
-            this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(39, 23);
-            this.buttonExit.TabIndex = 14;
-            this.buttonExit.Text = "Exit";
-            this.buttonExit.UseVisualStyleBackColor = false;
-            this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1142,7 +1133,6 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(886, 490);
-            this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
@@ -1164,11 +1154,11 @@
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).EndInit();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.panelSingleShop.ResumeLayout(false);
@@ -1292,7 +1282,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbProgressMessages;
         private System.Windows.Forms.Button buttonTSRPG;
-        private System.Windows.Forms.Button buttonExit;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

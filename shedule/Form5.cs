@@ -107,8 +107,8 @@ namespace shedule
            
 
             var l = chart1.Legends;
-            chart1.Series[2].IsVisibleInLegend = false;
-            chart1.Series[3].IsVisibleInLegend = false;
+            //chart1.Series[2].IsVisibleInLegend = false;
+            //chart1.Series[3].IsVisibleInLegend = false;
         }
 
 
@@ -150,7 +150,7 @@ namespace shedule
                 case 2: label3.Text = "Создание прогноза продаж"; break;
                 case 4: label3.Text = "Подсчет оптимальной загруженности"; break;
                 case 6: label3.Text = "Оптимальная расстановка смен"; break;
-                case 8: label3.Text = "Запись в Exel"; break;
+                case 8: label3.Text = "Запись в Exсel"; break;
 
             }
             progressBar1.Value = e.ProgressPercentage;

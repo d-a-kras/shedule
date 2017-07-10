@@ -250,6 +250,7 @@ namespace shedule
             
             }
 
+        
         }
 
         public VarSmen(int rab,int vyh, bool d)
@@ -985,8 +986,8 @@ namespace shedule
 
         private int idShop;
         int idFM;
-        public int CountMin ;
-        public int TimeMinRab=10 ; 
+        public int CountMin;
+        public int TimeMinRab = 10;
         private String address;
         public int getIdShop() { return idShop; }
         public int getIdShopFM() { return idFM; }
@@ -1035,7 +1036,8 @@ namespace shedule
             return this.workingDays;
         }
 
-        public void setIdShop(int x) {
+        public void setIdShop(int x)
+        {
             this.idFM = x;
         }
 
@@ -1234,7 +1236,7 @@ namespace shedule
         int endDaySale;
         int lenghtDaySale;
         int tip;
-       
+
         public ForChart Chart;
         public ForChart ChartClick;
         public ForChart ChartCheck;
@@ -1401,7 +1403,7 @@ namespace shedule
         static public int normchas = 0;
         static public bool connect = false;
         static public SqlConnection connection;
-        
+
         static public bool SozdanPrognoz = false;
         static public List<mShop> listShops = new List<mShop>();
         static public int TipOptimizacii = 0;
@@ -1418,9 +1420,6 @@ namespace shedule
 
         public static int MinKassirCount = 2;
         public static int LastHourInInterval = -1;
-
-        
-
 
         // static public List<hourSale> HSS = new List<hourSale>();
         static public string CountObr = "";
@@ -1442,7 +1441,7 @@ namespace shedule
         static public string password = "";
         static public int tipDiagram = 0;
         static public bool TSRTG = true;
-         static public bool exit = true;
+        static public bool exit = true;
 
 
         static public Shop currentShop;
@@ -1450,7 +1449,8 @@ namespace shedule
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
 
-        static public void ReadMinRab() {
+        static public void ReadMinRab()
+        {
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
 
             try
@@ -1466,31 +1466,31 @@ namespace shedule
                     {
 
                         str = s.Split('_');
-                       currentShop.CountMin = int.Parse(str[0]);
+                        currentShop.CountMin = int.Parse(str[0]);
                         currentShop.TimeMinRab = int.Parse(str[1]);
                     }
 
 
                 }
             }
-            catch 
+            catch
             {
 
                 currentShop.CountMin = 2;
-                currentShop.TimeMinRab = 10; 
-                
+                currentShop.TimeMinRab = 10;
+
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-                    sw.Write(currentShop.CountMin+"_"+currentShop.TimeMinRab);
-                    
+                    sw.Write(currentShop.CountMin + "_" + currentShop.TimeMinRab);
+
                 }
                 // MessageBox.Show(ex.ToString());
 
             }
         }
 
-       
+
 
 
         static public void newShop()
@@ -1502,7 +1502,7 @@ namespace shedule
         static public void readTSR()
         {
             currentShop.tsr.Clear();
-           String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
 
             try
             {
@@ -1524,7 +1524,7 @@ namespace shedule
 
                 }
             }
-            catch 
+            catch
             {
 
                 currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
@@ -1571,7 +1571,8 @@ namespace shedule
                         MessageBox.Show("Ошибка записи " + ex.Message);
                     }
                     break;
-                case false: {
+                case false:
+                    {
 
                         readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
 
@@ -1592,7 +1593,8 @@ namespace shedule
                             MessageBox.Show("Ошибка записи " + ex.Message);
                         }
 
-                    } break;
+                    }
+                    break;
             }
         }
 
@@ -1623,7 +1625,7 @@ namespace shedule
 
                 }
             }
-            catch 
+            catch
             {
 
                 currentShop.factors.Add(new Factor("TimeClick", "Время Клика", 4, true, new DateTime(2100, 1, 1), 0));
@@ -1669,6 +1671,14 @@ namespace shedule
         }
 
 
+          //  int CountProd = ((tc * TimeObrTov * 100) / (normchas* 3600 * KoefObr));
+           // MessageBox.Show("Param " + ParametrOptimization + "Count Kass " + CountKassirov);
+            
+               
+                //    employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1), "Кассир 1", "Сменный график");
+                //    currentShop.employes.Add(e);
+                   
+                
       
         static void Pereshet()
         {
@@ -1717,13 +1727,19 @@ namespace shedule
                     }
                 }
             }
-            catch 
+            catch
             {
                 //MessageBox.Show(ex.ToString());
                 currentShop.VarSmens.Add(new VarSmen(5, 2, true));
                 currentShop.VarSmens.Add(new VarSmen(2, 2, true));
                 currentShop.VarSmens.Add(new VarSmen(4, 3, true));
                 currentShop.VarSmens.Add(new VarSmen(6, 1, true));
+                              //  case 1: if (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab) != null) { emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab)); } else { emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getStartDaySale() +2 ), 10));  } break;
+          
+                        };
+                   
+            
+        
 
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
@@ -1735,7 +1751,7 @@ namespace shedule
 
             }
 
-        }
+        
 
 
      
@@ -1793,7 +1809,7 @@ namespace shedule
 
 
 
-        public static void createPrognoz(bool isMp=false)
+        public static void createPrognoz(bool isMp = false)
         {
             CheckDeistvFactors();
             currentShop.MouthPrognoz.Clear();
@@ -1803,9 +1819,9 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
-         //   if (connect)
-          //  {
-                currentShop.daysSale.Clear();
+            //   if (connect)
+            //  {
+            currentShop.daysSale.Clear();
             if (isMp)
             {
                 SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShopFM());
@@ -1814,16 +1830,16 @@ namespace shedule
             {
                 SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
             }
-            
-       //     }
-         //   else if(ExistFile) {
-        //        SozdanPrognoz = ExistFile;
-                
-          //  }
-        //    else
-         //   {
-             //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
-      //      }
+
+            //     }
+            //   else if(ExistFile) {
+            //        SozdanPrognoz = ExistFile;
+
+            //  }
+            //    else
+            //   {
+            //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
+            //      }
 
             foreach (daySale ds in currentShop.daysSale)
             {
@@ -1878,7 +1894,7 @@ namespace shedule
                             Sclick += hs.getCountClick();
                             Scheck += hs.getCountCheck();
                         }
-                  
+
 
                         Sclick = (int)Math.Ceiling((double)((Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100)));
                         Scheck = (int)Math.Ceiling((double)((Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100)));
@@ -1969,7 +1985,7 @@ namespace shedule
                             Scheck += hs.getCountCheck();
                         }
 
-                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) /100) * ((100 + snig_reklam) / 100);
+                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100);
                         Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100);
                         pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
                     }
@@ -1979,8 +1995,8 @@ namespace shedule
             }
 
             DateTime[] fd = new DateTime[3];
-           // DateTime fd2;
-           // DateTime fd3;
+            // DateTime fd2;
+            // DateTime fd3;
 
             if (tdt.Month < 10)
             {
@@ -2030,8 +2046,8 @@ namespace shedule
                 }
             }
 
-            
-            
+
+
 
 
 
@@ -2052,6 +2068,8 @@ namespace shedule
             var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
+            //string s1 = "2016"+ "/" + "9" + "/" + "6";
+            //string s2 = "2016" + "/" + "8" + "/" + "7";
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
             if (currentShop.getIdShop() == 0) { sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
@@ -2061,6 +2079,7 @@ namespace shedule
             currentShop.daysSale = new List<daySale>();
             List<hourSale> hss = new List<hourSale>();
             daySale ds;
+            //List<string> results = new List<string>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -2068,14 +2087,14 @@ namespace shedule
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(sql, connection);
-                    command.CommandTimeout = 300;
+                    command.CommandTimeout = 3000;
                     SqlDataReader reader = command.ExecuteReader();
 
 
                     while (reader.Read())
                     {
                         hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-
+                        //results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
                         hss.Add(h);
 
                     }
@@ -2087,6 +2106,8 @@ namespace shedule
                 }
 
             }
+
+
             //посчитать количество дней 
             TimeSpan ts = k - n;
 
@@ -2103,12 +2124,16 @@ namespace shedule
             //  MessageBox.Show("Количество часов "+hss.Count.ToString());
             foreach (hourSale hs in hss)
             {
-
-
                 currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
-
             }
 
+            //using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
+            //{
+            //    foreach (var s in results)
+            //    {
+            //        sm.WriteLine(s);
+            //    }
+            //}
 
             return true;
         }
@@ -2471,7 +2496,7 @@ namespace shedule
 
 
             }
-            catch 
+            catch
             {
                 //  MessageBox.Show(ex.Message);
 
@@ -2515,7 +2540,7 @@ namespace shedule
                     }
                 }
 
-                string directoryPath = readPath.Split(new string[] {"\\"}, StringSplitOptions.None)
+                string directoryPath = readPath.Split(new string[] { "\\" }, StringSplitOptions.None)
                     .Reverse()
                     .Skip(1)
                     .Reverse()
@@ -2720,8 +2745,8 @@ namespace shedule
                 Application.DoEvents();
             }
 
-            
-           
+
+
             ObjExcel.Quit();
 
         }
@@ -2853,9 +2878,8 @@ namespace shedule
                     else { connect = false; return connect; }
 
                 }
-                catch (System.Data.SqlClient.SqlException ex)
+                catch (SqlException ex)
                 {
-
                     MessageBox.Show(ex.Message);
                     connect = false;
                     return connect;
