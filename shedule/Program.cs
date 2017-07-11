@@ -344,7 +344,7 @@ namespace shedule
                 
             }
         }
-        public employee(int ish, int ie,VarSmen vs,  string d, string tgr)
+        public employee(int ish, int ie,VarSmen vs, int otr,  string d, string tgr)
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
@@ -352,7 +352,8 @@ namespace shedule
             this.Dolgnost = d;
             this.TipGraf = tgr;
             this.smens = new List<Smena>();
-            this.otrabotal = 0;
+
+            this.otrabotal = otr%VS.getR();
         }
 
        
@@ -879,7 +880,21 @@ namespace shedule
         int NStart;
         int NEnd;
         int Lenght;
+        bool zanyta;
         DateTime Data;
+
+        public void Zanyta()
+        {
+            this.zanyta = true;
+        }
+
+        public bool isZanyta() {
+            if (this.zanyta == true)
+            {
+                return true;
+            }
+            else { return false; }
+        }
 
         public Smena(int id, DateTime dt, int start, int lenght)
         {
@@ -887,6 +902,7 @@ namespace shedule
             this.NStart = start;
             this.Lenght = lenght;
             this.Data = dt;
+            this.zanyta = false;
         }
         static public void giveHoursSdvig(Smena sm1, Smena sm2, int x)
         {
@@ -1404,7 +1420,7 @@ namespace shedule
         static public bool connect = false;
         static public SqlConnection connection;
 
-        static public bool SozdanPrognoz = false;
+       // static public bool SozdanPrognoz = false;
         static public List<mShop> listShops = new List<mShop>();
         static public int TipOptimizacii = 0;
         static public int TipExporta = -1;
@@ -1501,8 +1517,13 @@ namespace shedule
 
         static public void readTSR()
         {
-            currentShop.tsr.Clear();
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+            
+            String readPath;
+            if (TSRTG)
+            {
+                currentShop.tsr.Clear();
+                readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+            
 
             try
             {
@@ -1523,6 +1544,7 @@ namespace shedule
 
 
                 }
+
             }
             catch
             {
@@ -1533,45 +1555,89 @@ namespace shedule
                 currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
                 currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
                 currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+                    using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                    {
 
-                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                        foreach (TSR f in currentShop.tsr)
+                            sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+                    }
+                }
+        }
+
+                else {
+                currentShop.tsrBG.Clear();
+                readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
+                try
                 {
 
-                    foreach (TSR f in currentShop.tsr)
-                        sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+
+                    using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                    {
+                        string[] str = new string[5];
+                        string s;
+
+                        while ((s = sr.ReadLine()) != null)
+                        {
+
+                            str = s.Split('#');
+                            currentShop.tsrBG.Add(new TSR(str[0], str[1], int.Parse(str[2]), int.Parse(str[3]), int.Parse(str[4])));
+
+                        }
+
+
+                    }
                 }
+                catch
+                {
+
+                    currentShop.tsrBG.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
+                    currentShop.tsrBG.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
+                    currentShop.tsrBG.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
+                    currentShop.tsrBG.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
+                    currentShop.tsrBG.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
+                    currentShop.tsrBG.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+
+                    using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                    {
+
+                        foreach (TSR f in currentShop.tsrBG)
+                            sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+                    }
+                }
+                }
+
+               
                 // MessageBox.Show(ex.ToString());
 
-            }
+            
 
         }
 
         static public void WriteTSR()
         {
             String readPath;
-            switch (TSRTG)
+            if (TSRTG)
             {
-                case true:
-                    readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
+
+                readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
 
 
 
-                    try
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
-                        using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-                        {
 
-                            foreach (TSR f in currentShop.tsr)
-                                sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
-                        }
+                        foreach (TSR f in currentShop.tsr)
+                            sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
+                    }
 
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Ошибка записи " + ex.Message);
-                    }
-                    break;
-                case false:
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка записи " + ex.Message);
+                }
+            }else
                     {
 
                         readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
@@ -1594,8 +1660,8 @@ namespace shedule
                         }
 
                     }
-                    break;
-            }
+                    
+            
         }
 
 
@@ -1824,11 +1890,11 @@ namespace shedule
             currentShop.daysSale.Clear();
             if (isMp)
             {
-                SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShopFM());
+                 createListDaySale(d2, ydt, currentShop.getIdShopFM());
             }
             else
             {
-                SozdanPrognoz = createListDaySale(d2, ydt, currentShop.getIdShop());
+                 createListDaySale(d2, ydt, currentShop.getIdShop());
             }
 
             //     }
@@ -2062,7 +2128,7 @@ namespace shedule
 
 
 
-        public static bool createListDaySale(DateTime n, DateTime k, int id)
+        public static void createListDaySale(DateTime n, DateTime k, int id)
         {
 
             var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
@@ -2093,7 +2159,7 @@ namespace shedule
 
                     while (reader.Read())
                     {
-                        hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                        hourSale h = new hourSale(currentShop.getIdShop(), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
                         //results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
                         hss.Add(h);
 
@@ -2102,40 +2168,50 @@ namespace shedule
                 catch (System.Data.SqlClient.SqlException ex)
                 {
                     MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
-                    return false;
+                    
                 }
 
             }
 
-
-            //посчитать количество дней 
-            TimeSpan ts = k - n;
-
-            DateTime d = n;
-
-            for (int i = 0; i <= ts.Days + 1; i++)
+            if (hss.Count > 200)
             {
 
-                ds = new daySale(Program.currentShop.getIdShop(), d);
-                currentShop.daysSale.Add(ds);
-                d = d.AddDays(1.0d);
-            }
-            // MessageBox.Show("Количество дней по ts " + ts.Days.ToString());
-            //  MessageBox.Show("Количество часов "+hss.Count.ToString());
-            foreach (hourSale hs in hss)
-            {
-                currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
-            }
 
-            //using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
-            //{
-            //    foreach (var s in results)
-            //    {
-            //        sm.WriteLine(s);
-            //    }
-            //}
 
-            return true;
+                //посчитать количество дней 
+                TimeSpan ts = k - n;
+
+                DateTime d = n;
+
+                for (int i = 0; i <= ts.Days + 1; i++)
+                {
+
+                    ds = new daySale(Program.currentShop.getIdShop(), d);
+                    currentShop.daysSale.Add(ds);
+                    d = d.AddDays(1.0d);
+                }
+                // MessageBox.Show("Количество дней по ts " + ts.Days.ToString());
+                //  MessageBox.Show("Количество часов "+hss.Count.ToString());
+                foreach (hourSale hs in hss)
+                {
+                    currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
+                }
+
+                //using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
+                //{
+                //    foreach (var s in results)
+                //    {
+                //        sm.WriteLine(s);
+                //    }
+                //}
+
+                
+            }
+            else {
+                Form6 f6 = new Form6();
+                f6.Show();
+               
+            }
         }
 
         /*static List<ForChart> createSaleForChart(){
@@ -2149,7 +2225,7 @@ namespace shedule
 
         }*/
 
-        static void Pohog(int idSh)
+        static public void Pohog(int idSh)
         {
 
             createListDaySale(DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-30), idSh);

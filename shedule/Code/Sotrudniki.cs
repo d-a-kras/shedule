@@ -10,7 +10,7 @@ namespace shedule.Code
 
  public  class Sotrudniki
     {
-        static public int shiftSm(int i)
+        static public int shiftSm(ref int i)
         {
             i++;
             if (i == Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true).Count)
@@ -20,7 +20,7 @@ namespace shedule.Code
             return i;
 
         }
-        static public int shiftProd(int i)
+        static public int shiftProd(ref int i)
         {
             i++;
             if (i == Program.currentShop.tsr.FindAll(t => t.getTip() == 2).Count)
@@ -30,7 +30,7 @@ namespace shedule.Code
             return i;
 
         }
-        static public int shiftKass(int i)
+        static public int shiftKass(ref int i)
         {
             i++;
             if (i == Program.currentShop.tsr.FindAll(t => t.getTip() == 1).Count)
@@ -49,7 +49,7 @@ namespace shedule.Code
             int kassCount = Program.MinKassirCount;
             List<VarSmen> DVS = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
 
-            if (!Program.SozdanPrognoz)
+            if (Program.currentShop.MouthPrognozT.Count==0)
             {
                 //MessageBox.Show("Прогноз не создан");
                 return;
@@ -91,7 +91,7 @@ namespace shedule.Code
 
             for (int i = 100; CountProd > 0; CountProd--, i++)
             {
-                employee e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(nvs)], LProd[shiftProd(nprod)].getOtobragenie(), "Сменный график");
+                employee e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs)], i,LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
 
                 Program.currentShop.employes.Add(e);
 
@@ -99,7 +99,7 @@ namespace shedule.Code
 
             for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
             {
-                employee e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(nvs)], LKass[shiftKass(nkass)].getOtobragenie(), "Сменный график");
+                employee e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs)], i,LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
 
                 Program.currentShop.employes.Add(e);
 
@@ -118,13 +118,13 @@ namespace shedule.Code
 
                 foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
                 {
-                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() > wd.DS.getStartDaySale()).getStartSmena();
+                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale())&&(!t.isZanyta())).getStartSmena();
 
                     if ((wd.minSotrUtr > 0) && (emp.TipTekSmen != 1))
                     {
                         start = wd.DS.getStartDaySale();
 
-                        if (emp.getOtrabotal() >0)
+                        if (emp.getOtrabotal() >=0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
                            
@@ -138,7 +138,7 @@ namespace shedule.Code
                     {
                         start = wd.DS.getEndDaySale() - dlina;
 
-                        if (emp.getOtrabotal() >0)
+                        if (emp.getOtrabotal() >=0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
                            
@@ -148,7 +148,7 @@ namespace shedule.Code
 
                     }
 
-                    else if (emp.getOtrabotal() < emp.getVS().getR())
+                    else if (emp.getOtrabotal() >=0)
                     {
                         emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
                        
@@ -178,7 +178,7 @@ namespace shedule.Code
                     {
 
 
-                        if (emp.getOtrabotal() >0)
+                        if (emp.getOtrabotal() >=0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
                            
@@ -192,7 +192,7 @@ namespace shedule.Code
                     {
                         start = wd.DS.getEndDaySale() - dlina;
 
-                        if (emp.getOtrabotal() >0)
+                        if (emp.getOtrabotal() >=0)
                         {
                             emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
                           
@@ -202,7 +202,7 @@ namespace shedule.Code
 
                     }
 
-                    else if (emp.getOtrabotal() >0)
+                    else if (emp.getOtrabotal() >=0)
                     {
                         start = wd.DS.getStartDaySale();
                         emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
