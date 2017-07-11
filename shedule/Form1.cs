@@ -108,7 +108,7 @@ namespace shedule
 
                             //  
                             Sotrudniki.CreateSmens();
-                           
+
                             bg.ReportProgress(8);
                         }
                         catch (Exception ex)
@@ -556,7 +556,7 @@ namespace shedule
 
 
                             // 
-                           Sotrudniki.OptimCountSotr();
+                            Sotrudniki.OptimCountSotr();
                             bg.ReportProgress(6);
                         }
                         catch (Exception ex)
@@ -698,33 +698,33 @@ namespace shedule
             //создаём новую строку
 
             //заполняем строку значениями
-            switch (Program.TSRTG)
-            {
-                case true:
-                    foreach (TSR tsr in Program.currentShop.tsr)
-                    {
-                        row = dt.NewRow();
-                        row["Должность"] = tsr.getOtobragenie();
-                        row["Количество"] = tsr.getCount();
-                        row["Зарплата"] = tsr.getZarp();
-                        row["Зарплата за 1/2"] = tsr.getZarp1_2();
-                        dt.Rows.Add(row);
-                    }
-                    break;
-                case false:
-                    foreach (TSR tsr in Program.currentShop.tsrBG)
-                    {
-                        row = dt.NewRow();
-                        row["Должность"] = tsr.getOtobragenie();
-                        row["Количество"] = tsr.getCount();
-                        row["Зарплата"] = tsr.getZarp();
-                        row["Зарплата за 1/2"] = tsr.getZarp1_2();
-                        dt.Rows.Add(row);
-                    }
-                    break;
+            if (Program.TSRTG) {
+                foreach (TSR tsr in Program.currentShop.tsr)
+                {
+                    row = dt.NewRow();
+                    row["Должность"] = tsr.getOtobragenie();
+                    row["Количество"] = tsr.getCount();
+                    row["Зарплата"] = tsr.getZarp();
+                    row["Зарплата за 1/2"] = tsr.getZarp1_2();
+                    dt.Rows.Add(row);
+                }
             }
+            else {
+                foreach (TSR tsr in Program.currentShop.tsrBG)
+                {
+                    row = dt.NewRow();
+                    row["Должность"] = tsr.getOtobragenie();
+                    row["Количество"] = tsr.getCount();
+                    row["Зарплата"] = tsr.getZarp();
+                    row["Зарплата за 1/2"] = tsr.getZarp1_2();
+                    dt.Rows.Add(row);
+                }
+                }
+            
             return dt;
         }
+
+
 
         private SD.DataTable viewFactors()
         {
@@ -863,7 +863,7 @@ namespace shedule
             InitializeComponent();
             FormClosing += Form1_FormClosing;
         }
-        
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.WindowsShutDown && Program.IsMpRezhim)
@@ -879,7 +879,7 @@ namespace shedule
             }
 
         }
-        
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1364,7 +1364,7 @@ namespace shedule
             Program.ExistFile = false;
             if (Program.currentShop.VarSmens.Count == 0)
             {
-              //  VarSmen.CreateVarSmen();
+                //  VarSmen.CreateVarSmen();
             }
             tabControl1.Visible = true;
         }
@@ -1590,36 +1590,7 @@ namespace shedule
 
 
 
-        public void writeTSR()
-        {
-            String writePath = Environment.CurrentDirectory + @"\TSR.txt";
-            try
-            {
-
-
-                using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
-                {
-
-                    for (int i = 0; i < 4; i++)
-                    {
-                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Должность"].Value.ToString());
-                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Количество"].Value);
-                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Зарплата"].Value);
-                        sw.WriteLine(dataGridViewForTSR.Rows[i].Cells["Зарплата за 1/2"].Value);
-                    }
-
-
-                }
-                MessageBox.Show("Данные сохранены");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
-            }
-
-        }
-
+       
 
 
         private void Form1_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1631,7 +1602,7 @@ namespace shedule
 
         private void buttonPTSR_Click(object sender, EventArgs e)
         {
-            writeTSR();
+            Program.WriteTSR();
             MessageBox.Show("Данные сохранены");
         }
 
@@ -1648,8 +1619,9 @@ namespace shedule
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-                foreach (VarSmen vs in Program.currentShop.VarSmens) {
-                    sw.WriteLine(vs.getR()+"#"+vs.getV()+ "#" + vs.getDeistvie());
+                foreach (VarSmen vs in Program.currentShop.VarSmens)
+                {
+                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
                 }
 
             }
@@ -1670,7 +1642,7 @@ namespace shedule
             Program.readVarSmen();
             if (Program.currentShop.VarSmens.Count == 0)
             {
-               // VarSmen.CreateVarSmen();
+                // VarSmen.CreateVarSmen();
             }
             tabControl1.Visible = true;
 
@@ -1722,7 +1694,7 @@ namespace shedule
                     }
                 }
             }
-            catch{}
+            catch { }
 
         }
 
@@ -1884,10 +1856,7 @@ namespace shedule
 
         }
 
-        private void panelSingleShop_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
 
         private void button6_Click_1(object sender, EventArgs e)
         {
@@ -1935,24 +1904,48 @@ namespace shedule
 
         private void dataGridViewForTSR_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            switch (e.ColumnIndex)
+            if (Program.TSRTG)
             {
-                case 1:
-                    Program.currentShop.tsr.Find(
-                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
-                        .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 2:
-                    Program.currentShop.tsr.Find(
-                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
-                        .setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 3:
-                    Program.currentShop.tsr.Find(
-                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
-                        .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
+                switch (e.ColumnIndex)
+                {
+                    case 1:
+                        Program.currentShop.tsr.Find(
+                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                            .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        break;
+                    case 2:
+                        Program.currentShop.tsr.Find(
+                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                            .setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        break;
+                    case 3:
+                        Program.currentShop.tsr.Find(
+                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                            .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        break;
 
+                }
+            }
+            else {
+                switch (e.ColumnIndex)
+                {
+                    case 1:
+                        Program.currentShop.tsrBG.Find(
+                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                            .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        break;
+                    case 2:
+                        Program.currentShop.tsrBG.Find(
+                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                            .setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        break;
+                    case 3:
+                        Program.currentShop.tsrBG.Find(
+                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                            .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        break;
+
+                }
             }
         }
 
@@ -2066,8 +2059,8 @@ namespace shedule
 
             Program.TipExporta = comboBox1.SelectedIndex;
             bw1.RunWorkerAsync();
-            
-            
+
+
         }
 
         private void bw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -2111,11 +2104,11 @@ namespace shedule
                     File.Delete(file);
                 }
             }
-            
+
             int ShopStep = 100 / Program.shops.Count;
             int TaskStep = ShopStep / 4;
             BackgroundWorker bg = sender as BackgroundWorker;
-            
+
             Program.currentShop = new Shop(0, "");
             bg.ProgressChanged += bg_ProgressChanged;
             Program.BgProgress = 0;
@@ -2146,7 +2139,7 @@ namespace shedule
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 if (Program.currentShop.VarSmens.Count == 0)
                 {
-                  //  VarSmen.CreateVarSmen();
+                    //  VarSmen.CreateVarSmen();
                 }
 
                 if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
@@ -2169,12 +2162,12 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
 
-                              Sotrudniki.OptimCountSotr();
+                                Sotrudniki.OptimCountSotr();
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
                                 Sotrudniki.CreateSmens();
-                              
+
 
                             }
                             catch (Exception ex)
@@ -2415,7 +2408,7 @@ namespace shedule
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
-                               Sotrudniki.OptimCountSotr();
+                                Sotrudniki.OptimCountSotr();
 
 
                             }
@@ -2621,7 +2614,7 @@ namespace shedule
             bg.ReportProgress(100);
 
             zf.Save(); //Сохраняем архив.
-            
+
         }
 
         private void tbKassirCount_TextChanged(object sender, EventArgs e)
@@ -2816,6 +2809,28 @@ namespace shedule
             Show();
             WindowState = FormWindowState.Normal;
             notifyIcon1.Visible = false;
+        }
+
+        private void buttonTSRPG_Click_1(object sender, EventArgs e)
+        {
+
+            if (Program.TSRTG)
+            {
+                
+                Program.TSRTG = false;
+                dataGridViewForTSR.DataSource =  viewTSR();
+               // dataGridViewForTSR.Refresh();
+               // dataGridViewForTSR.Update();
+                buttonTSRPG.Text = "На текущий год";
+            }
+            else {
+               
+                Program.TSRTG = true;
+                dataGridViewForTSR.DataSource = viewTSR();
+                //dataGridViewForTSR.Refresh();
+               // dataGridViewForTSR.Update();
+                buttonTSRPG.Text = "На будущий год";
+            }
         }
     }
 }

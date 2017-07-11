@@ -621,7 +621,6 @@
             this.panelSingleShop.Name = "panelSingleShop";
             this.panelSingleShop.Size = new System.Drawing.Size(848, 429);
             this.panelSingleShop.TabIndex = 13;
-            this.panelSingleShop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSingleShop_Paint);
             // 
             // buttonMultShops
             // 
@@ -651,9 +650,9 @@
             this.tabPage1.Controls.Add(this.buttonRaspisanie);
             this.tabPage1.Controls.Add(this.buttonCalendar);
             this.tabPage1.Controls.Add(this.buttonKassov);
+            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
-            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -766,16 +765,18 @@
             // 
             // buttonTSRPG
             // 
-            this.buttonTSRPG.Location = new System.Drawing.Point(0, 0);
+            this.buttonTSRPG.Location = new System.Drawing.Point(224, 216);
             this.buttonTSRPG.Name = "buttonTSRPG";
-            this.buttonTSRPG.Size = new System.Drawing.Size(75, 23);
+            this.buttonTSRPG.Size = new System.Drawing.Size(90, 40);
             this.buttonTSRPG.TabIndex = 0;
+            this.buttonTSRPG.Text = "На следующий год";
+            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click_1);
             // 
             // buttonPTSR
             // 
-            this.buttonPTSR.Location = new System.Drawing.Point(339, 216);
+            this.buttonPTSR.Location = new System.Drawing.Point(320, 217);
             this.buttonPTSR.Name = "buttonPTSR";
-            this.buttonPTSR.Size = new System.Drawing.Size(75, 23);
+            this.buttonPTSR.Size = new System.Drawing.Size(90, 40);
             this.buttonPTSR.TabIndex = 1;
             this.buttonPTSR.Text = "Применить";
             this.buttonPTSR.UseVisualStyleBackColor = true;
