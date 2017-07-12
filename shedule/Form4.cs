@@ -19,6 +19,7 @@ namespace shedule
         {
             InitializeComponent();
             _checkedLabels = new List<Label>();
+            comboBox1.SelectedIndex = 0;
         }
 
 
@@ -87,7 +88,7 @@ namespace shedule
             textBoxStart.Text = t.Item1[1];
             textBoxEnd.Text = t.Item1[2];
 
-            if (comboBox1.SelectedIndex == 4 && ModifierKeys == Keys.Control)
+            if (comboBox1.SelectedIndex == 5 && ModifierKeys == Keys.Control)
             {
                 if (currentLabel != null)
                 {
@@ -107,8 +108,9 @@ namespace shedule
                         _checkedLabels.Remove(currentLabel);
                     }
                 }
+                SetRtbCheckDaysText();
             }
-            else
+            if (comboBox1.SelectedIndex == 5 && ModifierKeys != Keys.Control)
             {
                 ldfc.Clear();
                 ldfc.Add(
@@ -117,9 +119,10 @@ namespace shedule
                 ResetCheckedLabels();
                 _checkedLabels.Clear();
                 SetLabelView(currentLabel);
+                SetRtbCheckDaysText();
             }
 
-            SetRtbCheckDaysText();
+           
         }
 
         private static DataTable CreateTable()
@@ -189,7 +192,7 @@ namespace shedule
             ResetCheckedLabels();
             switch (comboBox1.SelectedIndex)
             {
-                case 0:
+                case 1:
                     textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeStart().ToString();
                     textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
@@ -200,36 +203,39 @@ namespace shedule
                                 (t.getTip() == 5));
                     SetCheckedDaysByDates(ldfc);
                     break;
-                case 1:
+                case 2:
                     textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 7)).getTimeStart().ToString();
                     textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
                     ldfc = Program.currentShop.DFCs.FindAll(t => (t.getTip() == 6) || (t.getTip() == 7));
                     SetCheckedDaysByDates(ldfc);
                     break;
-                case 2:
+                case 3:
                     textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 8)).getTimeStart().ToString();
                     textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
                     ldfc = Program.currentShop.DFCs.FindAll(t => (t.getTip() == 8));
                     SetCheckedDaysByDates(ldfc);
                     break;
-                case 3:
+                case 4:
                     textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 9)).getTimeStart().ToString();
                     textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
                     ldfc = Program.currentShop.DFCs.FindAll(t => (t.getTip() == 9));
                     SetCheckedDaysByDates(ldfc);
                     break;
-                case 4:
+                case 5:
                     {
                         MultipleSelectModeOn();
                         textBoxStart.Text = "";
                         textBoxEnd.Text = "";
                         break;
                     }
-                default:
+                case 0:
+                {    
                     break;
+                }
+                default: break;
             }
             SetCheckedLabels();
         }
@@ -298,6 +304,9 @@ namespace shedule
         private void bMSelectOff_Click(object sender, EventArgs e)
         {
             MultipleSelectModeOff();
+            comboBox1.SelectedIndex = 0;
+            
+
         }
 
         /// <summary>

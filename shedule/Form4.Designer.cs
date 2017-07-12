@@ -63,16 +63,18 @@
             this.button1 = new System.Windows.Forms.Button();
             this.bResetSelection = new System.Windows.Forms.Button();
             this.gbCheckedDays = new System.Windows.Forms.GroupBox();
-            this.bMSelectOff = new System.Windows.Forms.Button();
             this.rtbCheckedDays = new System.Windows.Forms.RichTextBox();
+            this.bMSelectOff = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCalendar)).BeginInit();
             this.gbCheckedDays.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "-",
             "все будние ",
             "все выходные",
             "все праздничные дни",
@@ -551,17 +553,6 @@
             this.gbCheckedDays.Text = "Выбранные дни";
             this.gbCheckedDays.Visible = false;
             // 
-            // bMSelectOff
-            // 
-            this.bMSelectOff.Location = new System.Drawing.Point(13, 481);
-            this.bMSelectOff.Name = "bMSelectOff";
-            this.bMSelectOff.Size = new System.Drawing.Size(120, 38);
-            this.bMSelectOff.TabIndex = 39;
-            this.bMSelectOff.Text = "Выключить режим выделения";
-            this.bMSelectOff.UseVisualStyleBackColor = true;
-            this.bMSelectOff.Visible = false;
-            this.bMSelectOff.Click += new System.EventHandler(this.bMSelectOff_Click);
-            // 
             // rtbCheckedDays
             // 
             this.rtbCheckedDays.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -572,6 +563,17 @@
             this.rtbCheckedDays.Size = new System.Drawing.Size(155, 292);
             this.rtbCheckedDays.TabIndex = 0;
             this.rtbCheckedDays.Text = "";
+            // 
+            // bMSelectOff
+            // 
+            this.bMSelectOff.Location = new System.Drawing.Point(13, 481);
+            this.bMSelectOff.Name = "bMSelectOff";
+            this.bMSelectOff.Size = new System.Drawing.Size(120, 38);
+            this.bMSelectOff.TabIndex = 39;
+            this.bMSelectOff.Text = "Выключить режим выделения";
+            this.bMSelectOff.UseVisualStyleBackColor = true;
+            this.bMSelectOff.Visible = false;
+            this.bMSelectOff.Click += new System.EventHandler(this.bMSelectOff_Click);
             // 
             // Form4
             // 
