@@ -61,13 +61,20 @@
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAddCalendary = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.bResetSelection = new System.Windows.Forms.Button();
+            this.gbCheckedDays = new System.Windows.Forms.GroupBox();
+            this.rtbCheckedDays = new System.Windows.Forms.RichTextBox();
+            this.bMSelectOff = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCalendar)).BeginInit();
+            this.gbCheckedDays.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "-",
             "все будние ",
             "все выходные",
             "все праздничные дни",
@@ -103,7 +110,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label2.Location = new System.Drawing.Point(799, 103);
+            this.label2.Location = new System.Drawing.Point(787, 116);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(168, 20);
             this.label2.TabIndex = 7;
@@ -111,14 +118,14 @@
             // 
             // textBoxStart
             // 
-            this.textBoxStart.Location = new System.Drawing.Point(813, 69);
+            this.textBoxStart.Location = new System.Drawing.Point(823, 69);
             this.textBoxStart.Name = "textBoxStart";
             this.textBoxStart.Size = new System.Drawing.Size(100, 20);
             this.textBoxStart.TabIndex = 8;
             // 
             // textBoxEnd
             // 
-            this.textBoxEnd.Location = new System.Drawing.Point(813, 139);
+            this.textBoxEnd.Location = new System.Drawing.Point(823, 139);
             this.textBoxEnd.Name = "textBoxEnd";
             this.textBoxEnd.Size = new System.Drawing.Size(100, 20);
             this.textBoxEnd.TabIndex = 9;
@@ -145,7 +152,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label4.Location = new System.Drawing.Point(262, 0);
+            this.label4.Location = new System.Drawing.Point(251, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(85, 20);
             this.label4.TabIndex = 12;
@@ -155,7 +162,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label5.Location = new System.Drawing.Point(472, 0);
+            this.label5.Location = new System.Drawing.Point(453, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 20);
             this.label5.TabIndex = 13;
@@ -185,7 +192,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label8.Location = new System.Drawing.Point(270, 137);
+            this.label8.Location = new System.Drawing.Point(266, 137);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 20);
             this.label8.TabIndex = 16;
@@ -195,7 +202,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label9.Location = new System.Drawing.Point(463, 137);
+            this.label9.Location = new System.Drawing.Point(444, 137);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 20);
             this.label9.TabIndex = 17;
@@ -205,7 +212,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label10.Location = new System.Drawing.Point(646, 137);
+            this.label10.Location = new System.Drawing.Point(641, 137);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(66, 20);
             this.label10.TabIndex = 18;
@@ -215,7 +222,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label11.Location = new System.Drawing.Point(50, 277);
+            this.label11.Location = new System.Drawing.Point(60, 277);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(91, 20);
             this.label11.TabIndex = 19;
@@ -225,7 +232,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label12.Location = new System.Drawing.Point(242, 277);
+            this.label12.Location = new System.Drawing.Point(251, 277);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(81, 20);
             this.label12.TabIndex = 20;
@@ -235,7 +242,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label13.Location = new System.Drawing.Point(453, 277);
+            this.label13.Location = new System.Drawing.Point(444, 277);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(72, 20);
             this.label13.TabIndex = 21;
@@ -245,7 +252,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label14.Location = new System.Drawing.Point(641, 277);
+            this.label14.Location = new System.Drawing.Point(631, 277);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(81, 20);
             this.label14.TabIndex = 22;
@@ -282,6 +289,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tableLayoutPanel2.Location = new System.Drawing.Point(200, 23);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 5;
@@ -505,7 +513,7 @@
             // 
             // buttonAddCalendary
             // 
-            this.buttonAddCalendary.Location = new System.Drawing.Point(835, 603);
+            this.buttonAddCalendary.Location = new System.Drawing.Point(845, 600);
             this.buttonAddCalendary.Name = "buttonAddCalendary";
             this.buttonAddCalendary.Size = new System.Drawing.Size(75, 23);
             this.buttonAddCalendary.TabIndex = 35;
@@ -515,7 +523,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(813, 181);
+            this.button1.Location = new System.Drawing.Point(823, 165);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(97, 23);
             this.button1.TabIndex = 36;
@@ -523,11 +531,58 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // bResetSelection
+            // 
+            this.bResetSelection.Location = new System.Drawing.Point(12, 452);
+            this.bResetSelection.Name = "bResetSelection";
+            this.bResetSelection.Size = new System.Drawing.Size(121, 23);
+            this.bResetSelection.TabIndex = 37;
+            this.bResetSelection.Text = "Сброс выделения";
+            this.bResetSelection.UseVisualStyleBackColor = true;
+            this.bResetSelection.Visible = false;
+            this.bResetSelection.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // gbCheckedDays
+            // 
+            this.gbCheckedDays.Controls.Add(this.rtbCheckedDays);
+            this.gbCheckedDays.Location = new System.Drawing.Point(791, 250);
+            this.gbCheckedDays.Name = "gbCheckedDays";
+            this.gbCheckedDays.Size = new System.Drawing.Size(168, 318);
+            this.gbCheckedDays.TabIndex = 38;
+            this.gbCheckedDays.TabStop = false;
+            this.gbCheckedDays.Text = "Выбранные дни";
+            this.gbCheckedDays.Visible = false;
+            // 
+            // rtbCheckedDays
+            // 
+            this.rtbCheckedDays.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbCheckedDays.Location = new System.Drawing.Point(7, 20);
+            this.rtbCheckedDays.Name = "rtbCheckedDays";
+            this.rtbCheckedDays.ReadOnly = true;
+            this.rtbCheckedDays.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbCheckedDays.Size = new System.Drawing.Size(155, 292);
+            this.rtbCheckedDays.TabIndex = 0;
+            this.rtbCheckedDays.Text = "";
+            // 
+            // bMSelectOff
+            // 
+            this.bMSelectOff.Location = new System.Drawing.Point(13, 481);
+            this.bMSelectOff.Name = "bMSelectOff";
+            this.bMSelectOff.Size = new System.Drawing.Size(120, 38);
+            this.bMSelectOff.TabIndex = 39;
+            this.bMSelectOff.Text = "Выключить режим выделения";
+            this.bMSelectOff.UseVisualStyleBackColor = true;
+            this.bMSelectOff.Visible = false;
+            this.bMSelectOff.Click += new System.EventHandler(this.bMSelectOff_Click);
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 651);
+            this.Controls.Add(this.bMSelectOff);
+            this.Controls.Add(this.gbCheckedDays);
+            this.Controls.Add(this.bResetSelection);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonAddCalendary);
             this.Controls.Add(this.tableLayoutPanel12);
@@ -566,6 +621,7 @@
             this.Load += new System.EventHandler(this.Form4_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form4_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCalendar)).EndInit();
+            this.gbCheckedDays.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -606,5 +662,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel12;
         private System.Windows.Forms.Button buttonAddCalendary;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bResetSelection;
+        private System.Windows.Forms.GroupBox gbCheckedDays;
+        private System.Windows.Forms.Button bMSelectOff;
+        private System.Windows.Forms.RichTextBox rtbCheckedDays;
     }
 }

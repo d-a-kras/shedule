@@ -104,6 +104,25 @@ namespace shedule.Code
                     new object[] { value });
             }
         }
+
+        public static void CheckFactorsActuality()
+        {
+            bool wasUpdated = false;
+            foreach (Factor f in Program.currentShop.factors)
+            {
+                if (f.getData() <= DateTime.Now)
+                {
+                    wasUpdated = true;
+                    f.setTZnach(f.getTZnach());
+                    f.setData(DateTime.Now.AddYears(1));
+                }
+            }
+            if (wasUpdated)
+            {
+                Program.WriteFactors();
+            }
+        }
+
         private static readonly Dictionary<string, string> DayOfWeeksDictionary = new Dictionary<string, string>
         {
             {

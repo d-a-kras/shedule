@@ -862,6 +862,7 @@ namespace shedule
         {
             InitializeComponent();
             FormClosing += Form1_FormClosing;
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -1082,7 +1083,6 @@ namespace shedule
 
         private void buttonFactors_Click(object sender, EventArgs e)
         {
-
             buttonFactors.BackColor = Color.MistyRose;
             buttonVariantsSmen.BackColor = Color.White;
             buttonParamOptimiz.BackColor = Color.White;

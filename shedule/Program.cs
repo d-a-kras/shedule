@@ -14,6 +14,7 @@ using System.Drawing;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Xml.Linq;
 using System.Net.Mail;
+using shedule.Code;
 
 //DataVisualization.Charting.SeriesChartType.Renko
 //Excel.XlChartType.xlLineMarker
@@ -1696,8 +1697,6 @@ namespace shedule
 
             try
             {
-
-
                 using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
                     string s;
@@ -1710,13 +1709,10 @@ namespace shedule
                         currentShop.factors.Add(new Factor(str[0], str[1], int.Parse(str[2]), bool.Parse(str[3]), DateTime.Parse(str[4]), int.Parse(str[5])));
 
                     }
-
-
                 }
             }
             catch
             {
-
                 currentShop.factors.Add(new Factor("TimeClick", "Время Клика", 4, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeRech", "Голосовой интерфейс", 25, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeObrTov", "Время на нелиннейные операции", 14, true, new DateTime(2100, 1, 1), 0));
@@ -1730,17 +1726,17 @@ namespace shedule
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-
                     foreach (Factor f in currentShop.factors)
                         sw.WriteLine(f.getName() + "#" + f.getOtobragenie() + "#" + f.getTZnach() + "#" + f.getDeistvie() + "#" + f.getData() + "#" + f.getNewZnach());
                 }
                 // MessageBox.Show(ex.ToString());
-
             }
 
+            Helper.CheckFactorsActuality();
         }
 
-        static public void WriteFactors()
+
+        public static void WriteFactors()
         {
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\factors";
 
