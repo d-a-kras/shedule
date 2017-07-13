@@ -127,6 +127,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.buttonVygr = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -650,9 +652,9 @@
             this.tabPage1.Controls.Add(this.buttonRaspisanie);
             this.tabPage1.Controls.Add(this.buttonCalendar);
             this.tabPage1.Controls.Add(this.buttonKassov);
-            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
+            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -696,6 +698,8 @@
             // 
             // panelKassOper
             // 
+            this.panelKassOper.Controls.Add(this.comboBox2);
+            this.panelKassOper.Controls.Add(this.buttonVygr);
             this.panelKassOper.Controls.Add(this.buttonImportKasOper);
             this.panelKassOper.Controls.Add(this.radioButtonIzBD);
             this.panelKassOper.Controls.Add(this.radioButtonIzFile);
@@ -708,7 +712,7 @@
             // 
             this.buttonImportKasOper.Location = new System.Drawing.Point(29, 127);
             this.buttonImportKasOper.Name = "buttonImportKasOper";
-            this.buttonImportKasOper.Size = new System.Drawing.Size(75, 23);
+            this.buttonImportKasOper.Size = new System.Drawing.Size(75, 30);
             this.buttonImportKasOper.TabIndex = 2;
             this.buttonImportKasOper.Text = "загрузить";
             this.buttonImportKasOper.UseVisualStyleBackColor = true;
@@ -1127,6 +1131,39 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // buttonVygr
+            // 
+            this.buttonVygr.Location = new System.Drawing.Point(121, 127);
+            this.buttonVygr.Name = "buttonVygr";
+            this.buttonVygr.Size = new System.Drawing.Size(86, 30);
+            this.buttonVygr.TabIndex = 3;
+            this.buttonVygr.Text = "Выгрузить за";
+            this.buttonVygr.UseVisualStyleBackColor = true;
+            this.buttonVygr.Visible = false;
+            this.buttonVygr.Click += new System.EventHandler(this.button12_Click_1);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "январь",
+            "февраль",
+            "март",
+            "апрель",
+            "май",
+            "июнь",
+            "июль",
+            "август",
+            "сентябрь",
+            "октябрь",
+            "ноябрь",
+            "декабрь"});
+            this.comboBox2.Location = new System.Drawing.Point(213, 133);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 4;
+            this.comboBox2.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1284,6 +1321,8 @@
         private System.Windows.Forms.Label lbProgressMessages;
         private System.Windows.Forms.Button buttonTSRPG;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        public System.Windows.Forms.Button buttonVygr;
+        public System.Windows.Forms.ComboBox comboBox2;
     }
 }
 

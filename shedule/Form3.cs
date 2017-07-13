@@ -36,6 +36,8 @@ namespace shedule
             {
                 ((Form1)this.Owner).Enabled = true;
                 ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
+                ((Form1)this.Owner).buttonVygr.Visible = true;
+                ((Form1)this.Owner).comboBox2.Visible = true;
                 isConnected = true;
                 ((Form1)this.Owner).isConnected = true;
                 Program.login = login;
@@ -46,12 +48,13 @@ namespace shedule
                     ((Form1)this.Owner).CreateZip();
                 }
 
-                this.Close();
+                this.Close(); 
             }
             else
             {
                 ((Form1)this.Owner).radioButtonIzFile.Checked = true;
                 ((Form1)this.Owner).Enabled = true;
+
                 this.Close();
             }
 

@@ -1154,6 +1154,9 @@ namespace shedule
         private double countTov;
         private int Minute;
 
+        public double getCountTov() {
+            return this.countTov;
+        }
 
         public void setClick(int c)
         {
@@ -1275,6 +1278,26 @@ namespace shedule
                 default: i = -1; break;
             }
             return i;
+
+        }
+
+        public string getWeekDay2()
+        {
+
+            
+           
+            switch (this.getData().DayOfWeek.ToString())
+            {
+                case "Monday": return "понедельник";
+                case "Tuesday": return "вторник";
+                case "Wednesday": return "среда";
+                case "Thursday": return "четверг";
+                case "Friday": return "пятница";
+                case "Saturday": return "суббота";
+                case "Sunday": return "воскресенье";
+                default: return "";
+            }
+          
 
         }
 
