@@ -378,7 +378,7 @@ namespace shedule
             this.TipGraf = tgr;
             this.smens = new List<Smena>();
 
-            this.otrabotal = otr % VS.getR();
+            this.otrabotal = otr % (VS.getR()+1);
         }
 
 
@@ -393,19 +393,11 @@ namespace shedule
             {
                 switch (this.tip)
                 {
-                    case 1: this.Dolgnost = "Кассир 1"; return this.Dolgnost;
-                    case 2: this.Dolgnost = "Кассир 1"; return this.Dolgnost;
-                    case 3: this.Dolgnost = "Кассир 2"; return this.Dolgnost;
-                    case 4: this.Dolgnost = "Кассир 2"; return this.Dolgnost;
-                    case 5: this.Dolgnost = "Кассир 3"; return this.Dolgnost;
-                    case 6: this.Dolgnost = "Кассир 3"; return this.Dolgnost;
-                    case 7: this.Dolgnost = ""; return this.Dolgnost;
-                    case 8: this.Dolgnost = ""; return this.Dolgnost;
-                    case 9: this.Dolgnost = ""; return this.Dolgnost;
-                    case 10: this.Dolgnost = "Продавец 1"; return this.Dolgnost;
-                    case 11: this.Dolgnost = "Продавец 2"; return this.Dolgnost;
-                    case 12: this.Dolgnost = "Продавец 3"; return this.Dolgnost;
-                    case 0: this.Dolgnost = "Кассир 3"; return this.Dolgnost;
+                    case 1: this.Dolgnost = "Кассир"; return this.Dolgnost;
+                    case 2: this.Dolgnost = "Продавец"; return this.Dolgnost;
+                    case 3: this.Dolgnost = "Грузчик"; return this.Dolgnost;
+                    case 4: this.Dolgnost = "Гастроном"; return this.Dolgnost;
+
                     default: return "";
                 }
             }
@@ -568,10 +560,43 @@ namespace shedule
         public daySale DS;
         public List<Smena> lss;
         public Dictionary<int, int> Raznica;
-        public int minSotrUtr = 2;
-        public int minSotrVech = 2;
+        public int minGruzUtr;
+        public int minGruzVech;
+        public int minKassUtr ;
+        public int minKassVech;
+        public int minProdUtr ;
+        public int minProdVech ;
+        public int TimePrih;
 
         public ForChart Chart;
+
+        public void setMinCountSotr(int m,int t){
+            this.minGruzUtr = 1;
+            this.minGruzVech=1;
+            this.minKassUtr = m;
+            this.minProdUtr = m;
+            this.minKassVech = m;
+            this.minProdVech = m;
+            this.TimePrih = t;
+        }
+
+        public void mMinCountKassUtr() {
+            this.minKassUtr -= 1; 
+        }
+
+        public void mMinCountProdUtr()
+        {
+            this.minProdUtr -=1 ;
+        }
+
+        public void mMinCountKassVech()
+        {
+            this.minKassVech -=1;
+        }
+        public void mMinCountProdVech()
+        {
+            this.minProdVech -=1 ;
+        }
 
         public void PereschetSmen()
         {
@@ -709,11 +734,13 @@ namespace shedule
         {
             this.lss = l;
             this.DS = d;
+            setMinCountSotr(Program.currentShop.CountMin, Program.currentShop.TimeMinRab);
         }
         public TemplateWorkingDay(daySale d)
         {
             this.DS = d;
             this.lss = new List<Smena>();
+            setMinCountSotr(Program.currentShop.CountMin, Program.currentShop.TimeMinRab);
 
 
         }
@@ -1501,6 +1528,7 @@ namespace shedule
         static public int TimeClick = 4;
         static public int TimeRech = 25;
         static public int TimeObrTov = 14;
+       
 
         static public string login = "";
         static public string password = "";
@@ -1541,7 +1569,7 @@ namespace shedule
             catch
             {
 
-                currentShop.CountMin = 2;
+                currentShop.CountMin = 1;
                 currentShop.TimeMinRab = 10;
 
 

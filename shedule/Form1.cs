@@ -284,9 +284,9 @@ namespace shedule
                                 i++;
 
                                 ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
-                                //  ObjWorkSheet.Cells[j, 1].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 1].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                                // ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+                                ObjWorkSheet.Cells[j, 2].Interior.Color = color;
                                 ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
                                 if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
                                 {
@@ -297,6 +297,7 @@ namespace shedule
                                 ObjWorkSheet.Cells[j, 5].Interior.Color = System.Drawing.Color.LightSkyBlue; ;
                                 ObjWorkSheet.Cells[j, 6] = emp.smens.Count;
                                 ObjWorkSheet.Cells[j, 6].Interior.Color = color;
+
 
                             }
 
@@ -339,6 +340,8 @@ namespace shedule
                         {
                             t.createChartTemplate();
                             t.DS.CreateChartDaySale();
+                            t.DS.CreateChartDaySaleCheck();
+                            t.DS.CreateChartDaySaleClick();
                         }
                         bg.ReportProgress(4);
                         Excel.Range excelcells;
@@ -1115,7 +1118,9 @@ namespace shedule
             buttonParamOptimiz.BackColor = Color.White;
             panelDopusVarSmen.BringToFront();
             dataGridViewVarSmen.DataSource = viewVarSmen();
-
+            tbKassirCount.Text = Program.currentShop.CountMin.ToString();
+            tbLastHour.Text = Program.currentShop.TimeMinRab.ToString();
+           // Program.ReadMinRab();
 
 
 
@@ -1383,6 +1388,7 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
+            Program.ReadMinRab();
             Program.ExistFile = false;
             if (Program.currentShop.VarSmens.Count == 0)
             {
@@ -2892,8 +2898,8 @@ namespace shedule
             Excel.Range excelcells;
             ObjWorkBook.Sheets.Add();
             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-            ObjWorkSheet.Name = "График";
-            excelcells = ObjWorkSheet.get_Range("C1", "C1000");
+          //  ObjWorkSheet.Name = "График";
+            excelcells = ObjWorkSheet.get_Range("C1", "E1000");
             excelcells.Font.Size = 10;
             excelcells.ColumnWidth = 20;
 
@@ -2905,7 +2911,7 @@ namespace shedule
             ObjWorkSheet.Cells[1, 3] = "Дата";
             ObjWorkSheet.Cells[1, 4] = "Количество товаров";
             ObjWorkSheet.Cells[1, 5] = "Количество чеков";
-            ObjWorkSheet.Cells[1, 5] = "Количество сканирований";
+            ObjWorkSheet.Cells[1, 6] = "Количество сканирований";
 
             int i= 2;
             foreach (daySale twd in Program.currentShop.daysSale)
