@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,40 +72,6 @@ namespace shedule.Code
             throw new FileNotFoundException();
         }
 
-
-        public delegate void SetPropertyThreadSafeDelegate<TResult>(Control @this, Expression<Func<TResult>> property, TResult value);
-
-        public static void SetPropertyThreadSafe<TResult>(this Control @this, Expression<Func<TResult>> property, TResult value)
-        {
-            var propertyInfo = (property.Body as MemberExpression).Member
-                as PropertyInfo;
-
-            if (propertyInfo == null ||
-                !@this.GetType().IsSubclassOf(propertyInfo.ReflectedType) ||
-                @this.GetType().GetProperty(
-                    propertyInfo.Name,
-                    propertyInfo.PropertyType) == null)
-            {
-                throw new ArgumentException("The lambda expression 'property' must reference a valid property on this Control.");
-            }
-
-            if (@this.InvokeRequired)
-            {
-                @this.Invoke(new SetPropertyThreadSafeDelegate<TResult>
-                (SetPropertyThreadSafe),
-                new object[] { @this, property, value });
-            }
-            else
-            {
-                @this.GetType().InvokeMember(
-                    propertyInfo.Name,
-                    BindingFlags.SetProperty,
-                    null,
-                    @this,
-                    new object[] { value });
-            }
-        }
-
         public static void CheckFactorsActuality()
         {
             bool wasUpdated = false;
@@ -147,5 +114,39 @@ namespace shedule.Code
                 "Вс", "воскресенье"
             }
         };
+
+        /// <summary>
+        /// Возвращает календарь на следующий год если возможно, null если невозможно
+        /// </summary>
+        /// <returns></returns>
+        public static void CheckAndDownloadNextYearCalendar()
+        {
+            string url = $"http://xmlcalendar.ru/data/ru/{DateTime.Now.AddYears(1).Year}/calendar.xml";
+            WebRequest request = WebRequest.Create(url);
+            string writePath = Environment.CurrentDirectory + $@"\Calendars\{DateTime.Now.AddYears(1).Year}.xml";
+
+            try
+            {
+                WebResponse response = request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                var responseFromServer=reader.ReadToEnd();
+                reader.Close();
+
+                using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                {
+                    sw.Write(responseFromServer);
+                }
+            }
+            catch{}
+            
+        }
+
+        public static bool CheckNextYearCalendarIsExist()
+        {
+            string path = Environment.CurrentDirectory + $@"\Calendars\{DateTime.Now.AddYears(1).Year}.xml";
+            if (File.Exists(path)) return true;
+            return false;
+        }
     }
 }
