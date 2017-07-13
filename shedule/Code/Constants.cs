@@ -8,6 +8,6 @@ namespace shedule.Code
 {
     public static class Constants
     {
-        public const string ListName = "Sheet1";
+        public const string ListName = "График";
     }
 }

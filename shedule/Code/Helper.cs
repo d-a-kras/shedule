@@ -36,9 +36,9 @@ namespace shedule.Code
                     string dayOfWeek = a["День недели"];
                     string time = a["Время"];
                     string dateS = a["Дата"];
-                    string productS = a["Кол-во товаров"];
-                    string checkS = a["Кол-во чеков"];
-                    string scansS = a["Кол-во сканиирований"];
+                    string productS = a["Количество товаров"];
+                    string checkS = a["Количество чеков"];
+                    string scansS = a["Количество сканирований"];
 
                     DateTime dt;
                     int checkCount = 0;
