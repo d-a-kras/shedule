@@ -1365,9 +1365,7 @@ namespace shedule
                 buttonImportKasOper.Visible = false;
                 buttonVygr.Visible = true;
                 comboBox2.Visible = true;
-                Form3 f3 = new Form3();
-                f3.Show(this);
-                this.Enabled = false;
+               
             }
         }
 
@@ -1762,90 +1760,102 @@ namespace shedule
 
         private void buttonExport1_Click(object sender, EventArgs e)
         {
+            
             if (comboBox3.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите что отобразить!");
                 return;
             }
-            saveFileDialog1.DefaultExt = ".XLS";
-            saveFileDialog1.AddExtension = true;
-            saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
-                                               Program.currentShop.getIdShop();
-            saveFileDialog1.Title = "Выберите папку для сохранения расписания";
 
-            if (radioButtonMinFondOpl.Checked)
+            if (radioButtonIzBD.Checked && !isConnected)
             {
-                Program.ParametrOptimization = 0;
+                Form3 f3 = new Form3();
+                f3.Show(this);
+                this.Enabled = false;
             }
-
-            if (radioButtonMinTime.Checked)
+            else
             {
-                Program.ParametrOptimization = 2;
+                saveFileDialog1.DefaultExt = ".XLS";
+                saveFileDialog1.AddExtension = true;
+                saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
+                saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
+                                                   Program.currentShop.getIdShop();
+                saveFileDialog1.Title = "Выберите папку для сохранения расписания";
+
+                if (radioButtonMinFondOpl.Checked)
+                {
+                    Program.ParametrOptimization = 0;
+                }
+
+                if (radioButtonMinTime.Checked)
+                {
+                    Program.ParametrOptimization = 2;
+                }
+                if (radioButtonObRabTime.Checked)
+                {
+                    Program.ParametrOptimization = 1;
+                }
+
+
+                switch (comboBox3.SelectedIndex)
+
+                {
+                    case 0:
+                        saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
+                                                   Program.getMonths(DateTime.Now.AddMonths(1).Month);
+                        Program.TipExporta = 0;
+                        break;
+                    case 1:
+                        saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress();
+                        Program.TipExporta = 1;
+                        break;
+                    case 2:
+                        saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress();
+                        Program.TipExporta = 2;
+                        break;
+                    case 3:
+                        saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress();
+                        Program.TipExporta = 3;
+                        break;
+                }
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return;
+                // получаем выбранный файл
+
+                if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
+                {
+                    MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
+                    return;
+                }
+                if (radioButtonIzFile.Checked && !Program.ExistFile)
+                {
+                    MessageBox.Show("Загрузите данные из файла");
+                    return;
+                }
+
+                try
+                {
+                    filename = saveFileDialog1.FileName;
+                    listBox1.Enabled = false;
+                    progressBar1.Visible = true;
+
+                    label3.Text = "";
+                    label3.Visible = true;
+                    progressBar1.Maximum = 20;
+                    progressBar1.Minimum = 0;
+                    progressBar1.Step = 2;
+                    ReadTipOptimizacii();
+
+                    bw.RunWorkerAsync();
+                }
+                catch (Exception ex)
+                {
+                    CloseProcessOnError();
+                    MessageBox.Show(ex.Message);
+                }
             }
-            if (radioButtonObRabTime.Checked)
-            {
-                Program.ParametrOptimization = 1;
-            }
-
-
-            switch (comboBox3.SelectedIndex)
-
-            {
-                case 0:
-                    saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
-                                               Program.getMonths(DateTime.Now.AddMonths(1).Month);
-                    Program.TipExporta = 0;
-                    break;
-                case 1:
-                    saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress();
-                    Program.TipExporta = 1;
-                    break;
-                case 2:
-                    saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress();
-                    Program.TipExporta = 2;
-                    break;
-                case 3:
-                    saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress();
-                    Program.TipExporta = 3;
-                    break;
-            }
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return;
-            // получаем выбранный файл
-
-            if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
-            {
-                MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
-                return;
-            }
-            if (radioButtonIzFile.Checked && !Program.ExistFile)
-            {
-                MessageBox.Show("Загрузите данные из файла");
-                return;
-            }
-
-            try
-            {
-                filename = saveFileDialog1.FileName;
-                listBox1.Enabled = false;
-                progressBar1.Visible = true;
-
-                label3.Text = "";
-                label3.Visible = true;
-                progressBar1.Maximum = 20;
-                progressBar1.Minimum = 0;
-                progressBar1.Step = 2;
-                ReadTipOptimizacii();
-
-                bw.RunWorkerAsync();
-            }
-            catch (Exception ex)
-            {
-                CloseProcessOnError();
-                MessageBox.Show(ex.Message);
-            }
+            
         }
 
 
@@ -2857,95 +2867,107 @@ namespace shedule
 
         private void button12_Click_1(object sender, EventArgs e)
         {
-            string filename;
-            saveFileDialog1.DefaultExt = ".XLS";
-            saveFileDialog1.AddExtension = true;
-            saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +Program.currentShop.getIdShop();
-            saveFileDialog1.Title = "Выберите папку для сохранения выгрузки из БД";
-            saveFileDialog1.FileName = "Выгрузка по кассовым операциям за " + comboBox2.Text;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            if (radioButtonIzBD.Checked && !isConnected)
             {
-                filename = Path.GetFullPath(saveFileDialog1.FileName);
+                Form3 f3 = new Form3();
+                f3.Show(this);
+                this.Enabled = false;
             }
             else
             {
-                return;
-            }
-            int year;
-            
-
-            if (DateTime.Now.Month < comboBox2.SelectedIndex+1) {
-                year = DateTime.Now.Year - 1;
-                
-
-            } else { year = DateTime.Now.Year;  }
-
-            DateTime dt = new DateTime(year, comboBox2.SelectedIndex + 1, 1);
-            Program.createListDaySale(dt, dt.AddDays(31) ,Program.currentShop.getIdShop());
-
-            Excel.Application ObjExcel = new Excel.Application();
-            Workbook ObjWorkBook;
-            Worksheet ObjWorkSheet;
-
-            ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
-            Excel.Range excelcells;
-            ObjWorkBook.Sheets.Add();
-            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-            ObjWorkSheet.Name = "График";
-            excelcells = ObjWorkSheet.get_Range("C1", "C1000");
-            excelcells.Font.Size = 10;
-            excelcells.ColumnWidth = 20;
-
-            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-
-            ObjWorkSheet.Cells[1, 1] = "День недели";
-            ObjWorkSheet.Cells[1, 2] = "Время";
-            ObjWorkSheet.Cells[1, 3] = "Дата";
-            ObjWorkSheet.Cells[1, 4] = "Количество товаров";
-            ObjWorkSheet.Cells[1, 5] = "Количество чеков";
-            ObjWorkSheet.Cells[1, 5] = "Количество сканирований";
-
-            int i= 2;
-            foreach (daySale twd in Program.currentShop.daysSale)
-            {
-                foreach (hourSale hs in twd.hoursSale)
+                string filename;
+                saveFileDialog1.DefaultExt = ".XLS";
+                saveFileDialog1.AddExtension = true;
+                saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
+                saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
+                saveFileDialog1.Title = "Выберите папку для сохранения выгрузки из БД";
+                saveFileDialog1.FileName = "Выгрузка по кассовым операциям за " + comboBox2.Text;
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    ObjWorkSheet.Cells[i, 1] = twd.getWeekDay2();
-                    ObjWorkSheet.Cells[i, 2] = hs.getNHour()+":00";
-                    ObjWorkSheet.Cells[i, 3] = hs.getData();
-                    ObjWorkSheet.Cells[i, 4] = hs.getCountTov();
-                    ObjWorkSheet.Cells[i, 5] = hs.getCountCheck();
-                    ObjWorkSheet.Cells[i, 6] = hs.getCountClick();
+                    filename = Path.GetFullPath(saveFileDialog1.FileName);
+                }
+                else
+                {
+                    return;
+                }
+                int year;
 
-                    i++;
+
+                if (DateTime.Now.Month < comboBox2.SelectedIndex + 1)
+                {
+                    year = DateTime.Now.Year - 1;
+
+
+                }
+                else { year = DateTime.Now.Year; }
+
+                DateTime dt = new DateTime(year, comboBox2.SelectedIndex + 1, 1);
+                Program.createListDaySale(dt, dt.AddDays(31), Program.currentShop.getIdShop());
+
+                Excel.Application ObjExcel = new Excel.Application();
+                Workbook ObjWorkBook;
+                Worksheet ObjWorkSheet;
+
+                ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
+                Excel.Range excelcells;
+                ObjWorkBook.Sheets.Add();
+                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                ObjWorkSheet.Name = "График";
+                excelcells = ObjWorkSheet.get_Range("C1", "C1000");
+                excelcells.Font.Size = 10;
+                excelcells.ColumnWidth = 20;
+
+                excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
+                excelcells.VerticalAlignment = Excel.Constants.xlCenter;
+
+                ObjWorkSheet.Cells[1, 1] = "День недели";
+                ObjWorkSheet.Cells[1, 2] = "Время";
+                ObjWorkSheet.Cells[1, 3] = "Дата";
+                ObjWorkSheet.Cells[1, 4] = "Количество товаров";
+                ObjWorkSheet.Cells[1, 5] = "Количество чеков";
+                ObjWorkSheet.Cells[1, 5] = "Количество сканирований";
+
+                int i = 2;
+                foreach (daySale twd in Program.currentShop.daysSale)
+                {
+                    foreach (hourSale hs in twd.hoursSale)
+                    {
+                        ObjWorkSheet.Cells[i, 1] = twd.getWeekDay2();
+                        ObjWorkSheet.Cells[i, 2] = hs.getNHour() + ":00";
+                        ObjWorkSheet.Cells[i, 3] = hs.getData();
+                        ObjWorkSheet.Cells[i, 4] = hs.getCountTov();
+                        ObjWorkSheet.Cells[i, 5] = hs.getCountCheck();
+                        ObjWorkSheet.Cells[i, 6] = hs.getCountClick();
+
+                        i++;
+                    }
+                }
+
+
+                ObjExcel.Visible = false;
+                ObjExcel.UserControl = true;
+                ObjExcel.DisplayAlerts = false;
+                ObjWorkBook.Saved = true;
+                try
+                {
+
+                    ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+
+
+                    ObjWorkBook.Close(0);
+
+                    ObjExcel.Quit();
+                    MessageBox.Show("Файл создан");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка записи в файл " + ex.Message);
+                    ObjWorkBook.Close(0);
+                    ObjExcel.Quit();
                 }
             }
-         
-
-            ObjExcel.Visible = false;
-            ObjExcel.UserControl = true;
-            ObjExcel.DisplayAlerts = false;
-            ObjWorkBook.Saved = true;
-            try
-            {
-                
-                ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
-               
-
-                ObjWorkBook.Close(0);
-
-                ObjExcel.Quit();
-                MessageBox.Show("Файл создан");
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка записи в файл " + ex.Message);
-                ObjWorkBook.Close(0);
-                ObjExcel.Quit();
-            }
+            
         }
 
         private void dataGridViewVarSmen_CellEndEdit(object sender, DataGridViewCellEventArgs e)

@@ -27,11 +27,8 @@ namespace shedule
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-
-            //  string login = textBoxLogin.Text;
-            //  string password = textBoxPassword.Text;
-            string login = "VShleyev";
-            string password = "gjkrjdybr@93";
+            string login = textBoxLogin.Text;
+            string password = textBoxPassword.Text;
             if (Program.isConnected(login, password))
             {
                 ((Form1)this.Owner).Enabled = true;
@@ -52,6 +49,7 @@ namespace shedule
             }
             else
             {
+                isConnected = false;
                 ((Form1)this.Owner).radioButtonIzFile.Checked = true;
                 ((Form1)this.Owner).Enabled = true;
 
