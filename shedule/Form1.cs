@@ -699,7 +699,8 @@ namespace shedule
             //создаём новую строку
 
             //заполняем строку значениями
-            if (Program.TSRTG) {
+            if (Program.TSRTG)
+            {
                 foreach (TSR tsr in Program.currentShop.tsr)
                 {
                     row = dt.NewRow();
@@ -710,7 +711,8 @@ namespace shedule
                     dt.Rows.Add(row);
                 }
             }
-            else {
+            else
+            {
                 foreach (TSR tsr in Program.currentShop.tsrBG)
                 {
                     row = dt.NewRow();
@@ -720,8 +722,8 @@ namespace shedule
                     row["Зарплата за 1/2"] = tsr.getZarp1_2();
                     dt.Rows.Add(row);
                 }
-                }
-            
+            }
+
             return dt;
         }
 
@@ -1353,7 +1355,7 @@ namespace shedule
                 buttonImportKasOper.Visible = true;
                 buttonVygr.Visible = false;
                 comboBox2.Visible = false;
-                
+
             }
 
         }
@@ -1365,7 +1367,7 @@ namespace shedule
                 buttonImportKasOper.Visible = false;
                 buttonVygr.Visible = true;
                 comboBox2.Visible = true;
-               
+
             }
         }
 
@@ -1610,7 +1612,7 @@ namespace shedule
 
 
 
-       
+
 
 
         private void Form1_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1760,7 +1762,7 @@ namespace shedule
 
         private void buttonExport1_Click(object sender, EventArgs e)
         {
-            
+
             if (comboBox3.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите что отобразить!");
@@ -1855,7 +1857,7 @@ namespace shedule
                     MessageBox.Show(ex.Message);
                 }
             }
-            
+
         }
 
 
@@ -1897,17 +1899,27 @@ namespace shedule
                 MessageBox.Show("Выберите что отобразить!");
                 return;
             }
-            if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
+
+            if (radioButtonIzBD.Checked && !isConnected)
             {
-                MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
+                Form3 f3 = new Form3(2);
+                f3.Show(this);
+                this.Enabled = false;
                 return;
             }
+
             else if (radioButtonIzFile.Checked && !Program.ExistFile)
             {
                 MessageBox.Show("Загрузите данные из файла");
                 return;
             }
+            StartDiagramForm();
 
+            
+        }
+
+        public void StartDiagramForm()
+        {
             Form5 f5;
             switch (comboBox3.SelectedIndex)
             {
@@ -1958,7 +1970,8 @@ namespace shedule
 
                 }
             }
-            else {
+            else
+            {
                 switch (e.ColumnIndex)
                 {
                     case 1:
@@ -2052,7 +2065,7 @@ namespace shedule
             }
             else
             {
-                Form3 f3 = new Form3(true);
+                Form3 f3 = new Form3(1);
                 f3.Show(this);
                 this.Enabled = false;
             }
@@ -2848,19 +2861,20 @@ namespace shedule
 
             if (Program.TSRTG)
             {
-                
+
                 Program.TSRTG = false;
-                dataGridViewForTSR.DataSource =  viewTSR();
-               // dataGridViewForTSR.Refresh();
-               // dataGridViewForTSR.Update();
+                dataGridViewForTSR.DataSource = viewTSR();
+                // dataGridViewForTSR.Refresh();
+                // dataGridViewForTSR.Update();
                 buttonTSRPG.Text = "На текущий год";
             }
-            else {
-               
+            else
+            {
+
                 Program.TSRTG = true;
                 dataGridViewForTSR.DataSource = viewTSR();
                 //dataGridViewForTSR.Refresh();
-               // dataGridViewForTSR.Update();
+                // dataGridViewForTSR.Update();
                 buttonTSRPG.Text = "На будущий год";
             }
         }
@@ -2967,7 +2981,7 @@ namespace shedule
                     ObjExcel.Quit();
                 }
             }
-            
+
         }
 
         private void dataGridViewVarSmen_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -2978,10 +2992,10 @@ namespace shedule
                     Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setR(int.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
                     break;
                 case 1:
-                    Program.currentShop.VarSmens.Find( t => t.getR().ToString() == dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setV(int.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setV(int.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
                     break;
                 case 2:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString()== dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setDeistvie(bool.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setDeistvie(bool.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
                     break;
 
             }
