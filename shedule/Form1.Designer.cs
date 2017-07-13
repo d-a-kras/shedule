@@ -790,7 +790,7 @@
             this.buttonImportKasOper.Name = "buttonImportKasOper";
             this.buttonImportKasOper.Size = new System.Drawing.Size(75, 30);
             this.buttonImportKasOper.TabIndex = 2;
-            this.buttonImportKasOper.Text = "загрузить";
+            this.buttonImportKasOper.Text = "Загрузить";
             this.buttonImportKasOper.UseVisualStyleBackColor = true;
             this.buttonImportKasOper.Click += new System.EventHandler(this.buttonImportKasOper_Click);
             // 
