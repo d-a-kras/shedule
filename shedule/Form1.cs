@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.IO.Compression;
 using Ionic.Zip;
 using shedule.Code;
+using Point = System.Drawing.Point;
 
 
 namespace shedule
@@ -862,8 +863,23 @@ namespace shedule
         public Form1()
         {
             InitializeComponent();
+            SetNextYearCalendarButton();
             FormClosing += Form1_FormClosing;
-            
+        }
+
+        private void SetNextYearCalendarButton()
+        {
+            if (Helper.CheckNextYearCalendarIsExist())
+            {
+                buttonRaspisanie.Location = new Point(315, 12);
+                buttonCalendarNextYear.Visible = true;
+                buttonCalendarNextYear.Text = DateTime.Now.AddYears(1).Year.ToString();
+            }
+            else
+            {
+                buttonRaspisanie.Location = new Point(287, 12);
+                buttonCalendarNextYear.Visible = false;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -2947,6 +2963,11 @@ namespace shedule
                     break;
 
             }
+        }
+
+        private void buttonCalendarNextYear_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

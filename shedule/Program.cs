@@ -228,40 +228,44 @@ namespace shedule
 
     public class VarSmen
     {
-       
+
         bool Deistvie;
         int r;
         int v;
         int dlina;
 
-        public int getDlina() {
+        public int getDlina()
+        {
             if (this.dlina != 0)
             {
                 return this.dlina;
             }
-            else {
-                switch (this.getR()) {
-                    case 5: this.dlina=7;return this.dlina;
+            else
+            {
+                switch (this.getR())
+                {
+                    case 5: this.dlina = 7; return this.dlina;
                     case 2: this.dlina = 11; return this.dlina;
                     case 4: this.dlina = 9; return this.dlina;
                     case 6: this.dlina = 6; return this.dlina;
                     default: return -1;
                 }
 
-            
+
             }
 
-        
+
         }
 
-        public VarSmen(int rab,int vyh, bool d)
+        public VarSmen(int rab, int vyh, bool d)
         {
             this.r = rab;
             this.v = vyh;
             this.Deistvie = d;
         }
 
-        public int getR() {
+        public int getR()
+        {
             return this.r;
         }
 
@@ -271,7 +275,8 @@ namespace shedule
             return this.v;
         }
 
-        public bool getDeistvie() {
+        public bool getDeistvie()
+        {
             return this.Deistvie;
         }
 
@@ -293,7 +298,7 @@ namespace shedule
 
     }
 
- 
+
 
     public class employee
     {
@@ -309,15 +314,17 @@ namespace shedule
         string TipGraf;
         public List<Smena> smens;
 
-        public void OtrabotalDay() {
+        public void OtrabotalDay()
+        {
             this.otrabotal += 1;
             if (this.otrabotal == this.VS.getR())
             {
                 this.otrabotal = (-1) * this.VS.getV();
             }
-           
+
         }
-        public VarSmen getVS() {
+        public VarSmen getVS()
+        {
             return this.VS;
         }
         public int getOtrabotal()
@@ -353,27 +360,28 @@ namespace shedule
             }
             else
             {
-                switch (this.getID()/100) {
-                    case 0 :this.tip = 1;return this.tip;
+                switch (this.getID() / 100)
+                {
+                    case 0: this.tip = 1; return this.tip;
                     case 1: this.tip = 2; return this.tip;
                     default: return -1;
                 }
-                
+
             }
         }
-        public employee(int ish, int ie,VarSmen vs, int otr,  string d, string tgr)
+        public employee(int ish, int ie, VarSmen vs, int otr, string d, string tgr)
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
-            this.VS=vs;
+            this.VS = vs;
             this.Dolgnost = d;
             this.TipGraf = tgr;
             this.smens = new List<Smena>();
 
-            this.otrabotal = otr%VS.getR();
+            this.otrabotal = otr % VS.getR();
         }
 
-       
+
 
         public string GetDolgnost()
         {
@@ -409,8 +417,8 @@ namespace shedule
             this.smens.Add(sm);
         }
 
-     
-    
+
+
 
         public int getStatus()
         {
@@ -560,7 +568,7 @@ namespace shedule
         public daySale DS;
         public List<Smena> lss;
         public Dictionary<int, int> Raznica;
-        public int minSotrUtr=2;
+        public int minSotrUtr = 2;
         public int minSotrVech = 2;
 
         public ForChart Chart;
@@ -905,7 +913,8 @@ namespace shedule
             this.zanyta = true;
         }
 
-        public bool isZanyta() {
+        public bool isZanyta()
+        {
             if (this.zanyta == true)
             {
                 return true;
@@ -956,10 +965,10 @@ namespace shedule
 
         public void delChas(TemplateWorkingDay w)
         {
-            if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { this.SetStarnAndLenght(this.getStartSmena() , this.getLenght() -1); }
-            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() +1 , this.getLenght() - 1); }
+            if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
+            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() + 1, this.getLenght() - 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
-            else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() -1); }
+            else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
 
         }
 
@@ -1015,7 +1024,7 @@ namespace shedule
         public List<daySale> MouthPrognoz = new List<daySale>();
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<VarSmen> VarSmens = new List<VarSmen>();
-       
+
 
         private int idShop;
         int idFM;
@@ -1460,7 +1469,7 @@ namespace shedule
         static public bool connect = false;
         static public SqlConnection connection;
 
-       // static public bool SozdanPrognoz = false;
+        // static public bool SozdanPrognoz = false;
         static public List<mShop> listShops = new List<mShop>();
         static public int TipOptimizacii = 0;
         static public int TipExporta = -1;
@@ -1557,44 +1566,44 @@ namespace shedule
 
         static public void readTSR()
         {
-            
+
             String readPath;
             if (TSRTG)
             {
                 currentShop.tsr.Clear();
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
-            
-
-            try
-            {
 
 
-                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                try
                 {
-                    string[] str = new string[5];
-                    string s;
 
-                    while ((s = sr.ReadLine()) != null)
+
+                    using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                     {
+                        string[] str = new string[5];
+                        string s;
 
-                        str = s.Split('#');
-                        currentShop.tsr.Add(new TSR(str[0], str[1], int.Parse(str[2]), int.Parse(str[3]), int.Parse(str[4])));
+                        while ((s = sr.ReadLine()) != null)
+                        {
+
+                            str = s.Split('#');
+                            currentShop.tsr.Add(new TSR(str[0], str[1], int.Parse(str[2]), int.Parse(str[3]), int.Parse(str[4])));
+
+                        }
+
 
                     }
 
-
                 }
+                catch
+                {
 
-            }
-            catch
-            {
-
-                currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 2, 27000, 14000));
-                currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 1, 25000, 13000));
-                currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 1, 24000, 12000));
-                currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 2, 25000, 13000));
-                currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 1, 24000, 12000));
-                currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 1, 23000, 23000));
+                currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
+                currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
+                currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
+                currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
+                currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
+                currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
                 currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
                 currentShop.tsr.Add(new TSR("gastronom", "Гастроном", 0, 25000, 13000));
 
@@ -1605,9 +1614,10 @@ namespace shedule
                             sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
                     }
                 }
-        }
+            }
 
-                else {
+            else
+            {
                 currentShop.tsrBG.Clear();
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
                 try
@@ -1649,12 +1659,12 @@ namespace shedule
                             sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
                     }
                 }
-                }
+            }
 
-               
-                // MessageBox.Show(ex.ToString());
 
-            
+            // MessageBox.Show(ex.ToString());
+
+
 
         }
 
@@ -1682,31 +1692,32 @@ namespace shedule
                 {
                     MessageBox.Show("Ошибка записи " + ex.Message);
                 }
-            }else
+            }
+            else
+            {
+
+                readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
+
+
+
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
 
-                        readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSRBG";
-
-
-
-                        try
-                        {
-                            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-                            {
-
-                                foreach (TSR f in currentShop.tsrBG)
-                                    sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
-                            }
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Ошибка записи " + ex.Message);
-                        }
-
+                        foreach (TSR f in currentShop.tsrBG)
+                            sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
                     }
-                    
-            
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка записи " + ex.Message);
+                }
+
+            }
+
+
         }
 
 
@@ -1777,15 +1788,15 @@ namespace shedule
         }
 
 
-          //  int CountProd = ((tc * TimeObrTov * 100) / (normchas* 3600 * KoefObr));
-           // MessageBox.Show("Param " + ParametrOptimization + "Count Kass " + CountKassirov);
-            
-               
-                //    employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1), "Кассир 1", "Сменный график");
-                //    currentShop.employes.Add(e);
-                   
-                
-      
+        //  int CountProd = ((tc * TimeObrTov * 100) / (normchas* 3600 * KoefObr));
+        // MessageBox.Show("Param " + ParametrOptimization + "Count Kass " + CountKassirov);
+
+
+        //    employee e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmen.Find(t => t.getTip() == 1), "Кассир 1", "Сменный график");
+        //    currentShop.employes.Add(e);
+
+
+
         static void Pereshet()
         {
 
@@ -1841,27 +1852,27 @@ namespace shedule
                 currentShop.VarSmens.Add(new VarSmen(3, 3, false));
                 currentShop.VarSmens.Add(new VarSmen(4, 3, true));
                 currentShop.VarSmens.Add(new VarSmen(6, 1, false));
-                              //  case 1: if (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab) != null) { emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab)); } else { emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getStartDaySale() +2 ), 10));  } break;
-          
-                        };
-                   
-            
-        
+                //  case 1: if (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab) != null) { emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab)); } else { emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getStartDaySale() +2 ), 10));  } break;
+
+            };
 
 
-                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-                {
 
-                    foreach (VarSmen vs in currentShop.VarSmens)
-                        sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
-                }
 
+
+            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+            {
+
+                foreach (VarSmen vs in currentShop.VarSmens)
+                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
             }
 
-        
+        }
 
 
-     
+
+
+
 
         public static void itogChass()
         {
@@ -1931,11 +1942,11 @@ namespace shedule
             currentShop.daysSale.Clear();
             if (isMp)
             {
-                 createListDaySale(d2, ydt, currentShop.getIdShopFM());
+                createListDaySale(d2, ydt, currentShop.getIdShopFM());
             }
             else
             {
-                 createListDaySale(d2, ydt, currentShop.getIdShop());
+                createListDaySale(d2, ydt, currentShop.getIdShop());
             }
 
             //     }
@@ -2209,7 +2220,7 @@ namespace shedule
                 catch (System.Data.SqlClient.SqlException ex)
                 {
                     MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
-                    
+
                 }
 
             }
@@ -2246,12 +2257,13 @@ namespace shedule
                 //    }
                 //}
 
-                
+
             }
-            else {
+            else
+            {
                 Form6 f6 = new Form6();
                 f6.Show();
-               
+
             }
         }
 
@@ -2581,8 +2593,6 @@ namespace shedule
             // MessageBox.Show(readPath);
             try
             {
-
-
                 using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
                     string line;
@@ -2755,7 +2765,7 @@ namespace shedule
             }
         }
 
-        static public void ReadCalendarFromXML(int years)
+        public static void ReadCalendarFromXML(int years)
         {
 
             XmlDocument xDoc = new XmlDocument();
@@ -3077,6 +3087,8 @@ namespace shedule
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+            Helper.CheckAndDownloadNextYearCalendar();
         }
 
 

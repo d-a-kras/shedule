@@ -129,6 +129,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.buttonCalendarNextYear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -655,6 +656,7 @@
             this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
+            this.tabPage1.Controls.Add(this.buttonCalendarNextYear);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -1165,6 +1167,20 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // buttonCalendarNextYear
+            this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCalendarNextYear.Location = new System.Drawing.Point(270, 15);
+            this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
+            this.buttonCalendarNextYear.Size = new System.Drawing.Size(39, 34);
+            this.buttonCalendarNextYear.TabIndex = 5;
+            this.buttonCalendarNextYear.Text = "2018";
+            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
+            this.buttonCalendarNextYear.Visible = false;
+            this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1323,6 +1339,7 @@
         private System.Windows.Forms.Button buttonTSRPG;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         public System.Windows.Forms.Button buttonVygr;
+        private System.Windows.Forms.Button buttonCalendarNextYear;
         public System.Windows.Forms.ComboBox comboBox2;
     }
 }
