@@ -1771,93 +1771,96 @@ namespace shedule
 
             if (radioButtonIzBD.Checked && !isConnected)
             {
-                Form3 f3 = new Form3();
+                Form3 f3 = new Form3(3);
                 f3.Show(this);
                 this.Enabled = false;
+                return;
             }
-            else
+
+            StartExportingToExcel();
+        }
+
+        public void StartExportingToExcel()
+        {
+            saveFileDialog1.DefaultExt = ".XLS";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
+            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
+                                               Program.currentShop.getIdShop();
+            saveFileDialog1.Title = "Выберите папку для сохранения расписания";
+
+            if (radioButtonMinFondOpl.Checked)
             {
-                saveFileDialog1.DefaultExt = ".XLS";
-                saveFileDialog1.AddExtension = true;
-                saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-                saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
-                                                   Program.currentShop.getIdShop();
-                saveFileDialog1.Title = "Выберите папку для сохранения расписания";
-
-                if (radioButtonMinFondOpl.Checked)
-                {
-                    Program.ParametrOptimization = 0;
-                }
-
-                if (radioButtonMinTime.Checked)
-                {
-                    Program.ParametrOptimization = 2;
-                }
-                if (radioButtonObRabTime.Checked)
-                {
-                    Program.ParametrOptimization = 1;
-                }
-
-
-                switch (comboBox3.SelectedIndex)
-
-                {
-                    case 0:
-                        saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
-                                                   Program.getMonths(DateTime.Now.AddMonths(1).Month);
-                        Program.TipExporta = 0;
-                        break;
-                    case 1:
-                        saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress();
-                        Program.TipExporta = 1;
-                        break;
-                    case 2:
-                        saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress();
-                        Program.TipExporta = 2;
-                        break;
-                    case 3:
-                        saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress();
-                        Program.TipExporta = 3;
-                        break;
-                }
-
-                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
-                    return;
-                // получаем выбранный файл
-
-                if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
-                {
-                    MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
-                    return;
-                }
-                if (radioButtonIzFile.Checked && !Program.ExistFile)
-                {
-                    MessageBox.Show("Загрузите данные из файла");
-                    return;
-                }
-
-                try
-                {
-                    filename = saveFileDialog1.FileName;
-                    listBox1.Enabled = false;
-                    progressBar1.Visible = true;
-
-                    label3.Text = "";
-                    label3.Visible = true;
-                    progressBar1.Maximum = 20;
-                    progressBar1.Minimum = 0;
-                    progressBar1.Step = 2;
-                    ReadTipOptimizacii();
-
-                    bw.RunWorkerAsync();
-                }
-                catch (Exception ex)
-                {
-                    CloseProcessOnError();
-                    MessageBox.Show(ex.Message);
-                }
+                Program.ParametrOptimization = 0;
             }
 
+            if (radioButtonMinTime.Checked)
+            {
+                Program.ParametrOptimization = 2;
+            }
+            if (radioButtonObRabTime.Checked)
+            {
+                Program.ParametrOptimization = 1;
+            }
+
+
+            switch (comboBox3.SelectedIndex)
+
+            {
+                case 0:
+                    saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
+                                               Program.getMonths(DateTime.Now.AddMonths(1).Month);
+                    Program.TipExporta = 0;
+                    break;
+                case 1:
+                    saveFileDialog1.FileName = "Прогноз_" + Program.currentShop.getAddress();
+                    Program.TipExporta = 1;
+                    break;
+                case 2:
+                    saveFileDialog1.FileName = "Потребность в персонале" + Program.currentShop.getAddress();
+                    Program.TipExporta = 2;
+                    break;
+                case 3:
+                    saveFileDialog1.FileName = "Экономический эффект" + Program.currentShop.getAddress();
+                    Program.TipExporta = 3;
+                    break;
+            }
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+
+            if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
+            {
+                MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
+                return;
+            }
+            if (radioButtonIzFile.Checked && !Program.ExistFile)
+            {
+                MessageBox.Show("Загрузите данные из файла");
+                return;
+            }
+
+            try
+            {
+                filename = saveFileDialog1.FileName;
+                listBox1.Enabled = false;
+                progressBar1.Visible = true;
+
+                label3.Text = "";
+                label3.Visible = true;
+                progressBar1.Maximum = 20;
+                progressBar1.Minimum = 0;
+                progressBar1.Step = 2;
+                ReadTipOptimizacii();
+
+                bw.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            {
+                CloseProcessOnError();
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
@@ -1899,23 +1902,22 @@ namespace shedule
                 MessageBox.Show("Выберите что отобразить!");
                 return;
             }
-
-            if (radioButtonIzBD.Checked && !isConnected)
+            else if (radioButtonIzBD.Checked && !isConnected)
             {
                 Form3 f3 = new Form3(2);
                 f3.Show(this);
                 this.Enabled = false;
                 return;
             }
-
             else if (radioButtonIzFile.Checked && !Program.ExistFile)
             {
                 MessageBox.Show("Загрузите данные из файла");
                 return;
             }
-            StartDiagramForm();
-
-            
+            else if ((radioButtonIzBD.Checked && isConnected) || (radioButtonIzFile.Checked && Program.ExistFile))
+            {
+                StartDiagramForm();
+            }
         }
 
         public void StartDiagramForm()

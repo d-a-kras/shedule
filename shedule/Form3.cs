@@ -48,6 +48,10 @@ namespace shedule
                 {
                     ((Form1)this.Owner).StartDiagramForm();
                 }
+                if (isThisTypeOfFunction == 3)
+                {
+                    ((Form1)this.Owner).StartExportingToExcel();
+                }
 
                 this.Close();
             }
