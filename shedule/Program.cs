@@ -275,6 +275,22 @@ namespace shedule
             return this.Deistvie;
         }
 
+        public void setR( int rr)
+        {
+            this.r=rr;
+        }
+
+
+        public void setV(int vv)
+        {
+            this.v=vv;
+        }
+
+        public void setDeistvie(bool b)
+        {
+            this.Deistvie=b;
+        }
+
     }
 
  
@@ -1573,12 +1589,15 @@ namespace shedule
             catch
             {
 
-                currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
-                currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
-                currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
-                currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
-                currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
-                currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+                currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 2, 27000, 14000));
+                currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 1, 25000, 13000));
+                currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 1, 24000, 12000));
+                currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 2, 25000, 13000));
+                currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 1, 24000, 12000));
+                currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 1, 23000, 23000));
+                currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
+                currentShop.tsr.Add(new TSR("gastronom", "Гастроном", 0, 25000, 13000));
+
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
 
@@ -1620,6 +1639,8 @@ namespace shedule
                     currentShop.tsrBG.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
                     currentShop.tsrBG.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
                     currentShop.tsrBG.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+                    currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
+                    currentShop.tsr.Add(new TSR("gastronom", "Гастроном", 0, 25000, 13000));
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
@@ -1817,8 +1838,9 @@ namespace shedule
                 //MessageBox.Show(ex.ToString());
                 currentShop.VarSmens.Add(new VarSmen(5, 2, true));
                 currentShop.VarSmens.Add(new VarSmen(2, 2, true));
+                currentShop.VarSmens.Add(new VarSmen(3, 3, false));
                 currentShop.VarSmens.Add(new VarSmen(4, 3, true));
-                currentShop.VarSmens.Add(new VarSmen(6, 1, true));
+                currentShop.VarSmens.Add(new VarSmen(6, 1, false));
                               //  case 1: if (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab) != null) { emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab)); } else { emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getStartDaySale() +2 ), 10));  } break;
           
                         };

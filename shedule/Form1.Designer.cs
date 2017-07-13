@@ -84,16 +84,18 @@
             this.buttonRaspisanie = new System.Windows.Forms.Button();
             this.buttonCalendar = new System.Windows.Forms.Button();
             this.buttonKassov = new System.Windows.Forms.Button();
-            this.panelTRasp = new System.Windows.Forms.Panel();
-            this.buttonTSRPG = new System.Windows.Forms.Button();
-            this.buttonPTSR = new System.Windows.Forms.Button();
-            this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.panelKassOper = new System.Windows.Forms.Panel();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.buttonVygr = new System.Windows.Forms.Button();
             this.buttonImportKasOper = new System.Windows.Forms.Button();
             this.radioButtonIzBD = new System.Windows.Forms.RadioButton();
             this.radioButtonIzFile = new System.Windows.Forms.RadioButton();
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.panelTRasp = new System.Windows.Forms.Panel();
+            this.buttonTSRPG = new System.Windows.Forms.Button();
+            this.buttonPTSR = new System.Windows.Forms.Button();
+            this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelGruz = new System.Windows.Forms.Panel();
             this.panelUpravlenie = new System.Windows.Forms.Panel();
@@ -127,8 +129,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.buttonVygr = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -145,10 +145,10 @@
             this.panelSingleShop.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.panelTRasp.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).BeginInit();
             this.panelKassOper.SuspendLayout();
             this.panelCalendar.SuspendLayout();
+            this.panelTRasp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panelUpravlenie.SuspendLayout();
             this.panelParamOptim.SuspendLayout();
@@ -652,9 +652,9 @@
             this.tabPage1.Controls.Add(this.buttonRaspisanie);
             this.tabPage1.Controls.Add(this.buttonCalendar);
             this.tabPage1.Controls.Add(this.buttonKassov);
+            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
-            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -696,47 +696,6 @@
             this.buttonKassov.UseVisualStyleBackColor = false;
             this.buttonKassov.Click += new System.EventHandler(this.buttonKassov_Click);
             // 
-            // panelTRasp
-            // 
-            this.panelTRasp.Controls.Add(this.buttonTSRPG);
-            this.panelTRasp.Controls.Add(this.buttonPTSR);
-            this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
-            this.panelTRasp.Location = new System.Drawing.Point(23, 55);
-            this.panelTRasp.Name = "panelTRasp";
-            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
-            this.panelTRasp.TabIndex = 4;
-            // 
-            // buttonTSRPG
-            // 
-            this.buttonTSRPG.Location = new System.Drawing.Point(224, 216);
-            this.buttonTSRPG.Name = "buttonTSRPG";
-            this.buttonTSRPG.Size = new System.Drawing.Size(90, 40);
-            this.buttonTSRPG.TabIndex = 0;
-            this.buttonTSRPG.Text = "На следующий год";
-            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click_1);
-            // 
-            // buttonPTSR
-            // 
-            this.buttonPTSR.Location = new System.Drawing.Point(320, 217);
-            this.buttonPTSR.Name = "buttonPTSR";
-            this.buttonPTSR.Size = new System.Drawing.Size(90, 40);
-            this.buttonPTSR.TabIndex = 1;
-            this.buttonPTSR.Text = "Применить";
-            this.buttonPTSR.UseVisualStyleBackColor = true;
-            this.buttonPTSR.Click += new System.EventHandler(this.buttonPTSR_Click);
-            // 
-            // dataGridViewForTSR
-            // 
-            this.dataGridViewForTSR.AllowUserToAddRows = false;
-            this.dataGridViewForTSR.AllowUserToDeleteRows = false;
-            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
-            this.dataGridViewForTSR.Name = "dataGridViewForTSR";
-            this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
-            this.dataGridViewForTSR.TabIndex = 0;
-            this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
-            // 
             // panelKassOper
             // 
             this.panelKassOper.Controls.Add(this.comboBox2);
@@ -748,6 +707,39 @@
             this.panelKassOper.Name = "panelKassOper";
             this.panelKassOper.Size = new System.Drawing.Size(437, 266);
             this.panelKassOper.TabIndex = 2;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "январь",
+            "февраль",
+            "март",
+            "апрель",
+            "май",
+            "июнь",
+            "июль",
+            "август",
+            "сентябрь",
+            "октябрь",
+            "ноябрь",
+            "декабрь"});
+            this.comboBox2.Location = new System.Drawing.Point(213, 133);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 4;
+            this.comboBox2.Visible = false;
+            // 
+            // buttonVygr
+            // 
+            this.buttonVygr.Location = new System.Drawing.Point(121, 127);
+            this.buttonVygr.Name = "buttonVygr";
+            this.buttonVygr.Size = new System.Drawing.Size(86, 30);
+            this.buttonVygr.TabIndex = 3;
+            this.buttonVygr.Text = "Выгрузить за";
+            this.buttonVygr.UseVisualStyleBackColor = true;
+            this.buttonVygr.Visible = false;
+            this.buttonVygr.Click += new System.EventHandler(this.button12_Click_1);
             // 
             // buttonImportKasOper
             // 
@@ -798,6 +790,47 @@
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 0;
             // 
+            // panelTRasp
+            // 
+            this.panelTRasp.Controls.Add(this.buttonTSRPG);
+            this.panelTRasp.Controls.Add(this.buttonPTSR);
+            this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
+            this.panelTRasp.Location = new System.Drawing.Point(23, 55);
+            this.panelTRasp.Name = "panelTRasp";
+            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
+            this.panelTRasp.TabIndex = 4;
+            // 
+            // buttonTSRPG
+            // 
+            this.buttonTSRPG.Location = new System.Drawing.Point(224, 216);
+            this.buttonTSRPG.Name = "buttonTSRPG";
+            this.buttonTSRPG.Size = new System.Drawing.Size(90, 40);
+            this.buttonTSRPG.TabIndex = 0;
+            this.buttonTSRPG.Text = "На следующий год";
+            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click_1);
+            // 
+            // buttonPTSR
+            // 
+            this.buttonPTSR.Location = new System.Drawing.Point(320, 217);
+            this.buttonPTSR.Name = "buttonPTSR";
+            this.buttonPTSR.Size = new System.Drawing.Size(90, 40);
+            this.buttonPTSR.TabIndex = 1;
+            this.buttonPTSR.Text = "Применить";
+            this.buttonPTSR.UseVisualStyleBackColor = true;
+            this.buttonPTSR.Click += new System.EventHandler(this.buttonPTSR_Click);
+            // 
+            // dataGridViewForTSR
+            // 
+            this.dataGridViewForTSR.AllowUserToAddRows = false;
+            this.dataGridViewForTSR.AllowUserToDeleteRows = false;
+            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
+            this.dataGridViewForTSR.Name = "dataGridViewForTSR";
+            this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
+            this.dataGridViewForTSR.TabIndex = 0;
+            this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panelGruz);
@@ -822,9 +855,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -985,6 +1018,7 @@
             this.dataGridViewVarSmen.Name = "dataGridViewVarSmen";
             this.dataGridViewVarSmen.Size = new System.Drawing.Size(339, 138);
             this.dataGridViewVarSmen.TabIndex = 2;
+            this.dataGridViewVarSmen.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVarSmen_CellEndEdit);
             // 
             // label1
             // 
@@ -1131,39 +1165,6 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
-            // buttonVygr
-            // 
-            this.buttonVygr.Location = new System.Drawing.Point(121, 127);
-            this.buttonVygr.Name = "buttonVygr";
-            this.buttonVygr.Size = new System.Drawing.Size(86, 30);
-            this.buttonVygr.TabIndex = 3;
-            this.buttonVygr.Text = "Выгрузить за";
-            this.buttonVygr.UseVisualStyleBackColor = true;
-            this.buttonVygr.Visible = false;
-            this.buttonVygr.Click += new System.EventHandler(this.button12_Click_1);
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "январь",
-            "февраль",
-            "март",
-            "апрель",
-            "май",
-            "июнь",
-            "июль",
-            "август",
-            "сентябрь",
-            "октябрь",
-            "ноябрь",
-            "декабрь"});
-            this.comboBox2.Location = new System.Drawing.Point(213, 133);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 4;
-            this.comboBox2.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1202,11 +1203,11 @@
             this.panelSingleShop.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.panelTRasp.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.panelKassOper.ResumeLayout(false);
             this.panelKassOper.PerformLayout();
             this.panelCalendar.ResumeLayout(false);
+            this.panelTRasp.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.panelUpravlenie.ResumeLayout(false);
             this.panelParamOptim.ResumeLayout(false);

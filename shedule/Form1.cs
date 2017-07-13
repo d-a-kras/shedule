@@ -788,7 +788,8 @@ namespace shedule
             //создаём новую строку
 
             //заполняем строку значениями
-
+            Program.currentShop.VarSmens.Clear();
+            Program.readVarSmen();
             foreach (VarSmen f in Program.currentShop.VarSmens)
             {
                 row = dt.NewRow();
@@ -1614,7 +1615,7 @@ namespace shedule
         private void buttonAplyFactors_Click(object sender, EventArgs e)
         {
 
-            // writeFactors();
+            Program.WriteFactors();
             MessageBox.Show("Данные сохранены");
         }
 
@@ -2928,6 +2929,23 @@ namespace shedule
                 MessageBox.Show("Ошибка записи в файл " + ex.Message);
                 ObjWorkBook.Close(0);
                 ObjExcel.Quit();
+            }
+        }
+
+        private void dataGridViewVarSmen_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setR(int.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 1:
+                    Program.currentShop.VarSmens.Find( t => t.getR().ToString() == dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setV(int.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 2:
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString()== dataGridViewVarSmen[0, e.RowIndex].Value.ToString()).setDeistvie(bool.Parse(dataGridViewVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+
             }
         }
     }

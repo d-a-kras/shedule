@@ -41,10 +41,34 @@ namespace shedule.Code
 
         }
 
+        static public int shiftGruz(ref int i)
+        {
+            i++;
+            if (i == Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz").Count)
+                i = 0;
+
+
+            return i;
+
+        }
+
+        static public int shiftGastr(ref int i)
+        {
+            i++;
+            if (i == Program.currentShop.tsr.FindAll(t => t.getPosition() == "gastronom").Count)
+                i = 0;
+
+
+            return i;
+
+        }
+
         public static void OptimCountSotr()
         {
             int nvs = -1;
             int nprod = -1;
+            int ngastr = -1;
+            int ngruz = -1;
             int nkass = -1;
             int kassCount = Program.MinKassirCount;
             List<VarSmen> DVS = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
@@ -78,21 +102,113 @@ namespace shedule.Code
                 ob += t.getCapacityPCC();
             }
 
+            List<TSR> LGruz = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz");
+            List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gastronom");
             List<TSR> LProd = Program.currentShop.tsr.FindAll(t => t.getTip() == 2);
             List<TSR> LKass = Program.currentShop.tsr.FindAll(t => t.getTip() == 1);
+            
 
             //((tc * TimeObrTov * 100) / (normchas * 3600 * KoefObr));
             int CountProd = LProd.Sum(o => o.getCount());
+            int CountGastr = LGastr.Sum(o => o.getCount());
+            int CountGruz = LGruz.Sum(o => o.getCount());
             int CountKassirov = ((ob * K / (Program.normchas*6  * 3600))) + Program.ParametrOptimization;
 
-            if (CountKassirov < 6) { CountKassirov = 6; }
-            if (CountProd < 6) { CountProd = 6; }
+            if (CountKassirov < 4) { CountKassirov = 4; }
+            if (CountProd < 4) { CountProd = 4; }
+            if (CountGruz < 2) { CountGruz = 2; }
 
-          
+            bool flaggastr2 = false;
+            bool flaggastr3 = false;
+
+
+            for (int i = 300; CountGastr > 0; CountGastr--, i++)
+            {
+
+                if ((Program.currentShop.VarSmens.Find(t => t.getR() == 2) != null) && (!flaggastr2))
+                {
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -2, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    CountGastr--; i++;
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 0, LGastr[ngastr].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    continue;
+                }
+                if ((Program.currentShop.VarSmens.Find(t => t.getR() == 3) != null) && (!flaggastr3))
+                {
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -3, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    CountGastr--; i++;
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 0, LGastr[ngastr].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    continue;
+                }
+
+                e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs)], i, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
+
+                Program.currentShop.employes.Add(e);
+
+            }
+
+            bool flagg2 = false;
+            bool flagg3 = false;
+
+
+            for (int i = 200; CountGruz > 0; CountGruz--, i++)
+            {
+
+                if ((Program.currentShop.VarSmens.Find(t => t.getR() == 2) != null) && (!flagg2))
+                {
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -2, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    CountGruz--; i++;
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 0, LGruz[ngruz].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    continue;
+                }
+                if ((Program.currentShop.VarSmens.Find(t => t.getR() == 3) != null) && (!flagg3))
+                {
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -3, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    CountGruz--; i++;
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 0, LGruz[ngruz].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    continue;
+                }
+
+                e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs)], i, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
+
+                Program.currentShop.employes.Add(e);
+
+            }
+
+            bool flagp2 = false;
+            bool flagp3 = false;
+
 
             for (int i = 100; CountProd > 0; CountProd--, i++)
             {
-                 e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs)], i,LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
+
+                if ((Program.currentShop.VarSmens.Find(t => t.getR() == 2) != null) && (!flagp2))
+                {
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -2, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    CountProd--; i++;
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 0, LProd[ nprod].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    continue;
+                }
+                if ((Program.currentShop.VarSmens.Find(t => t.getR() == 3) != null) && (!flagp3))
+                {
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -3, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    CountProd--; i++;
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 0, LProd[nprod].getOtobragenie(), "Сменный график");
+                    Program.currentShop.employes.Add(e);
+                    continue;
+                }
+
+                e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs)], i,LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
 
                 Program.currentShop.employes.Add(e);
 
@@ -101,7 +217,7 @@ namespace shedule.Code
             bool flag2 = false;
             bool flag3 = false;
 
-           
+
             for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
             {
                 if ((Program.currentShop.VarSmens.Find(t => t.getR() == 2) != null)&&(!flag2))
@@ -109,7 +225,7 @@ namespace shedule.Code
                      e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -2, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
                     Program.currentShop.employes.Add(e);
                     CountKassirov--; i++;
-                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 0, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 0, LKass[ nkass].getOtobragenie(), "Сменный график");
                     Program.currentShop.employes.Add(e);
                     continue;
                 }
@@ -118,7 +234,7 @@ namespace shedule.Code
                     e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -3, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
                     Program.currentShop.employes.Add(e);
                     CountKassirov--; i++;
-                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 0, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
+                    e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 0, LKass[ nkass].getOtobragenie(), "Сменный график");
                     Program.currentShop.employes.Add(e);
                     continue;
                 }
@@ -200,7 +316,7 @@ namespace shedule.Code
             }
 
             emplo.Clear();
-            emplo = Program.currentShop.employes.FindAll(t => t.getStatus() == 0);
+            emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 2));
             foreach (employee emp in emplo)
             {
                 int dlina = emp.getVS().getDlina();
@@ -251,6 +367,60 @@ namespace shedule.Code
                 }
                 emp.setStatus(1);
             }
+
+
+            emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0));
+            foreach (employee emp in emplo)
+            {
+                int dlina = emp.getVS().getDlina();
+
+
+
+                foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
+                {
+                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() > wd.DS.getStartDaySale()).getStartSmena();
+
+                    if ((emp.TipTekSmen == 3))
+                    {
+
+
+                        if (emp.getOtrabotal() >= 0)
+                        {
+                            emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
+
+                            emp.TipTekSmen = 2;
+
+                        }
+
+                    }
+
+                    else if (emp.TipTekSmen == 1)
+                    {
+                        start = wd.DS.getEndDaySale() - dlina;
+
+                        if (emp.getOtrabotal() >= 0)
+                        {
+                            emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
+
+                            emp.TipTekSmen = 3;
+
+                        }
+
+                    }
+
+                    else if (emp.getOtrabotal() >= 0)
+                    {
+                        start = wd.DS.getStartDaySale();
+                        emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
+
+                        emp.TipTekSmen = 1;
+
+                    }
+                    emp.OtrabotalDay();
+                }
+                emp.setStatus(1);
+            }
+
 
             emplo.Clear();
             emplo = Program.currentShop.employes.FindAll(t => t.getStatus() == 1);
