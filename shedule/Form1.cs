@@ -125,6 +125,7 @@ namespace shedule
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
                             CloseProcessOnError();
+                            throw ex;
                             return;
                         }
                         System.Drawing.Color color;
@@ -3011,7 +3012,16 @@ namespace shedule
 
         private void buttonCalendarNextYear_Click(object sender, EventArgs e)
         {
+            buttonCalendar.BackColor = Color.MistyRose;
+            buttonRaspisanie.BackColor = Color.White;
+            buttonKassov.BackColor = Color.White;
+            panelCalendar.BringToFront();
 
+            buttonImportKasOper.Visible = false;
+            // ShowProizvCalendar();
+            Program.getListDate(DateTime.Now.AddYears(1).Year);
+            Form4 f4 = new Form4();
+            f4.Show();
         }
     }
 }

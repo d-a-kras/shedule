@@ -249,7 +249,8 @@ namespace shedule.Code
 
                 }
             }
-            else { //сообщение об ошибке
+            else { 
+               throw new Exception("Недостаточное количество смен");
             }
         }
 
