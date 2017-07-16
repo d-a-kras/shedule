@@ -111,8 +111,14 @@ namespace shedule
                             Sotrudniki.CreateSmens();
 
                             bg.ReportProgress(8);
+
+                            if (!Sotrudniki.CheckGrafic()) {
+                                MessageBox.Show("Расписание не создано из-за слишком жестких параметров выберите больше вариантов смен или уменьшите минимальное число сотрудников.");
+                                return;
+                            }
                         }
                         catch (Exception ex)
+
                         {
 
                             //  label3.Visible = false;
@@ -505,7 +511,7 @@ namespace shedule
 
 
 
-                        chartRange = ObjWorkSheet.get_Range("a1", "c" + i);
+                        chartRange = ObjWorkSheet.get_Range("a1", "h3");
 
                         chartPage.SetSourceData(chartRange, misValue);
 
@@ -630,7 +636,7 @@ namespace shedule
 
 
 
-                        chartRange = ObjWorkSheet.get_Range("a1", "c" + i);
+                        chartRange = ObjWorkSheet.get_Range("a1", "h3");
 
                         chartPage.SetSourceData(chartRange, misValue);
 
@@ -2502,7 +2508,7 @@ namespace shedule
                             break;
 
                         }
-                    case 2:
+                    case 1:
                         {
 
                             try
@@ -2563,7 +2569,7 @@ namespace shedule
                             Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
                             Excel.Chart chartPage = myChart.Chart;
 
-                            chartRange = ObjWorkSheet.get_Range("a1", "c" + i);
+                            chartRange = ObjWorkSheet.get_Range("a1", "h3");
 
                             chartPage.SetSourceData(chartRange, misValue);
 
@@ -2593,7 +2599,7 @@ namespace shedule
 
                             break;
                         }
-                    case 3:
+                    case 2:
                         {
 
                             try
@@ -2662,7 +2668,7 @@ namespace shedule
 
 
 
-                            chartRange = ObjWorkSheet.get_Range("a1", "c" + i);
+                            chartRange = ObjWorkSheet.get_Range("a1", "h3");
 
                             chartPage.SetSourceData(chartRange, misValue);
 
@@ -3167,6 +3173,11 @@ namespace shedule
                 textBox5.Visible = false;
                 Program.addsmena = false;
             }
+        }
+
+        private void panelParamOptim_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
