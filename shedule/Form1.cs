@@ -1478,7 +1478,7 @@ namespace shedule
 
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
-            Form4 f4 = new Form4();
+            Form4 f4 = new Form4(DateTime.Now.Year);
             f4.Show();
         }
 
@@ -3020,7 +3020,7 @@ namespace shedule
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
             Program.getListDate(DateTime.Now.AddYears(1).Year);
-            Form4 f4 = new Form4();
+            Form4 f4 = new Form4(DateTime.Now.AddYears(1).Year);
             f4.Show();
         }
     }

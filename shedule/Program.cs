@@ -86,6 +86,7 @@ namespace shedule
         {
             return this.Data.Month;
         }
+        
         /*static public bool isHolyday(DateTime mdt) {
             foreach (DateTime dt in Program.holydays) {
                 int rez = DateTime.Compare(mdt, dt);
@@ -2616,8 +2617,17 @@ namespace shedule
 
         static public void getListDate(int year)
         {
+            try
+            {
+               DateTime.Parse($"01-01-{year}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Значение {year} недопустимо в качестве года!");
+            }
+            
             currentShop.DFCs.Clear();
-            string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + @"\Calendar";
+            string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + $@"\Calendar{year}";
             // MessageBox.Show(readPath);
             try
             {
@@ -2655,7 +2665,7 @@ namespace shedule
             {
                 //  MessageBox.Show(ex.Message);
 
-                Program.ReadCalendarFromXML(DateTime.Today.Year);
+                Program.ReadCalendarFromXML(year);
                 for (int i = 1; i <= 12; i++)
                 {
                     RD[i - 1] = 0;
@@ -2719,7 +2729,7 @@ namespace shedule
 
 
         }
-        static public string[] getMonths()
+        public static string[] getMonths()
         {
             String[] months = new String[12];
             months[0] = "Январь";
