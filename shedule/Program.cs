@@ -1643,6 +1643,12 @@ namespace shedule
         static public MinRab ReadMinRab()
         {
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
+            if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
+            {
+                Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
+
+            }
+
             MinRab mr=null;
             try
             {
@@ -1670,6 +1676,7 @@ namespace shedule
 
                 mr = new MinRab(2, 10, false);
 
+                
 
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
