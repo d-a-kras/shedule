@@ -112,9 +112,9 @@ namespace shedule
 
                             bg.ReportProgress(8);
 
-                            if (!Sotrudniki.CheckGrafic()) {
+                             if (!Sotrudniki.CheckGrafic()) {
                                 MessageBox.Show("Расписание не создано из-за слишком жестких параметров выберите больше вариантов смен или уменьшите минимальное число сотрудников.");
-                                return;
+                              //  return;
                             }
                         }
                         catch (Exception ex)
@@ -132,7 +132,7 @@ namespace shedule
                             MessageBox.Show("Расписание не создано");
                             CloseProcessOnError();
                             throw ex;
-                            return;
+                           
                         }
                         System.Drawing.Color color;
                         Excel.Range excelcells;
