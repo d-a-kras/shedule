@@ -58,6 +58,8 @@ namespace shedule
                 progressBar1.Value = progressBar1.Maximum;
                 progressBar1.Visible = false;
                 label3.Visible = false;
+                if(Program.TipExporta == 0) Program.HandledShops.Add(Program.currentShop.getIdShop());
+                UpdateStatusShops();
             }
 
             EnableControlsOnFinish();
@@ -1098,13 +1100,15 @@ namespace shedule
                     listBox1.Items.Add(h.getIdShop() + "_" + h.getAddress());
                 }
             }
+            Helper.CheckShopsStatus();
             // textBoxSpeed.Text = 20 + "";
             // textBoxTimeTell.Text = 25 + "";
             // textBoxTimeClick.Text = 4 + "";
 
 
             //if (/*Program.isConnect()*/true) {   }
-            labelStatus1.Text = "Статус: Обработано " + Program.getStatus() + " магазинов из " + Program.listShops.Count;
+            UpdateStatusShops();
+            //labelStatus1.Text = "Статус: Обработано " + Program.HandledShops.Count + " магазинов из " + Program.listShops.Count;
             labelStatus2.Text = " режим работы локальный";
             radioButtonIzFile.Checked = true;
         }
@@ -2707,7 +2711,10 @@ namespace shedule
                         }
                 }
                 bg.ReportProgress(ShopStep * shopCounter);
+                Program.HandledShops.Add(shop.getIdShop());
+                UpdateStatusShops();
             }
+            
             if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
@@ -3178,6 +3185,11 @@ namespace shedule
         private void panelParamOptim_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        public void UpdateStatusShops()
+        {
+            labelStatus1.Text = "Статус: Обработано " + Program.HandledShops.Count + " магазинов из " + Program.listShops.Count;
         }
     }
 }

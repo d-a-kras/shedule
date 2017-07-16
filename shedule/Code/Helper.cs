@@ -148,5 +148,72 @@ namespace shedule.Code
             if (File.Exists(path)) return true;
             return false;
         }
+
+        /// <summary>
+        /// Проверяет наличие у магазина файлов из списка fileNames (внутри функции)
+        /// Если все файлы есть - магазин считается обработанным
+        /// Id этого магазина добавляется в список HandledShops
+        /// </summary>
+        /// <returns></returns>
+        public static void CheckShopsStatus()
+        {
+            bool checkNotFullcoincidence = true;       //если true, то проверяются вхождения слов из xlsParts в именах файлов. Иначе точные совпадения
+            List<string> fileNames = new List<string>
+            {
+                {
+                    "factors"
+                }
+            };
+            
+            List<string> xlsParts = new List<string>
+            {
+                {
+                    "График"
+                }
+            };
+
+            if (checkNotFullcoincidence)
+            {
+                foreach (var s in Program.listShops)
+                {
+                    int shopFileCounter = 0;
+                    var path = $"{Environment.CurrentDirectory}\\Shops\\{s.getIdShop()}";
+                    if (Directory.Exists(path))
+                    {
+                        var folderFiles = Directory.GetFiles(path);
+
+                        foreach (var f in xlsParts)
+                        {
+                            foreach (var file in folderFiles)
+                            {
+                                if (file.Contains(f)) shopFileCounter++;
+                            }
+                        }
+                        if (shopFileCounter == xlsParts.Count)
+                        {
+                            Program.HandledShops.Add(s.getIdShop());
+                        }
+                    }
+                    
+                }
+            }
+            else
+            {
+                foreach (var s in Program.listShops)
+                {
+                    int shopFileCounter = 0;
+                    foreach (var f in fileNames)
+                    {
+                        var path = $"{Environment.CurrentDirectory}\\Shops\\{s.getIdShop()}\\{f}";
+                        if (File.Exists(path)) shopFileCounter++;
+                    }
+                    if (shopFileCounter == fileNames.Count)
+                    {
+                        Program.HandledShops.Add(s.getIdShop());
+                    }
+                }
+            }
+            
+        }
     }
 }

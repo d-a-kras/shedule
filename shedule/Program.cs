@@ -1585,12 +1585,13 @@ namespace shedule
         static public bool TSRTG = true;
         static public bool exit = true;
         static public bool addsmena = false;
-
-
+        
         static public Shop currentShop;
         static public short ParametrOptimization;
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
+        
+        public static HashSet<int> HandledShops = new HashSet<int>();
 
         static public void WriteMinRab() {
             Program.currentShop.minrab.setOtobragenie(true);
