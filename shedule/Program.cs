@@ -24,6 +24,47 @@ using shedule.Code;
 
 namespace shedule
 {
+    public class MinRab
+    {
+        int MinCount;
+        int Time;
+        bool Otobragenie;
+      public  MinRab(int mc, int t, bool o) {
+            this.MinCount = mc;
+            this.Time = t;
+            this.Otobragenie = o;
+        }
+
+        public int getMinCount() {
+            return this.MinCount;
+        }
+
+        public int getTimeMinRab()
+        {
+            return this.Time;
+        }
+        public bool getOtobragenie()
+        {
+            return this.Otobragenie;
+        }
+
+        public void setOtobragenie(bool b)
+        {
+           this.Otobragenie=b;
+        }
+
+        public void setMinCount(int mc)
+        {
+            this.MinCount = mc;
+        }
+
+        public void setTime(int mt)
+        {
+            this.Time = mt;
+        }
+
+
+    }
 
     public class DataForCalendary
     {
@@ -734,13 +775,13 @@ namespace shedule
         {
             this.lss = l;
             this.DS = d;
-            setMinCountSotr(Program.currentShop.CountMin, Program.currentShop.TimeMinRab);
+            setMinCountSotr(Program.currentShop.minrab.getMinCount(), Program.currentShop.minrab.getTimeMinRab());
         }
         public TemplateWorkingDay(daySale d)
         {
             this.DS = d;
             this.lss = new List<Smena>();
-            setMinCountSotr(Program.currentShop.CountMin, Program.currentShop.TimeMinRab);
+            setMinCountSotr(Program.currentShop.minrab.getMinCount(), Program.currentShop.minrab.getTimeMinRab());
 
 
         }
@@ -1051,12 +1092,12 @@ namespace shedule
         public List<daySale> MouthPrognoz = new List<daySale>();
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<VarSmen> VarSmens = new List<VarSmen>();
+        public MinRab minrab;
 
 
         private int idShop;
         int idFM;
-        public int CountMin;
-        public int TimeMinRab = 10;
+         
         private String address;
         public int getIdShop() { return idShop; }
         public int getIdShopFM() { return idFM; }
@@ -1076,6 +1117,7 @@ namespace shedule
             this.factors = new List<Factor>();
             this.DFCs = new List<DataForCalendary>();
             this.templates = new List<TemplateWorkingDay>();
+            
             Program.newShop();
 
         }
@@ -1091,10 +1133,11 @@ namespace shedule
             this.factors = new List<Factor>();
             this.DFCs = new List<DataForCalendary>();
             this.templates = new List<TemplateWorkingDay>();
+           
             Program.newShop();
 
         }
-
+        public void setMinRab(MinRab mr) { this.minrab = mr; }
         public void AddTemplate(TemplateWorkingDay t)
         {
             this.templates.Add(t);
@@ -1542,10 +1585,64 @@ namespace shedule
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
 
-        static public void ReadMinRab()
+        static public void WriteMinRab() {
+            Program.currentShop.minrab.setOtobragenie(true);
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
+            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+            {
+                sw.Write(Program.currentShop.minrab.getMinCount() + "_" + Program.currentShop.minrab.getTimeMinRab() + "_" + Program.currentShop.minrab.getOtobragenie());
+
+            }
+        }
+
+        static public void ReadParametrOptimizacii()
+        {
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\parametroptimizacii";
+          
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                   
+                    string s;
+
+                    while ((s = sr.ReadLine()) != null)
+                    {
+                        short m = short.Parse(s);
+                        if ((m>0)&&(m<4)) {
+                            Program.ParametrOptimization = m;
+                        } else { Program.ParametrOptimization = 1; }
+                    }
+
+
+                }
+
+            }
+            catch
+            {
+
+                
+
+
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.Write("1");
+
+                }
+                // MessageBox.Show(ex.ToString());
+
+            }
+
+          
+        }
+
+        static public MinRab ReadMinRab()
         {
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
-
+            MinRab mr=null;
             try
             {
 
@@ -1559,28 +1656,31 @@ namespace shedule
                     {
 
                         str = s.Split('_');
-                        currentShop.CountMin = int.Parse(str[0]);
-                        currentShop.TimeMinRab = int.Parse(str[1]);
+                        mr = new MinRab(int.Parse(str[0]),  int.Parse(str[1]), bool.Parse(str[2]));
+                        
                     }
-
+                   
 
                 }
+                
             }
             catch
             {
 
-                currentShop.CountMin = 1;
-                currentShop.TimeMinRab = 10;
+                mr = new MinRab(2, 10, false);
+
 
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-                    sw.Write(currentShop.CountMin + "_" + currentShop.TimeMinRab);
+                    sw.Write(mr.getMinCount() + "_" + mr.getTimeMinRab()+"_"+"false");
 
                 }
                 // MessageBox.Show(ex.ToString());
 
             }
+
+            return mr;
         }
 
 
@@ -2042,8 +2142,8 @@ namespace shedule
                         }
 
 
-                        Sclick = (int)Math.Ceiling((double)((Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100)));
-                        Scheck = (int)Math.Ceiling((double)((Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100)));
+                        Sclick = (int)Math.Ceiling((double)((Sclick / h.Count) * ((100 + (float)otkr_konkurenta) / 100) * ((100 - (float)zakr_konkurenta) / 100) * ((100 + (float)rost_reklam) / 100) * ((100 + (float)snig_reklam) / 100)));
+                        Scheck = (int)Math.Ceiling((double)((Scheck / h.Count) * ((100 + (float)otkr_konkurenta) / 100) * ((100 - (float)zakr_konkurenta) / 100) * ((100 + (float)rost_reklam) / 100) * ((100 + (float)snig_reklam) / 100)));
                         pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Scheck, Sclick));
                         //MessageBox.Show(Scheck+" ");
                     }
@@ -2524,6 +2624,7 @@ namespace shedule
 
 
             TemplateWorkingDay twd = new TemplateWorkingDay(ds);
+            int i = 0;
             twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
             twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
             while (checkGraph())
