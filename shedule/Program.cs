@@ -286,11 +286,12 @@ namespace shedule
             {
                 switch (this.getR())
                 {
+                    case 3: this.dlina = 11; return this.dlina;
                     case 5: this.dlina = 7; return this.dlina;
                     case 2: this.dlina = 11; return this.dlina;
                     case 4: this.dlina = 9; return this.dlina;
                     case 6: this.dlina = 6; return this.dlina;
-                    default: return -1;
+                    default: this.dlina = 8; return this.dlina;
                 }
 
 
@@ -414,6 +415,8 @@ namespace shedule
                 {
                     case 0: this.tip = 1; return this.tip;
                     case 1: this.tip = 2; return this.tip;
+                    case 2: this.tip = 3; return this.tip;
+                    case 3: this.tip = 4; return this.tip;
                     default: return -1;
                 }
 
@@ -428,7 +431,7 @@ namespace shedule
             this.TipGraf = tgr;
             this.smens = new List<Smena>();
 
-            this.otrabotal = otr % (VS.getR()+1);
+            this.otrabotal = otr % (VS.getR());
         }
 
 
