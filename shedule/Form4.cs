@@ -14,12 +14,14 @@ namespace shedule
         Label[] ld;
         List<DataForCalendary> ldfc = new List<DataForCalendary>();
         private List<Label> _checkedLabels;
+        private int calendarYear;
 
-        public Form4()
+        public Form4(int year)
         {
             InitializeComponent();
             _checkedLabels = new List<Label>();
             comboBox1.SelectedIndex = 0;
+            calendarYear = year;
         }
 
 
@@ -175,8 +177,15 @@ namespace shedule
 
         private void buttonAddCalendary_Click(object sender, EventArgs e)
         {
-            string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() +
-                              @"\Calendar.txt";
+            string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{calendarYear}";
+
+            foreach (var l in ldfc)
+            {
+                var programDate = Program.currentShop.DFCs.SingleOrDefault(x => x.getData() == l.getData());
+                if (programDate == null) throw new ArgumentNullException(nameof(programDate), "Несуществующая дата");
+                programDate.setTimeBaE(l.getTimeStart(), l.getTimeEnd());
+            }
+            
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
 
