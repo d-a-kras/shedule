@@ -135,7 +135,7 @@ namespace shedule
 
                 }
                 progressBar1.Value = progressBar1.Maximum;
-
+                label1.Text = Program.currentShop.MouthPrognozT[Nday].getData().ToShortDateString().ToString();
                 progressBar1.Visible = false;
                 label3.Visible = false;
             }
