@@ -306,6 +306,14 @@ namespace shedule
             this.Deistvie = d;
         }
 
+        public VarSmen(int rab, int vyh,int dl, bool d)
+        {
+            this.r = rab;
+            this.v = vyh;
+            this.dlina = dl;
+            this.Deistvie = d;
+        }
+
         public int getR()
         {
             return this.r;
@@ -1573,6 +1581,7 @@ namespace shedule
         static public int tipDiagram = 0;
         static public bool TSRTG = true;
         static public bool exit = true;
+        static public bool addsmena = false;
 
 
         static public Shop currentShop;

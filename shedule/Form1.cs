@@ -3117,6 +3117,33 @@ namespace shedule
             Program.WriteMinRab();
             MessageBox.Show("Данные сохранены");
         }
+
+        private void button10_Click_1(object sender, EventArgs e)
+        {
+            if (!Program.addsmena)
+            {
+                label12.Visible = true;
+                label13.Visible = true;
+                label15.Visible = true;
+                textBox3.Visible = true;
+                textBox4.Visible = true;
+                textBox5.Visible = true;
+                Program.addsmena = true;
+                button10.Text = "ok";
+
+            }
+            else {
+                Program.currentShop.VarSmens.Add(new VarSmen(int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text),false));
+                dataGridViewVarSmen.DataSource = viewVarSmen();
+                label12.Visible = false;
+                label13.Visible = false;
+                label15.Visible = false;
+                textBox3.Visible = false;
+                textBox4.Visible = false;
+                textBox5.Visible = false;
+                Program.addsmena = false;
+            }
+        }
     }
 }
 

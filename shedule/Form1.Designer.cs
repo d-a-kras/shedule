@@ -134,6 +134,13 @@
             this.label10 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -972,6 +979,13 @@
             // 
             // panelDopusVarSmen
             // 
+            this.panelDopusVarSmen.Controls.Add(this.label15);
+            this.panelDopusVarSmen.Controls.Add(this.textBox5);
+            this.panelDopusVarSmen.Controls.Add(this.textBox4);
+            this.panelDopusVarSmen.Controls.Add(this.label13);
+            this.panelDopusVarSmen.Controls.Add(this.label12);
+            this.panelDopusVarSmen.Controls.Add(this.textBox3);
+            this.panelDopusVarSmen.Controls.Add(this.button10);
             this.panelDopusVarSmen.Controls.Add(this.label8);
             this.panelDopusVarSmen.Controls.Add(this.tbLastHour);
             this.panelDopusVarSmen.Controls.Add(this.label7);
@@ -1223,6 +1237,70 @@
             this.label11.TabIndex = 8;
             this.label11.Text = "Мин. число кассиров";
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(17, 175);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 42);
+            this.button10.TabIndex = 8;
+            this.button10.Text = "добавить смену";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click_1);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(277, 175);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(50, 20);
+            this.textBox3.TabIndex = 9;
+            this.textBox3.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(125, 182);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(115, 13);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "рабочих смен подряд";
+            this.label12.Visible = false;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(125, 204);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(125, 13);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "выходных смен подряд";
+            this.label13.Visible = false;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(278, 197);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(50, 20);
+            this.textBox4.TabIndex = 12;
+            this.textBox4.Visible = false;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(278, 219);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(50, 20);
+            this.textBox5.TabIndex = 13;
+            this.textBox5.Visible = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(125, 226);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(119, 13);
+            this.label15.TabIndex = 14;
+            this.label15.Text = "средняя длина смены";
+            this.label15.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1387,6 +1465,13 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
 
