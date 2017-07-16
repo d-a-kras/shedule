@@ -3157,6 +3157,7 @@ namespace shedule
             }
             else {
                 Program.currentShop.VarSmens.Add(new VarSmen(int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text),false));
+                Program.writeVarSmen();
                 dataGridViewVarSmen.DataSource = viewVarSmen();
                 label12.Visible = false;
                 label13.Visible = false;
