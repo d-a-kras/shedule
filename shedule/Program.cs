@@ -507,21 +507,15 @@ namespace shedule
             return this.Tip;
         }
 
-        public WorkingDay(int id, int start, int end)
-        {
-            this.idShop = id;
-            this.startWorkingDay = start;
-            this.endWorkingDay = end;
-            this.lss = new List<Smena>();
-        }
+    
 
-        public WorkingDay(int id, DateTime D, int start, int end, int t)
+        public WorkingDay(int id, DateTime D, int start, int end)
         {
             this.idShop = id;
             this.Data = D;
             this.startWorkingDay = start;
             this.endWorkingDay = end;
-            this.Tip = t;
+        
             this.lss = new List<Smena>();
         }
 

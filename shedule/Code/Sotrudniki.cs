@@ -10,6 +10,28 @@ namespace shedule.Code
 
  public  class Sotrudniki
     {
+
+        static public bool CheckGrafic() {
+            List<Smena> lss = new List<Smena>();
+           // WorkingDay wd; 
+            foreach (TemplateWorkingDay mp in Program.currentShop.MouthPrognozT){
+                if ((mp.minKassUtr>0)||(mp.minProdUtr>0)||(mp.minKassVech>0)||(mp.minProdVech>0)) { return false; }
+           /*   wd  = new WorkingDay(Program.currentShop.getIdShop(), mp.getData(),mp.DS.getStartDaySale(),mp.DS.getEndDaySale());
+                foreach (employee emp in Program.currentShop.employes) {
+                    if (emp.smens.Find(x=>x.getData()==mp.getData())!=null) {
+                        wd.AddSmena(emp.smens.Find(x => x.getData() == mp.getData()));
+                       }
+                }
+                Program.currentShop.workingDays.Add(wd);
+               */
+                
+            }
+
+
+            return true;
+
+        }
+
         static public int shiftSm(ref int i)
         {
             i++;

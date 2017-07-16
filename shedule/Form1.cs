@@ -15,7 +15,7 @@ using System.IO.Compression;
 using Ionic.Zip;
 using shedule.Code;
 using Point = System.Drawing.Point;
-
+using System.Diagnostics;
 
 namespace shedule
 {
@@ -138,7 +138,7 @@ namespace shedule
 
                         ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
                         ObjWorkSheet.Name = "График";
-                        excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                        excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                         excelcells.Font.Size = 10;
                         excelcells.NumberFormat = "@";
                         bg.ReportProgress(10);
@@ -224,7 +224,7 @@ namespace shedule
 
                         ObjWorkSheet.Name = "Часы";
 
-                        excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                        excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                         excelcells.Font.Size = 10;
                         excelcells.NumberFormat = "@";
 
@@ -357,7 +357,7 @@ namespace shedule
                         {
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[i];
                             ObjWorkSheet.Name = "Прогноз" + twd.getData().ToShortDateString();
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                            excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                             excelcells.Font.Size = 10;
                             //  excelcells.NumberFormat = "@";
                             bg.ReportProgress(10);
@@ -460,7 +460,7 @@ namespace shedule
 
                         ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                        excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                        excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                         excelcells.Font.Size = 10;
                         // excelcells.NumberFormat = "@";
                         bg.ReportProgress(10);
@@ -585,7 +585,7 @@ namespace shedule
 
                         ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                        excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                        excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                         excelcells.Font.Size = 10;
                         // excelcells.NumberFormat = "@";
                         bg.ReportProgress(10);
@@ -1122,14 +1122,15 @@ namespace shedule
             buttonParamOptimiz.BackColor = Color.White;
             panelDopusVarSmen.BringToFront();
             dataGridViewVarSmen.DataSource = viewVarSmen();
-            for(int i=0;i<6;i++) {
+        
 
-                dataGridViewVarSmen.Rows[i].Cells[0].ReadOnly = true;
-                dataGridViewVarSmen.Rows[i].Cells[1].ReadOnly = true;
+                dataGridViewVarSmen.Columns[0].ReadOnly = true;
+                dataGridViewVarSmen.Columns[1].ReadOnly = true;
 
-            }
+            
            
-            dataGridViewFactors.Columns[0].ReadOnly = true;
+           
+
             if (Program.currentShop.minrab.getOtobragenie()) {
                 tbKassirCount.Text = Program.currentShop.minrab.getMinCount().ToString();
                 tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
@@ -2191,10 +2192,22 @@ namespace shedule
         private delegate void updateLabel3Delegate(string text);
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("EXCEL"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             if (Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
             {
                 foreach (var file in Directory.GetFiles(Environment.CurrentDirectory + @"\mult\"))
                 {
+                    
                     File.Delete(file);
                 }
             }
@@ -2294,7 +2307,7 @@ namespace shedule
 
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
                             ObjWorkSheet.Name = "График";
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                            excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                             excelcells.Font.Size = 10;
                             excelcells.NumberFormat = "@";
                             bg.ReportProgress(10);
@@ -2380,7 +2393,7 @@ namespace shedule
 
                             ObjWorkSheet.Name = "Часы";
 
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                            excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                             excelcells.Font.Size = 10;
                             excelcells.NumberFormat = "@";
 
@@ -2520,7 +2533,7 @@ namespace shedule
 
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                            excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                             excelcells.Font.Size = 10;
                             // excelcells.NumberFormat = "@";
 
@@ -2613,7 +2626,7 @@ namespace shedule
 
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL40");
+                            excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                             excelcells.Font.Size = 10;
                             // excelcells.NumberFormat = "@";
 
