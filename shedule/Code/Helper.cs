@@ -37,9 +37,9 @@ namespace shedule.Code
                     string dayOfWeek = a["День недели"];
                     string time = a["Время"];
                     string dateS = a["Дата"];
-                    string productS = a["Кол-во товаров"];
-                    string checkS = a["Кол-во чеков"];
-                    string scansS = a["Кол-во сканиирований"];
+                    string productS = a["Количество товаров"];
+                    string checkS = a["Количество чеков"];
+                    string scansS = a["Количество сканирований"];
 
                     DateTime dt;
                     int checkCount = 0;
@@ -51,12 +51,12 @@ namespace shedule.Code
                     var resultChCount = int.TryParse(checkS, out checkCount);
                     var resultScCount = int.TryParse(scansS, out scansCount);
                     var resultPrCount = double.TryParse(productS, out productCount);
-                    var resultDayOfWeek = DayOfWeeksDictionary.ContainsKey(dayOfWeek);
+                    var resultDayOfWeek = DayOfWeeksDictionary.ContainsValue(dayOfWeek);
                     bool resultHour = !(time.Split(':').Length < 1);
 
                     if (resultDt && resultChCount && resultScCount && resultPrCount && resultDayOfWeek && resultHour)
                     {
-                        hourSales.Add(new hourSale(shopId, dt, time.Split(':')[0], DayOfWeeksDictionary[dayOfWeek], checkCount, scansCount, productCount));
+                        hourSales.Add(new hourSale(shopId, dt, time.Split(':')[0], dayOfWeek/*DayOfWeeksDictionary[dayOfWeek]*/, checkCount, scansCount, productCount));
                     }
                     else
                     {
