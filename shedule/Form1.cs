@@ -16,6 +16,7 @@ using Ionic.Zip;
 using shedule.Code;
 using Point = System.Drawing.Point;
 using System.Diagnostics;
+using Application = System.Windows.Forms.Application;
 
 namespace shedule
 {
@@ -2188,7 +2189,12 @@ namespace shedule
                     listBox1.Enabled = true;
                     MessageBox.Show("Архив создан");
                 }
+            }
 
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Maximized;
+                Application.Exit();
             }
             EnableControlsOnFinish();
 
