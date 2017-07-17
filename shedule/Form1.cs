@@ -1000,7 +1000,7 @@ namespace shedule
                 List<hourSale> hSs = new List<hourSale>();
                 hourSale h;
                 var connectionString =
-                    "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+                    $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
                 string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -3190,6 +3190,12 @@ namespace shedule
         public void UpdateStatusShops()
         {
             labelStatus1.Text = "Статус: Обработано " + Program.HandledShops.Count + " магазинов из " + Program.listShops.Count;
+        }
+
+        private void bSettings_Click(object sender, EventArgs e)
+        {
+            var form = new fSettings();
+            form.Show();
         }
     }
 }

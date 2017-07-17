@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="shedule" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DatabaseAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CENTRUMSRV</Value>
+    </Setting>
+    <Setting Name="DatabaseLogin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">VShleyev</Value>
+    </Setting>
+    <Setting Name="DatabasePassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gjkrjdybr@93</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

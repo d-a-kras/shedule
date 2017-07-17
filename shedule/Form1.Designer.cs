@@ -30,18 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.getStatisticByShopsDayHourBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataSet1 = new shedule.DataSet1();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.button4 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.labelStatus1 = new System.Windows.Forms.Label();
             this.labelStatus2 = new System.Windows.Forms.Label();
             this.button_refresh_list_shops = new System.Windows.Forms.Button();
-            this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.buttonTest = new System.Windows.Forms.Button();
             this.panelMultShops = new System.Windows.Forms.Panel();
@@ -88,6 +84,7 @@
             this.buttonRaspisanie = new System.Windows.Forms.Button();
             this.buttonCalendar = new System.Windows.Forms.Button();
             this.buttonKassov = new System.Windows.Forms.Button();
+            this.buttonCalendarNextYear = new System.Windows.Forms.Button();
             this.panelKassOper = new System.Windows.Forms.Panel();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.buttonImportKasOper = new System.Windows.Forms.Button();
@@ -96,7 +93,6 @@
             this.buttonVygr = new System.Windows.Forms.Button();
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.buttonCalendarNextYear = new System.Windows.Forms.Button();
             this.panelTRasp = new System.Windows.Forms.Panel();
             this.buttonTSRPG = new System.Windows.Forms.Button();
             this.buttonPTSR = new System.Windows.Forms.Button();
@@ -141,8 +137,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
+            this.bSettings = new System.Windows.Forms.Button();
+            this.getStatisticByShopsDayHourBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataSet1 = new shedule.DataSet1();
+            this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
+            this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -169,17 +168,9 @@
             this.panelFactors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // getStatisticByShopsDayHourBindingSource
-            // 
-            this.getStatisticByShopsDayHourBindingSource.DataMember = "get_StatisticByShopsDayHour";
-            this.getStatisticByShopsDayHourBindingSource.DataSource = this.dataSet1;
-            // 
-            // dataSet1
-            // 
-            this.dataSet1.DataSetName = "DataSet1";
-            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // button1
             // 
@@ -210,10 +201,6 @@
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // get_StatisticByShopsDayHourTableAdapter
-            // 
-            this.get_StatisticByShopsDayHourTableAdapter.ClearBeforeFill = true;
             // 
             // button4
             // 
@@ -262,10 +249,6 @@
             this.button_refresh_list_shops.Text = "Обновить список магазинов";
             this.button_refresh_list_shops.UseVisualStyleBackColor = true;
             this.button_refresh_list_shops.Click += new System.EventHandler(this.button_refresh_list_shops_Click);
-            // 
-            // get_StatisticByShopsDayHourTableAdapter1
-            // 
-            this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
             // 
             // openFileDialog1
             // 
@@ -562,7 +545,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(504, 319);
+            this.tabPage4.Size = new System.Drawing.Size(359, 319);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -746,6 +729,21 @@
             this.buttonKassov.UseVisualStyleBackColor = false;
             this.buttonKassov.Click += new System.EventHandler(this.buttonKassov_Click);
             // 
+            // buttonCalendarNextYear
+            // 
+            this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCalendarNextYear.Location = new System.Drawing.Point(270, 15);
+            this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
+            this.buttonCalendarNextYear.Size = new System.Drawing.Size(39, 34);
+            this.buttonCalendarNextYear.TabIndex = 5;
+            this.buttonCalendarNextYear.Text = "2018";
+            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
+            this.buttonCalendarNextYear.Visible = false;
+            this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
+            // 
             // panelKassOper
             // 
             this.panelKassOper.Controls.Add(this.comboBox2);
@@ -840,21 +838,6 @@
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 0;
             // 
-            // buttonCalendarNextYear
-            // 
-            this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCalendarNextYear.Location = new System.Drawing.Point(270, 15);
-            this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
-            this.buttonCalendarNextYear.Size = new System.Drawing.Size(39, 34);
-            this.buttonCalendarNextYear.TabIndex = 5;
-            this.buttonCalendarNextYear.Text = "2018";
-            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
-            this.buttonCalendarNextYear.Visible = false;
-            this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
-            // 
             // panelTRasp
             // 
             this.panelTRasp.Controls.Add(this.buttonTSRPG);
@@ -903,7 +886,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(510, 342);
+            this.tabPage2.Size = new System.Drawing.Size(365, 342);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Управление";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1230,7 +1213,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(510, 342);
+            this.tabPage3.Size = new System.Drawing.Size(365, 342);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1302,6 +1285,34 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // bSettings
+            // 
+            this.bSettings.Location = new System.Drawing.Point(786, 13);
+            this.bSettings.Name = "bSettings";
+            this.bSettings.Size = new System.Drawing.Size(75, 23);
+            this.bSettings.TabIndex = 14;
+            this.bSettings.Text = "Настройки";
+            this.bSettings.UseVisualStyleBackColor = true;
+            this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
+            // 
+            // getStatisticByShopsDayHourBindingSource
+            // 
+            this.getStatisticByShopsDayHourBindingSource.DataMember = "get_StatisticByShopsDayHour";
+            this.getStatisticByShopsDayHourBindingSource.DataSource = this.dataSet1;
+            // 
+            // dataSet1
+            // 
+            this.dataSet1.DataSetName = "DataSet1";
+            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // get_StatisticByShopsDayHourTableAdapter
+            // 
+            this.get_StatisticByShopsDayHourTableAdapter.ClearBeforeFill = true;
+            // 
+            // get_StatisticByShopsDayHourTableAdapter1
+            // 
+            this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1309,6 +1320,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(886, 490);
+            this.Controls.Add(this.bSettings);
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
@@ -1321,8 +1333,6 @@
             this.Padding = new System.Windows.Forms.Padding(10);
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
             this.panelMultShops.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
@@ -1356,6 +1366,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1473,6 +1485,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button bSettings;
     }
 }
 
