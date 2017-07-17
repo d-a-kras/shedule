@@ -1590,7 +1590,15 @@ namespace shedule
         static public short ParametrOptimization;
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
-        
+
+        //#region ConnectionSettings
+
+        //public static string databaseAddress = "";
+        //public static string databaseLogin = "";
+        //public static string databasePassword = "";
+
+        //#endregion
+
         public static HashSet<int> HandledShops = new HashSet<int>();
 
         static public void WriteMinRab() {
@@ -2326,7 +2334,7 @@ namespace shedule
         public static void createListDaySale(DateTime n, DateTime k, int id)
         {
 
-            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
             //string s1 = "2016"+ "/" + "9" + "/" + "6";
@@ -2488,7 +2496,7 @@ namespace shedule
 
         static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
-            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
             string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -3103,7 +3111,7 @@ namespace shedule
         {
 
             mShop h;
-            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
             string sql = "select * from get_shops() order by КодМагазина";
 
             using (connection = new SqlConnection(connectionString))
