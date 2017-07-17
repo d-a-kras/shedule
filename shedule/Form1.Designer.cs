@@ -82,12 +82,14 @@
             this.buttonMadd = new System.Windows.Forms.Button();
             this.listBoxMShops = new System.Windows.Forms.ListBox();
             this.panelSingleShop = new System.Windows.Forms.Panel();
+            this.label16 = new System.Windows.Forms.Label();
             this.buttonMultShops = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonRaspisanie = new System.Windows.Forms.Button();
             this.buttonCalendar = new System.Windows.Forms.Button();
             this.buttonKassov = new System.Windows.Forms.Button();
+            this.buttonCalendarNextYear = new System.Windows.Forms.Button();
             this.panelKassOper = new System.Windows.Forms.Panel();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.buttonImportKasOper = new System.Windows.Forms.Button();
@@ -96,7 +98,6 @@
             this.buttonVygr = new System.Windows.Forms.Button();
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
-            this.buttonCalendarNextYear = new System.Windows.Forms.Button();
             this.panelTRasp = new System.Windows.Forms.Panel();
             this.buttonTSRPG = new System.Windows.Forms.Button();
             this.buttonPTSR = new System.Windows.Forms.Button();
@@ -141,6 +142,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             this.panelMultShops.SuspendLayout();
@@ -238,7 +241,7 @@
             // 
             this.labelStatus1.AutoSize = true;
             this.labelStatus1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.labelStatus1.Location = new System.Drawing.Point(29, 10);
+            this.labelStatus1.Location = new System.Drawing.Point(6, 3);
             this.labelStatus1.Name = "labelStatus1";
             this.labelStatus1.Size = new System.Drawing.Size(61, 17);
             this.labelStatus1.TabIndex = 8;
@@ -330,7 +333,7 @@
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage6.Size = new System.Drawing.Size(504, 319);
             this.tabPage6.TabIndex = 0;
-            this.tabPage6.Text = "управление";
+            this.tabPage6.Text = "Управление";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // panel1
@@ -392,11 +395,11 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(253, 111);
+            this.button11.Location = new System.Drawing.Point(373, 217);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(75, 23);
             this.button11.TabIndex = 3;
-            this.button11.Text = "применить ";
+            this.button11.Text = "Применить ";
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
@@ -446,10 +449,10 @@
             // 
             // button9
             // 
-            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
-            this.button9.Location = new System.Drawing.Point(346, 216);
+            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.button9.Location = new System.Drawing.Point(357, 217);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(62, 23);
+            this.button9.Size = new System.Drawing.Size(78, 23);
             this.button9.TabIndex = 1;
             this.button9.Text = "Применить";
             this.button9.UseVisualStyleBackColor = true;
@@ -543,7 +546,7 @@
             // 
             // button23
             // 
-            this.button23.Location = new System.Drawing.Point(364, 217);
+            this.button23.Location = new System.Drawing.Point(373, 217);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(76, 23);
             this.button23.TabIndex = 0;
@@ -593,11 +596,11 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(391, 259);
+            this.button13.Location = new System.Drawing.Point(405, 289);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 23);
+            this.button13.Size = new System.Drawing.Size(93, 23);
             this.button13.TabIndex = 6;
-            this.button13.Text = "export в .xls";
+            this.button13.Text = "Экспорт в .xls";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
@@ -664,6 +667,7 @@
             // 
             // panelSingleShop
             // 
+            this.panelSingleShop.Controls.Add(this.label16);
             this.panelSingleShop.Controls.Add(this.buttonMultShops);
             this.panelSingleShop.Controls.Add(this.button_refresh_list_shops);
             this.panelSingleShop.Controls.Add(this.listBox1);
@@ -672,6 +676,15 @@
             this.panelSingleShop.Name = "panelSingleShop";
             this.panelSingleShop.Size = new System.Drawing.Size(848, 429);
             this.panelSingleShop.TabIndex = 13;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(-7, 429);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 13);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "label16";
             // 
             // buttonMultShops
             // 
@@ -745,6 +758,21 @@
             this.buttonKassov.Text = "Кассовые операции";
             this.buttonKassov.UseVisualStyleBackColor = false;
             this.buttonKassov.Click += new System.EventHandler(this.buttonKassov_Click);
+            // 
+            // buttonCalendarNextYear
+            // 
+            this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCalendarNextYear.Location = new System.Drawing.Point(270, 15);
+            this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
+            this.buttonCalendarNextYear.Size = new System.Drawing.Size(39, 34);
+            this.buttonCalendarNextYear.TabIndex = 5;
+            this.buttonCalendarNextYear.Text = "2018";
+            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
+            this.buttonCalendarNextYear.Visible = false;
+            this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
             // 
             // panelKassOper
             // 
@@ -839,21 +867,6 @@
             this.monthCalendar1.Location = new System.Drawing.Point(141, 49);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 0;
-            // 
-            // buttonCalendarNextYear
-            // 
-            this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCalendarNextYear.Location = new System.Drawing.Point(270, 15);
-            this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
-            this.buttonCalendarNextYear.Size = new System.Drawing.Size(39, 34);
-            this.buttonCalendarNextYear.TabIndex = 5;
-            this.buttonCalendarNextYear.Text = "2018";
-            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
-            this.buttonCalendarNextYear.Visible = false;
-            this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
             // 
             // panelTRasp
             // 
@@ -975,11 +988,11 @@
             // 
             // buttonApplyParamsOptim
             // 
-            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(253, 111);
+            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(384, 216);
             this.buttonApplyParamsOptim.Name = "buttonApplyParamsOptim";
             this.buttonApplyParamsOptim.Size = new System.Drawing.Size(75, 23);
             this.buttonApplyParamsOptim.TabIndex = 3;
-            this.buttonApplyParamsOptim.Text = "применить ";
+            this.buttonApplyParamsOptim.Text = "Применить ";
             this.buttonApplyParamsOptim.UseVisualStyleBackColor = true;
             this.buttonApplyParamsOptim.Click += new System.EventHandler(this.buttonApplyParamsOptim_Click);
             // 
@@ -1101,7 +1114,7 @@
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 42);
             this.button10.TabIndex = 8;
-            this.button10.Text = "добавить смену";
+            this.button10.Text = "Добавить смену";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click_1);
             // 
@@ -1168,7 +1181,7 @@
             // 
             // buttonAplyVarSmen
             // 
-            this.buttonAplyVarSmen.Location = new System.Drawing.Point(349, 205);
+            this.buttonAplyVarSmen.Location = new System.Drawing.Point(384, 216);
             this.buttonAplyVarSmen.Name = "buttonAplyVarSmen";
             this.buttonAplyVarSmen.Size = new System.Drawing.Size(76, 23);
             this.buttonAplyVarSmen.TabIndex = 0;
@@ -1188,10 +1201,10 @@
             // 
             // buttonAplyFactors
             // 
-            this.buttonAplyFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
-            this.buttonAplyFactors.Location = new System.Drawing.Point(346, 216);
+            this.buttonAplyFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonAplyFactors.Location = new System.Drawing.Point(384, 216);
             this.buttonAplyFactors.Name = "buttonAplyFactors";
-            this.buttonAplyFactors.Size = new System.Drawing.Size(62, 23);
+            this.buttonAplyFactors.Size = new System.Drawing.Size(80, 23);
             this.buttonAplyFactors.TabIndex = 1;
             this.buttonAplyFactors.Text = "Применить";
             this.buttonAplyFactors.UseVisualStyleBackColor = true;
@@ -1199,10 +1212,10 @@
             // 
             // buttonClearFactors
             // 
-            this.buttonClearFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
-            this.buttonClearFactors.Location = new System.Drawing.Point(266, 216);
+            this.buttonClearFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.buttonClearFactors.Location = new System.Drawing.Point(305, 216);
             this.buttonClearFactors.Name = "buttonClearFactors";
-            this.buttonClearFactors.Size = new System.Drawing.Size(61, 23);
+            this.buttonClearFactors.Size = new System.Drawing.Size(75, 23);
             this.buttonClearFactors.TabIndex = 0;
             this.buttonClearFactors.Text = "Очистить";
             this.buttonClearFactors.UseVisualStyleBackColor = true;
@@ -1241,7 +1254,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(120, 40);
             this.button6.TabIndex = 12;
-            this.button6.Text = "рассчитать и отобразить ";
+            this.button6.Text = "Рассчитать и отобразить ";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click_1);
             // 
@@ -1267,7 +1280,7 @@
             this.buttonExport1.Name = "buttonExport1";
             this.buttonExport1.Size = new System.Drawing.Size(120, 40);
             this.buttonExport1.TabIndex = 6;
-            this.buttonExport1.Text = "export в .xls";
+            this.buttonExport1.Text = "Экспорт в .xls";
             this.buttonExport1.UseVisualStyleBackColor = true;
             this.buttonExport1.Click += new System.EventHandler(this.buttonExport1_Click);
             // 
@@ -1302,13 +1315,36 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label17.Location = new System.Drawing.Point(7, 482);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(412, 12);
+            this.label17.TabIndex = 14;
+            this.label17.Text = "Сделано компанией \"Кабинет математики\" (ТМ ООО \"Планомедиа\"), www.kabinetmatemati" +
+    "ki.ru";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label18.Location = new System.Drawing.Point(7, 493);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(89, 12);
+            this.label18.TabIndex = 15;
+            this.label18.Text = "v.1.0. от 17.08.2017";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(886, 490);
+            this.ClientSize = new System.Drawing.Size(886, 508);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
@@ -1338,6 +1374,7 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.panelSingleShop.ResumeLayout(false);
+            this.panelSingleShop.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panelKassOper.ResumeLayout(false);
@@ -1473,6 +1510,9 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
     }
 }
 
