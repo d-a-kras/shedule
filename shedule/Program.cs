@@ -2413,8 +2413,9 @@ namespace shedule
             else
             {
                 Form6 f6 = new Form6();
-                f6.Show();
-
+                f6.ShowDialog();
+                var newid = f6.newId;
+                createListDaySale(n,k,newid);
             }
         }
 
@@ -2428,14 +2429,7 @@ namespace shedule
             }
 
         }*/
-
-        static public void Pohog(int idSh)
-        {
-
-            createListDaySale(DateTime.Today.AddDays(-1), DateTime.Today.AddDays(-30), idSh);
-
-        }
-
+        
         static void readTemplateForShop()
         {
             String readPath = Environment.CurrentDirectory + "/Shops" + currentShop.getIdShop() + "/Templates.txt";
