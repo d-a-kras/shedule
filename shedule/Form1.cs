@@ -1421,6 +1421,7 @@ namespace shedule
             Program.readFactors();
             Program.readVarSmen();
             Program.ReadMinRab();
+            Program.ReadPrilavki();
             Program.ReadParametrOptimizacii();
             Program.ExistFile = false;
             if (Program.currentShop.VarSmens.Count == 0)
@@ -1660,7 +1661,10 @@ namespace shedule
 
         private void buttonPTSR_Click(object sender, EventArgs e)
         {
+            Program.currentShop.prilavki.SetCount(int.Parse(textBox6.Text));
+            Program.currentShop.prilavki.SetNalichie(checkBox1.Checked);
             Program.WriteTSR();
+            Program.WritePrilavki();
             MessageBox.Show("Данные сохранены");
         }
 
@@ -1701,6 +1705,7 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
+            Program.ReadPrilavki();
             Program.ReadParametrOptimizacii();
             if (Program.currentShop.VarSmens.Count == 0)
             {
@@ -2151,15 +2156,15 @@ namespace shedule
 
 
             DisableControlsOnStart();
-            MessageBox.Show($"Выбрано {Program.shops.Count} магазинов, примерное время ожидания {Program.shops.Count * 2} минут");
-            progressBar1.Visible = true;
+            MessageBox.Show($"Выбрано {Program.shops.Count} магазинов, примерное время ожидания {Program.shops.Count * 5} минут");
+            progressBar2.Visible = true;
 
             label3.Text = "";
             label3.Visible = true;
             progressBar1.Maximum = 20;
             progressBar1.Minimum = 0;
             progressBar1.Step = 2;
-            progressBar2.Visible = true;
+           // progressBar2.Visible = true;
 
             Program.TipExporta = comboBox1.SelectedIndex;
             bw1.RunWorkerAsync();
@@ -2263,6 +2268,7 @@ namespace shedule
                 shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setMinRab(shop.minrab);
+                Program.ReadPrilavki();
                 if (Program.currentShop.VarSmens.Count == 0)
                 {
                     //  VarSmen.CreateVarSmen();
@@ -3212,11 +3218,8 @@ namespace shedule
             if (checkBox1.Checked)
             {
                 MessageBox.Show("Число продавцов стало зависить от прилавков");
-                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-                {
-                    sw.WriteLine(true);
-                }
-                Program.currentShop.prilavki = true;
+             
+                Program.currentShop.prilavki.SetNalichie( true);
                 label19.Visible = true;
                 textBox6.Visible = true;
                 }
@@ -3225,10 +3228,16 @@ namespace shedule
                 {
                     sw.WriteLine(false);
                 }
-                Program.currentShop.prilavki = false;
+                Program.currentShop.prilavki.SetNalichie( false);
                 label19.Visible = false;
                 textBox6.Visible = false;
             }
+        }
+
+        private void button12_Click_2(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.Show();
         }
     }
 }

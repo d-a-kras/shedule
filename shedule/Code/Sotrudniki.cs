@@ -104,9 +104,9 @@ namespace shedule.Code
                 }
                 Program.currentShop.employes.Clear();
                 int K, KP, Tobrtov;
-                if (Program.currentShop.factors.Find(t => t.getName() == "") != null)
+                if (Program.currentShop.factors.Find(t => t.getName() == "TimeObrTov") != null)
                 {
-                    Tobrtov = Program.currentShop.factors.Find(t => t.getName() == "").getTZnach();
+                    Tobrtov = Program.currentShop.factors.Find(t => t.getName() == "TimeObrTov").getTZnach();
                 }
                 else { Tobrtov = 14; }
                 if (Program.currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
@@ -135,19 +135,15 @@ namespace shedule.Code
                 List<TSR> LProd = Program.currentShop.tsr.FindAll(t => t.getTip() == 2);
                 List<TSR> LKass = Program.currentShop.tsr.FindAll(t => t.getTip() == 1);
                 int CountProd=0;
-                if (Program.currentShop.prilavki)
-                {
-                    CountProd = LProd.Sum(o => o.getCount());
-                }
-                else {
-                    CountProd = ((tc * Tobrtov * 100) / (Program.normchas * 3600 * KP));
-                }
+            
+                    CountProd = (int)Math.Round((double)((tc * Tobrtov * 60) / (Program.normchas * 3600 * KP)))+Program.currentShop.prilavki.GetCount();
+                
                 
                
                
                 int CountGruz = LGruz.Sum(o => o.getCount());
-                int CountKassirov = (int)Math.Round((double)(ob / (Program.normchas * K * 5))) + Program.ParametrOptimization;
-
+                int CountKassirov = (int)Math.Round((double)(ob / (Program.normchas * K *18 ))) + Program.ParametrOptimization;
+                
                 if (CountKassirov < 4) { CountKassirov = 4; }
                 if (CountProd < 4) { CountProd = 4; }
                 if (CountGruz < 2) { CountGruz = 2; }

@@ -1085,6 +1085,31 @@ namespace shedule
         }
     }
 
+    public class Prilavki {
+        bool nalichie;
+        int count;
+        public Prilavki(bool n, int c) {
+            this.nalichie = n;
+            this.count = c;
+        }
+
+        public bool GetNalichie() {
+            return this.nalichie;
+        }
+
+        public int GetCount() {
+            return this.count;
+        }
+
+        public void SetNalichie(bool n) {
+            this.nalichie = n;
+        }
+
+        public void SetCount(int c) {
+            this.count = c;
+        }
+    }
+
     public class Shop
     {
         public List<WorkingDay> workingDays { get; set; }
@@ -1099,8 +1124,9 @@ namespace shedule
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<VarSmen> VarSmens = new List<VarSmen>();
         public MinRab minrab;
-        public bool prilavki = false;
-        public int countPrilavok = 0;
+      //  public bool prilavki = false;
+       // public int countPrilavok = 0;
+        public Prilavki prilavki;
 
         private int idShop;
         int idFM;
@@ -1605,6 +1631,67 @@ namespace shedule
 
         public static HashSet<int> HandledShops = new HashSet<int>();
 
+        static public void WritePrilavki() {
+            Program.currentShop.minrab.setOtobragenie(true);
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\Prilavki";
+            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+            {
+                sw.Write(Program.currentShop.prilavki.GetNalichie() + "_" + Program.currentShop.prilavki.GetCount());
+
+            }
+        }
+
+        static public void ReadPrilavki()
+        {
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\Prilavki";
+            if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
+            {
+                Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
+
+            }
+
+           
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                    string[] str = new string[2];
+                    string s;
+
+                    while ((s = sr.ReadLine()) != null)
+                    {
+
+                        str = s.Split('_');
+                        currentShop.prilavki =new Prilavki(bool.Parse(str[0]), int.Parse(str[1]));
+
+                    }
+
+
+                }
+
+            }
+            catch
+            {
+
+                currentShop.prilavki = new Prilavki(false, 0);
+
+
+
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.Write(currentShop.prilavki.GetNalichie()+ "_" + currentShop.prilavki.GetCount());
+
+                }
+                // MessageBox.Show(ex.ToString());
+
+            }
+
+           
+        }
+
         static public void WriteMinRab() {
             Program.currentShop.minrab.setOtobragenie(true);
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
@@ -1903,7 +1990,7 @@ namespace shedule
                 currentShop.factors.Add(new Factor("TimeClick", "Время Клика", 4, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeRech", "Голосовой интерфейс", 25, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeObrTov", "Время на нелиннейные операции", 14, true, new DateTime(2100, 1, 1), 0));
-                currentShop.factors.Add(new Factor("TimeObrTov", "Позиций в чеке", 5, true, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("PozicVCheke", "Позиций в чеке", 5, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("KoefKassira", "Коэффициент эффективности кассиров (%)", 100, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("KoefObr", "Коэффициент эффетивности продавцов (%)", 100, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("Otkr_konkurenta", "Открытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
@@ -2274,8 +2361,8 @@ namespace shedule
             if (tdt.Month < 10)
             {
                 fd[0] = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                fd[1] = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                fd[2] = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                fd[1] = new DateTime(tdt.Year, tdt.Month + 2, 1);
+                fd[2] = new DateTime(tdt.Year, tdt.Month + 3, 1);
             }
             else
             {
