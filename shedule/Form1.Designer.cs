@@ -146,6 +146,7 @@
             this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button12 = new System.Windows.Forms.Button();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.panelMultShops.SuspendLayout();
@@ -594,7 +595,7 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "график на месяц",
+            "График на месяц",
             "Потребность в персонале",
             "Экономический эффект"});
             this.comboBox1.Location = new System.Drawing.Point(146, 65);
@@ -1277,7 +1278,7 @@
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "график на месяц",
+            "График на месяц",
             "Прогноз на 3 месяца по кассовым операциям",
             "Потребность в персонале",
             "Экономический эффект"});
@@ -1327,7 +1328,7 @@
             // 
             // bSettings
             // 
-            this.bSettings.Location = new System.Drawing.Point(786, 13);
+            this.bSettings.Location = new System.Drawing.Point(757, 13);
             this.bSettings.Name = "bSettings";
             this.bSettings.Size = new System.Drawing.Size(75, 23);
             this.bSettings.TabIndex = 14;
@@ -1353,7 +1354,15 @@
             // 
             this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
             // 
-            // checkBox1
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(838, 13);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(23, 23);
+            this.button12.TabIndex = 16;
+            this.button12.Text = "?";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click_2);
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(26, 207);
@@ -1387,6 +1396,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(886, 508);
+            this.Controls.Add(this.button12);
             this.Controls.Add(this.bSettings);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
@@ -1397,7 +1407,6 @@
             this.Controls.Add(this.panelSingleShop);
             this.HelpButton = true;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
@@ -1561,6 +1570,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox6;
     }
