@@ -77,16 +77,7 @@ namespace shedule.Code
 
         }
 
-        static public int shiftGastr(ref int i)
-        {
-            i++;
-            if (i == Program.currentShop.tsr.FindAll(t => t.getPosition() == "gastronom").Count)
-                i = 0;
-
-
-            return i;
-
-        }
+       
 
         public static void OptimCountSotr()
         {
@@ -135,14 +126,14 @@ namespace shedule.Code
                 }
 
                 List<TSR> LGruz = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz");
-                List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gastronom");
+                
                 List<TSR> LProd = Program.currentShop.tsr.FindAll(t => t.getTip() == 2);
                 List<TSR> LKass = Program.currentShop.tsr.FindAll(t => t.getTip() == 1);
 
 
                 //((tc * TimeObrTov * 100) / (normchas * 3600 * KoefObr));
                 int CountProd = LProd.Sum(o => o.getCount());
-                int CountGastr = LGastr.Sum(o => o.getCount());
+               
                 int CountGruz = LGruz.Sum(o => o.getCount());
                 int CountKassirov = (int)Math.Round((double)(ob / (Program.normchas * K * 5))) + Program.ParametrOptimization;
 
@@ -160,44 +151,7 @@ namespace shedule.Code
                 bool flag3 = false;
 
 
-                for (int i = 300; CountGastr > 0; CountGastr--, i++)
-                {
-                    if (flag) {
-                        flaggastr2 = false;
-                        flaggastr3 = false;
-                        flagg2 = false;
-                       flagg3 = false;
-                        flagp2 = false;
-                         flagp3 = false;
-                        flag2 = false;
-                         flag3 = false;
-                        flag = false;
-
-                    }
-                    if ((DVS.Find(t => t.getR() == 2) != null) && (!flaggastr2))
-                    {
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
-                        CountGastr--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
-                        continue;
-                    }
-                    if ((DVS.Find(t => t.getR() == 3) != null) && (!flaggastr3))
-                    {
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -1, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
-                        CountGastr--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 2, LGastr[ngastr].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
-                        continue;
-                    }
-
-                    e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs,ref flag)], i, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
-
-                    Program.currentShop.employes.Add(e);
-
-                }
+               
 
             
 

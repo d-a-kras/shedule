@@ -1756,7 +1756,7 @@ namespace shedule
                 currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
                 currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
                 currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
-                currentShop.tsr.Add(new TSR("gastronom", "Гастроном", 0, 25000, 13000));
+                
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
@@ -1801,7 +1801,7 @@ namespace shedule
                     currentShop.tsrBG.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
                     currentShop.tsrBG.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
                     currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
-                    currentShop.tsr.Add(new TSR("gastronom", "Гастроном", 0, 25000, 13000));
+                   
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
