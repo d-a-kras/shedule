@@ -12,6 +12,7 @@ namespace shedule
 {
     public partial class Form6 : Form
     {
+        public int newId;
         public Form6()
         {
             InitializeComponent();
@@ -22,10 +23,16 @@ namespace shedule
            
             string[] s = new string[2];
             s = listBox1.Text.Split('_');
-            ((Form1)this.Owner).Enabled = true;
-            this.Close();
-            Program.Pohog(int.Parse(s[0]));
+            if (this.Owner != null)
+            {
+                if (this.Owner is Form1)
+                {
+                    ((Form1)this.Owner).Enabled = true;
+                }
+            }
             
+            this.Close();
+            newId = int.Parse(s[0]);
         }
 
         private void Form6_Load(object sender, EventArgs e)
