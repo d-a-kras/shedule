@@ -1099,7 +1099,8 @@ namespace shedule
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<VarSmen> VarSmens = new List<VarSmen>();
         public MinRab minrab;
-
+        public bool prilavki = false;
+        public int countPrilavok = 0;
 
         private int idShop;
         int idFM;

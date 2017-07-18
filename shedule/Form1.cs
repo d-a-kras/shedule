@@ -2137,6 +2137,7 @@ namespace shedule
         public void CreateZip()
         {
             saveFileDialog1.DefaultExt = ".zip";
+            saveFileDialog1.FileName = "Архив графиков/гистограм по нескольким магазинам";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Filter = "Архив|*.zip";
             saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -2504,7 +2505,7 @@ namespace shedule
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
-                                MessageBox.Show("Расписание создано");
+                             //   MessageBox.Show("Расписание создано");
 
                             }
                             catch (Exception ex)
@@ -2718,7 +2719,7 @@ namespace shedule
                 }
                 bg.ReportProgress(ShopStep * shopCounter);
                 Program.HandledShops.Add(shop.getIdShop());
-                UpdateStatusShops();
+               // UpdateStatusShops();
             }
             
             if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
@@ -3202,6 +3203,31 @@ namespace shedule
         {
             var form = new fSettings();
             form.Show();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            String readPath = Environment.CurrentDirectory + "/Shops" + Program.currentShop.getIdShop() + "/prilavki";
+            if (checkBox1.Checked)
+            {
+                MessageBox.Show("Число продавцов стало зависить от прилавков");
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.WriteLine(true);
+                }
+                Program.currentShop.prilavki = true;
+                label19.Visible = true;
+                textBox6.Visible = true;
+                }
+            else {
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.WriteLine(false);
+                }
+                Program.currentShop.prilavki = false;
+                label19.Visible = false;
+                textBox6.Visible = false;
+            }
         }
     }
 }

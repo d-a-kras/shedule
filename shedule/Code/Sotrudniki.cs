@@ -84,7 +84,7 @@ namespace shedule.Code
             bool flag = false;
             int nvs = -1;
             int nprod = -1;
-            int ngastr = -1;
+           
             int ngruz = -1;
             int nkass = -1;
             int kassCount = Program.MinKassirCount;
@@ -103,7 +103,12 @@ namespace shedule.Code
 
                 }
                 Program.currentShop.employes.Clear();
-                int K, KP;
+                int K, KP, Tobrtov;
+                if (Program.currentShop.factors.Find(t => t.getName() == "") != null)
+                {
+                    Tobrtov = Program.currentShop.factors.Find(t => t.getName() == "").getTZnach();
+                }
+                else { Tobrtov = 14; }
                 if (Program.currentShop.factors.Find(t => t.getName() == "KoefKassira") != null)
                 {
                     K = Program.currentShop.factors.Find(t => t.getName() == "KoefKassira").getTZnach();
@@ -129,10 +134,16 @@ namespace shedule.Code
                 
                 List<TSR> LProd = Program.currentShop.tsr.FindAll(t => t.getTip() == 2);
                 List<TSR> LKass = Program.currentShop.tsr.FindAll(t => t.getTip() == 1);
-
-
-                //((tc * TimeObrTov * 100) / (normchas * 3600 * KoefObr));
-                int CountProd = LProd.Sum(o => o.getCount());
+                int CountProd=0;
+                if (Program.currentShop.prilavki)
+                {
+                    CountProd = LProd.Sum(o => o.getCount());
+                }
+                else {
+                    CountProd = ((tc * Tobrtov * 100) / (Program.normchas * 3600 * KP));
+                }
+                
+               
                
                 int CountGruz = LGruz.Sum(o => o.getCount());
                 int CountKassirov = (int)Math.Round((double)(ob / (Program.normchas * K * 5))) + Program.ParametrOptimization;
@@ -141,8 +152,7 @@ namespace shedule.Code
                 if (CountProd < 4) { CountProd = 4; }
                 if (CountGruz < 2) { CountGruz = 2; }
 
-               bool  flaggastr2 = false;
-               bool  flaggastr3 = false;
+              
                 bool flagg2 = false;
                 bool flagg3 = false;
                 bool flagp2 = false;
@@ -160,8 +170,7 @@ namespace shedule.Code
                 {
                     if (flag)
                     {
-                        flaggastr2 = false;
-                        flaggastr3 = false;
+                       
                         flagg2 = false;
                         flagg3 = false;
                         flagp2 = false;
@@ -202,8 +211,7 @@ namespace shedule.Code
                 {
                     if (flag)
                     {
-                        flaggastr2 = false;
-                        flaggastr3 = false;
+                       
                         flagg2 = false;
                         flagg3 = false;
                         flagp2 = false;

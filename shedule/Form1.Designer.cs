@@ -145,6 +145,9 @@
             this.dataSet1 = new shedule.DataSet1();
             this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -548,7 +551,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(359, 319);
+            this.tabPage4.Size = new System.Drawing.Size(504, 319);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -698,9 +701,9 @@
             this.tabPage1.Controls.Add(this.buttonCalendar);
             this.tabPage1.Controls.Add(this.buttonKassov);
             this.tabPage1.Controls.Add(this.buttonCalendarNextYear);
+            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Controls.Add(this.panelKassOper);
             this.tabPage1.Controls.Add(this.panelCalendar);
-            this.tabPage1.Controls.Add(this.panelTRasp);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -853,6 +856,9 @@
             // 
             // panelTRasp
             // 
+            this.panelTRasp.Controls.Add(this.label19);
+            this.panelTRasp.Controls.Add(this.textBox6);
+            this.panelTRasp.Controls.Add(this.checkBox1);
             this.panelTRasp.Controls.Add(this.buttonTSRPG);
             this.panelTRasp.Controls.Add(this.buttonPTSR);
             this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
@@ -899,7 +905,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(365, 342);
+            this.tabPage2.Size = new System.Drawing.Size(510, 342);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Управление";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1226,7 +1232,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(365, 342);
+            this.tabPage3.Size = new System.Drawing.Size(510, 342);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1298,6 +1304,28 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label17.Location = new System.Drawing.Point(7, 482);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(412, 12);
+            this.label17.TabIndex = 14;
+            this.label17.Text = "Сделано компанией \"Кабинет математики\" (ТМ ООО \"Планомедиа\"), www.kabinetmatemati" +
+    "ki.ru";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label18.Location = new System.Drawing.Point(7, 493);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(89, 12);
+            this.label18.TabIndex = 15;
+            this.label18.Text = "v.1.0. от 17.08.2017";
+            // 
+            // bSettings
             // 
             this.bSettings.Location = new System.Drawing.Point(786, 13);
             this.bSettings.Name = "bSettings";
@@ -1318,31 +1346,39 @@
             this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // get_StatisticByShopsDayHourTableAdapter
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(7, 482);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(412, 12);
-            this.label17.TabIndex = 14;
-            this.label17.Text = "Сделано компанией \"Кабинет математики\" (ТМ ООО \"Планомедиа\"), www.kabinetmatemati" +
-    "ki.ru";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.Location = new System.Drawing.Point(7, 493);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(89, 12);
-            this.label18.TabIndex = 15;
-            this.label18.Text = "v.1.0. от 17.08.2017";
-            // 
             // 
             this.get_StatisticByShopsDayHourTableAdapter.ClearBeforeFill = true;
             // 
             // get_StatisticByShopsDayHourTableAdapter1
             // 
             this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(26, 207);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(126, 17);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.Text = "Наличие прилавков";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(155, 235);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(37, 20);
+            this.textBox6.TabIndex = 3;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(26, 238);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(123, 13);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Количество прилавков";
             // 
             // Form1
             // 
@@ -1357,8 +1393,8 @@
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
-            this.Controls.Add(this.panelSingleShop);
             this.Controls.Add(this.panelMultShops);
+            this.Controls.Add(this.panelSingleShop);
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -1388,6 +1424,7 @@
             this.panelKassOper.PerformLayout();
             this.panelCalendar.ResumeLayout(false);
             this.panelTRasp.ResumeLayout(false);
+            this.panelTRasp.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.panelUpravlenie.ResumeLayout(false);
@@ -1523,6 +1560,9 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox textBox6;
     }
 }
 
