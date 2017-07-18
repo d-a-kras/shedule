@@ -139,6 +139,7 @@ namespace shedule
                 progressBar1.Visible = false;
                 label3.Visible = false;
             }
+            Program.isProcessing = false;
         }
 
 
@@ -159,6 +160,7 @@ namespace shedule
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
+            Program.isProcessing = true;
             BackgroundWorker bg = sender as BackgroundWorker;
             switch (Program.tipDiagram)
             {

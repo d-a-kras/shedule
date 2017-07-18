@@ -59,10 +59,10 @@ namespace shedule
                 progressBar1.Value = progressBar1.Maximum;
                 progressBar1.Visible = false;
                 label3.Visible = false;
-                if(Program.TipExporta == 0) Program.HandledShops.Add(Program.currentShop.getIdShop());
+                if (Program.TipExporta == 0) Program.HandledShops.Add(Program.currentShop.getIdShop());
                 UpdateStatusShops();
             }
-
+            Program.isProcessing = false;
             EnableControlsOnFinish();
         }
 
@@ -92,6 +92,7 @@ namespace shedule
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
+            Program.isProcessing = true;
             switch (Program.TipExporta)
             {
                 case 0:
@@ -115,9 +116,10 @@ namespace shedule
 
                             bg.ReportProgress(8);
 
-                             if (!Sotrudniki.CheckGrafic()) {
+                            if (!Sotrudniki.CheckGrafic())
+                            {
                                 MessageBox.Show("Расписание не оптимально, из-за слишком жестких параметров выберите больше вариантов смен или уменьшите минимальное число сотрудников.");
-                              //  return;
+                                //  return;
                             }
                         }
                         catch (Exception ex)
@@ -135,7 +137,7 @@ namespace shedule
                             MessageBox.Show("Расписание не создано");
                             CloseProcessOnError();
                             throw ex;
-                           
+
                         }
                         System.Drawing.Color color;
                         Excel.Range excelcells;
@@ -338,7 +340,7 @@ namespace shedule
                             ObjWorkBook.Close(0);
                             ObjExcel.Quit();
                         }
-                       
+
                         break;
                     }
                 case 1:
@@ -880,7 +882,19 @@ namespace shedule
         {
             InitializeComponent();
             SetNextYearCalendarButton();
-            FormClosing += Form1_FormClosing;
+            Resize += Form1_Resize;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                if (Program.isProcessing)
+                {
+                    Hide();
+                }
+                notifyIcon1.Visible = true;
+            }
         }
 
         private void SetNextYearCalendarButton()
@@ -897,23 +911,6 @@ namespace shedule
                 buttonCalendarNextYear.Visible = false;
             }
         }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason != CloseReason.WindowsShutDown && Program.IsMpRezhim)
-            {
-                WindowState = FormWindowState.Minimized;
-                e.Cancel = true;
-                Hide();
-                notifyIcon1.Visible = true;
-            }
-            else
-            {
-                System.Windows.Forms.Application.Exit();
-            }
-
-        }
-
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1133,23 +1130,26 @@ namespace shedule
             buttonParamOptimiz.BackColor = Color.White;
             panelDopusVarSmen.BringToFront();
             dataGridViewVarSmen.DataSource = viewVarSmen();
-        
 
-                dataGridViewVarSmen.Columns[0].ReadOnly = true;
-                dataGridViewVarSmen.Columns[1].ReadOnly = true;
 
-            
-           
-           
+            dataGridViewVarSmen.Columns[0].ReadOnly = true;
+            dataGridViewVarSmen.Columns[1].ReadOnly = true;
 
-            if (Program.currentShop.minrab.getOtobragenie()) {
+
+
+
+
+            if (Program.currentShop.minrab.getOtobragenie())
+            {
                 tbKassirCount.Text = Program.currentShop.minrab.getMinCount().ToString();
                 tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
-            } else {
+            }
+            else
+            {
                 tbKassirCount.Text = "";
                 tbLastHour.Text = "";
             }
-           // Program.ReadMinRab();
+            // Program.ReadMinRab();
 
 
 
@@ -1656,9 +1656,6 @@ namespace shedule
 
         private void Form1_HelpButtonClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Form2 formHelp = new Form2();
-            formHelp.Show();
-
         }
 
         private void buttonPTSR_Click(object sender, EventArgs e)
@@ -2097,16 +2094,16 @@ namespace shedule
                 tbKassirCount.Text = "";
                 tbLastHour.Text = "";
             }
-           
+
             button7.BackColor = Color.MistyRose;
             button8.BackColor = Color.White;
             button5.BackColor = Color.White;
             panel4.BringToFront();
 
             dataGridViewMVarSmen.DataSource = viewVarSmen();
-            
 
-                dataGridViewMVarSmen.Columns[0].ReadOnly = true;
+
+            dataGridViewMVarSmen.Columns[0].ReadOnly = true;
             dataGridViewMVarSmen.Columns[1].ReadOnly = true;
 
 
@@ -2197,6 +2194,7 @@ namespace shedule
                 Application.Exit();
             }
             EnableControlsOnFinish();
+            Program.isProcessing = false;
 
         }
 
@@ -2208,6 +2206,7 @@ namespace shedule
         private delegate void updateLabel3Delegate(string text);
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
+            Program.isProcessing = true;
             try
             {
                 foreach (Process proc in Process.GetProcessesByName("EXCEL"))
@@ -2223,7 +2222,7 @@ namespace shedule
             {
                 foreach (var file in Directory.GetFiles(Environment.CurrentDirectory + @"\mult\"))
                 {
-                    
+
                     File.Delete(file);
                 }
             }
@@ -2256,11 +2255,11 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
-          
+
 
             foreach (Shop shop in Program.shops)
             {
-               shop.setMinRab(Program.ReadMinRab());
+                shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setMinRab(shop.minrab);
                 if (Program.currentShop.VarSmens.Count == 0)
@@ -2376,8 +2375,8 @@ namespace shedule
                                         // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
 
                                         ObjWorkSheet.Cells[j, i] =
-                                            emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " +
-                                            emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
+                                             emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " +
+                                             emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
                                     }
                                     //else
                                     // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
@@ -2490,7 +2489,7 @@ namespace shedule
                                 j++;
 
                             }
-                            
+
 
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
@@ -2513,7 +2512,7 @@ namespace shedule
                                 ObjWorkBook.Close(0);
                                 ObjExcel.Quit();
                             }
-                            
+
 
                             break;
 
@@ -2720,7 +2719,7 @@ namespace shedule
                 Program.HandledShops.Add(shop.getIdShop());
                 UpdateStatusShops();
             }
-            
+
             if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
@@ -2749,7 +2748,7 @@ namespace shedule
 
                 if (int.TryParse(tbKassirCount.Text, out kassirCount))
                 {
-                    Program.currentShop.minrab.setMinCount( kassirCount);
+                    Program.currentShop.minrab.setMinCount(kassirCount);
 
                 }
 
@@ -2766,7 +2765,7 @@ namespace shedule
                 if (int.TryParse(tbLastHour.Text, out lastHour))
                 {
 
-                    Program.currentShop.minrab.setTime( lastHour);
+                    Program.currentShop.minrab.setTime(lastHour);
                 }
 
             }
@@ -3084,7 +3083,7 @@ namespace shedule
                         ObjExcel.Quit();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
@@ -3174,8 +3173,9 @@ namespace shedule
                 button10.Text = "ok";
 
             }
-            else {
-                Program.currentShop.VarSmens.Add(new VarSmen(int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text),false));
+            else
+            {
+                Program.currentShop.VarSmens.Add(new VarSmen(int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text), false));
                 Program.writeVarSmen();
                 dataGridViewVarSmen.DataSource = viewVarSmen();
                 label12.Visible = false;
@@ -3202,6 +3202,12 @@ namespace shedule
         {
             var form = new fSettings();
             form.Show();
+        }
+
+        private void button12_Click_2(object sender, EventArgs e)
+        {
+            Form2 formHelp = new Form2();
+            formHelp.Show();
         }
     }
 }

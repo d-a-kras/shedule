@@ -1591,6 +1591,9 @@ namespace shedule
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
 
+
+        public static bool isProcessing = false;
+
         //#region ConnectionSettings
 
         //public static string databaseAddress = "";

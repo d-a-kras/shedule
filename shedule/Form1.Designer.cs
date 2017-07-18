@@ -145,6 +145,7 @@
             this.dataSet1 = new shedule.DataSet1();
             this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
+            this.button12 = new System.Windows.Forms.Button();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -548,7 +549,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(359, 319);
+            this.tabPage4.Size = new System.Drawing.Size(504, 319);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -591,7 +592,7 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "график на месяц",
+            "График на месяц",
             "Потребность в персонале",
             "Экономический эффект"});
             this.comboBox1.Location = new System.Drawing.Point(146, 65);
@@ -899,7 +900,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(365, 342);
+            this.tabPage2.Size = new System.Drawing.Size(510, 342);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Управление";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1226,7 +1227,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(365, 342);
+            this.tabPage3.Size = new System.Drawing.Size(510, 342);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1271,7 +1272,7 @@
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "график на месяц",
+            "График на месяц",
             "Прогноз на 3 месяца по кассовым операциям",
             "Потребность в персонале",
             "Экономический эффект"});
@@ -1298,26 +1299,8 @@
             this.notifyIcon1.Text = "Кировский.Смены";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
+            // label17
             // 
-            this.bSettings.Location = new System.Drawing.Point(786, 13);
-            this.bSettings.Name = "bSettings";
-            this.bSettings.Size = new System.Drawing.Size(75, 23);
-            this.bSettings.TabIndex = 14;
-            this.bSettings.Text = "Настройки";
-            this.bSettings.UseVisualStyleBackColor = true;
-            this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
-            // 
-            // getStatisticByShopsDayHourBindingSource
-            // 
-            this.getStatisticByShopsDayHourBindingSource.DataMember = "get_StatisticByShopsDayHour";
-            this.getStatisticByShopsDayHourBindingSource.DataSource = this.dataSet1;
-            // 
-            // dataSet1
-            // 
-            this.dataSet1.DataSetName = "DataSet1";
-            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // get_StatisticByShopsDayHourTableAdapter
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label17.Location = new System.Drawing.Point(7, 482);
@@ -1337,12 +1320,43 @@
             this.label18.TabIndex = 15;
             this.label18.Text = "v.1.0. от 17.08.2017";
             // 
+            // bSettings
+            // 
+            this.bSettings.Location = new System.Drawing.Point(757, 13);
+            this.bSettings.Name = "bSettings";
+            this.bSettings.Size = new System.Drawing.Size(75, 23);
+            this.bSettings.TabIndex = 14;
+            this.bSettings.Text = "Настройки";
+            this.bSettings.UseVisualStyleBackColor = true;
+            this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
+            // 
+            // getStatisticByShopsDayHourBindingSource
+            // 
+            this.getStatisticByShopsDayHourBindingSource.DataMember = "get_StatisticByShopsDayHour";
+            this.getStatisticByShopsDayHourBindingSource.DataSource = this.dataSet1;
+            // 
+            // dataSet1
+            // 
+            this.dataSet1.DataSetName = "DataSet1";
+            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // get_StatisticByShopsDayHourTableAdapter
             // 
             this.get_StatisticByShopsDayHourTableAdapter.ClearBeforeFill = true;
             // 
             // get_StatisticByShopsDayHourTableAdapter1
             // 
             this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(838, 13);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(23, 23);
+            this.button12.TabIndex = 16;
+            this.button12.Text = "?";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click_2);
             // 
             // Form1
             // 
@@ -1351,6 +1365,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(886, 508);
+            this.Controls.Add(this.button12);
             this.Controls.Add(this.bSettings);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
@@ -1361,7 +1376,6 @@
             this.Controls.Add(this.panelMultShops);
             this.HelpButton = true;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
@@ -1523,6 +1537,7 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button button12;
     }
 }
 
