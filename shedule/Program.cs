@@ -1617,7 +1617,8 @@ namespace shedule
         static public short ParametrOptimization;
         static List<hourSale> SaleDay = new List<hourSale>();
         static List<hourSale> Raznica = new List<hourSale>();
-
+        public static int errorNum = 0;
+        public static int maxErrorNum = 2;
 
         public static bool isProcessing = false;
 
@@ -2428,7 +2429,7 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
-            //string s1 = "2016"+ "/" + "9" + "/" + "6";
+            //string s1 = "2016" + "/" + "9" + "/" + "6";
             //string s2 = "2016" + "/" + "8" + "/" + "7";
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
@@ -2506,7 +2507,15 @@ namespace shedule
                 Form6 f6 = new Form6();
                 f6.ShowDialog();
                 var newid = f6.newId;
-                createListDaySale(n,k,newid);
+                if (++errorNum <= maxErrorNum)
+                {
+                    createListDaySale(n, k, newid);
+                }
+                else
+                {
+                    throw new Exception("Соединение с базой нестабильно, выгрузка невозможна.");
+                }
+
             }
         }
 

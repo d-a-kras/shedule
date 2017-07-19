@@ -2823,10 +2823,19 @@ namespace shedule
 
         private void CloseProcessOnError()
         {
-            bw.ReportProgress(0);
-            bw.CancelAsync();
-            bw1.ReportProgress(0);
-            bw1.CancelAsync();
+            if (bw.IsBusy)
+            {
+                bw.ReportProgress(0);
+                bw.CancelAsync();
+                
+            }
+
+            if (bw1.IsBusy)
+            {
+                bw1.ReportProgress(0);
+                bw1.CancelAsync();
+            }
+            
             errorOnExecuting = true;
         }
 

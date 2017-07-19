@@ -26,10 +26,18 @@ namespace shedule
 
         private void bSaveSettings_Click(object sender, EventArgs e)
         {
-            Settings.Default.DatabaseAddress = tbServerAddress.Text;
-            Settings.Default.DatabaseLogin = tbServerLogin.Text;
-            Settings.Default.DatabasePassword = tbServerPassword.Text;
-            Settings.Default.Save();
+            try
+            {
+                Settings.Default.DatabaseAddress = tbServerAddress.Text;
+                Settings.Default.DatabaseLogin = tbServerLogin.Text;
+                Settings.Default.DatabasePassword = tbServerPassword.Text;
+                Settings.Default.Save();
+                MessageBox.Show("Успешно сохранено!", "Сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch
+            {
+                MessageBox.Show("Не сохранено!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
