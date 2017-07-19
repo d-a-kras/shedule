@@ -1182,6 +1182,7 @@
             // 
             // dataGridViewVarSmen
             // 
+            this.dataGridViewVarSmen.AllowUserToAddRows = false;
             this.dataGridViewVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVarSmen.Location = new System.Drawing.Point(15, 31);
             this.dataGridViewVarSmen.Name = "dataGridViewVarSmen";

@@ -102,8 +102,8 @@ namespace shedule
             chart1.Series["Прогнозное количество чеков"].Color = System.Drawing.Color.Red;
            
 
-            chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
-            chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+            chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+            chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
            
 
            // var l = chart1.Legends;
@@ -212,8 +212,8 @@ namespace shedule
                 Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleCheck();
                 Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleClick();
 
-                chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
-                chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+                chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+                chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
             }
             else { Nday--; MessageBox.Show("Больше данных нет"); }
         }
@@ -229,8 +229,8 @@ namespace shedule
                 Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleCheck();
                 Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleClick();
 
-                chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
-                chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+                chart1.Series["Прогнозное количество чеков"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
+                chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartClick.Y);
             }
             else { Nday++; MessageBox.Show("Больше данных нет"); }
         }
