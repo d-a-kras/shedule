@@ -138,6 +138,7 @@ namespace shedule
                 label1.Text = Program.currentShop.MouthPrognozT[Nday].getData().ToShortDateString().ToString();
                 progressBar1.Visible = false;
                 label3.Visible = false;
+                
             }
             Program.isProcessing = false;
         }

@@ -59,7 +59,7 @@ namespace shedule
                 progressBar1.Value = progressBar1.Maximum;
                 progressBar1.Visible = false;
                 label3.Visible = false;
-                if (Program.TipExporta == 0) Program.HandledShops.Add(Program.currentShop.getIdShop());
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
                 UpdateStatusShops();
             }
             Program.isProcessing = false;
@@ -325,6 +325,7 @@ namespace shedule
                         try
                         {
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
                             ObjWorkBook.Close();
@@ -418,6 +419,7 @@ namespace shedule
                         {
 
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
 
@@ -538,6 +540,7 @@ namespace shedule
                         {
 
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
 
@@ -663,6 +666,7 @@ namespace shedule
                         {
 
                             ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
 
@@ -897,6 +901,11 @@ namespace shedule
             }
         }
 
+        private void Form1_GotFocus(object sender, EventArgs e)
+        {
+            
+        }
+
         private void SetNextYearCalendarButton()
         {
             if (Helper.CheckNextYearCalendarIsExist())
@@ -1098,7 +1107,7 @@ namespace shedule
                     listBox1.Items.Add(h.getIdShop() + "_" + h.getAddress());
                 }
             }
-            Helper.CheckShopsStatus();
+            //Helper.CheckShopsStatus();
             // textBoxSpeed.Text = 20 + "";
             // textBoxTimeTell.Text = 25 + "";
             // textBoxTimeClick.Text = 4 + "";
@@ -1175,6 +1184,7 @@ namespace shedule
 
                     Program.ParametrOptimization = short.Parse(sr.ReadLine());
                 }
+
             }
             catch
             {
@@ -1183,6 +1193,8 @@ namespace shedule
                     sw.WriteLine("0");
                     Program.ParametrOptimization = 0;
                 }
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
+                UpdateStatusShops();
             }
 
             switch (Program.ParametrOptimization)
@@ -1611,6 +1623,7 @@ namespace shedule
             xlWorkBook.SaveAs(@"C:\1\csharp.net-informations.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue,
                 misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue,
                 misValue, misValue);
+            Program.HandledShops.Add(Program.currentShop.getIdShop());
 
             xlWorkBook.Close(true, misValue, misValue);
 
@@ -1696,6 +1709,8 @@ namespace shedule
                 }
 
             }
+            Program.HandledShops.Add(Program.currentShop.getIdShop());
+            UpdateStatusShops();
 
             Program.WriteMinRab();
             MessageBox.Show("Данные сохранены");
@@ -1798,6 +1813,8 @@ namespace shedule
                 try
                 {
                     sw.Write(Program.ParametrOptimization.ToString());
+                    Program.HandledShops.Add(Program.currentShop.getIdShop());
+                    UpdateStatusShops();
                 }
 
                 catch (Exception ex)
@@ -1806,6 +1823,7 @@ namespace shedule
 
                 }
             }
+
             MessageBox.Show("Данные сохранены");
         }
 
@@ -2514,6 +2532,7 @@ namespace shedule
                             try
                             {
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                                Program.HandledShops.Add(Program.currentShop.getIdShop());
                                 // ObjWorkBook.SaveAs(filename);
 
                                 ObjWorkBook.Close();
@@ -2609,6 +2628,7 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                                Program.HandledShops.Add(Program.currentShop.getIdShop());
                                 // ObjWorkBook.SaveAs(filename);
 
                                 ObjWorkBook.Close(0);
@@ -2708,6 +2728,7 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                                Program.HandledShops.Add(Program.currentShop.getIdShop());
                                 // ObjWorkBook.SaveAs(filename);
 
                                 ObjWorkBook.Close(0);
@@ -2870,6 +2891,8 @@ namespace shedule
                 try
                 {
                     sw.Write(Program.ParametrOptimization.ToString());
+                    Program.HandledShops.Add(Program.currentShop.getIdShop());
+                    UpdateStatusShops();
                 }
 
                 catch (Exception ex)
@@ -3093,6 +3116,7 @@ namespace shedule
                     {
 
                         ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                        Program.HandledShops.Add(Program.currentShop.getIdShop());
 
 
                         ObjWorkBook.Close(0);
@@ -3177,6 +3201,8 @@ namespace shedule
                 {
                     sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
                 }
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
+                UpdateStatusShops();
 
             }
 
@@ -3245,6 +3271,8 @@ namespace shedule
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
                     sw.WriteLine(false);
+                    Program.HandledShops.Add(Program.currentShop.getIdShop());
+                    UpdateStatusShops();
                 }
                 Program.currentShop.prilavki.SetNalichie( false);
                 label19.Visible = false;
@@ -3256,6 +3284,11 @@ namespace shedule
         {
             Form2 f2 = new Form2();
             f2.Show();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            UpdateStatusShops();
         }
     }
 }

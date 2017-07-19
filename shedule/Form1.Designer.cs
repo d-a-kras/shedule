@@ -86,13 +86,6 @@
             this.buttonCalendar = new System.Windows.Forms.Button();
             this.buttonKassov = new System.Windows.Forms.Button();
             this.buttonCalendarNextYear = new System.Windows.Forms.Button();
-            this.panelTRasp = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.buttonTSRPG = new System.Windows.Forms.Button();
-            this.buttonPTSR = new System.Windows.Forms.Button();
-            this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.panelKassOper = new System.Windows.Forms.Panel();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.buttonImportKasOper = new System.Windows.Forms.Button();
@@ -101,6 +94,13 @@
             this.buttonVygr = new System.Windows.Forms.Button();
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.panelTRasp = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.buttonTSRPG = new System.Windows.Forms.Button();
+            this.buttonPTSR = new System.Windows.Forms.Button();
+            this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panelGruz = new System.Windows.Forms.Panel();
             this.panelUpravlenie = new System.Windows.Forms.Panel();
@@ -149,6 +149,7 @@
             this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.button12 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -163,10 +164,10 @@
             this.panelSingleShop.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.panelTRasp.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).BeginInit();
             this.panelKassOper.SuspendLayout();
             this.panelCalendar.SuspendLayout();
+            this.panelTRasp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panelUpravlenie.SuspendLayout();
             this.panelParamOptim.SuspendLayout();
@@ -762,77 +763,6 @@
             this.buttonCalendarNextYear.Visible = false;
             this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
             // 
-            // panelTRasp
-            // 
-            this.panelTRasp.Controls.Add(this.label19);
-            this.panelTRasp.Controls.Add(this.textBox6);
-            this.panelTRasp.Controls.Add(this.checkBox1);
-            this.panelTRasp.Controls.Add(this.buttonTSRPG);
-            this.panelTRasp.Controls.Add(this.buttonPTSR);
-            this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
-            this.panelTRasp.Location = new System.Drawing.Point(23, 55);
-            this.panelTRasp.Name = "panelTRasp";
-            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
-            this.panelTRasp.TabIndex = 4;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(26, 238);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(123, 13);
-            this.label19.TabIndex = 4;
-            this.label19.Text = "Количество прилавков";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(155, 235);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(30, 20);
-            this.textBox6.TabIndex = 3;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(26, 207);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(126, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Наличие прилавков";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // buttonTSRPG
-            // 
-            this.buttonTSRPG.Location = new System.Drawing.Point(224, 216);
-            this.buttonTSRPG.Name = "buttonTSRPG";
-            this.buttonTSRPG.Size = new System.Drawing.Size(90, 40);
-            this.buttonTSRPG.TabIndex = 0;
-            this.buttonTSRPG.Text = "На следующий год";
-            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click_1);
-            // 
-            // buttonPTSR
-            // 
-            this.buttonPTSR.Location = new System.Drawing.Point(320, 217);
-            this.buttonPTSR.Name = "buttonPTSR";
-            this.buttonPTSR.Size = new System.Drawing.Size(90, 40);
-            this.buttonPTSR.TabIndex = 1;
-            this.buttonPTSR.Text = "Применить";
-            this.buttonPTSR.UseVisualStyleBackColor = true;
-            this.buttonPTSR.Click += new System.EventHandler(this.buttonPTSR_Click);
-            // 
-            // dataGridViewForTSR
-            // 
-            this.dataGridViewForTSR.AllowUserToAddRows = false;
-            this.dataGridViewForTSR.AllowUserToDeleteRows = false;
-            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
-            this.dataGridViewForTSR.Name = "dataGridViewForTSR";
-            this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
-            this.dataGridViewForTSR.TabIndex = 0;
-            this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
-            // 
             // panelKassOper
             // 
             this.panelKassOper.Controls.Add(this.comboBox2);
@@ -926,6 +856,77 @@
             this.monthCalendar1.Location = new System.Drawing.Point(141, 49);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 0;
+            // 
+            // panelTRasp
+            // 
+            this.panelTRasp.Controls.Add(this.label19);
+            this.panelTRasp.Controls.Add(this.textBox6);
+            this.panelTRasp.Controls.Add(this.checkBox1);
+            this.panelTRasp.Controls.Add(this.buttonTSRPG);
+            this.panelTRasp.Controls.Add(this.buttonPTSR);
+            this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
+            this.panelTRasp.Location = new System.Drawing.Point(23, 55);
+            this.panelTRasp.Name = "panelTRasp";
+            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
+            this.panelTRasp.TabIndex = 4;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(26, 238);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(123, 13);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Количество прилавков";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(155, 235);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(30, 20);
+            this.textBox6.TabIndex = 3;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(26, 207);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(126, 17);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.Text = "Наличие прилавков";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // buttonTSRPG
+            // 
+            this.buttonTSRPG.Location = new System.Drawing.Point(224, 216);
+            this.buttonTSRPG.Name = "buttonTSRPG";
+            this.buttonTSRPG.Size = new System.Drawing.Size(90, 40);
+            this.buttonTSRPG.TabIndex = 0;
+            this.buttonTSRPG.Text = "На следующий год";
+            this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click_1);
+            // 
+            // buttonPTSR
+            // 
+            this.buttonPTSR.Location = new System.Drawing.Point(320, 217);
+            this.buttonPTSR.Name = "buttonPTSR";
+            this.buttonPTSR.Size = new System.Drawing.Size(90, 40);
+            this.buttonPTSR.TabIndex = 1;
+            this.buttonPTSR.Text = "Применить";
+            this.buttonPTSR.UseVisualStyleBackColor = true;
+            this.buttonPTSR.Click += new System.EventHandler(this.buttonPTSR_Click);
+            // 
+            // dataGridViewForTSR
+            // 
+            this.dataGridViewForTSR.AllowUserToAddRows = false;
+            this.dataGridViewForTSR.AllowUserToDeleteRows = false;
+            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
+            this.dataGridViewForTSR.Name = "dataGridViewForTSR";
+            this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
+            this.dataGridViewForTSR.TabIndex = 0;
+            this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
             // 
             // tabPage2
             // 
@@ -1392,6 +1393,11 @@
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click_2);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1433,12 +1439,12 @@
             this.panelSingleShop.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.panelTRasp.ResumeLayout(false);
-            this.panelTRasp.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.panelKassOper.ResumeLayout(false);
             this.panelKassOper.PerformLayout();
             this.panelCalendar.ResumeLayout(false);
+            this.panelTRasp.ResumeLayout(false);
+            this.panelTRasp.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.panelUpravlenie.ResumeLayout(false);
             this.panelParamOptim.ResumeLayout(false);
@@ -1577,6 +1583,7 @@
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox6;
+        public System.Windows.Forms.Timer timer1;
     }
 }
 

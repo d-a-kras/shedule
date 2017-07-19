@@ -1638,6 +1638,7 @@ namespace shedule
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
                 sw.Write(Program.currentShop.prilavki.GetNalichie() + "_" + Program.currentShop.prilavki.GetCount());
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
 
             }
         }
@@ -1699,7 +1700,7 @@ namespace shedule
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
                 sw.Write(Program.currentShop.minrab.getMinCount() + "_" + Program.currentShop.minrab.getTimeMinRab() + "_" + Program.currentShop.minrab.getOtobragenie());
-
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
             }
         }
 
@@ -1929,6 +1930,7 @@ namespace shedule
                         foreach (TSR f in currentShop.tsr)
                             sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
                     }
+                    Program.HandledShops.Add(Program.currentShop.getIdShop());
 
                 }
                 catch (Exception ex)
@@ -1951,6 +1953,7 @@ namespace shedule
                         foreach (TSR f in currentShop.tsrBG)
                             sw.WriteLine(f.getPosition() + "#" + f.getOtobragenie() + "#" + f.getCount() + "#" + f.getZarp() + "#" + f.getZarp1_2());
                     }
+                    Program.HandledShops.Add(Program.currentShop.getIdShop());
 
                 }
                 catch (Exception ex)
@@ -2023,6 +2026,7 @@ namespace shedule
                     foreach (Factor f in currentShop.factors)
                         sw.WriteLine(f.getName() + "#" + f.getOtobragenie() + "#" + f.getTZnach() + "#" + f.getDeistvie() + "#" + f.getData() + "#" + f.getNewZnach());
                 }
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
             }
             catch (Exception ex)
             {
@@ -2062,6 +2066,7 @@ namespace shedule
                 foreach (VarSmen vs in currentShop.VarSmens)
                     sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
             }
+            Program.HandledShops.Add(Program.currentShop.getIdShop());
 
         }
 
@@ -2585,6 +2590,7 @@ namespace shedule
                     }
                     sw.WriteLine("*****");
                 }
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
             }
         }
 
@@ -3229,6 +3235,7 @@ namespace shedule
                             foreach (mShop s in listShops)
                                 sw.WriteLine(s.getIdShop() + "_" + s.getAddress());
                         }
+
                     }
 
 

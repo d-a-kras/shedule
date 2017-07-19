@@ -192,6 +192,7 @@ namespace shedule
                 foreach (DataForCalendary d in Program.currentShop.DFCs)
                     sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
             }
+            Program.HandledShops.Add(Program.currentShop.getIdShop());
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
