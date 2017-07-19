@@ -169,11 +169,7 @@ namespace shedule.Code
                        
                         flagg2 = false;
                         flagg3 = false;
-                        flagp2 = false;
-                        flagp3 = false;
-                        flag2 = false;
-                         flag3 = false;
-                        flag = false;
+                        
 
                     }
                     if ((DVS.Find(t => t.getR() == 2) != null) && (!flagg2))
@@ -208,12 +204,10 @@ namespace shedule.Code
                     if (flag)
                     {
                        
-                        flagg2 = false;
-                        flagg3 = false;
+                      
                         flagp2 = false;
                         flagp3 = false;
-                         flag2 = false;
-                        flag3 = false;
+                      
                         flag = false;
 
                     }
@@ -248,6 +242,17 @@ namespace shedule.Code
 
                 for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
                 {
+                    if (flag)
+                    {
+
+
+                          flag2 = false;
+                         flag3 = false;
+
+                        flag = false;
+
+                    }
+
                     if ((DVS.Find(t => t.getR() == 2) != null) && (!flag2))
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
@@ -304,7 +309,17 @@ namespace shedule.Code
 
                         emp.OtrabotalDay();
                     }
-                    
+                    if (((emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 7))
+                    {
+
+                        emp.OtrabotalDay();
+                    }
+                    if ((emp.getVS().getR() == 5)  && (wd.DS.getTip() == 6))
+                    {
+
+                        emp.OtrabotalDay();
+                    }
+
                     else
                     {
                         if ((wd.minKassUtr > 0) && (emp.TipTekSmen != 3))

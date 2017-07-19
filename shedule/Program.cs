@@ -2345,9 +2345,11 @@ namespace shedule
                             Scheck += hs.getCountCheck();
                         }
 
-                        Sclick = (Sclick / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100);
-                        Scheck = (Scheck / h.Count) * ((100 + otkr_konkurenta) / 100) * ((100 - zakr_konkurenta) / 100) * ((100 + rost_reklam) / 100) * ((100 + snig_reklam) / 100);
-                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Sclick, Scheck));
+
+                        Sclick = (int)Math.Ceiling((double)((Sclick / h.Count) * ((100 + (float)otkr_konkurenta) / 100) * ((100 - (float)zakr_konkurenta) / 100) * ((100 + (float)rost_reklam) / 100) * ((100 + (float)snig_reklam) / 100)));
+                        Scheck = (int)Math.Ceiling((double)((Scheck / h.Count) * ((100 + (float)otkr_konkurenta) / 100) * ((100 - (float)zakr_konkurenta) / 100) * ((100 + (float)rost_reklam) / 100) * ((100 + (float)snig_reklam) / 100)));
+                        pds.hoursSale.Add(new hourSale(currentShop.getIdShop(), h[0].getData(), h[0].getNHour(), Scheck, Sclick));
+                        //MessageBox.Show(Scheck+" ");
                     }
                 }
 
@@ -2393,6 +2395,7 @@ namespace shedule
                     MessageBox.Show("Ошибка построения прогноза");
                 }
             }
+
             for (int j = 0; j < 3; j++)
             {
                 for (int i = 1; i <= DateTime.DaysInMonth(fd[j].Year, fd[j].Month); i++)
@@ -2405,9 +2408,6 @@ namespace shedule
 
                 }
             }
-
-
-
 
 
 

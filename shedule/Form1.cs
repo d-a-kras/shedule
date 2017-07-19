@@ -118,7 +118,7 @@ namespace shedule
 
                             if (!Sotrudniki.CheckGrafic())
                             {
-                                MessageBox.Show("Расписание не оптимально, из-за слишком жестких параметров выберите больше вариантов смен или уменьшите минимальное число сотрудников.");
+                                MessageBox.Show("Расписание не оптимально, из-за слишком жестких параметров выберите другие варианты смен или уменьшите минимальное число сотрудников.");
                                 //  return;
                             }
                         }
@@ -1647,6 +1647,9 @@ namespace shedule
             panelTRasp.BringToFront();
             dataGridViewForTSR.DataSource = viewTSR();
             dataGridViewForTSR.Columns[0].ReadOnly = true;
+            textBox6.Text = Program.currentShop.prilavki.GetCount().ToString();
+            checkBox1.Checked = Program.currentShop.prilavki.GetNalichie();
+
 
         }
 
@@ -1661,7 +1664,13 @@ namespace shedule
 
         private void buttonPTSR_Click(object sender, EventArgs e)
         {
-            Program.currentShop.prilavki.SetCount(int.Parse(textBox6.Text));
+            if (textBox6.Text != "")
+            {
+                Program.currentShop.prilavki.SetCount(int.Parse(textBox6.Text));
+            }
+            else {
+                Program.currentShop.prilavki.SetCount(0);
+            }
             Program.currentShop.prilavki.SetNalichie(checkBox1.Checked);
             Program.WriteTSR();
             Program.WritePrilavki();
@@ -2139,7 +2148,7 @@ namespace shedule
         public void CreateZip()
         {
             saveFileDialog1.DefaultExt = ".zip";
-            saveFileDialog1.FileName = "Архив графиков/гистограм по нескольким магазинам";
+            saveFileDialog1.FileName = "Архив графиков, гистограм по нескольким магазинам";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Filter = "Архив|*.zip";
             saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -3217,7 +3226,7 @@ namespace shedule
             String readPath = Environment.CurrentDirectory + "/Shops" + Program.currentShop.getIdShop() + "/prilavki";
             if (checkBox1.Checked)
             {
-                MessageBox.Show("Число продавцов стало зависить от прилавков");
+               // MessageBox.Show("Число продавцов стало зависить от прилавков");
              
                 Program.currentShop.prilavki.SetNalichie( true);
                 label19.Visible = true;

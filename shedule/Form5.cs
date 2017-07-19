@@ -85,13 +85,13 @@ namespace shedule
             button1.Visible = true;
             button2.Visible = true;
             Nday = 0;
-           
-           
+
+            chart1.Series.Clear();
 
             Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleCheck();
             Program.currentShop.MouthPrognozT[Nday].DS.CreateChartDaySaleClick();
 
-            chart1.Series.Clear();
+        
              chart1.Series.Add(new Series("Прогнозное количество кликов"));
             chart1.Series.Add(new Series("Прогнозное количество чеков"));
            
@@ -106,7 +106,7 @@ namespace shedule
             chart1.Series["Прогнозное количество кликов"].Points.DataBindXY(Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.X, Program.currentShop.MouthPrognozT[Nday].DS.ChartCheck.Y);
            
 
-            var l = chart1.Legends;
+           // var l = chart1.Legends;
             //chart1.Series[2].IsVisibleInLegend = false;
             //chart1.Series[3].IsVisibleInLegend = false;
         }
@@ -164,12 +164,15 @@ namespace shedule
             BackgroundWorker bg = sender as BackgroundWorker;
             switch (Program.tipDiagram)
             {
-                case 1: bg.ReportProgress(4); Program.createPrognoz3(); bg.ReportProgress(10); break;
+                case 1: bg.ReportProgress(4);
+                    Program.createPrognoz3();
+                    bg.ReportProgress(10); break;
                 case 3:
                     bg.ReportProgress(4);
                     Program.createPrognoz();
                     bg.ReportProgress(8);
-                    Code.Sotrudniki.OptimCountSotr(); bg.ReportProgress(12); break;
+                    Code.Sotrudniki.OptimCountSotr();
+                    bg.ReportProgress(12); break;
                 case 2:
                     bg.ReportProgress(4);
                     Program.createPrognoz();
