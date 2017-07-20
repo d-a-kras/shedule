@@ -122,6 +122,7 @@
             this.textBoxStart.Name = "textBoxStart";
             this.textBoxStart.Size = new System.Drawing.Size(100, 20);
             this.textBoxStart.TabIndex = 8;
+            this.textBoxStart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStart_KeyPress);
             // 
             // textBoxEnd
             // 
@@ -129,6 +130,7 @@
             this.textBoxEnd.Name = "textBoxEnd";
             this.textBoxEnd.Size = new System.Drawing.Size(100, 20);
             this.textBoxEnd.TabIndex = 9;
+            this.textBoxEnd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxEnd_KeyPress);
             // 
             // dataGridViewCalendar
             // 
