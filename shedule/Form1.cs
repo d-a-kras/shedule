@@ -2781,6 +2781,20 @@ namespace shedule
         {
             if (!String.IsNullOrEmpty(tbKassirCount.Text))
             {
+                if (int.Parse(tbKassirCount.Text) < 1)
+                {
+                    MessageBox.Show("Меньше 1 нельзя");
+                    tbKassirCount.Text = "";
+                    return;
+                }
+
+                if (int.Parse(tbKassirCount.Text) >2)
+                {
+                    MessageBox.Show("Не оптимальное количество. Допустимо 1 или 2.");
+                    tbKassirCount.Text = "";
+                    return;
+                }
+
                 int kassirCount;
 
                 if (int.TryParse(tbKassirCount.Text, out kassirCount))
@@ -3289,6 +3303,66 @@ namespace shedule
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateStatusShops();
+        }
+
+        private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void tbKassirCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void tbLastHour_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text) || int.Parse(textBox3.Text) > 5 || int.Parse(textBox3.Text) < 1)
+            {
+                MessageBox.Show("Меньше 1 нельзя");
+                textBox3.Text = "";
+                return;
+            }
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+            if (int.Parse(textBox5.Text) <7 || int.Parse(textBox3.Text) > 10)
+            {
+                MessageBox.Show("Введите число от 7 до 10");
+                textBox5.Text = "";
+                return;
+            }
         }
     }
 }

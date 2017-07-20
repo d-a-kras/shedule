@@ -329,9 +329,9 @@
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.button8);
+            this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.panel4);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(472, 304);
@@ -488,6 +488,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(29, 20);
             this.textBox1.TabIndex = 11;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // label10
             // 
@@ -504,6 +505,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 9;
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // label11
             // 
@@ -885,6 +887,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(30, 20);
             this.textBox6.TabIndex = 3;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox6_KeyPress);
             // 
             // checkBox1
             // 
@@ -1090,6 +1093,8 @@
             this.textBox5.Size = new System.Drawing.Size(50, 20);
             this.textBox5.TabIndex = 13;
             this.textBox5.Visible = false;
+            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.textBox5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox5_KeyPress);
             // 
             // textBox4
             // 
@@ -1098,6 +1103,7 @@
             this.textBox4.Size = new System.Drawing.Size(50, 20);
             this.textBox4.TabIndex = 12;
             this.textBox4.Visible = false;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox4_KeyPress);
             // 
             // label13
             // 
@@ -1126,6 +1132,8 @@
             this.textBox3.Size = new System.Drawing.Size(50, 20);
             this.textBox3.TabIndex = 9;
             this.textBox3.Visible = false;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // button10
             // 
@@ -1153,6 +1161,7 @@
             this.tbLastHour.Size = new System.Drawing.Size(29, 20);
             this.tbLastHour.TabIndex = 6;
             this.tbLastHour.TextChanged += new System.EventHandler(this.tbLastHour_TextChanged);
+            this.tbLastHour.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLastHour_KeyPress);
             // 
             // label7
             // 
@@ -1170,6 +1179,7 @@
             this.tbKassirCount.Size = new System.Drawing.Size(100, 20);
             this.tbKassirCount.TabIndex = 4;
             this.tbKassirCount.TextChanged += new System.EventHandler(this.tbKassirCount_TextChanged);
+            this.tbKassirCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbKassirCount_KeyPress);
             // 
             // label6
             // 

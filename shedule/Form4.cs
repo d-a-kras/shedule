@@ -284,9 +284,16 @@ namespace shedule
             }
             else
             {
+                int dayLength = int.Parse(textBoxEnd.Text) - int.Parse(textBoxStart.Text);
+                if (dayLength < 13)
+                {
+                    MessageBox.Show("Длина дня не должна быть меньше 12 часов!");
+                    return;
+                }
                 button1.Text = "Редактировать";
                 textBoxEnd.Enabled = false;
                 textBoxStart.Enabled = false;
+
                 RedactirStartEndDay();
             }
         }
@@ -456,6 +463,16 @@ namespace shedule
                 var label = datesOfLabels[dtCalendar];
                 _checkedLabels.Add(label);
             }
+        }
+
+        private void textBoxStart_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void textBoxEnd_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }
