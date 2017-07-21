@@ -35,11 +35,25 @@ namespace shedule.Code
         static public int shiftSm(ref int i,ref bool f1)
         {
             i++;
-            if (i == Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true).Count-2)
+            if (i == Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true).Count)
             {
                 i = 0;
                 f1 = true;
                
+            }
+
+            return i;
+
+        }
+
+        static public int shiftSm2(ref int i, ref bool f1)
+        {
+            i++;
+            if (i == Program.currentShop.VarSmens.FindAll(t => (t.getDeistvie() == true)&&(!((t.getR() == 2) || (t.getR() == 3)))).Count)
+            {
+                i = 0;
+                f1 = true;
+
             }
 
             return i;
@@ -90,7 +104,7 @@ namespace shedule.Code
             int kassCount = Program.MinKassirCount;
            
                 List<VarSmen> DVS = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
-            List<VarSmen> DVS2 = DVS.FindAll(t =>( t.getR()!=2)||(t.getR()!=3));
+            List<VarSmen> DVS2 = DVS.FindAll(t =>!(( t.getR()==2)||(t.getR()==3)));
             if (DVS.Count != 0)
             {
 
@@ -190,11 +204,17 @@ namespace shedule.Code
                         Program.currentShop.employes.Add(e);
                         continue;
                     }
+                    if (DVS2.Count != 0)
+                    {
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], i, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
 
-                    e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs, ref flag)], i, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
-
-                    Program.currentShop.employes.Add(e);
-
+                        Program.currentShop.employes.Add(e);
+                    }
+                    else {
+                        i--;
+                        CountGruz++;
+                        flag = true; 
+                    }
                 }
 
 
@@ -232,10 +252,18 @@ namespace shedule.Code
                         continue;
                     }
 
-                    e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs, ref flag)], i, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
+                    if (DVS2.Count != 0)
+                    {
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], i, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
 
-                    Program.currentShop.employes.Add(e);
-
+                        Program.currentShop.employes.Add(e);
+                    }
+                    else
+                    {
+                        i--;
+                        CountProd++;
+                        flag = true;
+                    }
                 }
 
                 
@@ -258,7 +286,7 @@ namespace shedule.Code
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountKassirov--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LKass[nkass].getOtobragenie(), "Сменный график");
+                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LKass[ nkass].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         flag2 = true;
                         continue;
@@ -273,10 +301,21 @@ namespace shedule.Code
                         flag3 = true;
                         continue;
                     }
-                    e = new employee(Program.currentShop.getIdShop(), i, DVS[shiftSm(ref nvs, ref flag)], i, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
 
-                    Program.currentShop.employes.Add(e);
+                    if (DVS2.Count != 0)
+                    {
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], i, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
 
+                       
+                        Program.currentShop.employes.Add(e);
+                    }
+                    else
+                    {
+                        i--;
+                        CountKassirov++;
+                        flag = true;
+                        
+                    }
                 }
             }
             else { 
@@ -563,7 +602,7 @@ namespace shedule.Code
                 while (emp.getNormRab() > Program.normchas)
                 {
 
-                    Smena s = emp.smens.Find(t => t.getLenght() > 12);
+                    Smena s = emp.smens.Find(t => t.getLenght() > 13);
                     if (s != null)
                     { s.delChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData())); }
                     else
@@ -602,6 +641,7 @@ namespace shedule.Code
                 }
                 emp.setStatus(2);
             }
+            Program.itogChass();
         }
 
 

@@ -474,5 +474,10 @@ namespace shedule
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+
+        private void textBoxStart_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

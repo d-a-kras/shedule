@@ -122,6 +122,7 @@
             this.textBoxStart.Name = "textBoxStart";
             this.textBoxStart.Size = new System.Drawing.Size(100, 20);
             this.textBoxStart.TabIndex = 8;
+            this.textBoxStart.TextChanged += new System.EventHandler(this.textBoxStart_TextChanged);
             this.textBoxStart.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStart_KeyPress);
             // 
             // textBoxEnd

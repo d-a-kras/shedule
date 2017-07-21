@@ -2919,12 +2919,12 @@ namespace shedule
                         case 3: dfc.setTimeBaE(8, 23); break;
                         case 4: dfc.setTimeBaE(8, 23); break;
                         case 5: dfc.setTimeBaE(8, 23); break;
-                        case 6: dfc.setTimeBaE(9, 22); break;
-                        case 7: dfc.setTimeBaE(9, 22); break;
-                        case 8: dfc.setTimeBaE(9, 22); break;
-                        case 9: dfc.setTimeBaE(9, 22); break;
-                        case 10: dfc.setTimeBaE(9, 22); break;
-                        default: dfc.setTimeBaE(0, 0); break;
+                        case 6: dfc.setTimeBaE(9, 23); break;
+                        case 7: dfc.setTimeBaE(9, 23); break;
+                        case 8: dfc.setTimeBaE(9, 23); break;
+                        case 9: dfc.setTimeBaE(9, 23); break;
+                        case 10: dfc.setTimeBaE(9, 23); break;
+                        default: dfc.setTimeBaE(8, 23); break;
                     }
                 }
 

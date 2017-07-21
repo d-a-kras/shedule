@@ -2032,11 +2032,22 @@ namespace shedule
                             .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
                     case 2:
+                        if (int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())<8000)
+                        {
+                            MessageBox.Show("Зарплата не может быть меньше 8 тыс. руб.");
+                            dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value = 8000;
+                        }
                         Program.currentShop.tsr.Find(
                                 t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
                             .setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
                     case 3:
+
+                        if (int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()) < 8000)
+                        {
+                            MessageBox.Show("Зарплата не может быть меньше 4 тыс. руб.");
+                            dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value = 4000;
+                        }
                         Program.currentShop.tsr.Find(
                                 t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
                             .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
@@ -2054,12 +2065,22 @@ namespace shedule
                             .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
                     case 2:
+                        if (int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()) < 8000)
+                        {
+                            MessageBox.Show("Зарплата не может быть меньше 8 тыс. руб.");
+                            dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value = 8000;
+                        }
                         Program.currentShop.tsrBG.Find(
                                 t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
                             .setZarp(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
                     case 3:
-                        Program.currentShop.tsrBG.Find(
+                        if (int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()) < 8000)
+                        {
+                            MessageBox.Show("Зарплата не может быть меньше 4 тыс. руб.");
+                            dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value = 4000;
+                        }
+                            Program.currentShop.tsrBG.Find(
                                 t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
                             .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
@@ -2807,11 +2828,16 @@ namespace shedule
 
         }
 
-        private void tbLastHour_TextChanged(object sender, EventArgs e)
+   /*     private void tbLastHour_TextChanged(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(tbLastHour.Text))
             {
-
+                if (int.Parse(tbLastHour.Text) < 7 || int.Parse(tbLastHour.Text) > 10)
+                {
+                    MessageBox.Show("Введите число от 7 до 10");
+                    tbLastHour.Text = "";
+                    return;
+                }
                 int lastHour;
                 if (int.TryParse(tbLastHour.Text, out lastHour))
                 {
@@ -2820,7 +2846,7 @@ namespace shedule
                 }
 
             }
-        }
+        }*/
 
         private void ChangeLabel3Text(string text)
         {
@@ -3272,7 +3298,7 @@ namespace shedule
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
        
         {
-            String readPath = Environment.CurrentDirectory + "/Shops" + Program.currentShop.getIdShop() + "/prilavki";
+            String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/Prilavki";
             if (checkBox1.Checked)
             {
                // MessageBox.Show("Число продавцов стало зависить от прилавков");
@@ -3362,6 +3388,73 @@ namespace shedule
                 MessageBox.Show("Введите число от 7 до 10");
                 textBox5.Text = "";
                 return;
+            }
+        }
+
+     /*   private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(tbLastHour.Text))
+            {
+                if (int.Parse(textBox6.Text) < 0 || int.Parse(textBox6.Text) > 10)
+                {
+                    MessageBox.Show("Введите число продавцов от 1 до 10");
+                    textBox6.Text = "";
+                    return;
+                }
+            }
+        }*/
+
+        private void textBox6_CursorChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void tbLastHour_CursorChanged(object sender, EventArgs e)
+        {
+           
+            
+        }
+
+        private void tbLastHour_MouseLeave(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textBox6_MouseLeave(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void textBox6_Leave(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(tbLastHour.Text))
+            {
+                if (int.Parse(textBox6.Text) < 0 || int.Parse(textBox6.Text) > 10)
+                {
+                    MessageBox.Show("Введите число продавцов от 1 до 10");
+                    textBox6.Text = "";
+                    return;
+                }
+            }
+        }
+
+        private void tbLastHour_Leave(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(tbLastHour.Text))
+            {
+                if (int.Parse(tbLastHour.Text) < 7 || int.Parse(tbLastHour.Text) > 10)
+                {
+                    MessageBox.Show("Введите число от 7 до 10");
+                    tbLastHour.Text = "";
+                    return;
+                }
+                int lastHour;
+                if (int.TryParse(tbLastHour.Text, out lastHour))
+                {
+
+                    Program.currentShop.minrab.setTime(lastHour);
+                }
+
             }
         }
     }
