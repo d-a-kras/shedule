@@ -1583,6 +1583,7 @@ namespace shedule
         static public int progress = 0;
         static public bool ExistFile = false;
         public static bool IsMpRezhim = false;
+        public static bool isOffline = false;
 
         public static int BgProgress = 0;
 
@@ -2185,17 +2186,23 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
+            
             //   if (connect)
             //  {
-            currentShop.daysSale.Clear();
-            if (isMp)
+            if (!isOffline)
             {
-                createListDaySale(d2, ydt, currentShop.getIdShopFM());
+                currentShop.daysSale.Clear();
+                if (isMp)
+                {
+                    createListDaySale(d2, ydt, currentShop.getIdShopFM());
+                }
+                else
+                {
+                    createListDaySale(d2, ydt, currentShop.getIdShop());
+                }
             }
-            else
-            {
-                createListDaySale(d2, ydt, currentShop.getIdShop());
-            }
+            
+            
 
             //     }
             //   else if(ExistFile) {

@@ -1399,7 +1399,7 @@ namespace shedule
                 buttonImportKasOper.Visible = true;
                 buttonVygr.Visible = false;
                 comboBox2.Visible = false;
-
+                Program.isOffline = true;
             }
 
         }
@@ -1411,7 +1411,7 @@ namespace shedule
                 buttonImportKasOper.Visible = false;
                 buttonVygr.Visible = true;
                 comboBox2.Visible = true;
-
+                Program.isOffline = false;
             }
         }
 
@@ -1848,6 +1848,7 @@ namespace shedule
                 this.Enabled = false;
                 return;
             }
+            
 
             StartExportingToExcel();
         }
