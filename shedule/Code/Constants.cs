@@ -9,5 +9,6 @@ namespace shedule.Code
     public static class Constants
     {
         public const string ListName = "График";
+        public const string Version = "1.0";
     }
 }
