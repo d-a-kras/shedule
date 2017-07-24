@@ -1537,8 +1537,11 @@ namespace shedule
 
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
+            buttonCalendar.Enabled = false;
             Form4 f4 = new Form4(DateTime.Now.Year);
-            f4.Show();
+            f4.ShowDialog();
+            buttonCalendar.Enabled = true;
+
         }
 
         private void buttonTest_Click(object sender, EventArgs e)
@@ -1713,6 +1716,10 @@ namespace shedule
 
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
+            if (tbKassirCount.Text == "")
+            {
+                return;
+            }
             String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\VarSmen";
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
@@ -2826,7 +2833,7 @@ namespace shedule
                     return;
                 }
 
-                if (int.Parse(tbKassirCount.Text) >2)
+                if (int.Parse(tbKassirCount.Text) >3)
                 {
                     MessageBox.Show("Не оптимальное количество. Допустимо 1 или 2.");
                     tbKassirCount.Text = "";
@@ -3313,7 +3320,6 @@ namespace shedule
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
-       
         {
             String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/Prilavki";
             if (checkBox1.Checked)
@@ -3472,6 +3478,15 @@ namespace shedule
                     Program.currentShop.minrab.setTime(lastHour);
                 }
 
+            }
+        }
+
+        private void tbKassirCount_Leave(object sender, EventArgs e)
+        {
+            if (tbKassirCount.Text == "")
+            {
+                MessageBox.Show("Число кассиров не может быть пустым!");
+                tbKassirCount.Text = "1";
             }
         }
     }
