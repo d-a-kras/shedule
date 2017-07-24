@@ -329,9 +329,9 @@
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.button8);
-            this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.panel4);
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(472, 304);
@@ -432,9 +432,9 @@
             // 
             this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
             this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(50, 32);
+            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(23, 32);
             this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
-            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(283, 131);
+            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(310, 131);
             this.dataGridViewMVarSmen.TabIndex = 2;
             // 
             // label14
@@ -1369,7 +1369,7 @@
             this.lbCurrentVersion.Name = "lbCurrentVersion";
             this.lbCurrentVersion.Size = new System.Drawing.Size(89, 12);
             this.lbCurrentVersion.TabIndex = 15;
-            this.lbCurrentVersion.Text = "v.1.0. от 17.08.2017";
+            this.lbCurrentVersion.Text = "v.1.0. от 24.07.2017";
             // 
             // bSettings
             // 

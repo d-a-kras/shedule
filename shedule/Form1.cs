@@ -118,9 +118,22 @@ namespace shedule
 
                             if (!Sotrudniki.CheckGrafic())
                             {
-                                MessageBox.Show("Расписание не оптимально, из-за слишком жестких параметров выберите другие варианты смен или уменьшите минимальное число сотрудников.");
-                                //  return;
+                                if (Program.currentShop.employes.Count < 15)
+                                {
+                                    MessageBox.Show("Расписание не оптимально, из-за выбранных вариантов смен и минимального числа сотрудников. Данный магазин является небольшим, поэтому рекомендуется использовать только смены 2/2, 3/3 и минимальное количество сотрудников 1.");
+                                }
+
+                                else if ((Program.currentShop.employes.Count >= 15) && ((Program.currentShop.employes.Count < 30)))
+                                {
+                                    MessageBox.Show("Расписание не оптимально, из-за выбранных вариантов смен. Данный магазин является средним по размеру, поэтому предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Расписание не оптимально, из-за выбранных вариантов смен. Данный магазин является крупным по размеру, поэтому для достижения оптимальности предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
+                                
                             }
+                                    //  return;
+                                }
                         }
                         catch (Exception ex)
 
@@ -1434,6 +1447,7 @@ namespace shedule
             Program.readVarSmen();
             Program.ReadMinRab();
             Program.ReadPrilavki();
+            Program.ReadNarmaChas();
             Program.ReadParametrOptimizacii();
             Program.ExistFile = false;
             if (Program.currentShop.VarSmens.Count == 0)
@@ -1729,6 +1743,7 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
+            Program.ReadNarmaChas();
             Program.ReadPrilavki();
             Program.ReadParametrOptimizacii();
             if (Program.currentShop.VarSmens.Count == 0)
@@ -2317,6 +2332,7 @@ namespace shedule
                 shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setMinRab(shop.minrab);
+                Program.ReadNarmaChas();
                 Program.ReadPrilavki();
                 if (Program.currentShop.VarSmens.Count == 0)
                 {

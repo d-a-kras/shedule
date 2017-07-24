@@ -15,6 +15,7 @@ namespace shedule
         List<DataForCalendary> ldfc = new List<DataForCalendary>();
         private List<Label> _checkedLabels;
         private int calendarYear;
+        private int EditCell;
 
         public Form4(int year)
         {
@@ -158,12 +159,15 @@ namespace shedule
                 row["количество дней в месяце"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
                 row["количество рабочих дней"] = Program.RD[i - 1];
                 row["количество выходных дней"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1];
-                row["норма часов"] = Program.RD[i - 1] * 8 - Program.PHD[i - 1];
+                row["норма часов"] = Program.currentShop.NormaChasov[i-1].getNormChas();
                 dt.Rows.Add(row);
             }
             return dt;
         }
 
+        private static void readNarma() {
+
+        }
 
         private void Form4_Load(object sender, EventArgs e)
 
@@ -172,27 +176,45 @@ namespace shedule
             textBoxStart.Enabled = false;
 
             dataGridViewCalendar.DataSource = CreateTable();
+            dataGridViewCalendar.Columns[0].ReadOnly = true;
+            dataGridViewCalendar.Columns[1].ReadOnly = true;
+            dataGridViewCalendar.Columns[2].ReadOnly = true;
+            dataGridViewCalendar.Columns[3].ReadOnly = true;
             CreateCalendar();
         }
 
         private void buttonAddCalendary_Click(object sender, EventArgs e)
         {
-            string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{calendarYear}";
-
-            foreach (var l in ldfc)
+            if (Program.currentShop.RaznChas != 0)
             {
-                var programDate = Program.currentShop.DFCs.SingleOrDefault(x => x.getData() == l.getData());
-                if (programDate == null) throw new ArgumentNullException(nameof(programDate), "Несуществующая дата");
-                programDate.setTimeBaE(l.getTimeStart(), l.getTimeEnd());
-            }
-            
-            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-            {
+                if (Program.currentShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов добавьте " + Program.currentShop.RaznChas + " в месяц, где не более 168 "); }
+                else {
+                    MessageBox.Show("Несоответствие в норме часов уменьшите на " +Math.Abs( Program.currentShop.RaznChas) + " в каком-либо месяце ");
 
-                foreach (DataForCalendary d in Program.currentShop.DFCs)
-                    sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
+                }
             }
-            Program.HandledShops.Add(Program.currentShop.getIdShop());
+            else
+            {
+                Program.WriteNormChas();
+                string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{calendarYear}";
+
+                foreach (var l in ldfc)
+                {
+                    var programDate = Program.currentShop.DFCs.SingleOrDefault(x => x.getData() == l.getData());
+                    if (programDate == null) throw new ArgumentNullException(nameof(programDate), "Несуществующая дата");
+                    programDate.setTimeBaE(l.getTimeStart(), l.getTimeEnd());
+                }
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+
+                    foreach (DataForCalendary d in Program.currentShop.DFCs)
+                        sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
+                }
+                Program.HandledShops.Add(Program.currentShop.getIdShop());
+                MessageBox.Show("Данные сохранены");
+            }
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -285,9 +307,9 @@ namespace shedule
             else
             {
                 int dayLength = int.Parse(textBoxEnd.Text) - int.Parse(textBoxStart.Text);
-                if (dayLength < 13)
+                if (dayLength < 15)
                 {
-                    MessageBox.Show("Длина дня не должна быть меньше 12 часов!");
+                    MessageBox.Show("Длина дня не должна быть меньше 14 часов!");
                     return;
                 }
                 button1.Text = "Редактировать";
@@ -478,6 +500,28 @@ namespace shedule
         private void textBoxStart_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridViewCalendar_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int newZn;
+            if (int.TryParse(dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out newZn))
+            {
+                if (newZn > 176) { MessageBox.Show("Введите число не более 176"); dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell; }
+                else {
+                    Program.currentShop.RaznChas += EditCell - newZn;
+                    Program.currentShop.NormaChasov[e.RowIndex].setCountChas(newZn);
+                }
+            }
+            else {
+                MessageBox.Show("Нужно вводить число");
+                dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell;
+            }
+        }
+
+        private void dataGridViewCalendar_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            EditCell = int.Parse(dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
         }
     }
 }

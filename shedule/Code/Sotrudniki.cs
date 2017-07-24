@@ -135,6 +135,13 @@ namespace shedule.Code
                 else { KP = Program.KoefKassira; }
                 DateTime dt = DateTime.Today;
                 Program.normchas = Program.RD[dt.Month] * 8 - Program.PHD[dt.Month];
+                if (dt.Month==7) {
+                    Program.normchas -= 8;
+                }
+                if (dt.Month == 11)
+                {
+                    Program.normchas += 8;
+                }
 
                 int ob = 0;
                 int tc = 0;
@@ -156,7 +163,7 @@ namespace shedule.Code
                
                
                 int CountGruz = LGruz.Sum(o => o.getCount());
-                int CountKassirov = (int)Math.Round((double)(ob / (Program.normchas * K *18 ))) + Program.ParametrOptimization;
+                int CountKassirov = (int)Math.Round((double)(ob / (Program.normchas * K *36 ))) + Program.ParametrOptimization;
                 
                 if (CountKassirov < 4) { CountKassirov = 4; }
                 if (CountProd < 4) { CountProd = 4; }

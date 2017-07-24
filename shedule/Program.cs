@@ -24,6 +24,35 @@ using shedule.Code;
 
 namespace shedule
 {
+    public class NormaChas {
+        int NMonth;
+        int CountChas;
+       
+
+        public void setCountChas(int c) {
+            this.CountChas = c;
+        }
+
+       public NormaChas(int NM, int C)
+        {
+            this.NMonth = NM;
+            this.CountChas = C;
+        }
+
+        public int getNormChas() {
+            return this.CountChas;
+        }
+
+        public bool CheckNorma() {
+            if (this.CountChas > 176)
+            {
+                return false;
+            }
+            else return true;
+        }
+
+    }
+
     public class MinRab
     {
         int MinCount;
@@ -1113,6 +1142,7 @@ namespace shedule
     public class Shop
     {
         public List<WorkingDay> workingDays { get; set; }
+        public NormaChas[] NormaChasov = new NormaChas[12]; 
         public List<employee> employes { get; set; }
         public List<TemplateWorkingDay> templates { get; set; }
         public List<daySale> daysSale { get; set; }
@@ -1124,6 +1154,7 @@ namespace shedule
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<VarSmen> VarSmens = new List<VarSmen>();
         public MinRab minrab;
+        public int RaznChas;
       //  public bool prilavki = false;
        // public int countPrilavok = 0;
         public Prilavki prilavki;
@@ -1644,6 +1675,66 @@ namespace shedule
             }
         }
 
+        static public void ReadNarmaChas() {
+
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\NormaChas";
+            if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
+            {
+                Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
+
+            }
+
+
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+                    string[] str = new string[2];
+                    string s;
+                    int i = 0;
+                    while ((s = sr.ReadLine()) != null)
+                    {
+
+                        str = s.Split('_');
+                        currentShop.NormaChasov[i] = new NormaChas(int.Parse(str[0]), int.Parse(str[1]));
+                        i++;
+                    }
+
+
+                }
+
+            }
+            catch
+            {
+                for (int i = 0; i < 12; i++)
+                {
+
+                    currentShop.NormaChasov[i] = new NormaChas(i,Program.RD[i ] * 8 - Program.PHD[i ]);
+                   
+                }
+
+
+
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    for (int i = 0; i < 12; i++)
+                    {
+
+                        sw.WriteLine(i + "_" + currentShop.NormaChasov[i].getNormChas());
+
+                    }
+                   
+
+                }
+                // MessageBox.Show(ex.ToString());
+
+            }
+
+        }
+
         static public void ReadPrilavki()
         {
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\Prilavki";
@@ -1693,6 +1784,24 @@ namespace shedule
             }
 
            
+        }
+
+        static public void WriteNormChas()
+        {
+            
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\NormaChas";
+           
+            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+            {
+                for (int i = 0; i < 12; i++)
+                {
+
+                    sw.WriteLine(i + "_" + currentShop.NormaChasov[i].getNormChas());
+
+                }
+
+
+            }
         }
 
         static public void WriteMinRab() {
@@ -1996,8 +2105,8 @@ namespace shedule
                 currentShop.factors.Add(new Factor("TimeRech", "Голосовой интерфейс", 25, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("TimeObrTov", "Время на нелиннейные операции", 14, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("PozicVCheke", "Позиций в чеке", 5, true, new DateTime(2100, 1, 1), 0));
-                currentShop.factors.Add(new Factor("KoefKassira", "Коэффициент эффективности кассиров (%)", 100, true, new DateTime(2100, 1, 1), 0));
-                currentShop.factors.Add(new Factor("KoefObr", "Коэффициент эффетивности продавцов (%)", 100, true, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("KoefKassira", "Коэффициент эффективности кассиров (%)", 40, true, new DateTime(2100, 1, 1), 0));
+                currentShop.factors.Add(new Factor("KoefObr", "Коэффициент эффетивности продавцов (%)", 60, true, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("Otkr_konkurenta", "Открытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("zakr_konkurenta", "Закрытие конкурента (%)", 4, false, new DateTime(2100, 1, 1), 0));
                 currentShop.factors.Add(new Factor("snig_reklam", "Реклама конкурента (%)", 2, false, new DateTime(2100, 1, 1), 0));
