@@ -880,6 +880,7 @@
             this.label19.Size = new System.Drawing.Size(123, 13);
             this.label19.TabIndex = 4;
             this.label19.Text = "Количество прилавков";
+            this.label19.Visible = false;
             // 
             // textBox6
             // 
@@ -887,6 +888,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(30, 20);
             this.textBox6.TabIndex = 3;
+            this.textBox6.Visible = false;
             this.textBox6.CursorChanged += new System.EventHandler(this.textBox6_CursorChanged);
             this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox6_KeyPress);
             this.textBox6.Leave += new System.EventHandler(this.textBox6_Leave);
@@ -1185,6 +1187,7 @@
             this.tbKassirCount.TabIndex = 4;
             this.tbKassirCount.TextChanged += new System.EventHandler(this.tbKassirCount_TextChanged);
             this.tbKassirCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbKassirCount_KeyPress);
+            this.tbKassirCount.Leave += new System.EventHandler(this.tbKassirCount_Leave);
             // 
             // label6
             // 

@@ -2292,6 +2292,7 @@ namespace shedule
             }
 
 
+
             foreach (daySale ds in currentShop.MouthPrognoz)
             {
                 createPrognozTemplate(ds);
