@@ -11,6 +11,39 @@ namespace shedule.Code
  public  class Sotrudniki
     {
 
+        static public bool CheckGrafic13()
+        {
+            
+            foreach (employee emp in Program.currentShop.employes)
+            {
+                foreach(Smena sm in emp.smens)
+                if (sm.getLenght()>12) { return false; }
+              
+                   
+
+            }
+
+
+            return true;
+
+        }
+
+        static public bool CheckGrafic2()
+        {
+
+            foreach (TemplateWorkingDay mp in Program.currentShop.MouthPrognozT)
+            {
+                if ((mp.minKassUtr== Program.currentShop.minrab.getMinCount()) ||(mp.minKassVech == Program.currentShop.minrab.getMinCount())||(mp.minProdVech == Program.currentShop.minrab.getMinCount())||((mp.minProdUtr == Program.currentShop.minrab.getMinCount()))) { return false; }
+
+
+
+            }
+
+
+            return true;
+
+        }
+
         static public bool CheckGrafic() {
             List<Smena> lss = new List<Smena>();
            // WorkingDay wd; 
@@ -134,7 +167,8 @@ namespace shedule.Code
                 }
                 else { KP = Program.KoefKassira; }
                 DateTime dt = DateTime.Today;
-                Program.normchas = Program.RD[dt.Month] * 8 - Program.PHD[dt.Month];
+                Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
+                
                 if (dt.Month==7) {
                     Program.normchas -= 8;
                 }

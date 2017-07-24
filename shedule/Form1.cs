@@ -115,21 +115,30 @@ namespace shedule
                             Sotrudniki.CreateSmens();
 
                             bg.ReportProgress(8);
+                            if (!Sotrudniki.CheckGrafic13()) {
+                                MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                return;
+                            }
+                            if (!Sotrudniki.CheckGrafic2())
+                            {
+                                MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте смены 2/2 и 3/3");
+                                return;
+                            }
 
                             if (!Sotrudniki.CheckGrafic())
                             {
                                 if (Program.currentShop.employes.Count < 15)
                                 {
-                                    MessageBox.Show("Расписание не оптимально, из-за выбранных вариантов смен и минимального числа сотрудников. Данный магазин является небольшим, поэтому рекомендуется использовать только смены 2/2, 3/3 и минимальное количество сотрудников 1.");
+                                    MessageBox.Show("Расписание не удовлетворяет всем выбранным параметрам, из-за выбранных вариантов смен и минимального числа сотрудников. Данный магазин является небольшим, поэтому рекомендуется использовать только смены 2/2, 3/3 и минимальное количество сотрудников 1.");
                                 }
 
                                 else if ((Program.currentShop.employes.Count >= 15) && ((Program.currentShop.employes.Count < 30)))
                                 {
-                                    MessageBox.Show("Расписание не оптимально, из-за выбранных вариантов смен. Данный магазин является средним по размеру, поэтому предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
+                                    MessageBox.Show("Расписание не удовлетворяет всем выбранным параметрам, из-за выбранных вариантов смен. Данный магазин является средним по размеру, поэтому предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Расписание не оптимально, из-за выбранных вариантов смен. Данный магазин является крупным по размеру, поэтому для достижения оптимальности предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
+                                    MessageBox.Show("Расписание не удовлетворяет всем выбранным параметрам, из-за выбранных вариантов смен. Данный магазин является крупным по размеру, поэтому для достижения оптимальности предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
                                 
                             }
                                     //  return;
@@ -380,45 +389,53 @@ namespace shedule
                         int i = 1;
                         foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                         {
-                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[i];
-                            ObjWorkSheet.Name = "Прогноз" + twd.getData().ToShortDateString();
-                            excelcells = ObjWorkSheet.get_Range("A3", "AL100");
-                            excelcells.Font.Size = 10;
-                            //  excelcells.NumberFormat = "@";
-                            bg.ReportProgress(10);
-                            excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                            excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-                            int j = 1;
-                            foreach (int x in twd.Chart.X)
+                            try
                             {
-                                ObjWorkSheet.Cells[1, j] = x.ToString() + ":00";
-                                ObjWorkSheet.Cells[2, j] = twd.DS.ChartCheck.Y[j - 1];
-                                ObjWorkSheet.Cells[3, j] = twd.DS.ChartClick.Y[j - 1];
-                                j++;
+                                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[i];
+                                ObjWorkSheet.Name = "Прогноз" + twd.getData().ToShortDateString();
+                                excelcells = ObjWorkSheet.get_Range("A3", "AL100");
+                                excelcells.Font.Size = 10;
+                                //  excelcells.NumberFormat = "@";
+                                bg.ReportProgress(10);
+                                excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
+                                excelcells.VerticalAlignment = Excel.Constants.xlCenter;
+                                int j = 1;
+                                foreach (int x in twd.Chart.X)
+                                {
+                                    ObjWorkSheet.Cells[1, j] = x.ToString() + ":00";
+                                    ObjWorkSheet.Cells[2, j] = twd.DS.ChartCheck.Y[j - 1];
+                                    ObjWorkSheet.Cells[3, j] = twd.DS.ChartClick.Y[j - 1];
+                                    j++;
+                                }
+
+                                bg.ReportProgress(12);
+
+                                Excel.Range chartRange1;
+
+
+
+
+                                Excel.ChartObjects xlCharts = (Excel.ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
+
+                                Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
+
+                                Excel.Chart chartPage = myChart.Chart;
+
+
+
+                                chartRange1 = ObjWorkSheet.get_Range("a1", "C" + twd.DS.hoursSale.Count);
+                                // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
+
+                                chartPage.SetSourceData(chartRange1, misValue);
+
+                                chartPage.ChartType = Excel.XlChartType.xlLineMarkers;
+                                i++;
+                            }
+                            catch {
+
                             }
 
-                            bg.ReportProgress(12);
-
-                            Excel.Range chartRange1;
-
-
-
-
-                            Excel.ChartObjects xlCharts = (Excel.ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
-
-                            Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
-
-                            Excel.Chart chartPage = myChart.Chart;
-
-
-
-                            chartRange1 = ObjWorkSheet.get_Range("a1", "C" + twd.DS.hoursSale.Count);
-                            // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
-
-                            chartPage.SetSourceData(chartRange1, misValue);
-
-                            chartPage.ChartType = Excel.XlChartType.xlLineMarkers;
-                            i++;
+                           
 
                         }
                         bg.ReportProgress(18);
@@ -1433,8 +1450,10 @@ namespace shedule
             // Program.ReadConfigShop();
             //MessageBox.Show(listBox1.Text);
             // tabControl1.PerformLayout();
+            buttonParamOptimiz.PerformClick();
             tabControl1.SelectTab(tabPage1);
             buttonKassov.PerformClick();
+            
             Program.currentShop = null;
             string[] s = new string[2];
             s = listBox1.Text.Split('_');
@@ -1962,7 +1981,7 @@ namespace shedule
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         public void ReadTipOptimizacii()
@@ -2332,6 +2351,7 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
+            Program.ReadNarmaChas();
 
 
             foreach (Shop shop in Program.shops)
@@ -2339,7 +2359,7 @@ namespace shedule
                 shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setMinRab(shop.minrab);
-                Program.ReadNarmaChas();
+               
                 Program.ReadPrilavki();
                 if (Program.currentShop.VarSmens.Count == 0)
                 {
@@ -2371,6 +2391,17 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
                                 Sotrudniki.CreateSmens();
+
+                                if (!Sotrudniki.CheckGrafic13())
+                                {
+                                    MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                    return;
+                                }
+                                if (!Sotrudniki.CheckGrafic2())
+                                {
+                                    MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте смены 2/2 и 3/3");
+                                    return;
+                                }
 
 
                             }

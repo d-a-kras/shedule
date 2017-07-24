@@ -20,7 +20,7 @@ namespace shedule
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
+
             string[] s = new string[2];
             s = listBox1.Text.Split('_');
             if (this.Owner != null)
@@ -30,9 +30,11 @@ namespace shedule
                     ((Form1)this.Owner).Enabled = true;
                 }
             }
-            
+
             this.Close();
+            if (s[0] != "") { 
             newId = int.Parse(s[0]);
+        }
         }
 
         private void Form6_Load(object sender, EventArgs e)

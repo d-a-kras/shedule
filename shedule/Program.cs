@@ -98,7 +98,7 @@ namespace shedule
     public class DataForCalendary
     {
         DateTime Data;
-        int Tip;
+        public int Tip;
         int TimeBegin;
         int TimeEnd;
 
@@ -207,22 +207,56 @@ namespace shedule
         }
 
         public DateTime getData() { return this.Data; }
-        public int getTip()
+
+        public int gettip()
         {
+
             if (this.Tip == 0)
             {
-                switch (this.getData().DayOfWeek.ToString())
-                {
-                    case "Monday": return 1; ;
-                    case "Tuesday": return 2;
-                    case "Wednesday": return 3;
-                    case "Thursday": return 4;
-                    case "Friday": return 5;
-                    case "Saturday": return 6; ;
-                    case "Sunday": return 7;
-                    default: return 0;
-                }
+               
+                    switch (this.getData().DayOfWeek.ToString())
+                    {
+                        case "Monday": return 1; ;
+                        case "Tuesday": return 2;
+                        case "Wednesday": return 3;
+                        case "Thursday": return 4;
+                        case "Friday": return 5;
+                        case "Saturday": return 6; ;
+                        case "Sunday": return 7;
+                        default: return 0;
+                    }
 
+                
+            }
+            else return this.Tip;
+        }
+       
+    
+
+    public int getTip()
+        {
+
+            if (this.Tip == 0)
+            {
+                if (Program.currentShop.DFCs.Find(t => t.getData() == this.getData()) != null)
+                {
+                    return Program.currentShop.DFCs.Find(t => t.getData() == this.getData()).gettip();
+                }
+                else
+                {
+                    switch (this.getData().DayOfWeek.ToString())
+                    {
+                        case "Monday": return 1; ;
+                        case "Tuesday": return 2;
+                        case "Wednesday": return 3;
+                        case "Thursday": return 4;
+                        case "Friday": return 5;
+                        case "Saturday": return 6; ;
+                        case "Sunday": return 7;
+                        default: return 0;
+                    }
+
+                }
             }
             else return this.Tip;
         }
@@ -1892,7 +1926,7 @@ namespace shedule
             catch
             {
 
-                mr = new MinRab(2, 10, false);
+                mr = new MinRab(1, 9, false);
 
                 
 
@@ -2205,10 +2239,10 @@ namespace shedule
             catch
             {
                 //MessageBox.Show(ex.ToString());
-                currentShop.VarSmens.Add(new VarSmen(5, 2, true));
+                currentShop.VarSmens.Add(new VarSmen(5, 2, false));
                 currentShop.VarSmens.Add(new VarSmen(2, 2, true));
-                currentShop.VarSmens.Add(new VarSmen(3, 3, false));
-                currentShop.VarSmens.Add(new VarSmen(4, 3, true));
+                currentShop.VarSmens.Add(new VarSmen(3, 3, true));
+                currentShop.VarSmens.Add(new VarSmen(4, 3, false));
                 currentShop.VarSmens.Add(new VarSmen(6, 1, false));
                 //  case 1: if (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab) != null) { emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab)); } else { emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getStartDaySale() +2 ), 10));  } break;
 
