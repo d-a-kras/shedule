@@ -423,7 +423,7 @@ namespace shedule
 
 
 
-                                chartRange1 = ObjWorkSheet.get_Range("a1", "C" + twd.DS.hoursSale.Count);
+                                chartRange1 = ObjWorkSheet.get_Range("a1", "p3");
                                 // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
 
                                 chartPage.SetSourceData(chartRange1, misValue);

@@ -169,13 +169,7 @@ namespace shedule.Code
                 DateTime dt = DateTime.Today;
                 Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
                 
-                if (dt.Month==7) {
-                    Program.normchas -= 8;
-                }
-                if (dt.Month == 11)
-                {
-                    Program.normchas += 8;
-                }
+              
 
                 int ob = 0;
                 int tc = 0;
