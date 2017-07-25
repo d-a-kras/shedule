@@ -386,6 +386,10 @@ namespace shedule
                         Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
 
                         ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
+                        for (int k=0 ;k< Program.currentShop.MouthPrognozT.Count;k++) {
+                            ObjWorkBook.Worksheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                        }
+
                         int i = 1;
                         foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                         {
@@ -399,6 +403,7 @@ namespace shedule
                                 bg.ReportProgress(10);
                                 excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
                                 excelcells.VerticalAlignment = Excel.Constants.xlCenter;
+
                                 int j = 1;
                                 foreach (int x in twd.Chart.X)
                                 {
@@ -418,9 +423,10 @@ namespace shedule
                                 Excel.ChartObjects xlCharts = (Excel.ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
 
                                 Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
-
+                                //myChart.Legends.Add(new Legend("Legend2"));
+                                
                                 Excel.Chart chartPage = myChart.Chart;
-
+                                
 
 
                                 chartRange1 = ObjWorkSheet.get_Range("a1", "p3");
@@ -429,6 +435,7 @@ namespace shedule
                                 chartPage.SetSourceData(chartRange1, misValue);
 
                                 chartPage.ChartType = Excel.XlChartType.xlLineMarkers;
+                                
                                 i++;
                             }
                             catch {
@@ -915,7 +922,7 @@ namespace shedule
         public Form1()
         {
             InitializeComponent();
-            SetNextYearCalendarButton();
+           // SetNextYearCalendarButton();
             Resize += Form1_Resize;
         }
 
@@ -936,7 +943,7 @@ namespace shedule
             
         }
 
-        private void SetNextYearCalendarButton()
+        /*private void SetNextYearCalendarButton()
         {
             if (Helper.CheckNextYearCalendarIsExist())
             {
@@ -949,7 +956,7 @@ namespace shedule
                 buttonRaspisanie.Location = new Point(287, 12);
                 buttonCalendarNextYear.Visible = false;
             }
-        }
+        }*/
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

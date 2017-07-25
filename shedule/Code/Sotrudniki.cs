@@ -17,7 +17,10 @@ namespace shedule.Code
             foreach (employee emp in Program.currentShop.employes)
             {
                 foreach(Smena sm in emp.smens)
-                if (sm.getLenght()>12) { return false; }
+                if (sm.getLenght()>13) {
+
+                        return false;
+                    }
               
                    
 
@@ -636,7 +639,7 @@ namespace shedule.Code
                 while (emp.getNormRab() > Program.normchas)
                 {
 
-                    Smena s = emp.smens.Find(t => t.getLenght() > 13);
+                    Smena s = emp.smens.Find(t => t.getLenght() > 12);
                     if (s != null)
                     { s.delChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData())); }
                     else

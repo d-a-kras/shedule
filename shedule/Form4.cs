@@ -176,6 +176,9 @@ namespace shedule
             textBoxStart.Enabled = false;
 
             dataGridViewCalendar.DataSource = CreateTable();
+            for (int i=0;i<DateTime.Now.Month;i++) {
+                dataGridViewCalendar.Rows[i].Cells[4].ReadOnly = true;
+            }
             dataGridViewCalendar.Columns[0].ReadOnly = true;
             dataGridViewCalendar.Columns[1].ReadOnly = true;
             dataGridViewCalendar.Columns[2].ReadOnly = true;
@@ -187,7 +190,7 @@ namespace shedule
         {
             if (Program.currentShop.RaznChas != 0)
             {
-                if (Program.currentShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов добавьте " + Program.currentShop.RaznChas + " в месяц, где не более 168 "); }
+                if (Program.currentShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов. Добавьте " + Program.currentShop.RaznChas + " в месяц, где не более 168 "); }
                 else {
                     MessageBox.Show("Несоответствие в норме часов уменьшите на " +Math.Abs( Program.currentShop.RaznChas) + " в каком-либо месяце ");
 
@@ -522,6 +525,11 @@ namespace shedule
         private void dataGridViewCalendar_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             EditCell = int.Parse(dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+        }
+
+        private void buttonCalendarNextYear_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

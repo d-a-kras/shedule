@@ -65,6 +65,7 @@
             this.gbCheckedDays = new System.Windows.Forms.GroupBox();
             this.rtbCheckedDays = new System.Windows.Forms.RichTextBox();
             this.bMSelectOff = new System.Windows.Forms.Button();
+            this.buttonCalendarNextYear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCalendar)).BeginInit();
             this.gbCheckedDays.SuspendLayout();
             this.SuspendLayout();
@@ -519,7 +520,7 @@
             // 
             // buttonAddCalendary
             // 
-            this.buttonAddCalendary.Location = new System.Drawing.Point(845, 600);
+            this.buttonAddCalendary.Location = new System.Drawing.Point(890, 616);
             this.buttonAddCalendary.Name = "buttonAddCalendary";
             this.buttonAddCalendary.Size = new System.Drawing.Size(75, 23);
             this.buttonAddCalendary.TabIndex = 35;
@@ -581,11 +582,27 @@
             this.bMSelectOff.Visible = false;
             this.bMSelectOff.Click += new System.EventHandler(this.bMSelectOff_Click);
             // 
+            // buttonCalendarNextYear
+            // 
+            this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonCalendarNextYear.Location = new System.Drawing.Point(823, 605);
+            this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
+            this.buttonCalendarNextYear.Size = new System.Drawing.Size(43, 34);
+            this.buttonCalendarNextYear.TabIndex = 40;
+            this.buttonCalendarNextYear.Text = "2018";
+            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
+            this.buttonCalendarNextYear.Visible = false;
+            this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(977, 651);
+            this.Controls.Add(this.buttonCalendarNextYear);
             this.Controls.Add(this.bMSelectOff);
             this.Controls.Add(this.gbCheckedDays);
             this.Controls.Add(this.bResetSelection);
@@ -672,5 +689,6 @@
         private System.Windows.Forms.GroupBox gbCheckedDays;
         private System.Windows.Forms.Button bMSelectOff;
         private System.Windows.Forms.RichTextBox rtbCheckedDays;
+        private System.Windows.Forms.Button buttonCalendarNextYear;
     }
 }
