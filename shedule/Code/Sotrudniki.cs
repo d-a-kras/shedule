@@ -170,7 +170,6 @@ namespace shedule.Code
                 Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
                 
               
-
                 int ob = 0;
                 int tc = 0;
                 foreach (TemplateWorkingDay t in Program.currentShop.MouthPrognozT)

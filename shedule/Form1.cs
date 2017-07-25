@@ -1737,7 +1737,7 @@ namespace shedule
         {
             if (tbKassirCount.Text == "")
             {
-                return;
+                tbKassirCount.Text = "1";
             }
             String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\VarSmen";
 
