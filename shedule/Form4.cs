@@ -18,43 +18,66 @@ namespace shedule
         private int calendarYear;
         private int EditCell;
 
-        private Shop handledShop;
+        private static Shop _handledShop;
+
+        #region OnLoadForm -- действия которые происходят при загрузке формы/нажатии на кнопку следующего года
+
+        private void CalendarConstructor(int year)
+        {
+            if (Helper.CheckNextYearCalendarIsExist() && DateTime.Now.Year == year)
+            {
+                buttonCalendarNextYear.Visible = true;
+                buttonCalendarNextYear.Text = (year + 1).ToString();
+            }
+
+            if (DateTime.Now.Year == year)
+            {
+                _handledShop = Program.currentShop;
+            }
+            else
+            {
+                _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+                CalendarHelper.GetListDateForShop(_handledShop, year);
+            }
+
+            _checkedLabels = new List<Label>();
+            comboBox1.SelectedIndex = 0;
+            calendarYear = year;
+        }
+
+        private void CalendarLoad()
+        {
+            textBoxEnd.Enabled = false;
+            textBoxStart.Enabled = false;
+
+            dataGridViewCalendar.DataSource = CreateTable();
+            for (int i = 0; i < DateTime.Now.Month; i++)
+            {
+                dataGridViewCalendar.Rows[i].Cells[4].ReadOnly = true;
+            }
+            dataGridViewCalendar.Columns[0].ReadOnly = true;
+            dataGridViewCalendar.Columns[1].ReadOnly = true;
+            dataGridViewCalendar.Columns[2].ReadOnly = true;
+            dataGridViewCalendar.Columns[3].ReadOnly = true;
+            CreateCalendar();
+        }
+
+        #endregion
 
         public Form4(int year)
         {
             InitializeComponent();
-
-            if (Helper.CheckNextYearCalendarIsExist() || DateTime.Now.Year != year)
-            {
-                buttonCalendarNextYear.Visible = true;
-
-                if (DateTime.Now.Year == year)
-                {
-                    buttonCalendarNextYear.Text = (year + 1).ToString();
-                }
-                else
-                {
-                    buttonCalendarNextYear.Text = year.ToString();
-                    handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
-                    CalendarHelper.GetListDateForShop(handledShop, year);
-                }
-            }
-            
-            _checkedLabels = new List<Label>();
-            comboBox1.SelectedIndex = 0;
-            calendarYear = year;
-
-            
+            CalendarConstructor(year);
         }
 
 
         private void CreateCalendar()
         {
-            ld = new Label[Program.currentShop.DFCs.Count];
+            ld = new Label[_handledShop.DFCs.Count];
             int m, i, j;
             int k = 0;
 
-            foreach (DataForCalendary d in Program.currentShop.DFCs)
+            foreach (DataForCalendary d in _handledShop.DFCs)
             {
                 i = d.getNWeekday() - 1;
 
@@ -147,7 +170,7 @@ namespace shedule
                 SetRtbCheckDaysText();
             }
 
-           
+
         }
 
         private static DataTable CreateTable()
@@ -181,51 +204,41 @@ namespace shedule
                 row["количество дней в месяце"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
                 row["количество рабочих дней"] = Program.RD[i - 1];
                 row["количество выходных дней"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1];
-                row["норма часов"] = Program.currentShop.NormaChasov[i-1].getNormChas();
+                row["норма часов"] = _handledShop.NormaChasov[i - 1].getNormChas();
                 dt.Rows.Add(row);
             }
             return dt;
         }
 
-        private static void readNarma() {
+        private static void readNarma()
+        {
 
         }
 
         private void Form4_Load(object sender, EventArgs e)
-
         {
-            textBoxEnd.Enabled = false;
-            textBoxStart.Enabled = false;
-
-            dataGridViewCalendar.DataSource = CreateTable();
-            for (int i=0;i<DateTime.Now.Month;i++) {
-                dataGridViewCalendar.Rows[i].Cells[4].ReadOnly = true;
-            }
-            dataGridViewCalendar.Columns[0].ReadOnly = true;
-            dataGridViewCalendar.Columns[1].ReadOnly = true;
-            dataGridViewCalendar.Columns[2].ReadOnly = true;
-            dataGridViewCalendar.Columns[3].ReadOnly = true;
-            CreateCalendar();
+            CalendarLoad();
         }
 
         private void buttonAddCalendary_Click(object sender, EventArgs e)
         {
-            if (Program.currentShop.RaznChas != 0)
+            if (_handledShop.RaznChas != 0)
             {
-                if (Program.currentShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов. Добавьте " + Program.currentShop.RaznChas + " в месяц, где не более 168 "); }
-                else {
-                    MessageBox.Show("Несоответствие в норме часов уменьшите на " +Math.Abs( Program.currentShop.RaznChas) + " в каком-либо месяце ");
+                if (_handledShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов. Добавьте " + _handledShop.RaznChas + " в месяц, где не более 168 "); }
+                else
+                {
+                    MessageBox.Show("Несоответствие в норме часов уменьшите на " + Math.Abs(_handledShop.RaznChas) + " в каком-либо месяце ");
 
                 }
             }
             else
             {
                 Program.WriteNormChas();
-                string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{calendarYear}";
+                string readPath = Environment.CurrentDirectory + @"\Shops\" + _handledShop.getIdShop() + $@"\Calendar{calendarYear}";
 
                 foreach (var l in ldfc)
                 {
-                    var programDate = Program.currentShop.DFCs.SingleOrDefault(x => x.getData() == l.getData());
+                    var programDate = _handledShop.DFCs.SingleOrDefault(x => x.getData() == l.getData());
                     if (programDate == null) throw new ArgumentNullException(nameof(programDate), "Несуществующая дата");
                     programDate.setTimeBaE(l.getTimeStart(), l.getTimeEnd());
                 }
@@ -233,10 +246,10 @@ namespace shedule
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
 
-                    foreach (DataForCalendary d in Program.currentShop.DFCs)
+                    foreach (DataForCalendary d in _handledShop.DFCs)
                         sw.WriteLine(d.getData() + "#" + d.getTip() + "#" + d.getTimeStart() + "#" + d.getTimeEnd());
                 }
-                Program.HandledShops.Add(Program.currentShop.getIdShop());
+                Program.HandledShops.Add(_handledShop.getIdShop());
                 MessageBox.Show("Данные сохранены");
             }
 
@@ -250,35 +263,35 @@ namespace shedule
             switch (comboBox1.SelectedIndex)
             {
                 case 1:
-                    textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeStart().ToString();
-                    textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
+                    textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeStart().ToString();
+                    textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
                     ldfc =
-                        Program.currentShop.DFCs.FindAll(
+                        _handledShop.DFCs.FindAll(
                             t =>
                                 (t.getTip() == 1) || (t.getTip() == 2) || (t.getTip() == 3) || (t.getTip() == 4) ||
                                 (t.getTip() == 5));
                     SetCheckedDaysByDates(ldfc);
                     break;
                 case 2:
-                    textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 7)).getTimeStart().ToString();
-                    textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
+                    textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 7)).getTimeStart().ToString();
+                    textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
-                    ldfc = Program.currentShop.DFCs.FindAll(t => (t.getTip() == 6) || (t.getTip() == 7));
+                    ldfc = _handledShop.DFCs.FindAll(t => (t.getTip() == 6) || (t.getTip() == 7));
                     SetCheckedDaysByDates(ldfc);
                     break;
                 case 3:
-                    textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 8)).getTimeStart().ToString();
-                    textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
+                    textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 8)).getTimeStart().ToString();
+                    textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
-                    ldfc = Program.currentShop.DFCs.FindAll(t => (t.getTip() == 8));
+                    ldfc = _handledShop.DFCs.FindAll(t => (t.getTip() == 8));
                     SetCheckedDaysByDates(ldfc);
                     break;
                 case 4:
-                    textBoxStart.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 9)).getTimeStart().ToString();
-                    textBoxEnd.Text = Program.currentShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
+                    textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 9)).getTimeStart().ToString();
+                    textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
-                    ldfc = Program.currentShop.DFCs.FindAll(t => (t.getTip() == 9));
+                    ldfc = _handledShop.DFCs.FindAll(t => (t.getTip() == 9));
                     SetCheckedDaysByDates(ldfc);
                     break;
                 case 5:
@@ -289,9 +302,9 @@ namespace shedule
                         break;
                     }
                 case 0:
-                {    
-                    break;
-                }
+                    {
+                        break;
+                    }
                 default: break;
             }
             SetCheckedLabels();
@@ -369,7 +382,7 @@ namespace shedule
         {
             MultipleSelectModeOff();
             comboBox1.SelectedIndex = 0;
-            
+
 
         }
 
@@ -495,7 +508,7 @@ namespace shedule
         /// <param name="dates"></param>
         private void SetCheckedDaysByDates(List<DataForCalendary> dates)
         {
-            Dictionary<DateTime, Label> datesOfLabels = new Dictionary<DateTime, Label>(Program.currentShop.DFCs.Count);
+            Dictionary<DateTime, Label> datesOfLabels = new Dictionary<DateTime, Label>(_handledShop.DFCs.Count);
 
             foreach (var d in ld)
             {
@@ -533,12 +546,14 @@ namespace shedule
             if (int.TryParse(dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out newZn))
             {
                 if (newZn > 176) { MessageBox.Show("Введите число не более 176"); dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell; }
-                else {
-                    Program.currentShop.RaznChas += EditCell - newZn;
-                    Program.currentShop.NormaChasov[e.RowIndex].setCountChas(newZn);
+                else
+                {
+                    _handledShop.RaznChas += EditCell - newZn;
+                    _handledShop.NormaChasov[e.RowIndex].setCountChas(newZn);
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Нужно вводить число");
                 dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell;
             }
@@ -551,14 +566,18 @@ namespace shedule
 
         private void buttonCalendarNextYear_Click(object sender, EventArgs e)
         {
+
             int newFormYear = calendarYear;
             if (DateTime.Now.Year == calendarYear)
             {
                 newFormYear += 1;
             }
+            else
+            {
+                newFormYear = DateTime.Now.Year;
+            }
             Form4 form = new Form4(newFormYear);
-            form.Show();
-            this.Dispose(false);
+            form.ShowDialog();
         }
     }
 }

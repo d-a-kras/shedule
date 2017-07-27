@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace shedule.Code
 {
-   public static class CalendarHelper
+    public static class CalendarHelper
     {
         /// <summary>
         /// Копия метода GetListDate, но работает с переданным магазином, а не с тем что в Program
@@ -17,6 +17,9 @@ namespace shedule.Code
         /// <returns></returns>
         public static Shop GetListDateForShop(Shop shop, int year)
         {
+            int[] RD = new int[12];
+            int[] PHD = new int[12];
+
             if (shop != null)
             {
                 try

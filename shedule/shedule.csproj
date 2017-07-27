@@ -70,6 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\CalendarHelper.cs" />
+    <Compile Include="Code\CopyHelper.cs" />
     <Compile Include="Code\Sotrudniki.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\Helper.cs" />
