@@ -149,6 +149,10 @@
             this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.bAlphabetSort = new System.Windows.Forms.Button();
+            this.bNumberSort = new System.Windows.Forms.Button();
+            this.bAlphabetSortM = new System.Windows.Forms.Button();
+            this.bNumberSortM = new System.Windows.Forms.Button();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -249,7 +253,7 @@
             // 
             // button_refresh_list_shops
             // 
-            this.button_refresh_list_shops.Location = new System.Drawing.Point(4, 358);
+            this.button_refresh_list_shops.Location = new System.Drawing.Point(24, 358);
             this.button_refresh_list_shops.Name = "button_refresh_list_shops";
             this.button_refresh_list_shops.Size = new System.Drawing.Size(75, 49);
             this.button_refresh_list_shops.TabIndex = 10;
@@ -274,6 +278,8 @@
             // 
             // panelMultShops
             // 
+            this.panelMultShops.Controls.Add(this.bNumberSortM);
+            this.panelMultShops.Controls.Add(this.bAlphabetSortM);
             this.panelMultShops.Controls.Add(this.groupBox1);
             this.panelMultShops.Controls.Add(this.buttonSingleShop);
             this.panelMultShops.Controls.Add(this.buttonMdel);
@@ -281,7 +287,7 @@
             this.panelMultShops.Controls.Add(this.listBoxMShops);
             this.panelMultShops.Location = new System.Drawing.Point(3, 42);
             this.panelMultShops.Name = "panelMultShops";
-            this.panelMultShops.Size = new System.Drawing.Size(858, 435);
+            this.panelMultShops.Size = new System.Drawing.Size(858, 437);
             this.panelMultShops.TabIndex = 12;
             // 
             // groupBox1
@@ -619,9 +625,9 @@
             // 
             // buttonSingleShop
             // 
-            this.buttonSingleShop.Location = new System.Drawing.Point(29, 384);
+            this.buttonSingleShop.Location = new System.Drawing.Point(38, 384);
             this.buttonSingleShop.Name = "buttonSingleShop";
-            this.buttonSingleShop.Size = new System.Drawing.Size(75, 48);
+            this.buttonSingleShop.Size = new System.Drawing.Size(96, 48);
             this.buttonSingleShop.TabIndex = 6;
             this.buttonSingleShop.Text = "Режим одного магазина";
             this.buttonSingleShop.UseVisualStyleBackColor = true;
@@ -657,6 +663,8 @@
             // 
             // panelSingleShop
             // 
+            this.panelSingleShop.Controls.Add(this.bNumberSort);
+            this.panelSingleShop.Controls.Add(this.bAlphabetSort);
             this.panelSingleShop.Controls.Add(this.label16);
             this.panelSingleShop.Controls.Add(this.buttonMultShops);
             this.panelSingleShop.Controls.Add(this.button_refresh_list_shops);
@@ -678,7 +686,7 @@
             // 
             // buttonMultShops
             // 
-            this.buttonMultShops.Location = new System.Drawing.Point(85, 358);
+            this.buttonMultShops.Location = new System.Drawing.Point(105, 358);
             this.buttonMultShops.Name = "buttonMultShops";
             this.buttonMultShops.Size = new System.Drawing.Size(75, 49);
             this.buttonMultShops.TabIndex = 11;
@@ -1400,6 +1408,51 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // bAlphabetSort
+            // 
+            this.bAlphabetSort.BackColor = System.Drawing.SystemColors.Control;
+            this.bAlphabetSort.Location = new System.Drawing.Point(4, 358);
+            this.bAlphabetSort.Name = "bAlphabetSort";
+            this.bAlphabetSort.Size = new System.Drawing.Size(18, 23);
+            this.bAlphabetSort.TabIndex = 15;
+            this.bAlphabetSort.Text = "А";
+            this.bAlphabetSort.UseVisualStyleBackColor = false;
+            this.bAlphabetSort.Click += new System.EventHandler(this.bAlphabetSort_Click);
+            // 
+            // bNumberSort
+            // 
+            this.bNumberSort.BackColor = System.Drawing.SystemColors.Control;
+            this.bNumberSort.Enabled = false;
+            this.bNumberSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bNumberSort.Location = new System.Drawing.Point(4, 384);
+            this.bNumberSort.Name = "bNumberSort";
+            this.bNumberSort.Size = new System.Drawing.Size(18, 23);
+            this.bNumberSort.TabIndex = 16;
+            this.bNumberSort.Text = "№";
+            this.bNumberSort.UseVisualStyleBackColor = false;
+            this.bNumberSort.Click += new System.EventHandler(this.bNumberSort_Click);
+            // 
+            // bAlphabetSortM
+            // 
+            this.bAlphabetSortM.Location = new System.Drawing.Point(14, 384);
+            this.bAlphabetSortM.Name = "bAlphabetSortM";
+            this.bAlphabetSortM.Size = new System.Drawing.Size(18, 23);
+            this.bAlphabetSortM.TabIndex = 5;
+            this.bAlphabetSortM.Text = "А";
+            this.bAlphabetSortM.UseVisualStyleBackColor = true;
+            this.bAlphabetSortM.Click += new System.EventHandler(this.bAlphabetSortM_Click);
+            // 
+            // bNumberSortM
+            // 
+            this.bNumberSortM.Enabled = false;
+            this.bNumberSortM.Location = new System.Drawing.Point(14, 409);
+            this.bNumberSortM.Name = "bNumberSortM";
+            this.bNumberSortM.Size = new System.Drawing.Size(18, 23);
+            this.bNumberSortM.TabIndex = 5;
+            this.bNumberSortM.Text = "№";
+            this.bNumberSortM.UseVisualStyleBackColor = true;
+            this.bNumberSortM.Click += new System.EventHandler(this.bNumberSortM_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1585,6 +1638,10 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox6;
         public System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button bNumberSort;
+        private System.Windows.Forms.Button bAlphabetSort;
+        private System.Windows.Forms.Button bNumberSortM;
+        private System.Windows.Forms.Button bAlphabetSortM;
     }
 }
 

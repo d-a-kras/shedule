@@ -16,6 +16,7 @@ using Ionic.Zip;
 using shedule.Code;
 using Point = System.Drawing.Point;
 using System.Diagnostics;
+using System.Linq;
 using Application = System.Windows.Forms.Application;
 
 namespace shedule
@@ -32,6 +33,7 @@ namespace shedule
         private bool errorOnExecuting = false;
         public bool isConnected = false;
         public string PathToZip = "";
+        private List<Tuple<string, string>> listBox1List = new List<Tuple<string, string>>();
 
         /*  public void ShowProizvCalendar() {
               foreach (DataForCalendary d in  Program.currentShop.DFCs)
@@ -115,7 +117,8 @@ namespace shedule
                             Sotrudniki.CreateSmens();
 
                             bg.ReportProgress(8);
-                            if (!Sotrudniki.CheckGrafic13()) {
+                            if (!Sotrudniki.CheckGrafic13())
+                            {
                                 MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
                                 return;
                             }
@@ -139,10 +142,10 @@ namespace shedule
                                 else
                                 {
                                     MessageBox.Show("Расписание не удовлетворяет всем выбранным параметрам, из-за выбранных вариантов смен. Данный магазин является крупным по размеру, поэтому для достижения оптимальности предпочтительно использовать смены 2/2, 3/3 5/2 и минимальное количество сотрудников 2.");
-                                
-                            }
-                                    //  return;
+
                                 }
+                                //  return;
+                            }
                         }
                         catch (Exception ex)
 
@@ -386,7 +389,8 @@ namespace shedule
                         Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
 
                         ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
-                        for (int k=0 ;k< Program.currentShop.MouthPrognozT.Count;k++) {
+                        for (int k = 0; k < Program.currentShop.MouthPrognozT.Count; k++)
+                        {
                             ObjWorkBook.Worksheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
                         }
 
@@ -424,9 +428,9 @@ namespace shedule
 
                                 Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
                                 //myChart.Legends.Add(new Legend("Legend2"));
-                                
+
                                 Excel.Chart chartPage = myChart.Chart;
-                                
+
 
 
                                 chartRange1 = ObjWorkSheet.get_Range("a1", "p3");
@@ -435,14 +439,15 @@ namespace shedule
                                 chartPage.SetSourceData(chartRange1, misValue);
 
                                 chartPage.ChartType = Excel.XlChartType.xlLineMarkers;
-                                
+
                                 i++;
                             }
-                            catch {
+                            catch
+                            {
 
                             }
 
-                           
+
 
                         }
                         bg.ReportProgress(18);
@@ -922,7 +927,7 @@ namespace shedule
         public Form1()
         {
             InitializeComponent();
-           // SetNextYearCalendarButton();
+            // SetNextYearCalendarButton();
             Resize += Form1_Resize;
         }
 
@@ -940,7 +945,7 @@ namespace shedule
 
         private void Form1_GotFocus(object sender, EventArgs e)
         {
-            
+
         }
 
         /*private void SetNextYearCalendarButton()
@@ -1140,7 +1145,7 @@ namespace shedule
             {
                 foreach (mShop h in Program.listShops)
                 {
-
+                    listBox1List.Add(new Tuple<string, string>(h.getIdShop().ToString(), h.getAddress()));
                     listBox1.Items.Add(h.getIdShop() + "_" + h.getAddress());
                 }
             }
@@ -1460,7 +1465,7 @@ namespace shedule
             buttonParamOptimiz.PerformClick();
             tabControl1.SelectTab(tabPage1);
             buttonKassov.PerformClick();
-            
+
             Program.currentShop = null;
             string[] s = new string[2];
             s = listBox1.Text.Split('_');
@@ -1724,7 +1729,8 @@ namespace shedule
             {
                 Program.currentShop.prilavki.SetCount(int.Parse(textBox6.Text));
             }
-            else {
+            else
+            {
                 Program.currentShop.prilavki.SetCount(0);
             }
             Program.currentShop.prilavki.SetNalichie(checkBox1.Checked);
@@ -1896,7 +1902,7 @@ namespace shedule
                 this.Enabled = false;
                 return;
             }
-            
+
 
             StartExportingToExcel();
         }
@@ -1988,7 +1994,7 @@ namespace shedule
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         public void ReadTipOptimizacii()
@@ -2081,7 +2087,7 @@ namespace shedule
                             .setCount(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
                     case 2:
-                        if (int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString())<8000)
+                        if (int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()) < 8000)
                         {
                             MessageBox.Show("Зарплата не может быть меньше 8 тыс. руб.");
                             dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value = 8000;
@@ -2129,9 +2135,9 @@ namespace shedule
                             MessageBox.Show("Зарплата не может быть меньше 4 тыс. руб.");
                             dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value = 4000;
                         }
-                            Program.currentShop.tsrBG.Find(
-                                t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
-                            .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                        Program.currentShop.tsrBG.Find(
+                            t => t.getOtobragenie() == dataGridViewForTSR[0, e.RowIndex].Value.ToString())
+                        .setZarp1_2(int.Parse(dataGridViewForTSR[e.ColumnIndex, e.RowIndex].Value.ToString()));
                         break;
 
                 }
@@ -2261,7 +2267,7 @@ namespace shedule
             progressBar1.Maximum = 20;
             progressBar1.Minimum = 0;
             progressBar1.Step = 2;
-           // progressBar2.Visible = true;
+            // progressBar2.Visible = true;
 
             Program.TipExporta = comboBox1.SelectedIndex;
             bw1.RunWorkerAsync();
@@ -2366,7 +2372,7 @@ namespace shedule
                 shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setMinRab(shop.minrab);
-               
+
                 Program.ReadPrilavki();
                 if (Program.currentShop.VarSmens.Count == 0)
                 {
@@ -2621,7 +2627,7 @@ namespace shedule
                                 ObjWorkBook.Close();
 
                                 ObjExcel.Quit();
-                             //   MessageBox.Show("Расписание создано");
+                                //   MessageBox.Show("Расписание создано");
 
                             }
                             catch (Exception ex)
@@ -2837,7 +2843,7 @@ namespace shedule
                 }
                 bg.ReportProgress(ShopStep * shopCounter);
                 Program.HandledShops.Add(shop.getIdShop());
-               // UpdateStatusShops();
+                // UpdateStatusShops();
             }
 
             if (!Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
@@ -2871,7 +2877,7 @@ namespace shedule
                     return;
                 }
 
-                if (int.Parse(tbKassirCount.Text) >3)
+                if (int.Parse(tbKassirCount.Text) > 3)
                 {
                     MessageBox.Show("Не оптимальное количество. Допустимо 1 или 2.");
                     tbKassirCount.Text = "";
@@ -2890,25 +2896,25 @@ namespace shedule
 
         }
 
-   /*     private void tbLastHour_TextChanged(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(tbLastHour.Text))
-            {
-                if (int.Parse(tbLastHour.Text) < 7 || int.Parse(tbLastHour.Text) > 10)
-                {
-                    MessageBox.Show("Введите число от 7 до 10");
-                    tbLastHour.Text = "";
-                    return;
-                }
-                int lastHour;
-                if (int.TryParse(tbLastHour.Text, out lastHour))
-                {
+        /*     private void tbLastHour_TextChanged(object sender, EventArgs e)
+             {
+                 if (!String.IsNullOrEmpty(tbLastHour.Text))
+                 {
+                     if (int.Parse(tbLastHour.Text) < 7 || int.Parse(tbLastHour.Text) > 10)
+                     {
+                         MessageBox.Show("Введите число от 7 до 10");
+                         tbLastHour.Text = "";
+                         return;
+                     }
+                     int lastHour;
+                     if (int.TryParse(tbLastHour.Text, out lastHour))
+                     {
 
-                    Program.currentShop.minrab.setTime(lastHour);
-                }
+                         Program.currentShop.minrab.setTime(lastHour);
+                     }
 
-            }
-        }*/
+                 }
+             }*/
 
         private void ChangeLabel3Text(string text)
         {
@@ -2950,7 +2956,7 @@ namespace shedule
             {
                 bw.ReportProgress(0);
                 bw.CancelAsync();
-                
+
             }
 
             if (bw1.IsBusy)
@@ -2958,7 +2964,7 @@ namespace shedule
                 bw1.ReportProgress(0);
                 bw1.CancelAsync();
             }
-            
+
             errorOnExecuting = true;
         }
 
@@ -3362,20 +3368,21 @@ namespace shedule
             String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/Prilavki";
             if (checkBox1.Checked)
             {
-               // MessageBox.Show("Число продавцов стало зависить от прилавков");
-             
-                Program.currentShop.prilavki.SetNalichie( true);
+                // MessageBox.Show("Число продавцов стало зависить от прилавков");
+
+                Program.currentShop.prilavki.SetNalichie(true);
                 label19.Visible = true;
                 textBox6.Visible = true;
-                }
-            else {
+            }
+            else
+            {
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
                     sw.WriteLine(false);
                     Program.HandledShops.Add(Program.currentShop.getIdShop());
                     UpdateStatusShops();
                 }
-                Program.currentShop.prilavki.SetNalichie( false);
+                Program.currentShop.prilavki.SetNalichie(false);
                 label19.Visible = false;
                 textBox6.Visible = false;
             }
@@ -3444,7 +3451,7 @@ namespace shedule
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            if (int.Parse(textBox5.Text) <7 || int.Parse(textBox3.Text) > 10)
+            if (int.Parse(textBox5.Text) < 7 || int.Parse(textBox3.Text) > 10)
             {
                 MessageBox.Show("Введите число от 7 до 10");
                 textBox5.Text = "";
@@ -3452,38 +3459,38 @@ namespace shedule
             }
         }
 
-     /*   private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(tbLastHour.Text))
-            {
-                if (int.Parse(textBox6.Text) < 0 || int.Parse(textBox6.Text) > 10)
-                {
-                    MessageBox.Show("Введите число продавцов от 1 до 10");
-                    textBox6.Text = "";
-                    return;
-                }
-            }
-        }*/
+        /*   private void textBox6_TextChanged(object sender, EventArgs e)
+           {
+               if (!String.IsNullOrEmpty(tbLastHour.Text))
+               {
+                   if (int.Parse(textBox6.Text) < 0 || int.Parse(textBox6.Text) > 10)
+                   {
+                       MessageBox.Show("Введите число продавцов от 1 до 10");
+                       textBox6.Text = "";
+                       return;
+                   }
+               }
+           }*/
 
         private void textBox6_CursorChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void tbLastHour_CursorChanged(object sender, EventArgs e)
         {
-           
-            
+
+
         }
 
         private void tbLastHour_MouseLeave(object sender, EventArgs e)
         {
-            
+
         }
 
         private void textBox6_MouseLeave(object sender, EventArgs e)
         {
-           
+
         }
 
         private void textBox6_Leave(object sender, EventArgs e)
@@ -3527,6 +3534,52 @@ namespace shedule
                 tbKassirCount.Text = "1";
             }
         }
+
+        #region Сортировка бокса с магазинами
+
+        private void bAlphabetSort_Click(object sender, EventArgs e)
+        {
+            bNumberSort.Enabled = true;
+            bAlphabetSort.Enabled = false;
+            listBox1List.Sort((x1, x2) => x1.Item2.CompareTo(x2.Item2));
+            FillListBox(listBox1List, listBox1);
+        }
+
+        private void bNumberSort_Click(object sender, EventArgs e)
+        {
+            bAlphabetSort.Enabled = true;
+            bNumberSort.Enabled = false;
+            listBox1List.Sort((x1, x2) => x1.Item1.CompareTo(x2.Item1));
+            FillListBox(listBox1List, listBox1);
+        }
+
+        private void bAlphabetSortM_Click(object sender, EventArgs e)
+        {
+            bNumberSortM.Enabled = true;
+            bAlphabetSortM.Enabled = false;
+            listBox1List.Sort((x1, x2) => x1.Item2.CompareTo(x2.Item2));
+            FillListBox(listBox1List, listBoxMShops);
+        }
+
+        private void bNumberSortM_Click(object sender, EventArgs e)
+        {
+            bAlphabetSortM.Enabled = true;
+            bNumberSortM.Enabled = false;
+            listBox1List.Sort((x1, x2) => x1.Item1.CompareTo(x2.Item1));
+            FillListBox(listBox1List, listBoxMShops);
+        }
+
+        private void FillListBox(List<Tuple<string, string>> listForFilling, System.Windows.Forms.ListBox box)
+        {
+            box.Items.Clear();
+            foreach (var listItem in listForFilling)
+            {
+                box.Items.Add($"{listItem.Item1}_{listItem.Item2}");
+            }
+        }
+
+        #endregion
+
     }
 }
 
