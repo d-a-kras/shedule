@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using shedule.Code;
 
 namespace shedule
 {
@@ -17,12 +18,33 @@ namespace shedule
         private int calendarYear;
         private int EditCell;
 
+        private Shop handledShop;
+
         public Form4(int year)
         {
             InitializeComponent();
+
+            if (Helper.CheckNextYearCalendarIsExist() || DateTime.Now.Year != year)
+            {
+                buttonCalendarNextYear.Visible = true;
+
+                if (DateTime.Now.Year == year)
+                {
+                    buttonCalendarNextYear.Text = (year + 1).ToString();
+                }
+                else
+                {
+                    buttonCalendarNextYear.Text = year.ToString();
+                    handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+                    CalendarHelper.GetListDateForShop(handledShop, year);
+                }
+            }
+            
             _checkedLabels = new List<Label>();
             comboBox1.SelectedIndex = 0;
             calendarYear = year;
+
+            
         }
 
 
@@ -529,7 +551,14 @@ namespace shedule
 
         private void buttonCalendarNextYear_Click(object sender, EventArgs e)
         {
-
+            int newFormYear = calendarYear;
+            if (DateTime.Now.Year == calendarYear)
+            {
+                newFormYear += 1;
+            }
+            Form4 form = new Form4(newFormYear);
+            form.Show();
+            this.Dispose(false);
         }
     }
 }

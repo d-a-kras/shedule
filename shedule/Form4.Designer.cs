@@ -587,12 +587,11 @@
             this.buttonCalendarNextYear.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.buttonCalendarNextYear.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.buttonCalendarNextYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonCalendarNextYear.Location = new System.Drawing.Point(823, 605);
+            this.buttonCalendarNextYear.Location = new System.Drawing.Point(791, 610);
             this.buttonCalendarNextYear.Name = "buttonCalendarNextYear";
-            this.buttonCalendarNextYear.Size = new System.Drawing.Size(43, 34);
+            this.buttonCalendarNextYear.Size = new System.Drawing.Size(64, 36);
             this.buttonCalendarNextYear.TabIndex = 40;
             this.buttonCalendarNextYear.Text = "2018";
-            this.buttonCalendarNextYear.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonCalendarNextYear.UseVisualStyleBackColor = false;
             this.buttonCalendarNextYear.Visible = false;
             this.buttonCalendarNextYear.Click += new System.EventHandler(this.buttonCalendarNextYear_Click);
