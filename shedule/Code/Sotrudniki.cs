@@ -170,7 +170,7 @@ namespace shedule.Code
                 }
                 else { KP = Program.KoefKassira; }
                 DateTime dt = DateTime.Today;
-                Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
+                 Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
                 
               
                 int ob = 0;
