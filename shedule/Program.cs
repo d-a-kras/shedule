@@ -2988,7 +2988,7 @@ namespace shedule
             }
             return dt;
         }
-
+        
         static public void getListDate(int year)
         {
             try
@@ -3502,9 +3502,18 @@ namespace shedule
             Application.Run(new Form1());
 
             Helper.CheckAndDownloadNextYearCalendar();
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
+        static void OnProcessExit(object sender, EventArgs e)
+        {
+            try
+            {
+                Helper.KillExcels();
+            }
+            catch{}
 
+        }
 
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -130,7 +131,7 @@ namespace shedule.Code
                 WebResponse response = request.GetResponse();
                 Stream dataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream);
-                var responseFromServer=reader.ReadToEnd();
+                var responseFromServer = reader.ReadToEnd();
                 reader.Close();
 
                 using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
@@ -138,8 +139,8 @@ namespace shedule.Code
                     sw.Write(responseFromServer);
                 }
             }
-            catch{}
-            
+            catch { }
+
         }
 
         public static bool CheckNextYearCalendarIsExist()
@@ -164,7 +165,7 @@ namespace shedule.Code
                     "factors"
                 }
             };
-            
+
             List<string> xlsParts = new List<string>
             {
                 {
@@ -194,7 +195,7 @@ namespace shedule.Code
                             Program.HandledShops.Add(s.getIdShop());
                         }
                     }
-                    
+
                 }
             }
             else
@@ -213,7 +214,33 @@ namespace shedule.Code
                     }
                 }
             }
-            
+
+        }
+
+        /// <summary>
+        /// Пытаемся убить долбаные эксели
+        /// </summary>
+        /// <param name="excelFileName"></param>
+        public static void KillExcels(string excelFileName = "")
+        {
+            var processes = from p in Process.GetProcessesByName("EXCEL") select p;
+
+            //лень думать, пусть будут разные форычи
+            if (excelFileName != "")
+            {
+                foreach (var process in processes)
+                {
+                    if (process.MainWindowTitle == "Microsoft Excel - " + excelFileName)
+                        process.Kill();
+                }
+            }
+            else
+            {
+                foreach (var process in processes)
+                {
+                    process.Kill();
+                }
+            }
         }
     }
 }
