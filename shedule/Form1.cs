@@ -419,26 +419,26 @@ namespace shedule
 
                                 bg.ReportProgress(12);
 
-                                Excel.Range chartRange1;
-
-
-
-
-                                Excel.ChartObjects xlCharts = (Excel.ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
-
-                                Excel.ChartObject myChart = (Excel.ChartObject)xlCharts.Add(20, 80, 300, 250);
+                                Range chartRange1;
+                                ChartObjects xlCharts = (ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
+                                ChartObject myChart = (ChartObject)xlCharts.Add(20, 80, 300, 250);
+                                
                                 //myChart.Legends.Add(new Legend("Legend2"));
-
-                                Excel.Chart chartPage = myChart.Chart;
-
-
-
+                                Chart chartPage = myChart.Chart;
+                                chartPage.ChartType = XlChartType.xlLineMarkers;
                                 chartRange1 = ObjWorkSheet.get_Range("a1", "p3");
                                 // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
-
+                                
                                 chartPage.SetSourceData(chartRange1, misValue);
 
-                                chartPage.ChartType = Excel.XlChartType.xlLineMarkers;
+                                Excel.Range axis_range = ObjWorkSheet.get_Range("A1", "P1");
+                                Excel.Series series = (Excel.Series)chartPage.SeriesCollection(2);
+                                series.XValues = axis_range;
+                                chartPage.Legend.Clear();
+
+                                var serie = (SeriesCollection)chartPage.SeriesCollection();
+                                serie.Item(1).Delete();
+
 
                                 i++;
                             }
