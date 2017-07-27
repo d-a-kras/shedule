@@ -434,7 +434,12 @@ namespace shedule
                                 Excel.Range axis_range = ObjWorkSheet.get_Range("A1", "P1");
                                 Excel.Series series = (Excel.Series)chartPage.SeriesCollection(2);
                                 series.XValues = axis_range;
-                                chartPage.Legend.Clear();
+
+                                Excel.Series series0 = (Excel.Series)chartPage.SeriesCollection(2);
+                                series0.Name = "Чеки";
+
+                                Excel.Series series1 = (Excel.Series)chartPage.SeriesCollection(3);
+                                series1.Name = "Клики";
 
                                 var serie = (SeriesCollection)chartPage.SeriesCollection();
                                 serie.Item(1).Delete();
