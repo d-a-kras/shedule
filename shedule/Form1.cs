@@ -1123,7 +1123,7 @@ namespace shedule
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            lbCurrentVersion.Text = $"v {Code.Constants.Version} от {DateTime.Now.Date.ToString("dd.MM.yyyy")} ";
+            lbCurrentVersion.Text = $"v {Code.Constants.Version} от {Code.Constants.ReleaseDate} ";
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
             bw.DoWork += bw_DoWork;
