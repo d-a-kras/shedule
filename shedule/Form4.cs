@@ -224,10 +224,10 @@ namespace shedule
         {
             if (_handledShop.RaznChas != 0)
             {
-                if (_handledShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов. Добавьте " + _handledShop.RaznChas + " в месяц, где не более 168 "); }
+                if (_handledShop.RaznChas > 0) { MessageBox.Show("Несоответствие в норме часов. Добавьте " + _handledShop.RaznChas + " в месяц, где не более "+(180- _handledShop.RaznChas)); }
                 else
                 {
-                    MessageBox.Show("Несоответствие в норме часов уменьшите на " + Math.Abs(_handledShop.RaznChas) + " в каком-либо месяце ");
+                    MessageBox.Show("Несоответствие в норме часов. Уменьшите на " + Math.Abs(_handledShop.RaznChas) + " в каком-нибудь месяце. ");
 
                 }
             }
