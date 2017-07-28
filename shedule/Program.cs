@@ -1251,6 +1251,11 @@ namespace shedule
             this.idFM = x;
         }
 
+        public void setAdresShop(string x)
+        {
+            this.address = x;
+        }
+
     }
 
     public class TSR
@@ -1711,7 +1716,7 @@ namespace shedule
 
         static public void ReadNarmaChas() {
 
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\NormaChas";
+            String readPath = Environment.CurrentDirectory   + @"\NormaChas";
             if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
@@ -1823,7 +1828,7 @@ namespace shedule
         static public void WriteNormChas()
         {
             
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\NormaChas";
+            String readPath = Environment.CurrentDirectory + @"\NormaChas";
            
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
@@ -2344,20 +2349,23 @@ namespace shedule
                     createListDaySale(d2, ydt, currentShop.getIdShop());
                 }
             }
-            
-            
 
-            //     }
-            //   else if(ExistFile) {
-            //        SozdanPrognoz = ExistFile;
+            if ((isMp)&&(isOffline))
+            {
+                createListDaySale(d2, ydt, currentShop.getIdShopFM());
+            }
 
-            //  }
-            //    else
-            //   {
-            //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
-            //      }
+                //     }
+                //   else if(ExistFile) {
+                //        SozdanPrognoz = ExistFile;
 
-            foreach (daySale ds in currentShop.daysSale)
+                //  }
+                //    else
+                //   {
+                //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
+                //      }
+
+                foreach (daySale ds in currentShop.daysSale)
             {
                 ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
 

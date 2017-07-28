@@ -144,6 +144,9 @@
             this.dataGridViewCalendar.TabIndex = 10;
             this.dataGridViewCalendar.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridViewCalendar_CellBeginEdit);
             this.dataGridViewCalendar.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellEndEdit);
+            this.dataGridViewCalendar.CellErrorTextChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellErrorTextChanged);
+            //this.dataGridViewCalendar.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellValueChanged);
+            this.dataGridViewCalendar.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewCalendar_DataError);
             // 
             // label3
             // 

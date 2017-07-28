@@ -161,7 +161,7 @@ namespace shedule
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
                             CloseProcessOnError();
-                            throw ex;
+                           // throw ex;
 
                         }
                         System.Drawing.Color color;
@@ -1803,6 +1803,7 @@ namespace shedule
         private void buttonSingleShop_Click(object sender, EventArgs e)
         {
             panelSingleShop.BringToFront();
+            tabControl1.Visible = false;
             Program.IsMpRezhim = false;
             //Program.shops = new List<Shop>();
         }
@@ -2377,6 +2378,7 @@ namespace shedule
                 shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setMinRab(shop.minrab);
+                Program.currentShop.setAdresShop(shop.getAddress());
 
                 Program.ReadPrilavki();
                 if (Program.currentShop.VarSmens.Count == 0)
@@ -2397,7 +2399,7 @@ namespace shedule
                             try
                             {
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
-                                lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
+                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
                                 Program.createPrognoz(Program.IsMpRezhim);
 
@@ -2465,7 +2467,7 @@ namespace shedule
                                 i++;
                             }
                             Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
+                          //  excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
                             bg.ReportProgress(12);
 
 
@@ -2551,7 +2553,7 @@ namespace shedule
                                 i++;
                             }
                             Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
-                            excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
+                            //excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
 
                             bg.ReportProgress(16);
 
@@ -3585,6 +3587,17 @@ namespace shedule
 
         #endregion
 
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void textBox6_MouseClick(object sender, MouseEventArgs e)
+        {
+            textBox6.SelectionStart = 0;
+            textBox6.SelectionLength = textBox6.Text.Length;
+            textBox6.Focus();
+        }
     }
 }
 

@@ -545,7 +545,7 @@ namespace shedule
             int newZn;
             if (int.TryParse(dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out newZn))
             {
-                if (newZn > 176) { MessageBox.Show("Введите число не более 176"); dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell; }
+                if (newZn > 180) { MessageBox.Show("Введите число не более 180"); dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell; }
                 else
                 {
                     _handledShop.RaznChas += EditCell - newZn;
@@ -578,6 +578,21 @@ namespace shedule
             }
             Form4 form = new Form4(newFormYear);
             form.ShowDialog();
+        }
+
+     
+
+        private void dataGridViewCalendar_CellErrorTextChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            
+               
+            
+        }
+
+        private void dataGridViewCalendar_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("Нужно вводить число");
+           
         }
     }
 }
