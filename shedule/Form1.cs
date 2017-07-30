@@ -3598,6 +3598,54 @@ namespace shedule
             textBox6.SelectionLength = textBox6.Text.Length;
             textBox6.Focus();
         }
+
+        int hoveredIndex = -1;
+
+        private void listBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                int newHoveredIndex = 0;
+
+                System.Windows.Forms.ListBox senderListBox;
+                senderListBox = sender as System.Windows.Forms.ListBox;
+                if (senderListBox != null)
+                {
+                    switch (senderListBox.Name)
+                    {
+                        case "listBox1":
+                            newHoveredIndex = listBox1.IndexFromPoint(e.Location);
+                            break;
+                        case "listBoxMShops":
+                            newHoveredIndex = listBoxMShops.IndexFromPoint(e.Location);
+                            break;
+                        case "listBoxMPartShops":
+                            newHoveredIndex = listBoxMPartShops.IndexFromPoint(e.Location);
+                            break;
+                    }
+
+                    // If the row has changed since last moving the mouse:
+                    if (hoveredIndex != newHoveredIndex)
+                    {
+                        // Change the variable for the next timw we move the mouse:
+                        hoveredIndex = newHoveredIndex;
+
+                        // If over a row showing data (rather than blank space):
+                        if (hoveredIndex > -1)
+                        {
+                            //Set tooltip text for the row now under the mouse:
+                            toolTip1.Active = false;
+                            toolTip1.SetToolTip(senderListBox, (senderListBox.Items[hoveredIndex]).ToString());
+                            toolTip1.Active = true;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+               Console.WriteLine("ERROR: Не удалось показать ToolTip");
+            }
+        }
     }
 }
 

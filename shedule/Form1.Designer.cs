@@ -153,6 +153,7 @@
             this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -231,6 +232,7 @@
             this.listBox1.Size = new System.Drawing.Size(176, 329);
             this.listBox1.TabIndex = 9;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
             // 
             // labelStatus1
             // 
@@ -328,6 +330,7 @@
             this.listBoxMPartShops.Name = "listBoxMPartShops";
             this.listBoxMPartShops.Size = new System.Drawing.Size(120, 342);
             this.listBoxMPartShops.TabIndex = 1;
+            this.listBoxMPartShops.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
             // 
             // tabControl2
             // 
@@ -681,6 +684,7 @@
             this.listBoxMShops.Name = "listBoxMShops";
             this.listBoxMShops.Size = new System.Drawing.Size(120, 342);
             this.listBoxMShops.TabIndex = 0;
+            this.listBoxMShops.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
             // 
             // panelSingleShop
             // 
@@ -1469,8 +1473,8 @@
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
-            this.Controls.Add(this.panelSingleShop);
             this.Controls.Add(this.panelMultShops);
+            this.Controls.Add(this.panelSingleShop);
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -1644,6 +1648,7 @@
         private System.Windows.Forms.Button bAlphabetSort;
         private System.Windows.Forms.Button bNumberSortM;
         private System.Windows.Forms.Button bAlphabetSortM;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
