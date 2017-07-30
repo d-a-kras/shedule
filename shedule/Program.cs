@@ -15,6 +15,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Xml.Linq;
 using System.Net.Mail;
 using shedule.Code;
+using System.Runtime.Serialization.Formatters.Binary;
 
 //DataVisualization.Charting.SeriesChartType.Renko
 //Excel.XlChartType.xlLineMarker
@@ -1445,6 +1446,7 @@ namespace shedule
 
     }
 
+    [Serializable]
     public class daySale
     {
         public List<hourSale> hoursSale;
@@ -2322,6 +2324,35 @@ namespace shedule
 
         }
 
+        public static void readDays8and9()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
+            {
+                List<daySale> days89 = (List<daySale>)formatter.Deserialize(fs);
+
+                currentShop.daysSale.AddRange(days89);
+         
+            }
+
+        }
+
+        public static void createListDays8and9()
+        {
+            List<daySale> days89 = new List<daySale>();
+
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
+            {
+                // сериализуем весь массив people
+                formatter.Serialize(fs, days89);
+
+                Console.WriteLine("Объект сериализован");
+            }
+
+        }
 
 
         public static void createPrognoz(bool isMp = false)
@@ -2355,21 +2386,29 @@ namespace shedule
                 createListDaySale(d2, ydt, currentShop.getIdShopFM());
             }
 
-                //     }
-                //   else if(ExistFile) {
-                //        SozdanPrognoz = ExistFile;
+            //     }
+            //   else if(ExistFile) {
+            //        SozdanPrognoz = ExistFile;
 
-                //  }
-                //    else
-                //   {
-                //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
-                //      }
+            //  }
+            //    else
+            //   {
+            //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
+            //      }
 
-                foreach (daySale ds in currentShop.daysSale)
+           
+
+            foreach (daySale ds in currentShop.daysSale)
             {
                 ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
 
 
+            }
+
+            if ((tdt.Month == 0) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 5) || (tdt.Month == 4))
+            {
+
+                readDays8and9();
             }
 
             for (int i = 1; i < 10; i++)
