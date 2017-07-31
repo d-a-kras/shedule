@@ -962,9 +962,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);

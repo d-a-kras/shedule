@@ -196,7 +196,7 @@ namespace shedule.Code
                 
                 List<TSR> LProd = Program.currentShop.tsr.FindAll(t => t.getTip() == 2);
                 List<TSR> LKass = Program.currentShop.tsr.FindAll(t => t.getTip() == 1);
-                List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getTip() == 4);
+                List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gastr");
                 int CountProd=0;
                 int CountGastr = 0;
 
@@ -338,7 +338,7 @@ namespace shedule.Code
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
-                        CountProd--; i++;
+                        CountGastr--; i++;
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         flaggastr2 = true;
@@ -348,7 +348,7 @@ namespace shedule.Code
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -2, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
-                        CountProd--; i++;
+                        CountGastr--; i++;
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         flaggastr3 = true;

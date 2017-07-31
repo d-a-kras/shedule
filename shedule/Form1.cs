@@ -2891,7 +2891,7 @@ namespace shedule
 
                 if (int.Parse(tbKassirCount.Text) > 3)
                 {
-                    MessageBox.Show("Не оптимальное количество. Допустимо 1 или 2.");
+                    MessageBox.Show("Не оптимальное количество. Допустимо 1, 2 или 3.");
                     tbKassirCount.Text = "";
                     return;
                 }
@@ -2904,6 +2904,9 @@ namespace shedule
 
                 }
 
+            }
+            else {
+                Program.currentShop.minrab.setMinCount(1);
             }
 
         }
@@ -3542,8 +3545,8 @@ namespace shedule
         {
             if (tbKassirCount.Text == "")
             {
-                MessageBox.Show("Число кассиров не может быть пустым!");
-                tbKassirCount.Text = "1";
+              
+                tbKassirCount.Text = "";
             }
         }
 

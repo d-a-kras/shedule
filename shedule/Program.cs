@@ -2342,14 +2342,15 @@ namespace shedule
             List<VarSmen> lvs = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
             List<TSR> LGruz = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz");        
             List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getTip() == 4);
-
-            if (((lvs.Find(t => t.getR() == 2)!=null && (lvs.Find(t => t.getR() == 3)!=null)) && lvs.Count == 2)&&((LGruz.Count%2!=0)||(LGastr.Count%2!=0))) {
-                MessageBox.Show("Выбраны только смены 2/2 и 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно вариалт смены или сделайте число сотрудников четным");
+            int CountGruz = LGruz.Sum(o => o.getCount());
+            int CountGastr = LGastr.Sum(o => o.getCount());
+            if (((lvs.Find(t => t.getR() == 2)!=null && (lvs.Find(t => t.getR() == 3)!=null)) && lvs.Count == 2)&&((CountGruz%2!=0)||(CountGastr%2!=0))) {
+                MessageBox.Show("Выбраны только смены 2/2 и 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно варианты смен или сделайте число сотрудников четным");
                 return false;
             }
-            if (((lvs.Find(t => t.getR() == 2) != null || (lvs.Find(t => t.getR() == 3) != null)) && lvs.Count == 2) && ((LGruz.Count % 2 != 0) || (LGastr.Count % 2 != 0)))
+            if (((lvs.Find(t => t.getR() == 2) != null || (lvs.Find(t => t.getR() == 3) != null)) && lvs.Count == 2) && ((CountGruz % 2 != 0) || (CountGastr % 2 != 0)))
             {
-                MessageBox.Show("Выбранf только смена 2/2 или 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно вариалт смены или сделайте число сотрудников четным");
+                MessageBox.Show("Выбранf только смена 2/2 или 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно вариаты смен или сделайте число сотрудников четным");
                 return false;
             }
 
