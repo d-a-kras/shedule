@@ -98,9 +98,6 @@
             this.panelCalendar = new System.Windows.Forms.Panel();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.panelTRasp = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.buttonTSRPG = new System.Windows.Forms.Button();
             this.buttonPTSR = new System.Windows.Forms.Button();
             this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
@@ -123,9 +120,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbLastHour = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.tbKassirCount = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dataGridViewVarSmen = new System.Windows.Forms.DataGridView();
@@ -154,6 +148,10 @@
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -901,9 +899,6 @@
             // 
             // panelTRasp
             // 
-            this.panelTRasp.Controls.Add(this.label19);
-            this.panelTRasp.Controls.Add(this.textBox6);
-            this.panelTRasp.Controls.Add(this.checkBox1);
             this.panelTRasp.Controls.Add(this.buttonTSRPG);
             this.panelTRasp.Controls.Add(this.buttonPTSR);
             this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
@@ -911,41 +906,6 @@
             this.panelTRasp.Name = "panelTRasp";
             this.panelTRasp.Size = new System.Drawing.Size(437, 266);
             this.panelTRasp.TabIndex = 4;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(26, 238);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(123, 13);
-            this.label19.TabIndex = 4;
-            this.label19.Text = "Количество прилавков";
-            this.label19.Visible = false;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(155, 235);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(30, 20);
-            this.textBox6.TabIndex = 3;
-            this.textBox6.Visible = false;
-            this.textBox6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox6_MouseClick);
-            this.textBox6.CursorChanged += new System.EventHandler(this.textBox6_CursorChanged);
-            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
-            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox6_KeyPress);
-            this.textBox6.Leave += new System.EventHandler(this.textBox6_Leave);
-            this.textBox6.MouseLeave += new System.EventHandler(this.textBox6_MouseLeave);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(26, 207);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(126, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Наличие прилавков";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // buttonTSRPG
             // 
@@ -1103,6 +1063,10 @@
             // 
             // panelDopusVarSmen
             // 
+            this.panelDopusVarSmen.Controls.Add(this.label19);
+            this.panelDopusVarSmen.Controls.Add(this.label18);
+            this.panelDopusVarSmen.Controls.Add(this.label8);
+            this.panelDopusVarSmen.Controls.Add(this.label7);
             this.panelDopusVarSmen.Controls.Add(this.label15);
             this.panelDopusVarSmen.Controls.Add(this.textBox5);
             this.panelDopusVarSmen.Controls.Add(this.textBox4);
@@ -1110,9 +1074,6 @@
             this.panelDopusVarSmen.Controls.Add(this.label12);
             this.panelDopusVarSmen.Controls.Add(this.textBox3);
             this.panelDopusVarSmen.Controls.Add(this.button10);
-            this.panelDopusVarSmen.Controls.Add(this.label8);
-            this.panelDopusVarSmen.Controls.Add(this.tbLastHour);
-            this.panelDopusVarSmen.Controls.Add(this.label7);
             this.panelDopusVarSmen.Controls.Add(this.tbKassirCount);
             this.panelDopusVarSmen.Controls.Add(this.label6);
             this.panelDopusVarSmen.Controls.Add(this.dataGridViewVarSmen);
@@ -1120,7 +1081,7 @@
             this.panelDopusVarSmen.Controls.Add(this.buttonAplyVarSmen);
             this.panelDopusVarSmen.Location = new System.Drawing.Point(3, 57);
             this.panelDopusVarSmen.Name = "panelDopusVarSmen";
-            this.panelDopusVarSmen.Size = new System.Drawing.Size(477, 245);
+            this.panelDopusVarSmen.Size = new System.Drawing.Size(480, 245);
             this.panelDopusVarSmen.TabIndex = 2;
             // 
             // label15
@@ -1192,40 +1153,11 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click_1);
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(413, 93);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(36, 13);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "часов";
-            // 
-            // tbLastHour
-            // 
-            this.tbLastHour.Location = new System.Drawing.Point(382, 90);
-            this.tbLastHour.Name = "tbLastHour";
-            this.tbLastHour.Size = new System.Drawing.Size(29, 20);
-            this.tbLastHour.TabIndex = 6;
-            this.tbLastHour.CursorChanged += new System.EventHandler(this.tbLastHour_CursorChanged);
-            this.tbLastHour.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLastHour_KeyPress);
-            this.tbLastHour.Leave += new System.EventHandler(this.tbLastHour_Leave);
-            this.tbLastHour.MouseLeave += new System.EventHandler(this.tbLastHour_MouseLeave);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(363, 93);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(19, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "до";
-            // 
             // tbKassirCount
             // 
-            this.tbKassirCount.Location = new System.Drawing.Point(364, 65);
+            this.tbKassirCount.Location = new System.Drawing.Point(413, 41);
             this.tbKassirCount.Name = "tbKassirCount";
-            this.tbKassirCount.Size = new System.Drawing.Size(100, 20);
+            this.tbKassirCount.Size = new System.Drawing.Size(22, 20);
             this.tbKassirCount.TabIndex = 4;
             this.tbKassirCount.TextChanged += new System.EventHandler(this.tbKassirCount_TextChanged);
             this.tbKassirCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbKassirCount_KeyPress);
@@ -1236,9 +1168,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(360, 49);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(114, 13);
+            this.label6.Size = new System.Drawing.Size(56, 13);
             this.label6.TabIndex = 3;
-            this.label6.Text = "Мин. число кассиров";
+            this.label6.Text = "Не менее";
             // 
             // dataGridViewVarSmen
             // 
@@ -1459,6 +1391,44 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(440, 49);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "чел.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(360, 67);
+            this.label8.Name = "label8";
+            this.label8.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label8.Size = new System.Drawing.Size(108, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "касиров с времени ";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(360, 87);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(85, 13);
+            this.label18.TabIndex = 17;
+            this.label18.Text = "начала работы ";
+            this.label18.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(360, 105);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(59, 13);
+            this.label19.TabIndex = 18;
+            this.label19.Text = "магазина.";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1504,7 +1474,6 @@
             this.panelKassOper.PerformLayout();
             this.panelCalendar.ResumeLayout(false);
             this.panelTRasp.ResumeLayout(false);
-            this.panelTRasp.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.panelUpravlenie.ResumeLayout(false);
@@ -1613,9 +1582,6 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox tbLastHour;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbKassirCount;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbProgressMessages;
@@ -1639,16 +1605,17 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label lbCurrentVersion;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox textBox6;
         public System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button bNumberSort;
         private System.Windows.Forms.Button bAlphabetSort;
         private System.Windows.Forms.Button bNumberSortM;
         private System.Windows.Forms.Button bAlphabetSortM;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label19;
     }
 }
 

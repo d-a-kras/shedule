@@ -1199,12 +1199,12 @@ namespace shedule
             if (Program.currentShop.minrab.getOtobragenie())
             {
                 tbKassirCount.Text = Program.currentShop.minrab.getMinCount().ToString();
-                tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
+               // tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
             }
             else
             {
                 tbKassirCount.Text = "";
-                tbLastHour.Text = "";
+               // tbLastHour.Text = "";
             }
             // Program.ReadMinRab();
 
@@ -1718,8 +1718,8 @@ namespace shedule
             panelTRasp.BringToFront();
             dataGridViewForTSR.DataSource = viewTSR();
             dataGridViewForTSR.Columns[0].ReadOnly = true;
-            textBox6.Text = Program.currentShop.prilavki.GetCount().ToString();
-            checkBox1.Checked = Program.currentShop.prilavki.GetNalichie();
+            //textBox6.Text = Program.currentShop.prilavki.GetCount().ToString();
+            //checkBox1.Checked = Program.currentShop.prilavki.GetNalichie();
 
 
         }
@@ -1735,17 +1735,9 @@ namespace shedule
 
         private void buttonPTSR_Click(object sender, EventArgs e)
         {
-            if (textBox6.Text != "")
-            {
-                Program.currentShop.prilavki.SetCount(int.Parse(textBox6.Text));
-            }
-            else
-            {
-                Program.currentShop.prilavki.SetCount(0);
-            }
-            Program.currentShop.prilavki.SetNalichie(checkBox1.Checked);
+           
             Program.WriteTSR();
-            Program.WritePrilavki();
+           // Program.WritePrilavki();
             MessageBox.Show("Данные сохранены");
         }
 
@@ -1948,6 +1940,7 @@ namespace shedule
                 case 0:
                     saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(1).Month);
+
                     Program.TipExporta = 0;
                     break;
                 case 1:
@@ -1991,8 +1984,15 @@ namespace shedule
                 progressBar1.Minimum = 0;
                 progressBar1.Step = 2;
                 ReadTipOptimizacii();
-
-                bw.RunWorkerAsync();
+                if (Program.CheckDlinaDnya()&&Program.CheckParnSmen())
+                {
+                    bw.RunWorkerAsync();
+                }
+                else {
+                   
+                    progressBar1.Visible = false;
+                    listBox1.Enabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -2206,12 +2206,12 @@ namespace shedule
             if (Program.currentShop.minrab.getOtobragenie())
             {
                 tbKassirCount.Text = Program.currentShop.minrab.getMinCount().ToString();
-                tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
+               // tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
             }
             else
             {
                 tbKassirCount.Text = "";
-                tbLastHour.Text = "";
+               // tbLastHour.Text = "";
             }
 
             button7.BackColor = Color.MistyRose;
@@ -3377,14 +3377,14 @@ namespace shedule
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/Prilavki";
+          /*  String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/Prilavki";
             if (checkBox1.Checked)
             {
                 // MessageBox.Show("Число продавцов стало зависить от прилавков");
 
                 Program.currentShop.prilavki.SetNalichie(true);
-                label19.Visible = true;
-                textBox6.Visible = true;
+                //label19.Visible = true;
+                //textBox6.Visible = true;
             }
             else
             {
@@ -3397,7 +3397,7 @@ namespace shedule
                 Program.currentShop.prilavki.SetNalichie(false);
                 label19.Visible = false;
                 textBox6.Visible = false;
-            }
+            }*/
         }
 
         private void button12_Click_2(object sender, EventArgs e)
@@ -3507,7 +3507,7 @@ namespace shedule
 
         private void textBox6_Leave(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(tbLastHour.Text))
+          /*  if (!String.IsNullOrEmpty(tbLastHour.Text))
             {
                 if (int.Parse(textBox6.Text) < 0 || int.Parse(textBox6.Text) > 10)
                 {
@@ -3515,12 +3515,12 @@ namespace shedule
                     textBox6.Text = "";
                     return;
                 }
-            }
+            }*/
         }
 
         private void tbLastHour_Leave(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(tbLastHour.Text))
+          /*  if (!String.IsNullOrEmpty(tbLastHour.Text))
             {
                 if (int.Parse(tbLastHour.Text) < 7 || int.Parse(tbLastHour.Text) > 10)
                 {
@@ -3535,7 +3535,7 @@ namespace shedule
                     Program.currentShop.minrab.setTime(lastHour);
                 }
 
-            }
+            }*/
         }
 
         private void tbKassirCount_Leave(object sender, EventArgs e)
@@ -3599,9 +3599,9 @@ namespace shedule
 
         private void textBox6_MouseClick(object sender, MouseEventArgs e)
         {
-            textBox6.SelectionStart = 0;
+          /*  textBox6.SelectionStart = 0;
             textBox6.SelectionLength = textBox6.Text.Length;
-            textBox6.Focus();
+            textBox6.Focus();*/
         }
 
         int hoveredIndex = -1;
@@ -3650,6 +3650,11 @@ namespace shedule
             {
                Console.WriteLine("ERROR: Не удалось показать ToolTip");
             }
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

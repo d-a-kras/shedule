@@ -111,12 +111,20 @@ namespace shedule
         int TimeBegin;
         int TimeEnd;
 
+        public int getMonth() { return this.Data.Month; }
+
         public int getTimeStart() { return this.TimeBegin; }
 
         public int getTimeEnd()
         {
 
             return this.TimeEnd;
+        }
+
+        public int getLenght()
+        {
+
+            return (this.TimeEnd-this.getTimeStart());
         }
 
         public void setTimeBaE(int b, int e)
@@ -685,7 +693,9 @@ namespace shedule
         public int minKassVech;
         public int minProdUtr;
         public int minProdVech;
-        public int TimePrih;
+        public int minGastrUtr;
+        public int minGastrVech;
+       
 
         public ForChart Chart;
 
@@ -696,8 +706,15 @@ namespace shedule
             this.minKassUtr = m;
             this.minProdUtr = m;
             this.minKassVech = m;
-            this.minProdVech = m;
-            this.TimePrih = t;
+            if (m>1) {
+                this.minProdVech = m-1;
+            } else
+            {
+                this.minProdVech = m;
+            }
+            this.minGastrUtr = 1;
+            this.minGastrVech = 1;
+            
         }
 
         public void mMinCountKassUtr()
@@ -1349,11 +1366,15 @@ namespace shedule
                 switch (this.position)
                 {
                     case "kass1": this.tip = 1; return this.tip;
+                    case "kass": this.tip = 1; return this.tip;
                     case "kass2": this.tip = 1; return this.tip;
                     case "kass3": this.tip = 1; return this.tip;
                     case "prod1": this.tip = 2; return this.tip;
+                    case "prod": this.tip = 2; return this.tip;
                     case "prod2": this.tip = 2; return this.tip;
                     case "prod3": this.tip = 2; return this.tip;
+                    case "gruz": this.tip = 3; return this.tip;
+                    case "gastr": this.tip = 4; return this.tip;
                     default: return 0;
                 }
             }
@@ -2029,14 +2050,10 @@ namespace shedule
                 catch
                 {
 
-                    currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
-                    currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
-                    currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
-                    currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
-                    currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
-                    currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+                    currentShop.tsr.Add(new TSR("kass", "Кассир", 4, 27000, 14000));
+                    currentShop.tsr.Add(new TSR("prod", "Продавец", 4, 25000, 13000));                  
                     currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
-
+                    currentShop.tsr.Add(new TSR("gastr", "Гастроном", 2, 25000, 13000));
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
@@ -2074,13 +2091,10 @@ namespace shedule
                 catch
                 {
 
-                    currentShop.tsrBG.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
-                    currentShop.tsrBG.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
-                    currentShop.tsrBG.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
-                    currentShop.tsrBG.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
-                    currentShop.tsrBG.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
-                    currentShop.tsrBG.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+                    currentShop.tsr.Add(new TSR("kass", "Кассир", 4, 27000, 14000));
+                    currentShop.tsr.Add(new TSR("prod", "Продавец", 4, 25000, 13000));
                     currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
+                    currentShop.tsr.Add(new TSR("gastr", "Гастроном", 2, 25000, 13000));
 
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
@@ -2322,6 +2336,44 @@ namespace shedule
                     }
                 }
             }
+        }
+        public static bool CheckParnSmen()
+        {
+            List<VarSmen> lvs = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
+            List<TSR> LGruz = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz");        
+            List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getTip() == 4);
+
+            if (((lvs.Find(t => t.getR() == 2)!=null && (lvs.Find(t => t.getR() == 3)!=null)) && lvs.Count == 2)&&((LGruz.Count%2!=0)||(LGastr.Count%2!=0))) {
+                MessageBox.Show("Выбраны только смены 2/2 и 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно вариалт смены или сделайте число сотрудников четным");
+                return false;
+            }
+            if (((lvs.Find(t => t.getR() == 2) != null || (lvs.Find(t => t.getR() == 3) != null)) && lvs.Count == 2) && ((LGruz.Count % 2 != 0) || (LGastr.Count % 2 != 0)))
+            {
+                MessageBox.Show("Выбранf только смена 2/2 или 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно вариалт смены или сделайте число сотрудников четным");
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool CheckDlinaDnya() {
+            int min = 14;
+            List<DataForCalendary> ldfc = Program.currentShop.DFCs.FindAll(t=>t.getMonth()==DateTime.Now.AddMonths(1).Month);
+            foreach (DataForCalendary ds in ldfc) {
+                if (ds.getLenght()< min) {
+                    min = ds.getLenght();
+                }
+            }
+
+            List<VarSmen> lvs = Program.currentShop.VarSmens.FindAll(t=>t.getDeistvie()==true);
+            foreach (VarSmen vs in lvs) {
+                if (min < vs.getDlina()) {
+                   
+                    MessageBox.Show("Расписание не создано из-за выбранных вариантов смен при слишком короткой длине работы магазина. Используйте смены 5/2 и 6/1, или увеличьте время работы магазина.");
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static bool CheckSrokaFactors()

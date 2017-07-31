@@ -132,6 +132,8 @@
             this.textBoxEnd.Name = "textBoxEnd";
             this.textBoxEnd.Size = new System.Drawing.Size(100, 20);
             this.textBoxEnd.TabIndex = 9;
+            this.textBoxEnd.TextChanged += new System.EventHandler(this.textBoxEnd_TextChanged);
+            this.textBoxEnd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form4_KeyDown);
             this.textBoxEnd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxEnd_KeyPress);
             // 
             // dataGridViewCalendar
@@ -145,7 +147,6 @@
             this.dataGridViewCalendar.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridViewCalendar_CellBeginEdit);
             this.dataGridViewCalendar.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellEndEdit);
             this.dataGridViewCalendar.CellErrorTextChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellErrorTextChanged);
-            //this.dataGridViewCalendar.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellValueChanged);
             this.dataGridViewCalendar.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewCalendar_DataError);
             // 
             // label3

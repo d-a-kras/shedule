@@ -345,9 +345,9 @@ namespace shedule
             else
             {
                 int dayLength = int.Parse(textBoxEnd.Text) - int.Parse(textBoxStart.Text);
-                if (dayLength < 15)
+                if (dayLength < 9)
                 {
-                    MessageBox.Show("Длина дня не должна быть меньше 14 часов!");
+                    MessageBox.Show("Длина дня не должна быть меньше 8 часов!");
                     return;
                 }
                 button1.Text = "Редактировать";
@@ -532,7 +532,7 @@ namespace shedule
 
         private void textBoxEnd_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+
         }
 
         private void textBoxStart_TextChanged(object sender, EventArgs e)
@@ -593,6 +593,11 @@ namespace shedule
         {
             MessageBox.Show("Нужно вводить число");
            
+        }
+
+        private void textBoxEnd_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
