@@ -1165,6 +1165,7 @@ namespace shedule
             //labelStatus1.Text = "Статус: Обработано " + Program.HandledShops.Count + " магазинов из " + Program.listShops.Count;
             labelStatus2.Text = " режим работы локальный";
             radioButtonIzFile.Checked = true;
+
         }
 
 
@@ -1491,6 +1492,9 @@ namespace shedule
                 //  VarSmen.CreateVarSmen();
             }
             tabControl1.Visible = true;
+            
+            HolidayUnloader hu = new HolidayUnloader(Program.listShops, Program.currentShop.holidayDays);
+            hu.MakeHolidayDaysForShops();
         }
 
 
