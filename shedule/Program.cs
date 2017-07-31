@@ -3440,10 +3440,7 @@ namespace shedule
                         }
 
                     }
-
-                    HolidayUnloader hu = new HolidayUnloader(listShops, Program.shops.FirstOrDefault().holidayDays);
-                    hu.MakeHolidayDaysForShops();
-
+                    
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
