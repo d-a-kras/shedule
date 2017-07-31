@@ -1473,8 +1473,8 @@
             this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.labelStatus2);
             this.Controls.Add(this.labelStatus1);
-            this.Controls.Add(this.panelMultShops);
             this.Controls.Add(this.panelSingleShop);
+            this.Controls.Add(this.panelMultShops);
             this.HelpButton = true;
             this.MaximizeBox = false;
             this.Name = "Form1";
