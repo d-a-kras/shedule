@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LinqToExcel;
 
 namespace shedule.Code
 {
@@ -28,7 +31,7 @@ namespace shedule.Code
             if (File.Exists(filepath))
             {
                 //получаем лист
-                var book = new LinqToExcel.ExcelQueryFactory(filepath);
+                var book = new ExcelQueryFactory(filepath);
                 var getData = from a in book.Worksheet(Constants.ListName) select a;
 
                 int cntr = 0;
@@ -49,9 +52,9 @@ namespace shedule.Code
 
                     //если эти ячейки не смогли преобразоваться в нормальный тип данных - скорее всего там какое-то говнище, такую пропускаем
                     var resultDt = DateTime.TryParse(dateS, out dt);
-                    var resultChCount = int.TryParse(checkS, out checkCount);
-                    var resultScCount = int.TryParse(scansS, out scansCount);
-                    var resultPrCount = double.TryParse(productS, out productCount);
+                    var resultChCount = Int32.TryParse(checkS, out checkCount);
+                    var resultScCount = Int32.TryParse(scansS, out scansCount);
+                    var resultPrCount = Double.TryParse(productS, out productCount);
                     var resultDayOfWeek = DayOfWeeksDictionary.ContainsValue(dayOfWeek);
                     bool resultHour = !(time.Split(':').Length < 1);
 
@@ -241,6 +244,119 @@ namespace shedule.Code
                     process.Kill();
                 }
             }
+        }
+
+        /// <summary>
+        /// Возвращает сведения о чеках и кликах для магазина за промежуток времени
+        /// </summary>
+        /// <param name="shopId">Id магазина</param>
+        /// <param name="startPeriod">Начало периода</param>
+        /// <param name="endPeriod">Конец периода</param>
+        /// <returns></returns>
+        public static List<hourSale> GetHourSalesByDate(int shopId, DateTime startPeriod, DateTime endPeriod)
+        {
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+            string s1 = startPeriod.Year + "/" + startPeriod.Day + "/" + startPeriod.Month;
+            string s2 = endPeriod.Year + "/" + endPeriod.Day + "/" + endPeriod.Month;
+
+            string sql = "select * from dbo.get_StatisticByShopsDayHour('" + shopId + "', '" + s1 + "', '" + s2 + " 23:59:00')";
+
+            List<hourSale> hss = new List<hourSale>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sql, connection) { CommandTimeout = 3000 };
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    hourSale h = new hourSale(shopId, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                    hss.Add(h);
+                }
+            }
+            return hss;
+        }
+
+        /// <summary>
+        /// Возвращает daySale для определенного дня магазина
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="dayOfSale"></param>
+        /// <param name="typeOfDay"></param>
+        /// <returns></returns>
+        public static daySale GetDaySaleByDate(int shopId, DateTime dayOfSale, int typeOfDay)
+        {
+            var hoursOfDay = GetHourSalesByDate(shopId, dayOfSale, dayOfSale);
+            var ds = new daySale(Program.currentShop.getIdShop(), dayOfSale, typeOfDay);
+
+            foreach (hourSale hs in hoursOfDay)
+            {
+                ds.Add(hs);
+            }
+            return ds;
+        }
+
+        public static void readDays8and9()
+        {
+            string filepath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/days89.dat";
+
+            BinaryFormatter formatter = new BinaryFormatter();
+            if (File.Exists(filepath))
+            {
+                using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
+                {
+                    List<daySale> days89 = (List<daySale>)formatter.Deserialize(fs);
+                    if (days89.Any())
+                    {
+                        Program.currentShop.daysSale.AddRange(days89);
+                        return;
+                    }
+                }
+            }
+            SaveHolidayDaysOfShop(Program.currentShop, Program.currentShop.holidayDays);
+        }
+
+        /// <summary>
+        /// Сохраняет данные о праздничных и предпраздничных днях в файл
+        /// </summary>
+        /// <param name="shopId">Id магазина</param>
+        public static void createListDays8and9(int shopId, List<daySale> shopHolidayDays)
+        {
+            string filepath = Environment.CurrentDirectory + "/Shops/" + shopId;
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            if (shopHolidayDays.Any())
+            {
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                using (FileStream fs = new FileStream(filepath + "/days89.dat", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, shopHolidayDays);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Получает и сохраняет данные о праздничных и предпраздничных днях для одного магазина
+        /// </summary>
+        /// <param name="shop"></param>
+        /// <param name="_holidayList"></param>
+        public static void SaveHolidayDaysOfShop(Shop shop, List<DataForCalendary> _holidayList)
+        {
+            List<daySale> holidayDaySales = new List<daySale>(_holidayList.Count);
+
+            foreach (var holiday in _holidayList)
+            {
+                holidayDaySales.Add(Helper.GetDaySaleByDate(shop.getIdShop(), holiday.getData(), holiday.Tip));
+            }
+            Console.WriteLine($"Выгружено для магазина {shop.getAddress()}");
+
+
+            createListDays8and9(shop.getIdShop(), holidayDaySales);
+            Console.WriteLine($"Записано в файл для магазина {shop.getAddress()}");
+            
         }
     }
 }

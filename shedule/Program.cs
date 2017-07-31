@@ -1177,6 +1177,9 @@ namespace shedule
     public class Shop
     {
         public List<WorkingDay> workingDays { get; set; }
+        public List<DataForCalendary> holidayDays {
+            get { return (List<DataForCalendary>)DFCs.Where(x => x.Tip == 8 || x.Tip == 9); }
+        }
         public NormaChas[] NormaChasov = new NormaChas[12]; 
         public List<employee> employes { get; set; }
         public List<TemplateWorkingDay> templates { get; set; }
@@ -1500,6 +1503,16 @@ namespace shedule
             }
           
 
+        }
+
+        public daySale(int id, DateTime d, int tipOfDay)
+        {
+            Data = d;
+            idShop = id;
+            hoursSale = new List<hourSale>();
+            startDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeStart();
+            endDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeEnd();
+            tip = tipOfDay;
         }
 
         public daySale(int id, DateTime d)
@@ -2324,35 +2337,7 @@ namespace shedule
 
         }
 
-        public static void readDays8and9()
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
-            {
-                List<daySale> days89 = (List<daySale>)formatter.Deserialize(fs);
-
-                currentShop.daysSale.AddRange(days89);
-         
-            }
-
-        }
-
-        public static void createListDays8and9()
-        {
-            List<daySale> days89 = new List<daySale>();
-
-
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
-            {
-                // сериализуем весь массив people
-                formatter.Serialize(fs, days89);
-
-                Console.WriteLine("Объект сериализован");
-            }
-
-        }
+        
 
 
         public static void createPrognoz(bool isMp = false)
@@ -2408,7 +2393,7 @@ namespace shedule
             if ((tdt.Month == 0) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 5) || (tdt.Month == 4))
             {
 
-                readDays8and9();
+                Helper.readDays8and9();
             }
 
             for (int i = 1; i < 10; i++)
@@ -2673,9 +2658,6 @@ namespace shedule
 
             if (hss.Count > 200)
             {
-
-
-
                 //посчитать количество дней 
                 TimeSpan ts = k - n;
 

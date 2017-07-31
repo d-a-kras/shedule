@@ -1165,6 +1165,10 @@ namespace shedule
             //labelStatus1.Text = "Статус: Обработано " + Program.HandledShops.Count + " магазинов из " + Program.listShops.Count;
             labelStatus2.Text = " режим работы локальный";
             radioButtonIzFile.Checked = true;
+
+
+            HolidayUnloader hu = new HolidayUnloader(Program.shops, Program.shops.FirstOrDefault().holidayDays);
+            hu.MakeHolidayDaysForShops();
         }
 
 
