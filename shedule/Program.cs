@@ -16,6 +16,8 @@ using System.Xml.Linq;
 using System.Net.Mail;
 using shedule.Code;
 using System.Runtime.Serialization.Formatters.Binary;
+using log4net;
+using log4net.Config;
 
 //DataVisualization.Charting.SeriesChartType.Renko
 //Excel.XlChartType.xlLineMarker
@@ -25,26 +27,30 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace shedule
 {
-    public class NormaChas {
+    public class NormaChas
+    {
         int NMonth;
         int CountChas;
-       
 
-        public void setCountChas(int c) {
+
+        public void setCountChas(int c)
+        {
             this.CountChas = c;
         }
 
-       public NormaChas(int NM, int C)
+        public NormaChas(int NM, int C)
         {
             this.NMonth = NM;
             this.CountChas = C;
         }
 
-        public int getNormChas() {
+        public int getNormChas()
+        {
             return this.CountChas;
         }
 
-        public bool CheckNorma() {
+        public bool CheckNorma()
+        {
             if (this.CountChas > 176)
             {
                 return false;
@@ -59,13 +65,15 @@ namespace shedule
         int MinCount;
         int Time;
         bool Otobragenie;
-      public  MinRab(int mc, int t, bool o) {
+        public MinRab(int mc, int t, bool o)
+        {
             this.MinCount = mc;
             this.Time = t;
             this.Otobragenie = o;
         }
 
-        public int getMinCount() {
+        public int getMinCount()
+        {
             return this.MinCount;
         }
 
@@ -80,7 +88,7 @@ namespace shedule
 
         public void setOtobragenie(bool b)
         {
-           this.Otobragenie=b;
+            this.Otobragenie = b;
         }
 
         public void setMinCount(int mc)
@@ -157,7 +165,7 @@ namespace shedule
         {
             return this.Data.Month;
         }
-        
+
         /*static public bool isHolyday(DateTime mdt) {
             foreach (DateTime dt in Program.holydays) {
                 int rez = DateTime.Compare(mdt, dt);
@@ -214,27 +222,27 @@ namespace shedule
 
             if (this.Tip == 0)
             {
-               
-                    switch (this.getData().DayOfWeek.ToString())
-                    {
-                        case "Monday": return 1; ;
-                        case "Tuesday": return 2;
-                        case "Wednesday": return 3;
-                        case "Thursday": return 4;
-                        case "Friday": return 5;
-                        case "Saturday": return 6; ;
-                        case "Sunday": return 7;
-                        default: return 0;
-                    }
 
-                
+                switch (this.getData().DayOfWeek.ToString())
+                {
+                    case "Monday": return 1; ;
+                    case "Tuesday": return 2;
+                    case "Wednesday": return 3;
+                    case "Thursday": return 4;
+                    case "Friday": return 5;
+                    case "Saturday": return 6; ;
+                    case "Sunday": return 7;
+                    default: return 0;
+                }
+
+
             }
             else return this.Tip;
         }
-       
-    
 
-    public int getTip()
+
+
+        public int getTip()
         {
 
             if (this.Tip == 0)
@@ -371,7 +379,7 @@ namespace shedule
             this.Deistvie = d;
         }
 
-        public VarSmen(int rab, int vyh,int dl, bool d)
+        public VarSmen(int rab, int vyh, int dl, bool d)
         {
             this.r = rab;
             this.v = vyh;
@@ -395,20 +403,20 @@ namespace shedule
             return this.Deistvie;
         }
 
-        public void setR( int rr)
+        public void setR(int rr)
         {
-            this.r=rr;
+            this.r = rr;
         }
 
 
         public void setV(int vv)
         {
-            this.v=vv;
+            this.v = vv;
         }
 
         public void setDeistvie(bool b)
         {
-            this.Deistvie=b;
+            this.Deistvie = b;
         }
 
     }
@@ -582,7 +590,7 @@ namespace shedule
             return this.Tip;
         }
 
-    
+
 
         public WorkingDay(int id, DateTime D, int start, int end)
         {
@@ -590,7 +598,7 @@ namespace shedule
             this.Data = D;
             this.startWorkingDay = start;
             this.endWorkingDay = end;
-        
+
             this.lss = new List<Smena>();
         }
 
@@ -673,17 +681,18 @@ namespace shedule
         public Dictionary<int, int> Raznica;
         public int minGruzUtr;
         public int minGruzVech;
-        public int minKassUtr ;
+        public int minKassUtr;
         public int minKassVech;
-        public int minProdUtr ;
-        public int minProdVech ;
+        public int minProdUtr;
+        public int minProdVech;
         public int TimePrih;
 
         public ForChart Chart;
 
-        public void setMinCountSotr(int m,int t){
+        public void setMinCountSotr(int m, int t)
+        {
             this.minGruzUtr = 1;
-            this.minGruzVech=1;
+            this.minGruzVech = 1;
             this.minKassUtr = m;
             this.minProdUtr = m;
             this.minKassVech = m;
@@ -691,22 +700,23 @@ namespace shedule
             this.TimePrih = t;
         }
 
-        public void mMinCountKassUtr() {
-            this.minKassUtr -= 1; 
+        public void mMinCountKassUtr()
+        {
+            this.minKassUtr -= 1;
         }
 
         public void mMinCountProdUtr()
         {
-            this.minProdUtr -=1 ;
+            this.minProdUtr -= 1;
         }
 
         public void mMinCountKassVech()
         {
-            this.minKassVech -=1;
+            this.minKassVech -= 1;
         }
         public void mMinCountProdVech()
         {
-            this.minProdVech -=1 ;
+            this.minProdVech -= 1;
         }
 
         public void PereschetSmen()
@@ -1149,27 +1159,33 @@ namespace shedule
         }
     }
 
-    public class Prilavki {
+    public class Prilavki
+    {
         bool nalichie;
         int count;
-        public Prilavki(bool n, int c) {
+        public Prilavki(bool n, int c)
+        {
             this.nalichie = n;
             this.count = c;
         }
 
-        public bool GetNalichie() {
+        public bool GetNalichie()
+        {
             return this.nalichie;
         }
 
-        public int GetCount() {
+        public int GetCount()
+        {
             return this.count;
         }
 
-        public void SetNalichie(bool n) {
+        public void SetNalichie(bool n)
+        {
             this.nalichie = n;
         }
 
-        public void SetCount(int c) {
+        public void SetCount(int c)
+        {
             this.count = c;
         }
     }
@@ -1177,10 +1193,11 @@ namespace shedule
     public class Shop
     {
         public List<WorkingDay> workingDays { get; set; }
-        public List<DataForCalendary> holidayDays {
-            get { return (List<DataForCalendary>)DFCs.Where(x => x.Tip == 8 || x.Tip == 9); }
+        public List<DataForCalendary> holidayDays
+        {
+            get { return DFCs.Where(x => x.Tip == 8 || x.Tip == 9).ToList(); }
         }
-        public NormaChas[] NormaChasov = new NormaChas[12]; 
+        public NormaChas[] NormaChasov = new NormaChas[12];
         public List<employee> employes { get; set; }
         public List<TemplateWorkingDay> templates { get; set; }
         public List<daySale> daysSale { get; set; }
@@ -1193,13 +1210,13 @@ namespace shedule
         public List<VarSmen> VarSmens = new List<VarSmen>();
         public MinRab minrab;
         public int RaznChas;
-      //  public bool prilavki = false;
-       // public int countPrilavok = 0;
+        //  public bool prilavki = false;
+        // public int countPrilavok = 0;
         public Prilavki prilavki;
 
         private int idShop;
         int idFM;
-         
+
         private String address;
         public int getIdShop() { return idShop; }
         public int getIdShopFM() { return idFM; }
@@ -1219,7 +1236,7 @@ namespace shedule
             this.factors = new List<Factor>();
             this.DFCs = new List<DataForCalendary>();
             this.templates = new List<TemplateWorkingDay>();
-            
+
             Program.newShop();
 
         }
@@ -1235,7 +1252,7 @@ namespace shedule
             this.factors = new List<Factor>();
             this.DFCs = new List<DataForCalendary>();
             this.templates = new List<TemplateWorkingDay>();
-           
+
             Program.newShop();
 
         }
@@ -1357,7 +1374,8 @@ namespace shedule
         private double countTov;
         private int Minute;
 
-        public double getCountTov() {
+        public double getCountTov()
+        {
             return this.countTov;
         }
 
@@ -1488,8 +1506,8 @@ namespace shedule
         public string getWeekDay2()
         {
 
-            
-           
+
+
             switch (this.getData().DayOfWeek.ToString())
             {
                 case "Monday": return "понедельник";
@@ -1501,7 +1519,7 @@ namespace shedule
                 case "Sunday": return "воскресенье";
                 default: return "";
             }
-          
+
 
         }
 
@@ -1690,7 +1708,7 @@ namespace shedule
         static public int TimeClick = 4;
         static public int TimeRech = 25;
         static public int TimeObrTov = 14;
-       
+
 
         static public string login = "";
         static public string password = "";
@@ -1698,7 +1716,7 @@ namespace shedule
         static public bool TSRTG = true;
         static public bool exit = true;
         static public bool addsmena = false;
-        
+
         static public Shop currentShop;
         static public short ParametrOptimization;
         static List<hourSale> SaleDay = new List<hourSale>();
@@ -1718,7 +1736,8 @@ namespace shedule
 
         public static HashSet<int> HandledShops = new HashSet<int>();
 
-        static public void WritePrilavki() {
+        static public void WritePrilavki()
+        {
             Program.currentShop.minrab.setOtobragenie(true);
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\Prilavki";
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
@@ -1729,9 +1748,10 @@ namespace shedule
             }
         }
 
-        static public void ReadNarmaChas() {
+        static public void ReadNarmaChas()
+        {
 
-            String readPath = Environment.CurrentDirectory   + @"\NormaChas";
+            String readPath = Environment.CurrentDirectory + @"\NormaChas";
             if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
@@ -1765,8 +1785,8 @@ namespace shedule
                 for (int i = 0; i < 12; i++)
                 {
 
-                    currentShop.NormaChasov[i] = new NormaChas(i,Program.RD[i ] * 8 - Program.PHD[i ]);
-                   
+                    currentShop.NormaChasov[i] = new NormaChas(i, Program.RD[i] * 8 - Program.PHD[i]);
+
                 }
 
 
@@ -1780,7 +1800,7 @@ namespace shedule
                         sw.WriteLine(i + "_" + currentShop.NormaChasov[i].getNormChas());
 
                     }
-                   
+
 
                 }
                 // MessageBox.Show(ex.ToString());
@@ -1798,7 +1818,7 @@ namespace shedule
 
             }
 
-           
+
             try
             {
 
@@ -1812,7 +1832,7 @@ namespace shedule
                     {
 
                         str = s.Split('_');
-                        currentShop.prilavki =new Prilavki(bool.Parse(str[0]), int.Parse(str[1]));
+                        currentShop.prilavki = new Prilavki(bool.Parse(str[0]), int.Parse(str[1]));
 
                     }
 
@@ -1830,21 +1850,21 @@ namespace shedule
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-                    sw.Write(currentShop.prilavki.GetNalichie()+ "_" + currentShop.prilavki.GetCount());
+                    sw.Write(currentShop.prilavki.GetNalichie() + "_" + currentShop.prilavki.GetCount());
 
                 }
                 // MessageBox.Show(ex.ToString());
 
             }
 
-           
+
         }
 
         static public void WriteNormChas()
         {
-            
+
             String readPath = Environment.CurrentDirectory + @"\NormaChas";
-           
+
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
                 for (int i = 0; i < 12; i++)
@@ -1858,7 +1878,8 @@ namespace shedule
             }
         }
 
-        static public void WriteMinRab() {
+        static public void WriteMinRab()
+        {
             Program.currentShop.minrab.setOtobragenie(true);
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
@@ -1871,22 +1892,24 @@ namespace shedule
         static public void ReadParametrOptimizacii()
         {
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\parametroptimizacii";
-          
+
             try
             {
 
 
                 using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
-                   
+
                     string s;
 
                     while ((s = sr.ReadLine()) != null)
                     {
                         short m = short.Parse(s);
-                        if ((m>0)&&(m<4)) {
+                        if ((m > 0) && (m < 4))
+                        {
                             Program.ParametrOptimization = m;
-                        } else { Program.ParametrOptimization = 1; }
+                        }
+                        else { Program.ParametrOptimization = 1; }
                     }
 
 
@@ -1896,7 +1919,7 @@ namespace shedule
             catch
             {
 
-                
+
 
 
 
@@ -1909,7 +1932,7 @@ namespace shedule
 
             }
 
-          
+
         }
 
         static public MinRab ReadMinRab()
@@ -1921,7 +1944,7 @@ namespace shedule
 
             }
 
-            MinRab mr=null;
+            MinRab mr = null;
             try
             {
 
@@ -1935,25 +1958,25 @@ namespace shedule
                     {
 
                         str = s.Split('_');
-                        mr = new MinRab(int.Parse(str[0]),  int.Parse(str[1]), bool.Parse(str[2]));
-                        
+                        mr = new MinRab(int.Parse(str[0]), int.Parse(str[1]), bool.Parse(str[2]));
+
                     }
-                   
+
 
                 }
-                
+
             }
             catch
             {
 
                 mr = new MinRab(1, 9, false);
 
-                
+
 
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-                    sw.Write(mr.getMinCount() + "_" + mr.getTimeMinRab()+"_"+"false");
+                    sw.Write(mr.getMinCount() + "_" + mr.getTimeMinRab() + "_" + "false");
 
                 }
                 // MessageBox.Show(ex.ToString());
@@ -2006,14 +2029,14 @@ namespace shedule
                 catch
                 {
 
-                currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
-                currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
-                currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
-                currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
-                currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
-                currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
-                currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
-                
+                    currentShop.tsr.Add(new TSR("kass1", "Кассир 1", 4, 27000, 14000));
+                    currentShop.tsr.Add(new TSR("kass2", "Кассир 2", 4, 25000, 13000));
+                    currentShop.tsr.Add(new TSR("kass3", "Кассир 3", 3, 24000, 12000));
+                    currentShop.tsr.Add(new TSR("prod1", "Продавец 1", 4, 25000, 13000));
+                    currentShop.tsr.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
+                    currentShop.tsr.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
+                    currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
+
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
@@ -2058,7 +2081,7 @@ namespace shedule
                     currentShop.tsrBG.Add(new TSR("prod2", "Продавец 2", 4, 24000, 12000));
                     currentShop.tsrBG.Add(new TSR("prod3", "Продавец 3", 2, 23000, 23000));
                     currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
-                   
+
 
                     using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                     {
@@ -2337,7 +2360,7 @@ namespace shedule
 
         }
 
-        
+
 
 
         public static void createPrognoz(bool isMp = false)
@@ -2350,7 +2373,7 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
-            
+
             //   if (connect)
             //  {
             if (!isOffline)
@@ -2366,7 +2389,7 @@ namespace shedule
                 }
             }
 
-            if ((isMp)&&(isOffline))
+            if ((isMp) && (isOffline))
             {
                 createListDaySale(d2, ydt, currentShop.getIdShopFM());
             }
@@ -2381,7 +2404,7 @@ namespace shedule
             //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
             //      }
 
-           
+
 
             foreach (daySale ds in currentShop.daysSale)
             {
@@ -2714,7 +2737,7 @@ namespace shedule
             }
 
         }*/
-        
+
         static void readTemplateForShop()
         {
             String readPath = Environment.CurrentDirectory + "/Shops" + currentShop.getIdShop() + "/Templates.txt";
@@ -3017,18 +3040,18 @@ namespace shedule
             }
             return dt;
         }
-        
+
         static public void getListDate(int year)
         {
             try
             {
-               DateTime.Parse($"01-01-{year}");
+                DateTime.Parse($"01-01-{year}");
             }
             catch (Exception ex)
             {
                 throw new Exception($"Значение {year} недопустимо в качестве года!");
             }
-            
+
             currentShop.DFCs.Clear();
             string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + $@"\Calendar{year}";
             // MessageBox.Show(readPath);
@@ -3418,6 +3441,8 @@ namespace shedule
 
                     }
 
+                    HolidayUnloader hu = new HolidayUnloader(listShops, Program.shops.FirstOrDefault().holidayDays);
+                    hu.MakeHolidayDaysForShops();
 
                 }
                 catch (System.Data.SqlClient.SqlException ex)
@@ -3426,7 +3451,6 @@ namespace shedule
                     // ReadListShops();
                 }
             }
-
 
 
         }
@@ -3526,12 +3550,17 @@ namespace shedule
 
         static void Main()
         {
+            Logger.InitLogger();
+            Helper.CheckAndDownloadNextYearCalendar();
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            Helper.CheckAndDownloadNextYearCalendar();
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+            
+            
+            
         }
 
         static void OnProcessExit(object sender, EventArgs e)
@@ -3540,10 +3569,21 @@ namespace shedule
             {
                 Helper.KillExcels();
             }
-            catch{}
+            catch { }
 
         }
 
+    }
+
+    public static class Logger
+    {
+        public static ILog Log { get; } = LogManager.GetLogger("LOGGER");
+
+        public static void InitLogger()
+        {
+            XmlConfigurator.Configure();
+            Log.Info("Logger has started at " + DateTime.Now);
+        }
     }
 
 

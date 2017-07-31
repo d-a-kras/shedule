@@ -15,10 +15,10 @@ namespace shedule
     /// </summary>
     public class HolidayUnloader
     {
-        private List<Shop> _shopList;
+        private List<mShop> _shopList;
         private List<DataForCalendary> _holidayList;
 
-        public HolidayUnloader(List<Shop> shops, List<DataForCalendary> holidayList)
+        public HolidayUnloader(List<mShop> shops, List<DataForCalendary> holidayList)
         {
             _shopList = shops;
             _holidayList = holidayList;
@@ -38,7 +38,7 @@ namespace shedule
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Logger.Log.Error(ex);
                     errorShops.Add($"{shop.getAddress()}");
                 }
 

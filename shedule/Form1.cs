@@ -1166,9 +1166,6 @@ namespace shedule
             labelStatus2.Text = " режим работы локальный";
             radioButtonIzFile.Checked = true;
 
-
-            HolidayUnloader hu = new HolidayUnloader(Program.shops, Program.shops.FirstOrDefault().holidayDays);
-            hu.MakeHolidayDaysForShops();
         }
 
 
@@ -1495,6 +1492,9 @@ namespace shedule
                 //  VarSmen.CreateVarSmen();
             }
             tabControl1.Visible = true;
+            
+            HolidayUnloader hu = new HolidayUnloader(Program.listShops, Program.currentShop.holidayDays);
+            hu.MakeHolidayDaysForShops();
         }
 
 

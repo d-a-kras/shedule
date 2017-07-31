@@ -289,6 +289,10 @@ namespace shedule.Code
             var hoursOfDay = GetHourSalesByDate(shopId, dayOfSale, dayOfSale);
             var ds = new daySale(Program.currentShop.getIdShop(), dayOfSale, typeOfDay);
 
+            if (hoursOfDay.Count == 0)
+            {
+                Logger.Log.Error($"Не удалось вытянуть из базы данные дня {dayOfSale.Date} о магазине {shopId}");
+            }
             foreach (hourSale hs in hoursOfDay)
             {
                 ds.Add(hs);
@@ -313,7 +317,7 @@ namespace shedule.Code
                     }
                 }
             }
-            SaveHolidayDaysOfShop(Program.currentShop, Program.currentShop.holidayDays);
+            SaveHolidayDaysOfShop(new mShop(Program.currentShop.getIdShop(), Program.currentShop.getAddress()), Program.currentShop.holidayDays);
         }
 
         /// <summary>
@@ -333,7 +337,13 @@ namespace shedule.Code
                 }
                 using (FileStream fs = new FileStream(filepath + "/days89.dat", FileMode.OpenOrCreate))
                 {
-                    formatter.Serialize(fs, shopHolidayDays);
+                    //пустые не записываем
+                    if (shopHolidayDays.Count > 0 && shopHolidayDays.FirstOrDefault().hoursSale.Count > 0)
+                    {
+                        formatter.Serialize(fs, shopHolidayDays);
+                        Logger.Log.Info($"Записано в файл для магазина {shopId}");
+                    }
+                    
                 }
             }
         }
@@ -343,7 +353,7 @@ namespace shedule.Code
         /// </summary>
         /// <param name="shop"></param>
         /// <param name="_holidayList"></param>
-        public static void SaveHolidayDaysOfShop(Shop shop, List<DataForCalendary> _holidayList)
+        public static void SaveHolidayDaysOfShop(mShop shop, List<DataForCalendary> _holidayList)
         {
             List<daySale> holidayDaySales = new List<daySale>(_holidayList.Count);
 
@@ -351,11 +361,10 @@ namespace shedule.Code
             {
                 holidayDaySales.Add(Helper.GetDaySaleByDate(shop.getIdShop(), holiday.getData(), holiday.Tip));
             }
-            Console.WriteLine($"Выгружено для магазина {shop.getAddress()}");
-
+            Logger.Log.Info($"Выгружено для магазина {shop.getIdShop()}");
 
             createListDays8and9(shop.getIdShop(), holidayDaySales);
-            Console.WriteLine($"Записано в файл для магазина {shop.getAddress()}");
+            
             
         }
     }
