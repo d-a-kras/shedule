@@ -107,12 +107,11 @@
             this.buttonParamOptimiz = new System.Windows.Forms.Button();
             this.buttonVariantsSmen = new System.Windows.Forms.Button();
             this.buttonFactors = new System.Windows.Forms.Button();
-            this.panelParamOptim = new System.Windows.Forms.Panel();
-            this.buttonApplyParamsOptim = new System.Windows.Forms.Button();
-            this.radioButtonObRabTime = new System.Windows.Forms.RadioButton();
-            this.radioButtonMinTime = new System.Windows.Forms.RadioButton();
-            this.radioButtonMinFondOpl = new System.Windows.Forms.RadioButton();
             this.panelDopusVarSmen = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -129,6 +128,11 @@
             this.buttonAplyFactors = new System.Windows.Forms.Button();
             this.buttonClearFactors = new System.Windows.Forms.Button();
             this.dataGridViewFactors = new System.Windows.Forms.DataGridView();
+            this.panelParamOptim = new System.Windows.Forms.Panel();
+            this.buttonApplyParamsOptim = new System.Windows.Forms.Button();
+            this.radioButtonObRabTime = new System.Windows.Forms.RadioButton();
+            this.radioButtonMinTime = new System.Windows.Forms.RadioButton();
+            this.radioButtonMinFondOpl = new System.Windows.Forms.RadioButton();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button6 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -148,10 +152,6 @@
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -172,11 +172,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.panelUpravlenie.SuspendLayout();
-            this.panelParamOptim.SuspendLayout();
             this.panelDopusVarSmen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVarSmen)).BeginInit();
             this.panelFactors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).BeginInit();
+            this.panelParamOptim.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -962,9 +962,9 @@
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
@@ -1003,64 +1003,6 @@
             this.buttonFactors.UseVisualStyleBackColor = false;
             this.buttonFactors.Click += new System.EventHandler(this.buttonFactors_Click);
             // 
-            // panelParamOptim
-            // 
-            this.panelParamOptim.Controls.Add(this.buttonApplyParamsOptim);
-            this.panelParamOptim.Controls.Add(this.radioButtonObRabTime);
-            this.panelParamOptim.Controls.Add(this.radioButtonMinTime);
-            this.panelParamOptim.Controls.Add(this.radioButtonMinFondOpl);
-            this.panelParamOptim.Location = new System.Drawing.Point(6, 57);
-            this.panelParamOptim.Name = "panelParamOptim";
-            this.panelParamOptim.Size = new System.Drawing.Size(474, 248);
-            this.panelParamOptim.TabIndex = 8;
-            this.panelParamOptim.Paint += new System.Windows.Forms.PaintEventHandler(this.panelParamOptim_Paint);
-            // 
-            // buttonApplyParamsOptim
-            // 
-            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(384, 216);
-            this.buttonApplyParamsOptim.Name = "buttonApplyParamsOptim";
-            this.buttonApplyParamsOptim.Size = new System.Drawing.Size(75, 23);
-            this.buttonApplyParamsOptim.TabIndex = 3;
-            this.buttonApplyParamsOptim.Text = "Применить ";
-            this.buttonApplyParamsOptim.UseVisualStyleBackColor = true;
-            this.buttonApplyParamsOptim.Click += new System.EventHandler(this.buttonApplyParamsOptim_Click);
-            // 
-            // radioButtonObRabTime
-            // 
-            this.radioButtonObRabTime.AutoSize = true;
-            this.radioButtonObRabTime.Location = new System.Drawing.Point(33, 42);
-            this.radioButtonObRabTime.Name = "radioButtonObRabTime";
-            this.radioButtonObRabTime.Size = new System.Drawing.Size(332, 17);
-            this.radioButtonObRabTime.TabIndex = 2;
-            this.radioButtonObRabTime.TabStop = true;
-            this.radioButtonObRabTime.Text = "Общее рабочее время, отработанное персоналом магазина";
-            this.radioButtonObRabTime.UseVisualStyleBackColor = true;
-            this.radioButtonObRabTime.CheckedChanged += new System.EventHandler(this.radioButtonObRabTime_CheckedChanged);
-            // 
-            // radioButtonMinTime
-            // 
-            this.radioButtonMinTime.AutoSize = true;
-            this.radioButtonMinTime.Location = new System.Drawing.Point(33, 65);
-            this.radioButtonMinTime.Name = "radioButtonMinTime";
-            this.radioButtonMinTime.Size = new System.Drawing.Size(310, 17);
-            this.radioButtonMinTime.TabIndex = 1;
-            this.radioButtonMinTime.TabStop = true;
-            this.radioButtonMinTime.Text = "Минимизировать время ожидания покупателя на кассе";
-            this.radioButtonMinTime.UseVisualStyleBackColor = true;
-            this.radioButtonMinTime.CheckedChanged += new System.EventHandler(this.radioButtonMinTime_CheckedChanged);
-            // 
-            // radioButtonMinFondOpl
-            // 
-            this.radioButtonMinFondOpl.AutoSize = true;
-            this.radioButtonMinFondOpl.Location = new System.Drawing.Point(33, 19);
-            this.radioButtonMinFondOpl.Name = "radioButtonMinFondOpl";
-            this.radioButtonMinFondOpl.Size = new System.Drawing.Size(213, 17);
-            this.radioButtonMinFondOpl.TabIndex = 0;
-            this.radioButtonMinFondOpl.TabStop = true;
-            this.radioButtonMinFondOpl.Text = "Минимизировать фонд оплаты труда";
-            this.radioButtonMinFondOpl.UseVisualStyleBackColor = true;
-            this.radioButtonMinFondOpl.CheckedChanged += new System.EventHandler(this.radioButtonMinFondOpl_CheckedChanged);
-            // 
             // panelDopusVarSmen
             // 
             this.panelDopusVarSmen.Controls.Add(this.label19);
@@ -1083,6 +1025,44 @@
             this.panelDopusVarSmen.Name = "panelDopusVarSmen";
             this.panelDopusVarSmen.Size = new System.Drawing.Size(480, 245);
             this.panelDopusVarSmen.TabIndex = 2;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(360, 105);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(59, 13);
+            this.label19.TabIndex = 18;
+            this.label19.Text = "магазина.";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(360, 87);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(85, 13);
+            this.label18.TabIndex = 17;
+            this.label18.Text = "начала работы ";
+            this.label18.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(360, 67);
+            this.label8.Name = "label8";
+            this.label8.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.label8.Size = new System.Drawing.Size(108, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "касиров с времени ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(440, 49);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(27, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "чел.";
             // 
             // label15
             // 
@@ -1135,7 +1115,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(277, 175);
+            this.textBox3.Location = new System.Drawing.Point(278, 175);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(50, 20);
             this.textBox3.TabIndex = 9;
@@ -1243,6 +1223,64 @@
             this.dataGridViewFactors.Size = new System.Drawing.Size(464, 194);
             this.dataGridViewFactors.TabIndex = 2;
             this.dataGridViewFactors.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFactors_CellEndEdit);
+            // 
+            // panelParamOptim
+            // 
+            this.panelParamOptim.Controls.Add(this.buttonApplyParamsOptim);
+            this.panelParamOptim.Controls.Add(this.radioButtonObRabTime);
+            this.panelParamOptim.Controls.Add(this.radioButtonMinTime);
+            this.panelParamOptim.Controls.Add(this.radioButtonMinFondOpl);
+            this.panelParamOptim.Location = new System.Drawing.Point(6, 57);
+            this.panelParamOptim.Name = "panelParamOptim";
+            this.panelParamOptim.Size = new System.Drawing.Size(474, 248);
+            this.panelParamOptim.TabIndex = 8;
+            this.panelParamOptim.Paint += new System.Windows.Forms.PaintEventHandler(this.panelParamOptim_Paint);
+            // 
+            // buttonApplyParamsOptim
+            // 
+            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(384, 216);
+            this.buttonApplyParamsOptim.Name = "buttonApplyParamsOptim";
+            this.buttonApplyParamsOptim.Size = new System.Drawing.Size(75, 23);
+            this.buttonApplyParamsOptim.TabIndex = 3;
+            this.buttonApplyParamsOptim.Text = "Применить ";
+            this.buttonApplyParamsOptim.UseVisualStyleBackColor = true;
+            this.buttonApplyParamsOptim.Click += new System.EventHandler(this.buttonApplyParamsOptim_Click);
+            // 
+            // radioButtonObRabTime
+            // 
+            this.radioButtonObRabTime.AutoSize = true;
+            this.radioButtonObRabTime.Location = new System.Drawing.Point(33, 42);
+            this.radioButtonObRabTime.Name = "radioButtonObRabTime";
+            this.radioButtonObRabTime.Size = new System.Drawing.Size(332, 17);
+            this.radioButtonObRabTime.TabIndex = 2;
+            this.radioButtonObRabTime.TabStop = true;
+            this.radioButtonObRabTime.Text = "Общее рабочее время, отработанное персоналом магазина";
+            this.radioButtonObRabTime.UseVisualStyleBackColor = true;
+            this.radioButtonObRabTime.CheckedChanged += new System.EventHandler(this.radioButtonObRabTime_CheckedChanged);
+            // 
+            // radioButtonMinTime
+            // 
+            this.radioButtonMinTime.AutoSize = true;
+            this.radioButtonMinTime.Location = new System.Drawing.Point(33, 65);
+            this.radioButtonMinTime.Name = "radioButtonMinTime";
+            this.radioButtonMinTime.Size = new System.Drawing.Size(310, 17);
+            this.radioButtonMinTime.TabIndex = 1;
+            this.radioButtonMinTime.TabStop = true;
+            this.radioButtonMinTime.Text = "Минимизировать время ожидания покупателя на кассе";
+            this.radioButtonMinTime.UseVisualStyleBackColor = true;
+            this.radioButtonMinTime.CheckedChanged += new System.EventHandler(this.radioButtonMinTime_CheckedChanged);
+            // 
+            // radioButtonMinFondOpl
+            // 
+            this.radioButtonMinFondOpl.AutoSize = true;
+            this.radioButtonMinFondOpl.Location = new System.Drawing.Point(33, 19);
+            this.radioButtonMinFondOpl.Name = "radioButtonMinFondOpl";
+            this.radioButtonMinFondOpl.Size = new System.Drawing.Size(213, 17);
+            this.radioButtonMinFondOpl.TabIndex = 0;
+            this.radioButtonMinFondOpl.TabStop = true;
+            this.radioButtonMinFondOpl.Text = "Минимизировать фонд оплаты труда";
+            this.radioButtonMinFondOpl.UseVisualStyleBackColor = true;
+            this.radioButtonMinFondOpl.CheckedChanged += new System.EventHandler(this.radioButtonMinFondOpl_CheckedChanged);
             // 
             // tabPage3
             // 
@@ -1391,44 +1429,6 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(440, 49);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(27, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "чел.";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(360, 67);
-            this.label8.Name = "label8";
-            this.label8.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label8.Size = new System.Drawing.Size(108, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "касиров с времени ";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(360, 87);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(85, 13);
-            this.label18.TabIndex = 17;
-            this.label18.Text = "начала работы ";
-            this.label18.Click += new System.EventHandler(this.label18_Click);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(360, 105);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(59, 13);
-            this.label19.TabIndex = 18;
-            this.label19.Text = "магазина.";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1477,13 +1477,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewForTSR)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.panelUpravlenie.ResumeLayout(false);
-            this.panelParamOptim.ResumeLayout(false);
-            this.panelParamOptim.PerformLayout();
             this.panelDopusVarSmen.ResumeLayout(false);
             this.panelDopusVarSmen.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVarSmen)).EndInit();
             this.panelFactors.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFactors)).EndInit();
+            this.panelParamOptim.ResumeLayout(false);
+            this.panelParamOptim.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.getStatisticByShopsDayHourBindingSource)).EndInit();

@@ -152,6 +152,9 @@ namespace shedule.Code
            
                 List<VarSmen> DVS = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
             List<VarSmen> DVS2 = DVS.FindAll(t =>!(( t.getR()==2)||(t.getR()==3)));
+            DVS2.Sort(delegate (VarSmen s1, VarSmen s2)
+            { return s1.getR().CompareTo(s2.getR()); });
+
             if (DVS.Count != 0)
             {
 
@@ -244,8 +247,11 @@ namespace shedule.Code
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGruz--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGruz[ngruz].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
+                        if (CountGruz>0) {
+                            e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGruz[ngruz].getOtobragenie(), "Сменный график");
+                            Program.currentShop.employes.Add(e);
+                        }
+                        flagg2 = true;
                         continue;
                     }
                     if ((DVS.Find(t => t.getR() == 3) != null) && (!flagg3))
@@ -253,8 +259,12 @@ namespace shedule.Code
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -1, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGruz--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 2, LGruz[ngruz].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
+                        if (CountGruz > 0)
+                        {
+                            e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 2, LGruz[ngruz].getOtobragenie(), "Сменный график");
+                            Program.currentShop.employes.Add(e);
+                        }
+                        flagg3 = true;
                         continue;
                     }
                     if (DVS2.Count != 0)
@@ -339,8 +349,11 @@ namespace shedule.Code
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGastr--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
+                        if (CountGastr > 0)
+                        {
+                            e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
+                            Program.currentShop.employes.Add(e);
+                        }
                         flaggastr2 = true;
                         continue;
                     }
@@ -349,8 +362,11 @@ namespace shedule.Code
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -2, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGastr--; i++;
-                        e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
-                        Program.currentShop.employes.Add(e);
+                        if (CountGastr > 0)
+                        {
+                            e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
+                            Program.currentShop.employes.Add(e);
+                        }
                         flaggastr3 = true;
                         continue;
                     }
