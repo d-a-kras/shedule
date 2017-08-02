@@ -173,9 +173,9 @@ namespace shedule
                             Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
                       
                             ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
-                        
 
-                        ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                            ObjWorkBook.Worksheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
                         
 
                         ObjWorkSheet.Name = "График";
@@ -261,7 +261,7 @@ namespace shedule
 
                             }
                             bg.ReportProgress(14);
-
+                            
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
 
                             ObjWorkSheet.Name = "Часы";

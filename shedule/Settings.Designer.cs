@@ -37,7 +37,7 @@ namespace shedule {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("VShleyev")]
         public string DatabaseLogin {
             get {
                 return ((string)(this["DatabaseLogin"]));
@@ -49,7 +49,7 @@ namespace shedule {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("gjkrjdybr@93")]
         public string DatabasePassword {
             get {
                 return ((string)(this["DatabasePassword"]));

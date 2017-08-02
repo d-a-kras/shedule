@@ -6,10 +6,10 @@
       <Value Profile="(Default)">CENTRUMSRV</Value>
     </Setting>
     <Setting Name="DatabaseLogin" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">VShleyev</Value>
     </Setting>
     <Setting Name="DatabasePassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">gjkrjdybr@93</Value>
     </Setting>
   </Settings>
 </SettingsFile>

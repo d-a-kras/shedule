@@ -28,17 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.labelLogin = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.SuspendLayout();
-            // 
-            // get_StatisticByShopsDayHourTableAdapter1
-            // 
-            this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
             // 
             // textBoxLogin
             // 
@@ -86,6 +82,10 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // get_StatisticByShopsDayHourTableAdapter1
+            // 
+            this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
             // 
             // Form3
             // 
