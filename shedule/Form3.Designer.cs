@@ -46,7 +46,7 @@
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
             this.textBoxLogin.TabIndex = 0;
-            this.textBoxLogin.Text = Settings.Default.DatabaseLogin;
+            this.textBoxLogin.Text = global::shedule.Settings.Default.DatabaseLogin;
             // 
             // textBoxPassword
             // 
@@ -54,7 +54,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.textBoxPassword.TabIndex = 1;
-            this.textBoxPassword.Text = Settings.Default.DatabasePassword;
+            this.textBoxPassword.Text = global::shedule.Settings.Default.DatabasePassword;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // labelLogin
@@ -102,6 +102,7 @@
             this.Name = "Form3";
             this.Text = "Введите данные для доступа к БД";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form3_FormClosed);
+            this.Load += new System.EventHandler(this.Form3_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

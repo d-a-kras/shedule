@@ -224,7 +224,7 @@ namespace shedule.Code
         /// Пытаемся убить долбаные эксели
         /// </summary>
         /// <param name="excelFileName"></param>
-        public static void KillExcels(string excelFileName = "")
+       /* public static void KillExcels(string excelFileName = "")
         {
             var processes = from p in Process.GetProcessesByName("EXCEL") select p;
 
@@ -244,7 +244,7 @@ namespace shedule.Code
                     process.Kill();
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// Возвращает сведения о чеках и кликах для магазина за промежуток времени

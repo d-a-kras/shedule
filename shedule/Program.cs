@@ -3617,7 +3617,7 @@ namespace shedule
         {
             try
             {
-                Helper.KillExcels();
+              //  Helper.KillExcels();
             }
             catch { }
 

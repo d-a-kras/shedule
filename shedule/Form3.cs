@@ -80,5 +80,10 @@ namespace shedule
 
             ((Form1)this.Owner).Enabled = true;
         }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

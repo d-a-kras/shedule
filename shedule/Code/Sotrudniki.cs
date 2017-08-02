@@ -153,7 +153,7 @@ namespace shedule.Code
                 List<VarSmen> DVS = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
             List<VarSmen> DVS2 = DVS.FindAll(t =>!(( t.getR()==2)||(t.getR()==3)));
             DVS2.Sort(delegate (VarSmen s1, VarSmen s2)
-            { return s1.getR().CompareTo(s2.getR()); });
+            { return s2.getR().CompareTo(s1.getR()); });
 
             if (DVS.Count != 0)
             {
@@ -446,31 +446,43 @@ namespace shedule.Code
        static public void CreateSmens()
         {
             Smena sm;
-            
+            bool sort=false;
+            bool count;
+
+
             List<employee> emplo = Program.currentShop.employes.FindAll((t => (t.getStatus() == 0) && (t.GetTip() == 1)));
-            foreach (employee emp in emplo)
+             count = false;
+            if (emplo.Count>6) { count = true; }
+            foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
+            {
+                if ((sort)&&(count))
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s1.getID().CompareTo(s2.getID()); });
+                    sort = false;
+                }
+                else {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s2.getID().CompareTo(s1.getID()); });
+                    sort = true;
+                }
+
+                foreach (employee emp in emplo)
             {
                 int dlina = emp.getVS().getDlina();
 
 
 
-                foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
-                {
+               
                     int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena();
-                    if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
+                   
+                  if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
                         dlina -= 1;
                     }
+                  
 
-                    if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8))
-                    {
 
-                        emp.OtrabotalDay();
-                    }
-                 
-
-                    else
-                    {
                         if ((wd.minKassUtr > 0) && (emp.TipTekSmen != 3))
                         {
                             start = wd.DS.getStartDaySale();
@@ -515,20 +527,39 @@ namespace shedule.Code
                         emp.OtrabotalDay();
 
                     }
-                }
-                emp.setStatus(1);
+                
+               
             }
+            foreach (employee emp in emplo)
+                emp.setStatus(1);
 
             emplo.Clear();
+            sort = false;
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 2));
-            foreach (employee emp in emplo)
+            count = false;
+            if (emplo.Count > 6) { count = true; }
+            foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
+            {
+                if ((sort)&&(count))
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s1.getID().CompareTo(s2.getID()); });
+                    sort = false;
+                }
+                else
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s2.getID().CompareTo(s1.getID()); });
+                    sort = true;
+                }
+
+                foreach (employee emp in emplo)
             {
                 int dlina = emp.getVS().getDlina();
 
 
 
-                foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
-                {
+               
                     int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() >wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena()-1;
                     if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
@@ -591,19 +622,38 @@ namespace shedule.Code
                         emp.OtrabotalDay();
                     }
                 }
-                emp.setStatus(1);
+                
             }
+            foreach (employee emp in emplo)
+                emp.setStatus(1);
 
             emplo.Clear();
+            sort = false;
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 4));
-            foreach (employee emp in emplo)
+            count = false;
+            if (emplo.Count > 6) { count = true; }
+            foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
+            {
+
+                if ((sort)&&(count))
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s1.getID().CompareTo(s2.getID()); });
+                    sort = false;
+                }
+                else
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s2.getID().CompareTo(s1.getID()); });
+                    sort = true;
+                }
+                foreach (employee emp in emplo)
             {
                 int dlina = emp.getVS().getDlina();
 
 
 
-                foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
-                {
+               
                     int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena();
                     if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
@@ -666,19 +716,36 @@ namespace shedule.Code
                         emp.OtrabotalDay();
                     }
                 }
-                emp.setStatus(1);
+                
             }
+            foreach (employee emp in emplo)
+                emp.setStatus(1);
 
             emplo.Clear();
+            sort = false;
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 3));
-            foreach (employee emp in emplo)
+            count = false;
+            if (emplo.Count > 6) { count = true; }
+            foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
+            {
+                if ((sort)&&(count))
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s1.getID().CompareTo(s2.getID()); });
+                    sort = false;
+                }
+                else
+                {
+                    emplo.Sort(delegate (employee s1, employee s2)
+                    { return s2.getID().CompareTo(s1.getID()); });
+                    sort = true;
+                }
+                foreach (employee emp in emplo)
             {
                 int dlina = emp.getVS().getDlina();
 
 
 
-                foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
-                {
                     int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena();
 
                     if ( (wd.minGruzUtr > 0))
@@ -728,9 +795,10 @@ namespace shedule.Code
                     }
                     emp.OtrabotalDay();
                 }
-                emp.setStatus(1);
+               
             }
-
+            foreach (employee emp in emplo)
+                emp.setStatus(1);
 
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0));
             foreach (employee emp in emplo)
