@@ -2690,7 +2690,7 @@ namespace shedule
         public static void createListDaySale(DateTime n, DateTime k, int id)
         {
 
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
             //string s1 = "2016" + "/" + "9" + "/" + "6";
@@ -2852,7 +2852,7 @@ namespace shedule
 
         static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -3467,7 +3467,7 @@ namespace shedule
         {
 
             mShop h;
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string sql = "select * from get_shops() order by КодМагазина";
 
             using (connection = new SqlConnection(connectionString))

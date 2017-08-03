@@ -255,7 +255,7 @@ namespace shedule.Code
         /// <returns></returns>
         public static List<hourSale> GetHourSalesByDate(int shopId, DateTime startPeriod, DateTime endPeriod)
         {
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = startPeriod.Year + "/" + startPeriod.Day + "/" + startPeriod.Month;
             string s2 = endPeriod.Year + "/" + endPeriod.Day + "/" + endPeriod.Month;
 

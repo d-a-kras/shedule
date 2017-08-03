@@ -1061,7 +1061,7 @@ namespace shedule
                 List<hourSale> hSs = new List<hourSale>();
                 hourSale h;
                 var connectionString =
-                    $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+                    $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
                 string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))

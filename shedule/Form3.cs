@@ -83,7 +83,8 @@ namespace shedule
 
         private void Form3_Load(object sender, EventArgs e)
         {
-
+            textBoxLogin.Text = Settings.Default.DatabaseLogin;
+            textBoxPassword.Text  = Settings.Default.DatabasePassword;
         }
     }
 }
