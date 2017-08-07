@@ -1236,6 +1236,7 @@ namespace shedule
 
         private String address;
         public int getIdShop() { return idShop; }
+
         public int getIdShopFM() { return idFM; }
         public string getAddress() { return address; }
 
@@ -1285,6 +1286,11 @@ namespace shedule
         }
 
         public void setIdShop(int x)
+        {
+            this.idShop = x;
+        }
+
+        public void setIdShopFM(int x)
         {
             this.idFM = x;
         }
@@ -1958,12 +1964,16 @@ namespace shedule
 
         static public MinRab ReadMinRab()
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
-            if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
+           
+           
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString() + @"\MinRab";
+            if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString()))
             {
-                Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
+                Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString());
 
             }
+
+
 
             MinRab mr = null;
             try

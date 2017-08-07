@@ -1809,6 +1809,7 @@ namespace shedule
             panelSingleShop.BringToFront();
             tabControl1.Visible = false;
             Program.IsMpRezhim = false;
+            Program.currentShop = null;
             //Program.shops = new List<Shop>();
         }
 
@@ -2389,9 +2390,12 @@ namespace shedule
 
             foreach (Shop shop in Program.shops)
             {
-                shop.setMinRab(Program.ReadMinRab());
+                
                 Program.currentShop.setIdShop(shop.getIdShopFM());
+                Program.currentShop.setIdShopFM(shop.getIdShopFM());
+                shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setMinRab(shop.minrab);
+               // Program.currentShop.setIdShop(0);
                 Program.currentShop.setAdresShop(shop.getAddress());
 
                 Program.ReadPrilavki();
@@ -2467,9 +2471,10 @@ namespace shedule
                             Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
 
                             ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
-
-                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-                            ObjWorkSheet.Name = "График";
+                                ObjWorkBook.Worksheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                               
+                                ObjWorkSheet.Name = "График";
                             excelcells = ObjWorkSheet.get_Range("A3", "AL100");
                             excelcells.Font.Size = 10;
                             excelcells.NumberFormat = "@";
@@ -2552,7 +2557,8 @@ namespace shedule
                             }
                             bg.ReportProgress(14);
 
-                            ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
+                               
+                                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
 
                             ObjWorkSheet.Name = "Часы";
 
@@ -2655,7 +2661,7 @@ namespace shedule
 
                             }
                              
-                            catch { MessageBox.Show("Ошибка на внешней утилите: EXCEL"); 
+                            catch(Exception ex) { MessageBox.Show("Ошибка на внешней утилите: EXCEL" + ex); 
                        
                                // ObjWorkBook.Close(0);
                                 //ObjExcel.Quit();
@@ -2786,7 +2792,7 @@ namespace shedule
                             Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
 
                             ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
-
+                            //ObjWorkBook.Worksheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
                             ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
@@ -2901,9 +2907,9 @@ namespace shedule
                     return;
                 }
 
-                if (int.Parse(tbKassirCount.Text) > 3)
+                if (int.Parse(tbKassirCount.Text) > 5)
                 {
-                    MessageBox.Show("Не оптимальное количество. Допустимо 1, 2 или 3.");
+                    MessageBox.Show("Не оптимальное количество. Допустимо от 1 до 5.");
                     tbKassirCount.Text = "";
                     return;
                 }
