@@ -3481,35 +3481,52 @@ namespace shedule
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
+            bool error = false;
+
             if (!String.IsNullOrEmpty(textBox3.Text)) {
                 if (!String.IsNullOrEmpty(textBox4.Text))
                 {
                     if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text))
                     {
-                        MessageBox.Show("Количество рабочих смен не должно быть меньше количества выходных.");
-                        textBox3.Text = "";
+                        error = true;
                     }
                 }
 
                 if (int.Parse(textBox3.Text) > 6 || int.Parse(textBox3.Text) < 1)
                 {
-                    MessageBox.Show("Меньше 1 и больше 6 нельзя");
-                    textBox3.Text = "";
+                    error = true;
                 }
-            }  
+            }
+
+            if (error) {
+                MessageBox.Show("Меньше 1 и больше 6 нельзя, а количество рабочих смен не должно быть меньше количества выходных");
+                textBox3.Text = "";
+            }
 
             return;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
-        {             
-            if (!String.IsNullOrEmpty(textBox3.Text) && !String.IsNullOrEmpty(textBox4.Text))
+        {
+            bool error = false;
+            if (!String.IsNullOrEmpty(textBox4.Text))
             {
-                if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text))
+                if (int.Parse(textBox4.Text) < 1)
                 {
-                    MessageBox.Show("Количество рабочих смен не должно быть меньше количества выходных.");
-                    textBox4.Text = "";
+                    error = true;
                 }
+                else if (!String.IsNullOrEmpty(textBox3.Text))
+                {
+                    if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text))
+                    {
+                        error = true;
+                    }
+                }
+            }
+
+            if (error) {
+                MessageBox.Show("Меньше 1 нельзя, а количество рабочих смен не должно быть меньше количества выходных.");
+                textBox4.Text = "";
             }
 
             return;
