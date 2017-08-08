@@ -3363,13 +3363,19 @@ namespace shedule
                 textBox5.Visible = true;
                 Program.addsmena = true;
                 button10.Text = "ok";
-
             }
             else
             {
-                Program.currentShop.VarSmens.Add(new VarSmen(int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text), false));
-                Program.writeVarSmen();
-                dataGridViewVarSmen.DataSource = viewVarSmen();
+                if (textBox3.Text != "" && textBox4.Text != "" && textBox5.Text != "")
+                {
+                    Program.currentShop.VarSmens.Add(new VarSmen(int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text), false));
+                    Program.writeVarSmen();
+                    dataGridViewVarSmen.DataSource = viewVarSmen();
+                }
+                else {
+                    MessageBox.Show("Одно из полей не было заполнено. Смена не будет добавлена");
+                }
+                
                 label12.Visible = false;
                 label13.Visible = false;
                 label15.Visible = false;
@@ -3377,6 +3383,7 @@ namespace shedule
                 textBox4.Visible = false;
                 textBox5.Visible = false;
                 Program.addsmena = false;
+                button10.Text = "Добавить смену";
             }
         }
 
@@ -3474,17 +3481,43 @@ namespace shedule
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text) || int.Parse(textBox3.Text) > 5 || int.Parse(textBox3.Text) < 1)
+            if (!String.IsNullOrEmpty(textBox3.Text)) {
+                if (!String.IsNullOrEmpty(textBox4.Text))
+                {
+                    if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text))
+                    {
+                        MessageBox.Show("Количество рабочих смен не должно быть меньше количества выходных.");
+                        textBox3.Text = "";
+                    }
+                }
+
+                if (int.Parse(textBox3.Text) > 5 || int.Parse(textBox3.Text) < 1)
+                {
+                    MessageBox.Show("Меньше 1 и больше 5 нельзя");
+                    textBox3.Text = "";
+                }
+            }  
+
+            return;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {             
+            if (!String.IsNullOrEmpty(textBox3.Text) && !String.IsNullOrEmpty(textBox4.Text))
             {
-                MessageBox.Show("Меньше 1 нельзя");
-                textBox3.Text = "";
-                return;
+                if (int.Parse(textBox3.Text) < int.Parse(textBox4.Text))
+                {
+                    MessageBox.Show("Количество рабочих смен не должно быть меньше количества выходных.");
+                    textBox4.Text = "";
+                }
             }
+
+            return;
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            if (int.Parse(textBox5.Text) < 7 || int.Parse(textBox3.Text) > 10)
+            if (!String.IsNullOrEmpty(textBox5.Text) && (int.Parse(textBox5.Text) < 7 || int.Parse(textBox5.Text) > 10))
             {
                 MessageBox.Show("Введите число от 7 до 10");
                 textBox5.Text = "";
@@ -3677,6 +3710,8 @@ namespace shedule
         {
 
         }
+
+       
     }
 }
 
