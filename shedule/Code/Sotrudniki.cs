@@ -679,7 +679,7 @@ namespace shedule.Code
                                 emp.AddSmena(sm);
 
                                 emp.TipTekSmen = 2;
-                                wd.minProdUtr--;
+                                wd.minGastrUtr--;
 
                             }
 
@@ -696,7 +696,7 @@ namespace shedule.Code
                                 emp.AddSmena(sm);
 
                                 emp.TipTekSmen = 3;
-                                wd.minProdVech--;
+                                wd.minGastrVech--;
 
                             }
 
