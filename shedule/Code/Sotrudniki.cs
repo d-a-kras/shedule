@@ -36,7 +36,7 @@ namespace shedule.Code
 
             foreach (TemplateWorkingDay mp in Program.currentShop.MouthPrognozT)
             {
-                if ((mp.minKassUtr== Program.currentShop.minrab.getMinCount()) ||(mp.minKassVech == Program.currentShop.minrab.getMinCount())||(mp.minProdVech != 0)||((mp.minProdUtr == Program.currentShop.minrab.getMinCount()))) { return false; }
+                if ((mp.minKassUtr== Program.currentShop.minrab.getMinCount()) ||(mp.minKassVech !=0)||(mp.minProdVech != 0)||((mp.minProdUtr == Program.currentShop.minrab.getMinCount()))) { return false; }
 
 
 
@@ -452,6 +452,16 @@ namespace shedule.Code
             if (emplo.Count>6) { count = true; }
             foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
             {
+                int ck = 0;
+                if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString())!=null)
+                {
+                     ck= wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / 60;
+                }
+                if (ck>wd.minKassUtr) {
+                    wd.minKassUtr = ck;
+                    wd.minKassVech = ck;
+                }
+                int start = wd.DS.getStartDaySale();
                 if ((sort)&&(count))
                 {
                     emplo.Sort(delegate (employee s1, employee s2)
@@ -469,9 +479,13 @@ namespace shedule.Code
                 int dlina = emp.getVS().getDlina();
 
 
-                    int start = wd.DS.getStartDaySale();
-                    if (Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() != start))!=null) {
+
+                    if (Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() != start)) != null)
+                    {
                         start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() >= wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != start)).getStartSmena();
+                    }
+                    else {
+                        start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() >= wd.DS.getStartDaySale()) && (!t.isZanyta()) ).getStartSmena();
                     }
                    
                   if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
@@ -540,6 +554,18 @@ namespace shedule.Code
             if (emplo.Count > 6) { count = true; }
             foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
             {
+                int ck = 0;
+                if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
+                {
+                    ck = wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / 60;
+                }
+                if (ck > wd.minProdUtr)
+                {
+                    wd.minProdUtr = ck;
+                    wd.minProdVech = ck;
+                }
+                int start = wd.DS.getStartDaySale();
+
                 if ((sort)&&(count))
                 {
                     emplo.Sort(delegate (employee s1, employee s2)
@@ -558,10 +584,13 @@ namespace shedule.Code
                 int dlina = emp.getVS().getDlina();
 
 
-                    int start = wd.DS.getStartDaySale();
+
                     if (Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() != start)) != null)
                     {
-                        start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != start)).getStartSmena()-1;
+                        start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != start)).getStartSmena() - 1;
+                    }
+                    else {
+                        start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) ).getStartSmena() - 1;
                     }
 
 
