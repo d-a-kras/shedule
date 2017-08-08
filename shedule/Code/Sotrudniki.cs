@@ -242,28 +242,27 @@ namespace shedule.Code
                         
 
                     }
-                    if ((DVS.Find(t => t.getR() == 2) != null) && (!flagg2))
+                    if ((DVS.Find(t => t.getR() == 2) != null) && (!flagg2) && (CountGruz > 1))
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGruz--; i++;
-                        if (CountGruz>0) {
+                      
                             e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGruz[ngruz].getOtobragenie(), "Сменный график");
                             Program.currentShop.employes.Add(e);
-                        }
+                        
                         flagg2 = true;
                         continue;
                     }
-                    if ((DVS.Find(t => t.getR() == 3) != null) && (!flagg3))
+                    if ((DVS.Find(t => t.getR() == 3) != null) && (!flagg3)&&(CountGruz>1))
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -1, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGruz--; i++;
-                        if (CountGruz > 0)
-                        {
+                      
                             e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 2, LGruz[ngruz].getOtobragenie(), "Сменный график");
                             Program.currentShop.employes.Add(e);
-                        }
+                        
                         flagg3 = true;
                         continue;
                     }
@@ -344,29 +343,27 @@ namespace shedule.Code
                         flag = false;
 
                     }
-                    if ((DVS.Find(t => t.getR() == 2) != null) && (!flaggastr2))
+                    if ((DVS.Find(t => t.getR() == 2) != null) && (!flaggastr2) && (CountGastr > 1))
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), -1, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGastr--; i++;
-                        if (CountGastr > 0)
-                        {
+                       
                             e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 2), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
                             Program.currentShop.employes.Add(e);
-                        }
+                        
                         flaggastr2 = true;
                         continue;
                     }
-                    if ((DVS.Find(t => t.getR() == 3) != null) && (!flaggastr3))
+                    if ((DVS.Find(t => t.getR() == 3) != null) && (!flaggastr3)&&(CountGastr>1))
                     {
                         e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), -2, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
                         Program.currentShop.employes.Add(e);
                         CountGastr--; i++;
-                        if (CountGastr > 0)
-                        {
+                        
                             e = new employee(Program.currentShop.getIdShop(), i, Program.currentShop.VarSmens.Find(t => t.getR() == 3), 1, LGastr[ngastr].getOtobragenie(), "Сменный график");
                             Program.currentShop.employes.Add(e);
-                        }
+                        
                         flaggastr3 = true;
                         continue;
                     }
