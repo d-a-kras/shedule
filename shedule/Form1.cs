@@ -3491,9 +3491,9 @@ namespace shedule
                     }
                 }
 
-                if (int.Parse(textBox3.Text) > 5 || int.Parse(textBox3.Text) < 1)
+                if (int.Parse(textBox3.Text) > 6 || int.Parse(textBox3.Text) < 1)
                 {
-                    MessageBox.Show("Меньше 1 и больше 5 нельзя");
+                    MessageBox.Show("Меньше 1 и больше 6 нельзя");
                     textBox3.Text = "";
                 }
             }  
