@@ -455,7 +455,7 @@ namespace shedule.Code
                 int ck = 0;
                 if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString())!=null)
                 {
-                     ck= (int)Math.Ceiling((double)(wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / 60));
+                     ck= (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountClick() * 2) / 1200));
                 }
                 if (ck>wd.minKassUtr) {
                     wd.minKassUtr = ck;
@@ -465,7 +465,7 @@ namespace shedule.Code
                 int ck2 = 0;
                 if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()) != null)
                 {
-                    ck2 = (int)Math.Ceiling((double)(wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() / 60));
+                    ck2 = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountClick() * 2) / 1200));
                 }
 
                 if (ck2 > wd.minKassVech)
@@ -570,7 +570,7 @@ namespace shedule.Code
                 int ck = 0;
                 if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
                 {
-                    ck = (int)Math.Ceiling((double)(wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / 60));
+                    ck = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountClick()*2)/1200));
                 }
                 if (ck > wd.minProdUtr)
                 {
@@ -581,7 +581,7 @@ namespace shedule.Code
                 int ck2 = 0;
                 if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()) != null)
                 {
-                    ck2 = (int)Math.Ceiling((double)(wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() / 60));
+                    ck2 = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountClick() * 2) / 1200));
                 }
                 if (ck2 > wd.minProdVech)
                 {
