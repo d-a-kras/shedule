@@ -2364,13 +2364,16 @@ namespace shedule
                 return false;
             }
 
-            if (((lvs.Find(t => t.getR() == 5) != null) || (lvs.Find(t => t.getR() == 6) != null)) && ((CountGruz % 2 != 0) || (CountGastr % 2 != 0)))
-            {
-               
-            }
-            else {
-                MessageBox.Show("Не выбраны смены 5/2 или 6/1 и нечетное число грузчиков или гастрономов. Добавьте дополнительно варианты смен или сделайте число сотрудников четным");
-                return false;
+            if (((lvs.Find(t => t.getR() == 5) != null) || (lvs.Find(t => t.getR() == 6) != null))){ } else {
+
+                if  ((CountGruz % 2 != 0) || (CountGastr % 2 != 0))
+                {
+                    MessageBox.Show("Не выбраны смены 5/2 или 6/1 и нечетное число грузчиков или гастрономов. Добавьте дополнительно варианты смен или сделайте число сотрудников четным");
+                    return false;
+                }
+                
+                   
+                
             }
 
             return true;

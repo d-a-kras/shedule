@@ -469,9 +469,10 @@ namespace shedule.Code
                 int dlina = emp.getVS().getDlina();
 
 
-
-               
-                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() >= wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena();
+                    int start = wd.DS.getStartDaySale();
+                    if (Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() != start))!=null) {
+                        start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() >= wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != start)).getStartSmena();
+                    }
                    
                   if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
@@ -557,9 +558,13 @@ namespace shedule.Code
                 int dlina = emp.getVS().getDlina();
 
 
+                    int start = wd.DS.getStartDaySale();
+                    if (Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() != start)) != null)
+                    {
+                        start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != start)).getStartSmena()-1;
+                    }
 
-               
-                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena()-1;
+
                     if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
                         dlina -= 1;
