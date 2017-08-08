@@ -710,7 +710,7 @@ namespace shedule
                 this.minProdVech = m-1;
             } else
             {
-                this.minProdVech = m;
+                this.minProdVech = 1;
             }
             this.minGastrUtr = 1;
             this.minGastrVech = 1;

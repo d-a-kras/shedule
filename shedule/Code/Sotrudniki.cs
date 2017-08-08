@@ -36,7 +36,7 @@ namespace shedule.Code
 
             foreach (TemplateWorkingDay mp in Program.currentShop.MouthPrognozT)
             {
-                if ((mp.minKassUtr== Program.currentShop.minrab.getMinCount()) ||(mp.minKassVech == Program.currentShop.minrab.getMinCount())||(mp.minProdVech == Program.currentShop.minrab.getMinCount())||((mp.minProdUtr == Program.currentShop.minrab.getMinCount()))) { return false; }
+                if ((mp.minKassUtr== Program.currentShop.minrab.getMinCount()) ||(mp.minKassVech == Program.currentShop.minrab.getMinCount())||(mp.minProdVech != 0)||((mp.minProdUtr == Program.currentShop.minrab.getMinCount()))) { return false; }
 
 
 
@@ -532,6 +532,8 @@ namespace shedule.Code
 
             emplo.Clear();
             sort = false;
+
+//Продавцы
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 2));
             count = false;
             if (emplo.Count > 6) { count = true; }
@@ -557,7 +559,7 @@ namespace shedule.Code
 
 
                
-                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() >=wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena()-1;
+                    int start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta())).getStartSmena()-1;
                     if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
                         dlina -= 1;
