@@ -19,6 +19,7 @@ namespace shedule.Code
                 foreach(Smena sm in emp.smens)
                 if (sm.getLenght()>13) {
 
+
                         return false;
                     }
               
@@ -268,7 +269,13 @@ namespace shedule.Code
                     }
                     if (DVS2.Count != 0)
                     {
-                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], i, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
+
+                       DateTime fd = new DateTime( DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month,1);
+                        DataForCalendary d = new DataForCalendary(fd);
+                        int otrab = d.getNWeekday()-1;
+                        
+
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], otrab, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
 
                         Program.currentShop.employes.Add(e);
                     }
@@ -370,7 +377,10 @@ namespace shedule.Code
 
                     if (DVS2.Count != 0)
                     {
-                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], i, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
+                        DateTime fd = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1);
+                        DataForCalendary d = new DataForCalendary(fd);
+                        int otrab = d.getNWeekday() - 1;
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], otrab, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
 
                         Program.currentShop.employes.Add(e);
                     }
@@ -452,26 +462,30 @@ namespace shedule.Code
             if (emplo.Count>6) { count = true; }
             foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
             {
-                int ck = 0;
-                if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString())!=null)
+                if (count)
                 {
-                     ck= (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountClick() * 2) / 1200));
-                }
-                if (ck>wd.minKassUtr) {
-                    wd.minKassUtr = ck;
-                 
-                }
+                    int ck = 0;
+                    if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
+                    {
+                        ck = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountClick() * 2) / 1800));
+                    }
+                    if (ck > wd.minKassUtr)
+                    {
+                        wd.minKassUtr = ck;
 
-                int ck2 = 0;
-                if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()) != null)
-                {
-                    ck2 = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountClick() * 2) / 1200));
-                }
+                    }
 
-                if (ck2 > wd.minKassVech)
-                {
-                   
-                    wd.minKassVech = ck2;
+                    int ck2 = 0;
+                    if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()) != null)
+                    {
+                        ck2 = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountClick() * 2) / 1800));
+                    }
+
+                    if (ck2 > wd.minKassVech)
+                    {
+
+                        wd.minKassVech = ck2;
+                    }
                 }
 
                 int start = wd.DS.getStartDaySale();
@@ -567,26 +581,29 @@ namespace shedule.Code
             if (emplo.Count > 6) { count = true; }
             foreach (TemplateWorkingDay wd in Program.currentShop.MouthPrognozT)
             {
-                int ck = 0;
-                if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
+                if (count)
                 {
-                    ck = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountClick()*2)/1200));
-                }
-                if (ck > wd.minProdUtr)
-                {
-                    wd.minProdUtr = ck;
-                    
-                }
+                    int ck = 0;
+                    if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
+                    {
+                        ck = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountClick() * 2) / 1800));
+                    }
+                    if (ck > wd.minProdUtr)
+                    {
+                        wd.minProdUtr = ck;
 
-                int ck2 = 0;
-                if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()) != null)
-                {
-                    ck2 = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountClick() * 2) / 1200));
-                }
-                if (ck2 > wd.minProdVech)
-                {
-                   
-                    wd.minProdVech = ck2;
+                    }
+
+                    int ck2 = 0;
+                    if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()) != null)
+                    {
+                        ck2 = (int)Math.Ceiling((double)((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountCheck() * 25 + wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getEndDaySale().ToString()).getCountClick() * 2) / 1800));
+                    }
+                    if (ck2 > wd.minProdVech)
+                    {
+
+                        wd.minProdVech = ck2;
+                    }
                 }
 
                 int start = wd.DS.getStartDaySale();
@@ -684,7 +701,7 @@ namespace shedule.Code
             }
             foreach (employee emp in emplo)
                 emp.setStatus(1);
-
+//гастрономы
             emplo.Clear();
             sort = false;
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 4));
@@ -778,7 +795,7 @@ namespace shedule.Code
             }
             foreach (employee emp in emplo)
                 emp.setStatus(1);
-
+//грузчики
             emplo.Clear();
             sort = false;
             emplo = Program.currentShop.employes.FindAll(t => (t.getStatus() == 0) && (t.GetTip() == 3));
@@ -800,7 +817,8 @@ namespace shedule.Code
                 }
                 foreach (employee emp in emplo)
             {
-                int dlina = emp.getVS().getDlina();
+                    
+                    int dlina = emp.getVS().getDlina();
 
 
 
@@ -826,12 +844,18 @@ namespace shedule.Code
 
                     else if ((wd.minGruzVech > 0))
                     {
-                        start = wd.DS.getEndDaySale() - dlina;
+                        if (wd.DS.getEndDaySale()>22) {
+
+                            start = wd.DS.getEndDaySale() - 1 - dlina;
+                        } else {
+                            start = wd.DS.getEndDaySale()  - dlina;
+                        }
+                        
 
                         if (emp.getOtrabotal() >= 0)
                         {
                             sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
-                            if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
+                            //if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(23 - dlina, dlina); }
                             emp.AddSmena(sm);
 
                             emp.TipTekSmen = 3;
@@ -845,13 +869,20 @@ namespace shedule.Code
                     {
 
                         sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
-                        if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
+                        //if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(22 - dlina, dlina); }
                         emp.AddSmena(sm);
 
                         emp.TipTekSmen = 1;
 
                     }
                     emp.OtrabotalDay();
+                    foreach (Smena sm1 in emp.smens)
+                        if (sm1.getLenght() > 12)
+                        {
+                            int x = 0;
+
+
+                        }
                 }
                
             }

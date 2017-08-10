@@ -10,6 +10,6 @@ namespace shedule.Code
     {
         public const string ListName = "График";
         public const string Version = "1.0";
-        public const string ReleaseDate = "09.08.2017";
+        public const string ReleaseDate = "10.08.2017";
     }
 }

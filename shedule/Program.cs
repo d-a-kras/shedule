@@ -1124,7 +1124,7 @@ namespace shedule
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
             else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-            else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
+            else { this.SetStarnAndLenght(this.getStartSmena()-1, this.getLenght()+1); }
 
         }
 
