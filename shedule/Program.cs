@@ -3129,6 +3129,8 @@ namespace shedule
 
             currentShop.DFCs.Clear();
             string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + $@"\Calendar{year}";
+            if (Program.IsMpRezhim) { readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShopFM() + $@"\Calendar{year}"; }
+            
             // MessageBox.Show(readPath);
             try
             {

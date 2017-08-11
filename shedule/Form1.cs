@@ -2211,16 +2211,7 @@ namespace shedule
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (Program.currentShop.minrab.getOtobragenie())
-            {
-                tbKassirCount.Text = Program.currentShop.minrab.getMinCount().ToString();
-               // tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
-            }
-            else
-            {
-                tbKassirCount.Text = "";
-               // tbLastHour.Text = "";
-            }
+            
 
             button7.BackColor = Color.MistyRose;
             button8.BackColor = Color.White;
@@ -2232,7 +2223,7 @@ namespace shedule
 
             dataGridViewMVarSmen.Columns[0].ReadOnly = true;
             dataGridViewMVarSmen.Columns[1].ReadOnly = true;
-
+            //Program.writeVarSmen();
 
         }
 
@@ -2381,7 +2372,7 @@ namespace shedule
             int shopCounter = 0;
             shopCounter++;
 
-            Program.getListDate(DateTime.Today.Year);
+           
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
@@ -2393,6 +2384,7 @@ namespace shedule
                 
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setIdShopFM(shop.getIdShopFM());
+                Program.getListDate(DateTime.Today.Year);
                 shop.setMinRab(Program.ReadMinRab());
                 Program.currentShop.setMinRab(shop.minrab);
                // Program.currentShop.setIdShop(0);
@@ -3334,20 +3326,7 @@ namespace shedule
 
         private void button23_Click(object sender, EventArgs e)
         {
-            String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\VarSmen";
-
-            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-            {
-                foreach (VarSmen vs in Program.currentShop.VarSmens)
-                {
-                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
-                }
-                Program.HandledShops.Add(Program.currentShop.getIdShop());
-                UpdateStatusShops();
-
-            }
-
-            Program.WriteMinRab();
+            Program.writeVarSmen();
             MessageBox.Show("Данные сохранены");
         }
 
@@ -3728,7 +3707,50 @@ namespace shedule
 
         }
 
-       
+        private void dataGridViewMVarSmen_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString()).setR(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 1:
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString()).setV(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 2:
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString()).setDeistvie(bool.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+
+            }
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            {
+                case 1:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
+                        .setTZnach(int.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 2:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
+                        .setDeistvie(bool.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 3:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
+                        .setData(DateTime.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+                case 4:
+                    Program.currentShop.factors.Find(
+                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
+                        .setNewZnach(int.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    break;
+
+            }
+        }
     }
 }
 

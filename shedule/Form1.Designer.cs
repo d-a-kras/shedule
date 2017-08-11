@@ -479,6 +479,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(408, 185);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // panel4
             // 
@@ -498,6 +499,7 @@
             this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
             this.dataGridViewMVarSmen.Size = new System.Drawing.Size(310, 131);
             this.dataGridViewMVarSmen.TabIndex = 2;
+            this.dataGridViewMVarSmen.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMVarSmen_CellEndEdit);
             // 
             // label14
             // 
