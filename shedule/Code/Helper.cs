@@ -224,27 +224,27 @@ namespace shedule.Code
         /// Пытаемся убить долбаные эксели
         /// </summary>
         /// <param name="excelFileName"></param>
-       /* public static void KillExcels(string excelFileName = "")
-        {
-            var processes = from p in Process.GetProcessesByName("EXCEL") select p;
-
-            //лень думать, пусть будут разные форычи
-            if (excelFileName != "")
-            {
-                foreach (var process in processes)
-                {
-                    if (process.MainWindowTitle == "Microsoft Excel - " + excelFileName)
-                        process.Kill();
-                }
-            }
-            else
-            {
-                foreach (var process in processes)
-                {
-                    process.Kill();
-                }
-            }
-        }*/
+        /* public static void KillExcels(string excelFileName = "")
+         {
+             var processes = from p in Process.GetProcessesByName("EXCEL") select p;
+ 
+             //лень думать, пусть будут разные форычи
+             if (excelFileName != "")
+             {
+                 foreach (var process in processes)
+                 {
+                     if (process.MainWindowTitle == "Microsoft Excel - " + excelFileName)
+                         process.Kill();
+                 }
+             }
+             else
+             {
+                 foreach (var process in processes)
+                 {
+                     process.Kill();
+                 }
+             }
+         }*/
 
         /// <summary>
         /// Возвращает сведения о чеках и кликах для магазина за промежуток времени
@@ -255,27 +255,49 @@ namespace shedule.Code
         /// <returns></returns>
         public static List<hourSale> GetHourSalesByDate(int shopId, DateTime startPeriod, DateTime endPeriod)
         {
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
+            var connectionString =
+                $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = startPeriod.Year + "/" + startPeriod.Day + "/" + startPeriod.Month;
             string s2 = endPeriod.Year + "/" + endPeriod.Day + "/" + endPeriod.Month;
 
-            string sql = "select * from dbo.get_StatisticByShopsDayHour('" + shopId + "', '" + s1 + "', '" + s2 + " 23:59:00')";
+            string sql = "select * from dbo.get_StatisticByShopsDayHour('" + shopId + "', '" + s1 + "', '" + s2 +
+                         " 23:59:00')";
 
             List<hourSale> hss = new List<hourSale>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            int countAttemption = 0;
+            int countRecords = 0;
+            while (countRecords == 0 && countAttemption < 2)
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection) { CommandTimeout = 3000 };
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                countAttemption++;
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    hourSale h = new hourSale(shopId, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                    hss.Add(h);
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sql, connection) { CommandTimeout = 3000 };
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        hourSale h = new hourSale(shopId, reader.GetDateTime(1), reader.GetString(2),
+                            reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                        hss.Add(h);
+                        countRecords++;
+                    }
                 }
+                if (countRecords > 2) countAttemption = 2;
             }
+
+            if (countRecords < 2&&Constants.IsThrowExceptionOnNullResult)
+            {
+                countRecords = 0;
+                countAttemption = 0;
+                throw new Exception("Соединение с базой нестабильно, данные не были получены.");
+            }
+
+            countRecords = 0;
+            countAttemption = 0;
             return hss;
         }
+
 
         /// <summary>
         /// Возвращает daySale для определенного дня магазина
@@ -343,7 +365,7 @@ namespace shedule.Code
                         formatter.Serialize(fs, shopHolidayDays);
                         Logger.Log.Info($"Записано в файл для магазина {shopId}");
                     }
-                    
+
                 }
             }
         }
@@ -364,8 +386,8 @@ namespace shedule.Code
             Logger.Log.Info($"Выгружено для магазина {shop.getIdShop()}");
 
             createListDays8and9(shop.getIdShop(), holidayDaySales);
-            
-            
+
+
         }
     }
 }

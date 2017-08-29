@@ -1064,28 +1064,46 @@ namespace shedule
                     $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
                 string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                int countAttemption = 0;
+                int countRecords = 0;
+                while (countRecords == 0 && countAttemption < 2)
                 {
-                    try
+                    countAttemption++;
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        connection.Open();
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        command.CommandTimeout = 300;
-                        SqlDataReader reader = command.ExecuteReader();
-
-                        while (reader.Read())
+                        try
                         {
-                            h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2),
-                                reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                            hSs.Add(h);
+                            connection.Open();
+                            SqlCommand command = new SqlCommand(sql, connection);
+                            command.CommandTimeout = 500;
+                            SqlDataReader reader = command.ExecuteReader();
 
+                            while (reader.Read())
+                            {
+                                h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2),
+                                    reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                                hSs.Add(h);
+                                countRecords++;
+                            }
                         }
+                        catch (System.Data.SqlClient.SqlException ex)
+                        {
+                            MessageBox.Show("Ошибка соединения с базой данных" + ex);
+                        }
+                        
                     }
-                    catch (System.Data.SqlClient.SqlException ex)
-                    {
-                        MessageBox.Show("Ошибка соединения с базой данных" + ex);
-                    }
+                    if (countRecords > 2) countAttemption = 2;
                 }
+
+                if (countRecords < 2 && Code.Constants.IsThrowExceptionOnNullResult)
+                {
+                    countRecords = 0;
+                    countAttemption = 0;
+                    throw new Exception("Соединение с базой нестабильно, данные не были получены.");
+                }
+
+                countRecords = 0;
+                countAttemption = 0;
 
                 List<hourSale>[,] hss = new List<hourSale>[7, 24];
                 for (int i = 0; i < Program.collectionweekday.Length; i++)

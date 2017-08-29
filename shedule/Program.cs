@@ -2746,31 +2746,48 @@ namespace shedule
             daySale ds;
             //List<string> results = new List<string>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            int countAttemption = 0;
+            int countRecords = 0;
+            while (countRecords == 0 && countAttemption < 2)
             {
-                try
+                countAttemption++;
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    command.CommandTimeout = 3000;
-                    SqlDataReader reader = command.ExecuteReader();
-
-
-                    while (reader.Read())
+                    try
                     {
-                        hourSale h = new hourSale(currentShop.getIdShop(), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                        //results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
-                        hss.Add(h);
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        command.CommandTimeout = 3000;
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            hourSale h = new hourSale(currentShop.getIdShop(), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                            //results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
+                            hss.Add(h);
+                            countRecords++;
+
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException ex)
+                    {
+                        MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
 
                     }
+                    if (countRecords > 1) countAttemption=2;
                 }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
-
-                }
-
             }
+
+            if (countRecords < 2 && Constants.IsThrowExceptionOnNullResult)
+            {
+                countRecords = 0;
+                countAttemption = 0;
+                throw new Exception("Соединение с базой нестабильно, данные не были получены.");
+            }
+
+            countRecords = 0;
+            countAttemption = 0;
+            
 
             if (hss.Count > 200)
             {
@@ -2895,31 +2912,51 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            int countAttemption = 0;
+            int countRecords = 0;
+            while (countRecords == 0 && countAttemption < 2)
             {
-                try
+                countAttemption++;
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    command.CommandTimeout = 300;
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    try
                     {
-                        hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                        SaleDay.Add(h);
+                        connection.Open();
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        command.CommandTimeout = 500;
+                        SqlDataReader reader = command.ExecuteReader();
 
+                        while (reader.Read())
+                        {
+                            hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2),
+                                reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                            SaleDay.Add(h);
+                            countRecords++;
+
+                        }
+                    }
+                    catch (System.Data.SqlClient.SqlException ex)
+                    {
+                        MessageBox.Show("Ошибка соединения с базой данных" + ex);
                     }
                 }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    MessageBox.Show("Ошибка соединения с базой данных" + ex);
-                }
-
-
-                return Raznica = SaleDay;
+                if (countRecords > 2) countAttemption = 2;
             }
-        }
+
+            if (countRecords < 2 && Constants.IsThrowExceptionOnNullResult)
+            {
+                countRecords = 0;
+                countAttemption = 0;
+                throw new Exception("Соединение с базой нестабильно, данные не были получены.");
+            }
+
+            countRecords = 0;
+            countAttemption = 0;
+
+
+            return Raznica = SaleDay;
+            }
+        
 
         static public Smena OptimRec(DateTime data)
         {
@@ -3512,6 +3549,7 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string sql = "select * from get_shops() order by КодМагазина";
 
+            
             using (connection = new SqlConnection(connectionString))
             {
                 try
@@ -3519,7 +3557,7 @@ namespace shedule
                     listShops.Clear();
                     connection.Open();
                     SqlCommand command = new SqlCommand(sql, connection);
-                    command.CommandTimeout = 300;
+                    command.CommandTimeout = 500;
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
