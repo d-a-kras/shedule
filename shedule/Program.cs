@@ -1124,7 +1124,9 @@ namespace shedule
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
             else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-            else { this.SetStarnAndLenght(this.getStartSmena()-1, this.getLenght()+1); }
+            else if (this.getStartSmena() == (w.DS.getStartDaySale()+1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
+           
+            else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
 
         }
 
@@ -1967,6 +1969,10 @@ namespace shedule
            
            
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString() + @"\MinRab";
+            if (IsMpRezhim) {
+                readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM().ToString() + @"\MinRab";
+            }
+
             if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString()))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString());
@@ -2034,7 +2040,9 @@ namespace shedule
             {
                 currentShop.tsr.Clear();
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
-
+                if (IsMpRezhim) {
+                    readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM() + @"\TSR";
+                }
 
                 try
                 {
@@ -2354,11 +2362,11 @@ namespace shedule
             List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getTip() == 4);
             int CountGruz = LGruz.Sum(o => o.getCount());
             int CountGastr = LGastr.Sum(o => o.getCount());
-            if (((lvs.Find(t => t.getR() == 2)!=null && (lvs.Find(t => t.getR() == 3)!=null)) && lvs.Count == 2)&&((CountGruz%2!=0)||(CountGastr%2!=0))) {
+            if (((lvs.Find(t => t.getR() == 2)!=null) && ((lvs.Find(t => t.getR() == 3))!=null) && (lvs.Count == 2))&&((CountGruz%2!=0)||(CountGastr%2!=0))) {
                 MessageBox.Show("Выбраны только смены 2/2 и 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно варианты смен или сделайте число сотрудников четным");
                 return false;
             }
-            if (((lvs.Find(t => t.getR() == 2) != null || (lvs.Find(t => t.getR() == 3) != null)) && lvs.Count == 2) && ((CountGruz % 2 != 0) || (CountGastr % 2 != 0)))
+            if (((lvs.Find(t => t.getR() == 2) != null) || (lvs.Find(t => t.getR() == 3) != null)) && (lvs.Count == 1) && ((CountGruz % 2 != 0) || (CountGastr % 2 != 0)))
             {
                 MessageBox.Show("Выбрана только смена 2/2 или 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно вариаты смен или сделайте число сотрудников четным");
                 return false;

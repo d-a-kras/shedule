@@ -2373,11 +2373,11 @@ namespace shedule
             shopCounter++;
 
            
-            Program.readTSR();
+           
             Program.readFactors();
             Program.readVarSmen();
             Program.ReadNarmaChas();
-
+           // Program.readTSR();
 
             foreach (Shop shop in Program.shops)
             {
@@ -2385,8 +2385,11 @@ namespace shedule
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setIdShopFM(shop.getIdShopFM());
                 Program.getListDate(DateTime.Today.Year);
-                shop.setMinRab(Program.ReadMinRab());
-                Program.currentShop.setMinRab(shop.minrab);
+                Program.readTSR();
+               
+
+               shop.setMinRab(Program.ReadMinRab());
+               Program.currentShop.setMinRab(shop.minrab);
                // Program.currentShop.setIdShop(0);
                 Program.currentShop.setAdresShop(shop.getAddress());
 
@@ -2440,7 +2443,7 @@ namespace shedule
 
                                 //  label3.Visible = false;
                                 //  progressBar1.Visible = false;
-                                MessageBox.Show(ex.Message);
+                                MessageBox.Show(ex.ToString());
                                 string[] s = new string[2];
                                 // s = listBox1.Text.Split('_');
                                 //  Program.currentShop = new Shop(Int16.Parse(s[0]), s[1]);
