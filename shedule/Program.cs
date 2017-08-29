@@ -2777,6 +2777,14 @@ namespace shedule
                     if (countRecords > 1) countAttemption=2;
                 }
             }
+
+            if (countRecords < 2 && Constants.IsThrowExceptionOnNullResult)
+            {
+                countRecords = 0;
+                countAttemption = 0;
+                throw new Exception("Соединение с базой нестабильно, данные не были получены.");
+            }
+
             countRecords = 0;
             countAttemption = 0;
             
@@ -2934,6 +2942,14 @@ namespace shedule
                 }
                 if (countRecords > 2) countAttemption = 2;
             }
+
+            if (countRecords < 2 && Constants.IsThrowExceptionOnNullResult)
+            {
+                countRecords = 0;
+                countAttemption = 0;
+                throw new Exception("Соединение с базой нестабильно, данные не были получены.");
+            }
+
             countRecords = 0;
             countAttemption = 0;
 
