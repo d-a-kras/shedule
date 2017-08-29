@@ -232,7 +232,7 @@ namespace shedule.Code
                 
                 if (CountKassirov < 3) { CountKassirov = 3; }
                 if (CountProd < 2) { CountProd = 2; }
-                if (CountGruz < 2) { CountGruz = 2; }
+               
 
               
                 bool flagg2 = false;
@@ -304,10 +304,10 @@ namespace shedule.Code
                 }
 
 
-
+                int otrPr=0;
                 for (int i = 100; CountProd > 0; CountProd--, i++)
                 {
-                    int otrPr=0;
+                    
 
                     if (flag)
                     {
@@ -413,10 +413,10 @@ namespace shedule.Code
                 }
 
 
-
+                int otrKass = 0;
                 for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
                 {
-                    int otrKass = 0;
+                    
                     if (flag)
                     {
 
@@ -553,7 +553,7 @@ namespace shedule.Code
                   
 
 
-                        if ((wd.minKassUtr > 0) && (emp.TipTekSmen != 3))
+                        if (wd.minKassUtr > 0) 
                         {
                             start = wd.DS.getStartDaySale();
 
@@ -688,7 +688,7 @@ namespace shedule.Code
 
                     else
                     {
-                        if ((emp.TipTekSmen != 3) && (wd.minProdUtr > 0))
+                        if  (wd.minProdUtr > 0)
                         {
 
 
@@ -885,7 +885,7 @@ namespace shedule.Code
                     {
                         if (wd.DS.getEndDaySale()>=22) {
 
-                            start = 22 - dlina;
+                            start = 23 - dlina;
                         } else {
                             start = wd.DS.getEndDaySale()  - dlina;
                         }
@@ -908,7 +908,7 @@ namespace shedule.Code
                     {
                         
                         sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina-1);
-                        if (sm.getEndSmena() > 22) { sm.SetStarnAndLenght(22 - dlina, dlina); }
+                        if (sm.getEndSmena() > 22) { sm.SetStarnAndLenght(23 - dlina, dlina); }
                         emp.AddSmena(sm);
 
                         emp.TipTekSmen = 1;

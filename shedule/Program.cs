@@ -2360,7 +2360,7 @@ namespace shedule
                 {
                     if (e.smens.Find(t => t.getData() == twd.getData()) != null)
                     {
-                        e.smens.Find(t => t.getData() == twd.getData()).addChas(twd);
+                        e.smens.Find(t => t.getData() == twd.getData()).obedChas(twd);
                     }
                 }
             }
