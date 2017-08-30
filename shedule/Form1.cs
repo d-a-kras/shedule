@@ -161,7 +161,7 @@ namespace shedule
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
                             CloseProcessOnError();
-                           // throw ex;
+                            throw ex;
 
                         }
                         System.Drawing.Color color;
@@ -2470,6 +2470,7 @@ namespace shedule
                                 MessageBox.Show("Расписание не создано");
                                 //CloseProcessOnError();
                                 //return;
+                                throw ex;
                             }
                             //  System.Drawing.Color color;
 
@@ -2796,6 +2797,7 @@ namespace shedule
                             {
                                 CloseProcessOnError();
                                 MessageBox.Show(ex.Message);
+                                throw ex;
                             }
                             object misValue = System.Reflection.Missing.Value;
 

@@ -124,7 +124,7 @@ namespace shedule
         public int getLenght()
         {
 
-            return (this.TimeEnd-this.getTimeStart());
+            return (this.TimeEnd - this.getTimeStart());
         }
 
         public void setTimeBaE(int b, int e)
@@ -695,7 +695,7 @@ namespace shedule
         public int minProdVech;
         public int minGastrUtr;
         public int minGastrVech;
-       
+
 
         public ForChart Chart;
 
@@ -706,15 +706,17 @@ namespace shedule
             this.minKassUtr = m;
             this.minProdUtr = m;
             this.minKassVech = m;
-            if (m>1) {
-                this.minProdVech = m-1;
-            } else
+            if (m > 1)
+            {
+                this.minProdVech = m - 1;
+            }
+            else
             {
                 this.minProdVech = 1;
             }
             this.minGastrUtr = 1;
             this.minGastrVech = 1;
-            
+
         }
 
         public void mMinCountKassUtr()
@@ -1124,8 +1126,8 @@ namespace shedule
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
             else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-            else if (this.getStartSmena() == (w.DS.getStartDaySale()+1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-           
+            else if (this.getStartSmena() == (w.DS.getStartDaySale() + 1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
+
             else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
 
         }
@@ -1135,7 +1137,7 @@ namespace shedule
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
             else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-           
+
             else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
 
         }
@@ -1976,10 +1978,11 @@ namespace shedule
 
         static public MinRab ReadMinRab()
         {
-           
-           
+
+
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString() + @"\MinRab";
-            if (IsMpRezhim) {
+            if (IsMpRezhim)
+            {
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM().ToString() + @"\MinRab";
             }
 
@@ -2050,7 +2053,8 @@ namespace shedule
             {
                 currentShop.tsr.Clear();
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
-                if (IsMpRezhim) {
+                if (IsMpRezhim)
+                {
                     readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM() + @"\TSR";
                 }
 
@@ -2079,7 +2083,7 @@ namespace shedule
                 {
 
                     currentShop.tsr.Add(new TSR("kass", "Кассир", 4, 27000, 14000));
-                    currentShop.tsr.Add(new TSR("prod", "Продавец", 4, 25000, 13000));                  
+                    currentShop.tsr.Add(new TSR("prod", "Продавец", 4, 25000, 13000));
                     currentShop.tsr.Add(new TSR("gruz", "Грузчик", 2, 25000, 13000));
                     currentShop.tsr.Add(new TSR("gastr", "Гастроном", 2, 25000, 13000));
 
@@ -2368,11 +2372,12 @@ namespace shedule
         public static bool CheckParnSmen()
         {
             List<VarSmen> lvs = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
-            List<TSR> LGruz = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz");        
+            List<TSR> LGruz = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gruz");
             List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getTip() == 4);
             int CountGruz = LGruz.Sum(o => o.getCount());
             int CountGastr = LGastr.Sum(o => o.getCount());
-            if (((lvs.Find(t => t.getR() == 2)!=null) && ((lvs.Find(t => t.getR() == 3))!=null) && (lvs.Count == 2))&&((CountGruz%2!=0)||(CountGastr%2!=0))) {
+            if (((lvs.Find(t => t.getR() == 2) != null) && ((lvs.Find(t => t.getR() == 3)) != null) && (lvs.Count == 2)) && ((CountGruz % 2 != 0) || (CountGastr % 2 != 0)))
+            {
                 MessageBox.Show("Выбраны только смены 2/2 и 3/3 и нечетное число грузчиков или гастрономов. Добавьте дополнительно варианты смен или сделайте число сотрудников четным");
                 return false;
             }
@@ -2382,34 +2387,41 @@ namespace shedule
                 return false;
             }
 
-            if (((lvs.Find(t => t.getR() == 5) != null) || (lvs.Find(t => t.getR() == 6) != null))){ } else {
+            if (((lvs.Find(t => t.getR() == 5) != null) || (lvs.Find(t => t.getR() == 6) != null))) { }
+            else
+            {
 
-                if  ((CountGruz % 2 != 0) || (CountGastr % 2 != 0))
+                if ((CountGruz % 2 != 0) || (CountGastr % 2 != 0))
                 {
                     MessageBox.Show("Не выбраны смены 5/2 или 6/1 и нечетное число грузчиков или гастрономов. Добавьте дополнительно варианты смен или сделайте число сотрудников четным");
                     return false;
                 }
-                
-                   
-                
+
+
+
             }
 
             return true;
         }
 
-        public static bool CheckDlinaDnya() {
+        public static bool CheckDlinaDnya()
+        {
             int min = 14;
-            List<DataForCalendary> ldfc = Program.currentShop.DFCs.FindAll(t=>t.getMonth()==DateTime.Now.AddMonths(1).Month);
-            foreach (DataForCalendary ds in ldfc) {
-                if (ds.getLenght()< min) {
+            List<DataForCalendary> ldfc = Program.currentShop.DFCs.FindAll(t => t.getMonth() == DateTime.Now.AddMonths(1).Month);
+            foreach (DataForCalendary ds in ldfc)
+            {
+                if (ds.getLenght() < min)
+                {
                     min = ds.getLenght();
                 }
             }
 
-            List<VarSmen> lvs = Program.currentShop.VarSmens.FindAll(t=>t.getDeistvie()==true);
-            foreach (VarSmen vs in lvs) {
-                if (min < vs.getDlina()) {
-                   
+            List<VarSmen> lvs = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
+            foreach (VarSmen vs in lvs)
+            {
+                if (min < vs.getDlina())
+                {
+
                     MessageBox.Show("Расписание не создано из-за выбранных вариантов смен при слишком короткой длине работы магазина. Используйте смены 5/2 и 6/1, или увеличьте время работы магазина.");
                     return false;
                 }
@@ -2733,8 +2745,8 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
-            //string s1 = "2016" + "/" + "9" + "/" + "6";
-            //string s2 = "2016" + "/" + "8" + "/" + "7";
+            //string s1 = "2015" + "/" + "9" + "/" + "6";
+            //string s2 = "2015" + "/" + "8" + "/" + "7";
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
             if (currentShop.getIdShop() == 0) { sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
@@ -2774,7 +2786,7 @@ namespace shedule
                         MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
 
                     }
-                    if (countRecords > 1) countAttemption=2;
+                    if (countRecords > 1) countAttemption = 2;
                 }
             }
 
@@ -2787,7 +2799,7 @@ namespace shedule
 
             countRecords = 0;
             countAttemption = 0;
-            
+
 
             if (hss.Count > 200)
             {
@@ -2955,8 +2967,8 @@ namespace shedule
 
 
             return Raznica = SaleDay;
-            }
-        
+        }
+
 
         static public Smena OptimRec(DateTime data)
         {
@@ -3185,7 +3197,7 @@ namespace shedule
             currentShop.DFCs.Clear();
             string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + $@"\Calendar{year}";
             if (Program.IsMpRezhim) { readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShopFM() + $@"\Calendar{year}"; }
-            
+
             // MessageBox.Show(readPath);
             try
             {
@@ -3549,7 +3561,7 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string sql = "select * from get_shops() order by КодМагазина";
 
-            
+
             using (connection = new SqlConnection(connectionString))
             {
                 try
@@ -3573,7 +3585,7 @@ namespace shedule
                         }
 
                     }
-                    
+
                 }
                 catch (System.Data.SqlClient.SqlException ex)
                 {
@@ -3680,24 +3692,32 @@ namespace shedule
 
         static void Main()
         {
-            Logger.InitLogger();
-            Helper.CheckAndDownloadNextYearCalendar();
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+            try
+            {
+                Logger.InitLogger();
+                Helper.CheckAndDownloadNextYearCalendar();
+                AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Form1());
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error("Произошла ошибка! " + ex.Message);
+            }
 
-            
-            
-            
+
+
+
+
         }
 
         static void OnProcessExit(object sender, EventArgs e)
         {
             try
             {
-              //  Helper.KillExcels();
+                //  Helper.KillExcels();
             }
             catch { }
 
