@@ -21,7 +21,12 @@ namespace shedule
         public HolidayUnloader(List<mShop> shops, List<DataForCalendary> holidayList)
         {
             _shopList = shops;
-            _holidayList = holidayList;
+
+            var March8 = new DateTime(2017, 03, 08);
+            var March7 = new DateTime(2017, 03, 07);
+
+            //оставляем только 7 и 8 марта по совету Димы
+            _holidayList = holidayList.Where(x => x.getData() == March8 || x.getData() == March7).ToList();
         }
 
         /// <summary>

@@ -1494,8 +1494,8 @@ namespace shedule
             tabControl1.Visible = true;
             
             //вызов функции для сохранения праздничных дней
-            //HolidayUnloader hu = new HolidayUnloader(Program.listShops, Program.currentShop.holidayDays);
-            //hu.MakeHolidayDaysForShops();
+            HolidayUnloader hu = new HolidayUnloader(Program.listShops, Program.currentShop.holidayDays);
+            hu.MakeHolidayDaysForShops();
         }
 
 
