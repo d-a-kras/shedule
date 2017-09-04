@@ -1168,6 +1168,7 @@
             this.dataGridViewVarSmen.Name = "dataGridViewVarSmen";
             this.dataGridViewVarSmen.Size = new System.Drawing.Size(339, 138);
             this.dataGridViewVarSmen.TabIndex = 2;
+            this.dataGridViewVarSmen.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVarSmen_CellContentClick);
             this.dataGridViewVarSmen.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVarSmen_CellEndEdit);
             // 
             // label1

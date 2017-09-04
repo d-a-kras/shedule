@@ -114,7 +114,14 @@ namespace shedule
 
 
                             //  
-                            Sotrudniki.CreateSmens();
+
+
+                            if (!Sotrudniki.CreateSmens()) {
+                                MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                return;
+                            }
+
+
 
                             bg.ReportProgress(8);
                             if (!Sotrudniki.CheckGrafic13())
@@ -125,7 +132,8 @@ namespace shedule
                             if (!Sotrudniki.CheckGrafic2())
                             {
                                 MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
-                                //return;
+                                //
+                                return;
                             }
 
                             if (!Sotrudniki.CheckGrafic())
@@ -153,7 +161,7 @@ namespace shedule
 
                             //  label3.Visible = false;
                             //  progressBar1.Visible = false;
-                            MessageBox.Show(ex.Message);
+                            MessageBox.Show(ex.ToString());
                             string[] s = new string[2];
                             // s = listBox1.Text.Split('_');
                             //  Program.currentShop = new Shop(Int16.Parse(s[0]), s[1]);
@@ -510,7 +518,7 @@ namespace shedule
                         catch (Exception ex)
                         {
                             CloseProcessOnError();
-                            MessageBox.Show(ex.Message);
+                            MessageBox.Show(ex.ToString());
                         }
                         object misValue = System.Reflection.Missing.Value;
 
@@ -636,7 +644,7 @@ namespace shedule
                         catch (Exception ex)
                         {
                             CloseProcessOnError();
-                            MessageBox.Show(ex.Message);
+                            MessageBox.Show(ex.ToString());
                         }
                         object misValue = System.Reflection.Missing.Value;
 
@@ -1779,16 +1787,7 @@ namespace shedule
             {
                 tbKassirCount.Text = "1";
             }
-            String readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + @"\VarSmen";
-
-            using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
-            {
-                foreach (VarSmen vs in Program.currentShop.VarSmens)
-                {
-                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
-                }
-
-            }
+            Program.writeVarSmen();
             Program.HandledShops.Add(Program.currentShop.getIdShop());
             UpdateStatusShops();
 
@@ -2023,7 +2022,7 @@ namespace shedule
             catch (Exception ex)
             {
                 CloseProcessOnError();
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -2353,7 +2352,7 @@ namespace shedule
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.ToString());
             }
             if (Directory.Exists(Environment.CurrentDirectory + @"\mult\"))
             {
@@ -2441,7 +2440,11 @@ namespace shedule
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
-                                Sotrudniki.CreateSmens();
+                                if (!Sotrudniki.CreateSmens())
+                                {
+                                    MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                    return;
+                                }
 
                                 if (!Sotrudniki.CheckGrafic13())
                                 {
@@ -2701,7 +2704,7 @@ namespace shedule
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show(ex.Message);
+                                MessageBox.Show(ex.ToString());
                             }
                             object misValue = System.Reflection.Missing.Value;
 
@@ -2795,7 +2798,7 @@ namespace shedule
                             catch (Exception ex)
                             {
                                 CloseProcessOnError();
-                                MessageBox.Show(ex.Message);
+                                MessageBox.Show(ex.ToString());
                             }
                             object misValue = System.Reflection.Missing.Value;
 
@@ -3771,6 +3774,11 @@ namespace shedule
                     break;
 
             }
+        }
+
+        private void dataGridViewVarSmen_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

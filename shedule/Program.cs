@@ -366,9 +366,9 @@ namespace shedule
             {
                 switch (this.getR())
                 {
-                    case 3: this.dlina = 11; return this.dlina;
+                    case 3: this.dlina = 10; return this.dlina;
                     case 5: this.dlina = 7; return this.dlina;
-                    case 2: this.dlina = 11; return this.dlina;
+                    case 2: this.dlina = 10; return this.dlina;
                     case 4: this.dlina = 9; return this.dlina;
                     case 6: this.dlina = 6; return this.dlina;
                     default: this.dlina = 8; return this.dlina;
@@ -511,7 +511,14 @@ namespace shedule
             this.TipGraf = tgr;
             this.smens = new List<Smena>();
 
-            this.otrabotal = otr % (VS.getR());
+            int m= otr % (VS.getR() + VS.getV());
+
+            if (m >= VS.getR()) {
+                this.otrabotal = m - (VS.getR() + VS.getV());
+                    }
+            else {
+                this.otrabotal = m;
+            }
         }
 
 
@@ -1121,6 +1128,7 @@ namespace shedule
 
         public void addChas(TemplateWorkingDay w)
         {
+            if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)) ;
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
             else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
