@@ -39,5 +39,12 @@ namespace shedule
                 MessageBox.Show("Не сохранено!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //вызов функции для сохранения праздничных дней
+            HolidayUnloader hu = new HolidayUnloader(Program.listShops, Program.currentShop.holidayDays);
+            hu.MakeHolidayDaysForShops();
+        }
     }
 }

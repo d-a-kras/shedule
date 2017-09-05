@@ -303,7 +303,7 @@ namespace shedule.Code
         /// <returns></returns>
         public static daySale GetDaySaleByDate(int shopId, DateTime dayOfSale, int typeOfDay)
         {
-            var hoursOfDay = GetHourSalesByDate(shopId, dayOfSale, dayOfSale);
+            var hoursOfDay = Program.createDaySale(shopId,dayOfSale);
             var ds = new daySale(Program.currentShop.getIdShop(), dayOfSale, typeOfDay);
 
             if (hoursOfDay.Count == 0)

@@ -315,6 +315,7 @@
             this.groupBox1.Size = new System.Drawing.Size(663, 428);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // listBoxMPartShops
             // 
@@ -646,6 +647,7 @@
             this.panelSingleShop.Name = "panelSingleShop";
             this.panelSingleShop.Size = new System.Drawing.Size(848, 429);
             this.panelSingleShop.TabIndex = 13;
+            this.panelSingleShop.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSingleShop_Paint);
             // 
             // bNumberSort
             // 

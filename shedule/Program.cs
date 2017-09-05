@@ -1057,6 +1057,7 @@ namespace shedule
         }
     }
 
+    [Serializable]
     public class ForChart
     {
         public int[] X;

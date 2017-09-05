@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.bSaveSettings = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbServerAddress = new System.Windows.Forms.TextBox();
-            this.tbServerLogin = new System.Windows.Forms.TextBox();
             this.tbServerPassword = new System.Windows.Forms.TextBox();
+            this.tbServerLogin = new System.Windows.Forms.TextBox();
+            this.tbServerAddress = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.bSaveSettings = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,33 +55,27 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки подключения к базе данных";
             // 
-            // bSaveSettings
+            // tbServerPassword
             // 
-            this.bSaveSettings.Location = new System.Drawing.Point(201, 168);
-            this.bSaveSettings.Name = "bSaveSettings";
-            this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
-            this.bSaveSettings.TabIndex = 1;
-            this.bSaveSettings.Text = "Сохранить";
-            this.bSaveSettings.UseVisualStyleBackColor = true;
-            this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
+            this.tbServerPassword.Location = new System.Drawing.Point(72, 91);
+            this.tbServerPassword.Name = "tbServerPassword";
+            this.tbServerPassword.PasswordChar = '*';
+            this.tbServerPassword.Size = new System.Drawing.Size(199, 20);
+            this.tbServerPassword.TabIndex = 6;
             // 
-            // label2
+            // tbServerLogin
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Логин:";
+            this.tbServerLogin.Location = new System.Drawing.Point(72, 65);
+            this.tbServerLogin.Name = "tbServerLogin";
+            this.tbServerLogin.Size = new System.Drawing.Size(199, 20);
+            this.tbServerLogin.TabIndex = 5;
             // 
-            // label3
+            // tbServerAddress
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 94);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Пароль:";
+            this.tbServerAddress.Location = new System.Drawing.Point(101, 39);
+            this.tbServerAddress.Name = "tbServerAddress";
+            this.tbServerAddress.Size = new System.Drawing.Size(170, 20);
+            this.tbServerAddress.TabIndex = 4;
             // 
             // label1
             // 
@@ -91,33 +86,50 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Адрес сервера:";
             // 
-            // tbServerAddress
+            // label3
             // 
-            this.tbServerAddress.Location = new System.Drawing.Point(101, 39);
-            this.tbServerAddress.Name = "tbServerAddress";
-            this.tbServerAddress.Size = new System.Drawing.Size(170, 20);
-            this.tbServerAddress.TabIndex = 4;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 94);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(48, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Пароль:";
             // 
-            // tbServerLogin
+            // label2
             // 
-            this.tbServerLogin.Location = new System.Drawing.Point(72, 65);
-            this.tbServerLogin.Name = "tbServerLogin";
-            this.tbServerLogin.Size = new System.Drawing.Size(199, 20);
-            this.tbServerLogin.TabIndex = 5;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Логин:";
             // 
-            // tbServerPassword
+            // bSaveSettings
             // 
-            this.tbServerPassword.Location = new System.Drawing.Point(72, 91);
-            this.tbServerPassword.Name = "tbServerPassword";
-            this.tbServerPassword.PasswordChar = '*';
-            this.tbServerPassword.Size = new System.Drawing.Size(199, 20);
-            this.tbServerPassword.TabIndex = 6;
+            this.bSaveSettings.Location = new System.Drawing.Point(201, 168);
+            this.bSaveSettings.Name = "bSaveSettings";
+            this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
+            this.bSaveSettings.TabIndex = 1;
+            this.bSaveSettings.Text = "Сохранить";
+            this.bSaveSettings.UseVisualStyleBackColor = true;
+            this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(16, 167);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "праздники";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // fSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 198);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.bSaveSettings);
             this.Controls.Add(this.groupBox1);
             this.Name = "fSettings";
@@ -139,5 +151,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
     }
 }

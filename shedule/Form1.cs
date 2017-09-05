@@ -1526,9 +1526,7 @@ namespace shedule
             }
             tabControl1.Visible = true;
             
-            //вызов функции для сохранения праздничных дней
-            //HolidayUnloader hu = new HolidayUnloader(Program.listShops, Program.currentShop.holidayDays);
-            //hu.MakeHolidayDaysForShops();
+            
         }
 
 
@@ -3779,6 +3777,16 @@ namespace shedule
         }
 
         private void dataGridViewVarSmen_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelSingleShop_Paint(object sender, PaintEventArgs e)
         {
 
         }
