@@ -1131,11 +1131,13 @@ namespace shedule
 
         public void addChas(TemplateWorkingDay w)
         {
-            if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)) ;
+            if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)){return;}
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
-            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
-            else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
-            else if (this.getStartSmena() == (w.DS.getStartDaySale() + 1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
+            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); return; }
+            else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+            else if (this.getEndSmena() < w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+            else if (this.getStartSmena() == (w.DS.getStartDaySale() + 1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+            
 
             else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
 

@@ -284,7 +284,7 @@ namespace shedule.Code
                         flagg3 = true;
                         continue;
                     }
-                    if (DVS3.Count != 0)
+                    if (DVS3.Count != 0 && CountGruz == 1)
                     {
 
                        DateTime fd = new DateTime( DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month,1);
@@ -396,7 +396,7 @@ namespace shedule.Code
                         continue;
                     }
 
-                    if (DVS3.Count != 0)
+                    if (DVS3.Count != 0 && CountGastr==1)
                     {
                         DateTime fd = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1);
                         DataForCalendary d = new DataForCalendary(fd);
