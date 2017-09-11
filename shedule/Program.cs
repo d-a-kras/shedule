@@ -1143,6 +1143,18 @@ namespace shedule
 
         }
 
+        public void addChas2(TemplateWorkingDay w)
+        {
+            if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)) ;
+            if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
+            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
+            else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
+            else if (this.getStartSmena() == (w.DS.getStartDaySale() + 1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
+
+            else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
+
+        }
+
         public void obedChas(TemplateWorkingDay w)
         {
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
