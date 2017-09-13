@@ -1027,7 +1027,17 @@ namespace shedule.Code
                     // MessageBox.Show("Меньше");
                     Smena s = emp.smens.Find(t => t.getLenght() < 6);
                     if (s != null)
-                    { s.addChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData())); }
+                    {
+                        if (emp.GetTip() == 3)
+                        {
+                            s.addChas2(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData()));
+                        }
+                        else
+                        {
+                            s.addChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData()));
+                        }
+                        
+                    }
                     else
                     {
                         int x = 0;
@@ -1035,7 +1045,15 @@ namespace shedule.Code
                         {
                             if ((sm1 != null) && (sm1.getLenght() < 12))
                             {
-                                sm1.addChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm1.getData()));
+                                if (emp.GetTip() == 3)
+                                {
+                                    sm1.addChas2(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm1.getData()));
+                                }
+                                else
+                                {
+                                    sm1.addChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm1.getData()));
+                                }
+                                
                             }
                             else {
                                 x++;

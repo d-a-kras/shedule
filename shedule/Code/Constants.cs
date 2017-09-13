@@ -10,7 +10,7 @@ namespace shedule.Code
     {
         public const string ListName = "График";
         public const string Version = "1.0";
-        public const string ReleaseDate = "3.09.2017";
+        public const string ReleaseDate = "12.09.2017";
         public const bool IsThrowExceptionOnNullResult = true; //будет ли программа порождать исключение если из базы вернулось 0 результатов
     }
 }
