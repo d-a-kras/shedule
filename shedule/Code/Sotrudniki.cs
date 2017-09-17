@@ -467,6 +467,7 @@ namespace shedule.Code
                         i--;
                         CountKassirov++;
                         flag = true;
+                        flagB = true;
                         
                     }
                 }
