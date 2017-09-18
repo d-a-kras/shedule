@@ -15,12 +15,12 @@ namespace shedule
     /// </summary>
     public class HolidayUnloader
     {
-        private List<mShop> _shopList;
+        private int _shopid;
         private List<DataForCalendary> _holidayList;
 
-        public HolidayUnloader(List<mShop> shops, List<DataForCalendary> holidayList)
+        public HolidayUnloader(int idshop, List<DataForCalendary> holidayList)
         {
-            _shopList = shops;
+            _shopid = idshop;
             _holidayList = holidayList;
         }
 
@@ -30,19 +30,18 @@ namespace shedule
         public void MakeHolidayDaysForShops()
         {
             List<string> errorShops = new List<string>();
-            foreach (var shop in _shopList)
-            {
+           
                 try
                 {
-                    Helper.SaveHolidayDaysOfShop(shop, _holidayList);
+                    Helper.SaveHolidayDaysOfShop(_shopid, _holidayList);
                 }
                 catch (Exception ex)
                 {
                     Logger.Log.Error(ex);
-                    errorShops.Add($"{shop.getAddress()}");
+                    errorShops.Add($"{_shopid}");
                 }
 
-            }
+            
 
             MessageBox.Show(!errorShops.Any()
                 ? "Дни типа 8 и 9 успешно выгружены для всех магазинов"

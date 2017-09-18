@@ -1104,6 +1104,8 @@ namespace shedule
             this.Lenght = lenght;
             this.Data = dt;
             this.zanyta = false;
+
+
         }
         static public void giveHoursSdvig(Smena sm1, Smena sm2, int x)
         {
@@ -1145,7 +1147,7 @@ namespace shedule
 
         public void addChas2(TemplateWorkingDay w)
         {
-            if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)) ;
+            if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)) { return; };
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
             else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
             else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); }
@@ -1425,7 +1427,7 @@ namespace shedule
 
     }
 
-
+    [Serializable]
     public class hourSale
     {
 
@@ -1734,6 +1736,7 @@ namespace shedule
 
     static class Program
     {
+        static public List<DataForCalendary> minholidays;
         static public List<Shop> shops;
         static public int normchas = 0;
         static public bool connect = false;
@@ -2541,10 +2544,11 @@ namespace shedule
 
             }
 
-            if ((tdt.Month == 0) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 5) || (tdt.Month == 4))
+            if ((tdt.Month == 11) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 5) || (tdt.Month == 4))
             {
-
-                Helper.readDays8and9();
+               
+                    Helper.readDays8and9();
+              
             }
 
             for (int i = 1; i < 10; i++)
@@ -3446,8 +3450,15 @@ namespace shedule
 
 
 
+        static public void R()
+        {
+               
+                    Helper.readDays8and9();
+              
+            }
 
-        static public void ReadTekChedule(string fileName)
+
+    static public void ReadTekChedule(string fileName)
         {
 
 

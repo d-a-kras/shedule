@@ -565,6 +565,7 @@ namespace shedule.Code
 
                             if (emp.getOtrabotal() >= 0)
                             {
+
                                 sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
                                 if (sm.getEndSmena()>wd.DS.getEndDaySale()) { sm.SetStarnAndLenght( wd.DS.getEndDaySale() - dlina, dlina); }
                                 emp.AddSmena(sm);
@@ -593,7 +594,14 @@ namespace shedule.Code
 
                         else if (emp.getOtrabotal() >= 0)
                         {
-                            emp.AddSmena(new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina));
+                       
+                           Smena sm1 =new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
+                        if (sm1.getEndSmena()>=wd.DS.getEndDaySale())
+                        {
+                            sm1.SetStarnAndLenght(wd.DS.getEndDaySale()-dlina,dlina);
+                        }
+                       
+                        emp.AddSmena(sm1);
 
                             emp.TipTekSmen = 2;
 

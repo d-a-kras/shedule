@@ -319,6 +319,7 @@ namespace shedule.Code
 
         public static void readDays8and9()
         {
+           
             string filepath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/days89.dat";
 
             BinaryFormatter formatter = new BinaryFormatter();
@@ -334,7 +335,7 @@ namespace shedule.Code
                     }
                 }
             }
-            SaveHolidayDaysOfShop(new mShop(Program.currentShop.getIdShop(), Program.currentShop.getAddress()), Program.currentShop.holidayDays);
+            SaveHolidayDaysOfShop(Program.currentShop.getIdShop(), CreateListHolidays());
         }
 
         /// <summary>
@@ -370,19 +371,29 @@ namespace shedule.Code
         /// </summary>
         /// <param name="shop"></param>
         /// <param name="_holidayList"></param>
-        public static void SaveHolidayDaysOfShop(mShop shop, List<DataForCalendary> _holidayList)
+        public static void SaveHolidayDaysOfShop(int id, List<DataForCalendary> _holidayList)
         {
             List<daySale> holidayDaySales = new List<daySale>(_holidayList.Count);
 
             foreach (var holiday in _holidayList)
             {
-                holidayDaySales.Add(Helper.GetDaySaleByDate(shop.getIdShop(), holiday.getData(), holiday.Tip));
+                holidayDaySales.Add(Helper.GetDaySaleByDate(id, holiday.getData(), holiday.Tip));
             }
-            Logger.Log.Info($"Выгружено для магазина {shop.getIdShop()}");
+            Logger.Log.Info($"Выгружено для магазина {id}");
 
-            createListDays8and9(shop.getIdShop(), holidayDaySales);
+            createListDays8and9(id, holidayDaySales);
 
 
+        }
+
+        public static List<DataForCalendary> CreateListHolidays() {
+           List< DataForCalendary> dd= new List<DataForCalendary>();
+            dd.Add(new DataForCalendary(new DateTime(2017,1,7),8));
+           dd.Add(new DataForCalendary(new DateTime(2017, 2, 23), 8));
+            dd.Add(new DataForCalendary(new DateTime(2017, 3, 8), 8));
+           dd.Add(new DataForCalendary(new DateTime(2017, 3, 7), 9));
+            dd.Add(new DataForCalendary(new DateTime(2017, 2, 22), 9));
+            return dd;
         }
     }
 }
