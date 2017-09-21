@@ -2949,7 +2949,11 @@ namespace shedule
         static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
-            string sql = "select * from dbo.get_StatisticByShopsDayHour('301', '2017/01/02', '2017/01/04 23:59:00')";
+            string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
+            string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
+            
+            string sql;
+            sql = "select * from dbo.get_StatisticByShopsDayHour('" + idShop + "', '" + s1 + "', '" + s2 + " 23:59:00')";
 
             int countAttemption = 0;
             int countRecords = 0;
