@@ -2951,7 +2951,7 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
-            
+            List< hourSale> lhs=new List<hourSale>();
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + idShop + "', '" + s1 + "', '" + s2 + " 23:59:00')";
 
@@ -2966,14 +2966,14 @@ namespace shedule
                     {
                         connection.Open();
                         SqlCommand command = new SqlCommand(sql, connection);
-                        command.CommandTimeout = 500;
+                        command.CommandTimeout = 3000;
                         SqlDataReader reader = command.ExecuteReader();
 
                         while (reader.Read())
                         {
                             hourSale h = new hourSale(reader.GetInt16(0), reader.GetDateTime(1), reader.GetString(2),
                                 reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                            SaleDay.Add(h);
+                            lhs.Add(h);
                             countRecords++;
 
                         }
@@ -2997,7 +2997,7 @@ namespace shedule
             countAttemption = 0;
 
 
-            return Raznica = SaleDay;
+            return lhs;
         }
 
 

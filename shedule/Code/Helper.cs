@@ -281,7 +281,7 @@ namespace shedule.Code
                 if (countRecords > 2) countAttemption = 2;
             }
 
-            if (countRecords < 2&&Constants.IsThrowExceptionOnNullResult)
+            if (countRecords < 2 && Constants.IsThrowExceptionOnNullResult)
             {
                 countRecords = 0;
                 countAttemption = 0;
@@ -303,7 +303,7 @@ namespace shedule.Code
         /// <returns></returns>
         public static daySale GetDaySaleByDate(int shopId, DateTime dayOfSale, int typeOfDay)
         {
-            var hoursOfDay = Program.createDaySale(shopId,dayOfSale);
+            var hoursOfDay = Program.createDaySale(shopId, dayOfSale);
             var ds = new daySale(Program.currentShop.getIdShop(), dayOfSale, typeOfDay);
 
             if (hoursOfDay.Count == 0)
@@ -319,7 +319,7 @@ namespace shedule.Code
 
         public static void readDays8and9()
         {
-           
+
             string filepath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/days89.dat";
 
             BinaryFormatter formatter = new BinaryFormatter();
@@ -386,14 +386,27 @@ namespace shedule.Code
 
         }
 
-        public static List<DataForCalendary> CreateListHolidays() {
-           List< DataForCalendary> dd= new List<DataForCalendary>();
-            dd.Add(new DataForCalendary(new DateTime(2017,1,7),8));
-           dd.Add(new DataForCalendary(new DateTime(2017, 2, 23), 8));
+        public static List<DataForCalendary> CreateListHolidays()
+        {
+            List<DataForCalendary> dd = new List<DataForCalendary>();
+            dd.Add(new DataForCalendary(new DateTime(2017, 1, 7), 8));
+            dd.Add(new DataForCalendary(new DateTime(2017, 2, 23), 8));
             dd.Add(new DataForCalendary(new DateTime(2017, 3, 8), 8));
-           dd.Add(new DataForCalendary(new DateTime(2017, 3, 7), 9));
+            dd.Add(new DataForCalendary(new DateTime(2017, 3, 7), 9));
             dd.Add(new DataForCalendary(new DateTime(2017, 2, 22), 9));
             return dd;
+        }
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey> (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
         }
     }
 }
