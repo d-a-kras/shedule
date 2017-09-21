@@ -169,7 +169,7 @@ namespace shedule
                             Program.readTSR();
                             MessageBox.Show("Расписание не создано");
                             CloseProcessOnError();
-                            throw ex;
+                            //throw ex;
 
                         }
                         System.Drawing.Color color;
