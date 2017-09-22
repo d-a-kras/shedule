@@ -320,7 +320,7 @@ namespace shedule.Code
         public static void readDays8and9()
         {
 
-            string filepath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + "/days89.dat";
+            string filepath = Environment.CurrentDirectory + "/ShopsH/" + Program.currentShop.getIdShop() + "/days89.dat";
 
             BinaryFormatter formatter = new BinaryFormatter();
             if (File.Exists(filepath))

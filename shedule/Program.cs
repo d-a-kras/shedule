@@ -546,6 +546,7 @@ namespace shedule
         public void AddSmena(Smena sm)
         {
             this.PlusNormRab(sm.getLenght());
+           
             this.smens.Add(sm);
         }
 
@@ -1080,7 +1081,7 @@ namespace shedule
         int NStart;
         int NEnd;
         int Lenght;
-        bool zanyta;
+      bool zanyta;
         DateTime Data;
 
         public void Zanyta()
