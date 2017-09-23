@@ -326,7 +326,7 @@ namespace shedule.Code
             BinaryFormatter formatter = new BinaryFormatter();
             if (File.Exists(filepath))
             {
-                using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate))
                 {
                     List<daySale> days89 = (List<daySale>)formatter.Deserialize(fs);
                     if (days89.Any())

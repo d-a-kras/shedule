@@ -2545,7 +2545,7 @@ namespace shedule
 
             }
 
-            if ((tdt.Month == 11) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 5) || (tdt.Month == 4))
+            if ((tdt.Month == 10) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 4) || (tdt.Month == 5))
             {
                
                     Helper.readDays8and9();
