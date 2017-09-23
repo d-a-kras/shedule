@@ -2949,7 +2949,7 @@ namespace shedule
 
         static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Settings.Default.DatabaseLogin};Password={Settings.Default.DatabasePassword}";
+            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
           //  string s1 = "2016/4/11";
