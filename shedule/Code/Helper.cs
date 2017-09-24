@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Windows.Forms;
 using LinqToExcel;
 
 namespace shedule.Code
@@ -317,15 +318,15 @@ namespace shedule.Code
             return ds;
         }
 
-        public static void readDays8and9()
-        {
+        public static void readDays8and9() { 
+        
 
             string filepath = Environment.CurrentDirectory + "/ShopsH/" + Program.currentShop.getIdShop() + "/days89.dat";
 
             BinaryFormatter formatter = new BinaryFormatter();
             if (File.Exists(filepath))
             {
-                using (FileStream fs = new FileStream("days89.dat", FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate))
                 {
                     List<daySale> days89 = (List<daySale>)formatter.Deserialize(fs);
                     if (days89.Any())
@@ -344,7 +345,7 @@ namespace shedule.Code
         /// <param name="shopId">Id магазина</param>
         public static void createListDays8and9(int shopId, List<daySale> shopHolidayDays)
         {
-            string filepath = Environment.CurrentDirectory + "/Shops/" + shopId;
+            string filepath = Environment.CurrentDirectory + "/ShopsH/" + shopId;
             BinaryFormatter formatter = new BinaryFormatter();
 
             if (shopHolidayDays.Any())
@@ -386,14 +387,24 @@ namespace shedule.Code
 
         }
 
+        public static void CreateHolidaysForAllShops()
+        {
+            var completedShops = new List<string>();
+            foreach (var shop in Program.listShops)
+            {
+                var hr = new HolidayUnloader(shop.getIdShop(), CreateListHolidays());
+                hr.MakeHolidayDaysForShops();
+                completedShops.Add(shop.getIdShop().ToString());
+            }
+
+            MessageBox.Show("Праздничные дни выгружены для: " + completedShops.ToString());
+        }
+
         public static List<DataForCalendary> CreateListHolidays()
         {
             List<DataForCalendary> dd = new List<DataForCalendary>();
-            dd.Add(new DataForCalendary(new DateTime(2017, 1, 7), 8));
-            dd.Add(new DataForCalendary(new DateTime(2017, 2, 23), 8));
             dd.Add(new DataForCalendary(new DateTime(2017, 3, 8), 8));
             dd.Add(new DataForCalendary(new DateTime(2017, 3, 7), 9));
-            dd.Add(new DataForCalendary(new DateTime(2017, 2, 22), 9));
             return dd;
         }
 

@@ -2545,7 +2545,7 @@ namespace shedule
 
             }
 
-            if ((tdt.Month == 11) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 5) || (tdt.Month == 4))
+            if ((tdt.Month == 10) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 4) || (tdt.Month == 5))
             {
                
                     Helper.readDays8and9();
@@ -2952,6 +2952,8 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
+          //  string s1 = "2016/4/11";
+           // string s2 = "2016/4/11";
             List< hourSale> lhs=new List<hourSale>();
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + idShop + "', '" + s1 + "', '" + s2 + " 23:59:00')";
@@ -3457,10 +3459,12 @@ namespace shedule
 
         static public void R()
         {
-               
-                    Helper.readDays8and9();
-              
-            }
+
+            //Helper.readDays8and9();
+            Helper.CreateHolidaysForAllShops();
+
+
+        }
 
 
     static public void ReadTekChedule(string fileName)

@@ -41,11 +41,11 @@ namespace shedule
                     errorShops.Add($"{_shopid}");
                 }
 
-            
-
-            MessageBox.Show(!errorShops.Any()
-                ? "Дни типа 8 и 9 успешно выгружены для всех магазинов"
-                : $"Дни типа 8 и 9 не выгружены для магазинов:\n{string.Join(",", errorShops)}");
+            if (errorShops.Any())
+                MessageBox.Show($"Дни типа 8 и 9 не выгружены для магазинов:\n{string.Join(",", errorShops)}");
+            //MessageBox.Show(!errorShops.Any()
+            //    ? "Дни типа 8 и 9 успешно выгружены для всех магазинов"
+            //    : $"Дни типа 8 и 9 не выгружены для магазинов:\n{string.Join(",", errorShops)}");
         }
     }
 }

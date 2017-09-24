@@ -343,7 +343,8 @@ namespace shedule.Code
 
                     if (DVS2.Count != 0)
                     {
-                       
+                        if ((nvs == 0) && (DVS2.Count == 2) && (CountProd == 2)) { otrPr = 2; }
+                        if ((nvs == 1) && (DVS2.Count == 2) && (CountProd == 1)) { otrPr = -2; }
                         e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], otrPr, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
                         otrPr += 2;
                         Program.currentShop.employes.Add(e);
