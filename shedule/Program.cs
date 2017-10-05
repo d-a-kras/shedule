@@ -446,6 +446,10 @@ namespace shedule
         int otdih;
         public List<Smena> smens;
 
+        public int getOtdih() {
+            return this.otdih;
+        }
+
         public void OtrabotalDay()
         {
             this.otrabotal += 1;

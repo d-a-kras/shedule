@@ -3415,7 +3415,13 @@ namespace shedule
 
         public static void Done(Thread ts) {
             while (ts.IsAlive) {  }
-            MessageBox.Show("Чтение завершено");
+            if (Program.currentShop.Semployes.Count != 0)
+            {
+                MessageBox.Show("Чтение завершено успешно");
+            }
+            else {
+                MessageBox.Show("Ошибка чтения! Файл имеет неверные данные");
+            }
         }
     }
 }

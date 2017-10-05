@@ -472,12 +472,36 @@ namespace shedule.Code
                         
                     }
                 }
+
+                if (Program.currentShop.Semployes.Count!=0) {
+                    NewOtrabotal();
+                }
             }
             else { 
                throw new Exception("Недостаточное количество смен");
             }
         }
 
+        static public void NewOtrabotal() {
+
+          
+
+                foreach (employee e in Program.currentShop.Semployes) {
+                if (Program.currentShop.employes.Find(t=>t.getID()==e.getID())!=null) {
+                    int o = e.getOtdih();
+                    if (o < 0)
+                    {
+                        e.setOtrabotal((-1) * o);
+                    }
+                    else
+                    {
+                        e.setOtrabotal(o- Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getV());
+                    }
+                    Program.currentShop.employes.Find(t => t.getID() == e.getID()).setOtrabotal(e.getOtrabotal());
+                }
+            }
+
+        }
 
        static public bool CreateSmens()
         {

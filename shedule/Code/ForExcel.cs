@@ -296,8 +296,11 @@ namespace shedule.Code
 
                     for (int i=3;i<60;i++) {
                         if (ObjWorkSheet.Cells[i, 2].Text!="") {
-                            employee e = new employee(Program.currentShop.getIdShop(), returnIndex(ObjWorkSheet.Cells[i, 2].Text), ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet));
-                            Program.currentShop.Semployes.Add(e);
+                            int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
+                            if (ind != -1) {
+                                employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet));
+                                Program.currentShop.Semployes.Add(e);
+                            }
                         }
 
                     }
@@ -327,13 +330,18 @@ namespace shedule.Code
                 i = le.Max(t => t.getID())+1;
             }
             catch {
-                switch (d) {
-                    case "Кассир": i = 0;break;
-                    case "Продавец": i = 100; break;
-                    case "Грузчик": i = 200; break;
-                    case "Гастроном": i = 300; break;
+               
+                    switch (d)
+                    {
+                        case "Кассир": i = 0; break;
+                        case "Продавец": i = 100; break;
+                        case "Грузчик": i = 200; break;
+                        case "Гастроном": i = 300; break;
+                        default: Program.currentShop.Semployes.Clear(); break;
+                    }
                 }
-            }
+              
+            
             return i;
         }
 
