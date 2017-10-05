@@ -147,6 +147,8 @@
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button14 = new System.Windows.Forms.Button();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1237,6 +1239,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button14);
             this.tabPage3.Controls.Add(this.button6);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.progressBar1);
@@ -1279,7 +1282,7 @@
             // 
             // buttonExport1
             // 
-            this.buttonExport1.Location = new System.Drawing.Point(157, 287);
+            this.buttonExport1.Location = new System.Drawing.Point(288, 287);
             this.buttonExport1.Name = "buttonExport1";
             this.buttonExport1.Size = new System.Drawing.Size(120, 40);
             this.buttonExport1.TabIndex = 6;
@@ -1381,6 +1384,20 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(162, 287);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(120, 40);
+            this.button14.TabIndex = 13;
+            this.button14.Text = "Добавить график за текущий месяц";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "openFileDialog2";
             // 
             // Form1
             // 
@@ -1564,6 +1581,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
     }
 }
 

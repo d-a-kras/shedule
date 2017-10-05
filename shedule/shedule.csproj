@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\CalendarHelper.cs" />
+    <Compile Include="Code\ForExcel.cs" />
     <Compile Include="Code\CopyHelper.cs" />
     <Compile Include="Code\Sotrudniki.cs" />
     <Compile Include="Code\Constants.cs" />

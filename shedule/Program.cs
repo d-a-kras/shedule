@@ -443,6 +443,7 @@ namespace shedule
         int NormRab;
         string Dolgnost;
         string TipGraf;
+        int otdih;
         public List<Smena> smens;
 
         public void OtrabotalDay()
@@ -519,9 +520,26 @@ namespace shedule
             else {
                 this.otrabotal = m;
             }
+            this.otdih = 0;
         }
 
 
+
+        public employee(int ish, int ie, string d, string tgr, int o)
+        {
+            this.IdShop = ish;
+            this.IdEmployee = ie;
+           
+            this.Dolgnost = d;
+            this.TipGraf = tgr;
+            this.smens = new List<Smena>();
+            this.otdih = o;
+           
+        }
+
+        public void setOtrabotal(int s) {
+            this.otrabotal = s;
+        }
 
         public string GetDolgnost()
         {
@@ -1256,6 +1274,7 @@ namespace shedule
         }
         public NormaChas[] NormaChasov = new NormaChas[12];
         public List<employee> employes { get; set; }
+        public List<employee> Semployes { get; set; }
         public List<TemplateWorkingDay> templates { get; set; }
         public List<daySale> daysSale { get; set; }
         public List<Factor> factors = new List<Factor>();
@@ -1777,7 +1796,7 @@ namespace shedule
         static public int TimeRech = 25;
         static public int TimeObrTov = 14;
 
-
+        static public string file = "";
         static public string login = "";
         static public string password = "";
         static public int tipDiagram = 0;
