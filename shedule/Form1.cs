@@ -1195,7 +1195,12 @@ namespace shedule
         private void buttonImportKasOper_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c:\\";
+            if (Settings.Default.folder=="") {
+                openFileDialog.InitialDirectory = "c:\\";
+            }
+            else{
+                openFileDialog.InitialDirectory = Settings.Default.folder;
+            }
             openFileDialog.Filter = "*|*.xls";
             openFileDialog.RestoreDirectory = true;
             string filepath = "";
@@ -1737,8 +1742,14 @@ namespace shedule
             saveFileDialog1.DefaultExt = ".xlsx";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
-                                               Program.currentShop.getIdShop();
+            if (Settings.Default.folder == "")
+            {
+                saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" +
+                                                   Program.currentShop.getIdShop();
+            }
+            else {
+                saveFileDialog1.InitialDirectory = Settings.Default.folder;
+            }
             saveFileDialog1.Title = "Выберите папку для сохранения расписания";
 
             if (radioButtonMinFondOpl.Checked)
@@ -2069,7 +2080,11 @@ namespace shedule
             saveFileDialog1.FileName = "Архив графиков, гистограм по нескольким магазинам";
             saveFileDialog1.AddExtension = true;
             saveFileDialog1.Filter = "Архив|*.zip";
-            saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (Settings.Default.folder=="") {
+                saveFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            } else {
+                saveFileDialog1.InitialDirectory = Settings.Default.folder;
+            }
             saveFileDialog1.Title = "Выберите папку для сохранения архива";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -2794,7 +2809,12 @@ namespace shedule
                     saveFileDialog1.DefaultExt = ".XLS";
                     saveFileDialog1.AddExtension = true;
                     saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-                    saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
+                    if (Settings.Default.folder=="") {
+                        saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
+                    }
+                    else {
+                        saveFileDialog1.InitialDirectory = Settings.Default.folder;
+                    }
                     saveFileDialog1.Title = "Выберите папку для сохранения выгрузки из БД";
                     saveFileDialog1.FileName = "Выгрузка по кассовым операциям за " + comboBox2.Text;
                     if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -3388,28 +3408,35 @@ namespace shedule
         private void button14_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c:\\";
+            if (Settings.Default.folder=="") {
+                openFileDialog.InitialDirectory = "c:\\";
+            }
+            else{
+                openFileDialog.InitialDirectory = Settings.Default.folder;
+            }
             openFileDialog.Filter = "*|*.xlsx";
             openFileDialog.RestoreDirectory = true;
-            
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Program.file = openFileDialog.FileName;
-            }
 
-            try
-            {
-                Thread thread1 = new Thread(ForExcel.CreateEmployee);
-                thread1.Priority = ThreadPriority.Highest;
-                thread1.IsBackground = true;
-                thread1.Start();
-                
-                Done(thread1);
-                
-                
-            }
-            catch(Exception ex) {
-                MessageBox.Show(ex.ToString());
+
+                try
+                {
+                    Thread thread1 = new Thread(ForExcel.CreateEmployee);
+                    thread1.Priority = ThreadPriority.Highest;
+                    thread1.IsBackground = true;
+                    thread1.Start();
+
+                    Done(thread1);
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
 
