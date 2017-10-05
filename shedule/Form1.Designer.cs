@@ -129,6 +129,7 @@
             this.buttonClearFactors = new System.Windows.Forms.Button();
             this.dataGridViewFactors = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button14 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -147,7 +148,6 @@
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button14 = new System.Windows.Forms.Button();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -1254,6 +1254,16 @@
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(162, 287);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(120, 40);
+            this.button14.TabIndex = 13;
+            this.button14.Text = "Добавить график за текущий месяц";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(31, 287);
@@ -1385,16 +1395,6 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(162, 287);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(120, 40);
-            this.button14.TabIndex = 13;
-            this.button14.Text = "Добавить график за текущий месяц";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
-            // 
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
@@ -1416,10 +1416,11 @@
             this.Controls.Add(this.panelSingleShop);
             this.Controls.Add(this.panelMultShops);
             this.HelpButton = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "График работы персонала, v1.0";
+            this.Text = "График работы персонала, v1.1";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelMultShops.ResumeLayout(false);
