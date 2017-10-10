@@ -170,13 +170,13 @@ namespace shedule
                     bg.ReportProgress(10); break;
                 case 3:
                     bg.ReportProgress(4);
-                    Program.createPrognoz();
+                    Program.createPrognoz(false,false);
                     bg.ReportProgress(8);
                     Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12); break;
                 case 2:
                     bg.ReportProgress(4);
-                    Program.createPrognoz();
+                    Program.createPrognoz(false,false);
                     bg.ReportProgress(8);
                    Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12);break;

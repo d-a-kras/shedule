@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 using LinqToExcel;
+using System.Threading;
+using System.ComponentModel;
 
 namespace shedule.Code
 {
     class ForExcel
     {
-        public static void  ExportExcel(string filename) {
+        public static Thread thread1;
+
+        public static void  ExportExcel(string filename, BackgroundWorker bg) {
 
             System.Drawing.Color color;
             Microsoft.Office.Interop.Excel.Range excelcells;
@@ -28,8 +32,8 @@ namespace shedule.Code
                 ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
                 ObjWorkSheet.Name = "Часы";
                 ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-               
 
+                bg.ReportProgress(10);
                 ObjWorkSheet.Name = "График";
 
                 excelcells = ObjWorkSheet.get_Range("F3", "AK50");
@@ -48,9 +52,9 @@ namespace shedule.Code
                 }
                 //Microsoft.Office.Interop.Excel.Range excelcells2 = ObjWorkSheet.get_Range("A3", "AK50");
                 //  excelcells2.ColumnWidth = Program.currentShop.getAddress().Length;
-              //  bg.ReportProgress(12);
+                //  bg.ReportProgress(12);
 
-
+                bg.ReportProgress(12);
                 ObjWorkSheet.Cells[2, 1] = "Адрес";
 
                 ObjWorkSheet.Cells[2, 2] = "Должность";
@@ -114,7 +118,7 @@ namespace shedule.Code
                     j++;
 
                 }
-               // bg.ReportProgress(14);
+                bg.ReportProgress(14);
 
 
                 ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[2];
@@ -138,7 +142,7 @@ namespace shedule.Code
                // Microsoft.Office.Interop.Excel.Range excelcells3 = ObjWorkSheet.get_Range("A3", "AL50");
                 //excelcells3.ColumnWidth = Program.currentShop.getAddress().Length;
 
-               // bg.ReportProgress(16);
+                bg.ReportProgress(16);
 
 
                 ObjWorkSheet.Cells[2, 1] = "Адрес";
@@ -294,11 +298,11 @@ namespace shedule.Code
                     Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
                     ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                    for (int i=3;i<60;i++) {
+                    for (int i=3;i<100;i++) {
                         if (ObjWorkSheet.Cells[i, 2].Text!="") {
                             int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
                             if (ind != -1) {
-                                employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet));
+                                employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet,getDenM(i, ObjWorkSheet)));
                                 Program.currentShop.Semployes.Add(e);
                             }
                         }
@@ -319,6 +323,65 @@ namespace shedule.Code
                
             }
            
+        }
+
+        public static void CreateEmployeeAndSmens()
+        {
+            string filepath = Program.file;
+            Program.currentShop.Semployes = new List<employee>();
+            if (File.Exists(filepath))
+            {
+
+                {
+                    //Создаём приложение.
+                    Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                    //Открываем книгу.                                                                                                                                                        
+                    Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(filepath, 0, true);// 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                    //Выбираем таблицу(лист).
+                    Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+                    ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+
+                    for (int i = 3; i < 100; i++)
+                    {
+                        if (ObjWorkSheet.Cells[i, 2].Text != "")
+                        {
+                            int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
+                            if (ind != -1)
+                            {
+                                int nd = DateTime.Now.AddDays(1).Day + 4;
+                                employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet, nd ));
+                                Program.currentShop.Semployes.Add(e);
+                                for (int k=0-nd+6,j=6;k<=0;k++,j++) {
+                                    try
+                                    {
+                                        string s = ObjWorkSheet.Cells[i, j].Text;
+                                        string[] sm = new string[2];
+                                        sm = s.Split('-');
+                                        int l = int.Parse(sm[1]) - int.Parse(sm[0])-1;
+                                        e.AddSmena(new Smena(Program.currentShop.getIdShop(),DateTime.Now.AddDays(k),int.Parse(sm[0]),l));
+                                    }
+                                    catch {
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                    ObjExcel.Visible = false;
+                    ObjExcel.UserControl = true;
+                    ObjExcel.DisplayAlerts = false;
+                    ObjWorkBook.Saved = true;
+
+
+
+                    ObjWorkBook.Close();
+                    ObjExcel.Quit();
+                }
+
+
+            }
+
         }
 
         public static int returnIndex(string d) {
@@ -345,16 +408,23 @@ namespace shedule.Code
             return i;
         }
 
-        public static int getOtdih(int stroka, Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet) {
-            int o = 0;
-          
+        public static int getDenM(int stroka, Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet) {
             int den = 25;
-            for (int j=den;j<50;j++) {
-                if (ObjWorkSheet.Cells[1, j].Text == "") {
+            for (int j = den; j < 50; j++)
+            {
+                if (ObjWorkSheet.Cells[1, j].Text == "")
+                {
                     den = j - 1;
                     break;
                 }
             }
+            return den;
+        }
+
+        public static int getOtdih(int stroka, Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet, int den) {
+            int o = 0;
+          
+           
 
             for (int i = 0; i < 7; i++, den--) {
                 if ((ObjWorkSheet.Cells[stroka, den].Text!="")&&(o>0)) {

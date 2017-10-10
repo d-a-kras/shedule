@@ -355,6 +355,7 @@ namespace shedule
         int r;
         int v;
         int dlina;
+        string dolgnost;
 
         public int getDlina()
         {
@@ -380,11 +381,12 @@ namespace shedule
 
         }
 
-        public VarSmen(int rab, int vyh, bool d)
+        public VarSmen(int rab, int vyh, bool d, string dolgnost1)
         {
             this.r = rab;
             this.v = vyh;
             this.Deistvie = d;
+            this.dolgnost = dolgnost1;
         }
 
         public VarSmen(int rab, int vyh, int dl, bool d)
@@ -393,6 +395,14 @@ namespace shedule
             this.v = vyh;
             this.dlina = dl;
             this.Deistvie = d;
+        }
+
+        public string getDolgnost() {
+            return this.dolgnost;
+        }
+
+        public void setDolgnost(string d) {
+            this.dolgnost = d;
         }
 
         public int getR()
@@ -2341,13 +2351,13 @@ namespace shedule
 
         public static void writeVarSmen()
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen";
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen2";
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
 
                 foreach (VarSmen vs in currentShop.VarSmens)
-                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
+                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie()+"#"+vs.getDolgnost());
             }
             Program.HandledShops.Add(Program.currentShop.getIdShop());
 
@@ -2355,7 +2365,7 @@ namespace shedule
 
         public static void readVarSmen()
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen";
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen2";
             // String readPath = Environment.CurrentDirectory + "/" + currentShop.getIdShop() + @"\varSmen.txt";
             try
             {
@@ -2371,18 +2381,34 @@ namespace shedule
                     while ((line = sr.ReadLine()) != null)
                     {
                         s = line.Split('#');
-                        currentShop.VarSmens.Add(new VarSmen(int.Parse(s[0]), int.Parse(s[1]), bool.Parse(s[2])));
+                        currentShop.VarSmens.Add(new VarSmen(int.Parse(s[0]), int.Parse(s[1]), bool.Parse(s[2]), s[3] ));
                     }
                 }
             }
             catch
             {
                 //MessageBox.Show(ex.ToString());
-                currentShop.VarSmens.Add(new VarSmen(5, 2, false));
-                currentShop.VarSmens.Add(new VarSmen(2, 2, true));
-                currentShop.VarSmens.Add(new VarSmen(3, 3, true));
-                currentShop.VarSmens.Add(new VarSmen(4, 3, false));
-                currentShop.VarSmens.Add(new VarSmen(6, 1, false));
+                currentShop.VarSmens.Add(new VarSmen(5, 2, false, "Кассир"));
+                currentShop.VarSmens.Add(new VarSmen(2, 2, true, "Кассир"));
+                currentShop.VarSmens.Add(new VarSmen(3, 3, true, "Кассир"));
+                currentShop.VarSmens.Add(new VarSmen(4, 3, false, "Кассир"));
+                currentShop.VarSmens.Add(new VarSmen(6, 1, false, "Кассир"));
+                currentShop.VarSmens.Add(new VarSmen(5, 2, false, "Продавец"));
+                currentShop.VarSmens.Add(new VarSmen(2, 2, true, "Продавец"));
+                currentShop.VarSmens.Add(new VarSmen(3, 3, true, "Продавец"));
+                currentShop.VarSmens.Add(new VarSmen(4, 3, false, "Продавец"));
+                currentShop.VarSmens.Add(new VarSmen(6, 1, false, "Продавец"));
+                currentShop.VarSmens.Add(new VarSmen(5, 2, false, "Гастроном"));
+                currentShop.VarSmens.Add(new VarSmen(2, 2, true, "Гастроном"));
+                currentShop.VarSmens.Add(new VarSmen(3, 3, true, "Гастроном"));
+                currentShop.VarSmens.Add(new VarSmen(4, 3, false, "Гастроном"));
+                currentShop.VarSmens.Add(new VarSmen(6, 1, false, "Гастроном"));
+                currentShop.VarSmens.Add(new VarSmen(5, 2, false, "Грузчик"));
+                currentShop.VarSmens.Add(new VarSmen(2, 2, true, "Грузчик"));
+                currentShop.VarSmens.Add(new VarSmen(3, 3, true, "Грузчик"));
+                currentShop.VarSmens.Add(new VarSmen(4, 3, false, "Грузчик"));
+                currentShop.VarSmens.Add(new VarSmen(6, 1, false, "Грузчик"));
+
                 //  case 1: if (currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab) != null) { emp.AddSmena(currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => t.getStartSmena() >= currentShop.TimeMinRab)); } else { emp.AddSmena(new Smena(currentShop.getIdShop(), wd.getData(), (wd.DS.getStartDaySale() +2 ), 10));  } break;
 
             };
@@ -2395,7 +2421,7 @@ namespace shedule
             {
 
                 foreach (VarSmen vs in currentShop.VarSmens)
-                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie());
+                    sw.WriteLine(vs.getR() + "#" + vs.getV() + "#" + vs.getDeistvie()+"#"+vs.getDolgnost());
             }
 
         }
@@ -2411,6 +2437,20 @@ namespace shedule
             {
 
                 foreach (TemplateWorkingDay twd in currentShop.MouthPrognozT)
+                {
+                    if (e.smens.Find(t => t.getData() == twd.getData()) != null)
+                    {
+                        e.smens.Find(t => t.getData() == twd.getData()).obedChas(twd);
+                    }
+                }
+            }
+        }
+        public static void itogChass2()
+        {
+            foreach (employee e in currentShop.employes)
+            {
+
+                foreach (TemplateWorkingDay twd in currentShop.MouthPrognozT.FindAll(t=>t.DS.getData().Day>DateTime.Now.Day))
                 {
                     if (e.smens.Find(t => t.getData() == twd.getData()) != null)
                     {
@@ -2518,7 +2558,7 @@ namespace shedule
 
 
 
-        public static void createPrognoz(bool isMp = false)
+        public static void createPrognoz( bool current, bool isMp  )
         {
             CheckDeistvFactors();
             currentShop.MouthPrognoz.Clear();
@@ -2593,17 +2633,7 @@ namespace shedule
                 }
 
             }
-            DateTime fd;
-
-            if (tdt.Month != 12)
-            {
-                fd = new DateTime(tdt.Year, tdt.Month + 1, 1);
-            }
-            else
-            {
-                fd = new DateTime(tdt.Year + 1, 1, 1);
-            }
-
+           
 
             foreach (PrognDaySale pds in PDSs)
             {
@@ -2633,12 +2663,31 @@ namespace shedule
 
             }
 
+            DateTime fd;
 
+            int dim;
+            daySale d;
+            if (current) {
+               
+                fd = new DateTime(tdt.Year , tdt.Month , tdt.AddDays(1).Day);
+                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
 
-            for (int i = 1; i <= DateTime.DaysInMonth(fd.Year, fd.Month); i++)
+            } else {
+                if (tdt.Month != 12)
+                {
+                    fd = new DateTime(tdt.Year, tdt.Month + 1, 1);
+                }
+                else
+                {
+                    fd = new DateTime(tdt.Year + 1, 1, 1);
+                }
+                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
+            }
+
+            for (int i = fd.Day; i <= dim; i++)
             {
 
-                daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
+                 d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
                 d.whatTip();
                 d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
                 currentShop.MouthPrognoz.Add(d);

@@ -69,10 +69,10 @@ namespace shedule.Code
 
         }
 
-        static public int shiftSm(ref int i,ref bool f1)
+        static public int shiftSm(ref int i,ref bool f1, List<VarSmen> lvs)
         {
             i++;
-            if (i == Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true).Count)
+            if (i == lvs.Count)
             {
                 i = 0;
                 f1 = true;
@@ -82,7 +82,7 @@ namespace shedule.Code
             return i;
 
         }
-
+        /*
         static public int shiftSm2(ref int i, ref bool f1)
         {
             i++;
@@ -109,7 +109,7 @@ namespace shedule.Code
 
             return i;
 
-        }
+        }*/
 
         static public int shiftProd(ref int i)
         {
@@ -165,8 +165,16 @@ namespace shedule.Code
             int ngruz = -1;
             int nkass = -1;
             int kassCount = Program.MinKassirCount;
-           
-                List<VarSmen> DVS = Program.currentShop.VarSmens.FindAll(t => t.getDeistvie() == true);
+
+            List<VarSmen> DVS0= Program.currentShop.VarSmens.FindAll(t => t.getDolgnost()=="Грузчик");
+
+            List<VarSmen> DVS = DVS0.FindAll(t => t.getDeistvie() == true);
+            if (DVS.Count == 0)
+            {
+                Exception ex = new Exception("Не выбрана ни одна смена у грузчиков");
+
+                return;
+            }
             List<VarSmen> DVS2 = DVS.FindAll(t =>!(( t.getR()==2)||(t.getR()==3)));
             List<VarSmen> DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
 
@@ -243,7 +251,8 @@ namespace shedule.Code
                 bool flagp3 = false;
                 bool flag2 = false;
                 bool flag3 = false;
-
+                bool f56gruz = false;
+                bool f56gastr = false;
 
                
 
@@ -284,7 +293,7 @@ namespace shedule.Code
                         flagg3 = true;
                         continue;
                     }
-                    if (DVS3.Count != 0 && CountGruz == 1)
+                    if ((DVS3.Count != 0 && CountGruz == 1)|| f56gruz)
                     {
 
                        DateTime fd = new DateTime( DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month,1);
@@ -292,19 +301,33 @@ namespace shedule.Code
                         int otrab = (d.getNWeekday())-1;
                         
 
-                        e = new employee(Program.currentShop.getIdShop(), i, DVS3[shiftSm3(ref nvs, ref flag)], otrab, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS3[shiftSm(ref nvs, ref flag, DVS3)], otrab, LGruz[shiftGruz(ref ngruz)].getOtobragenie(), "Сменный график");
 
                         Program.currentShop.employes.Add(e);
                     }
                     else {
                         i--;
                         CountGruz++;
-                        flag = true; 
+                        flag = true;
+                        if (DVS2.Count==0) {
+                            f56gruz = true;
+                        }
                     }
                 }
 
+                 DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Продавец");
 
-                int otrPr=0;
+                DVS = DVS0.FindAll(t => t.getDeistvie() == true);
+                if (DVS.Count==0) {
+                    Exception ex = new Exception("Не выбрана ни одна смена у продавцов");
+                    
+                    return;
+                }
+                 DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
+                 DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
+
+
+                int otrPr =0;
                 nvs = -1;
                 for (int i = 100; CountProd > 0; CountProd--, i++)
                 {
@@ -345,7 +368,7 @@ namespace shedule.Code
                     {
                         if ((nvs == 0) && (DVS2.Count == 2) && (CountProd == 2)) { otrPr = 2; }
                         if ((nvs == 1) && (DVS2.Count == 2) && (CountProd == 1)) { otrPr = -2; }
-                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], otrPr, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm(ref nvs, ref flag, DVS2)], otrPr, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
                         otrPr += 2;
                         Program.currentShop.employes.Add(e);
                     }
@@ -357,7 +380,16 @@ namespace shedule.Code
                     }
                 }
 
+                DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Гастроном");
+                DVS = DVS0.FindAll(t => t.getDeistvie() == true);
+                if (DVS.Count == 0)
+                {
+                    Exception ex = new Exception("Не выбрана ни одна смена у гастрономов");
 
+                    return;
+                }
+                DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
+                DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
 
                 nvs = -1;
                 for (int i = 300; CountGastr > 0; CountGastr--, i++)
@@ -397,12 +429,12 @@ namespace shedule.Code
                         continue;
                     }
 
-                    if (DVS3.Count != 0 && CountGastr==1)
+                    if ((DVS3.Count != 0 && CountGastr==1)||f56gastr)
                     {
                         DateTime fd = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1);
                         DataForCalendary d = new DataForCalendary(fd);
                         int otrab = d.getNWeekday() - 1;
-                        e = new employee(Program.currentShop.getIdShop(), i, DVS3[shiftSm3(ref nvs, ref flag)], otrab, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS3[shiftSm(ref nvs, ref flag, DVS3)], otrab, LGastr[shiftGastr(ref ngastr)].getOtobragenie(), "Сменный график");
 
                         Program.currentShop.employes.Add(e);
                     }
@@ -411,9 +443,23 @@ namespace shedule.Code
                         i--;
                         CountGastr++;
                         flag = true;
+                        if (DVS2.Count == 0)
+                        {
+                            f56gastr = true;
+                        }
                     }
                 }
 
+                DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Кассир");
+                DVS = DVS0.FindAll(t => t.getDeistvie() == true);
+                if (DVS.Count == 0)
+                {
+                    Exception ex = new Exception("Не выбрана ни одна смена у кассиров");
+
+                    return;
+                }
+                DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
+                DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
 
                 int otrKass = 0;
                  nvs = -1;
@@ -457,7 +503,7 @@ namespace shedule.Code
                     {
                         if ((nvs==0)&&(DVS2.Count==2)&&(CountKassirov==2)) { otrKass = 2; }
                         if ((nvs == 1) && (DVS2.Count == 2) && (CountKassirov == 1)) { otrKass = -2; }
-                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm2(ref nvs, ref flag)], otrKass, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
+                        e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm(ref nvs, ref flag, DVS2)], otrKass, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
                         otrKass += 2;
                         
                        
@@ -473,14 +519,14 @@ namespace shedule.Code
                     }
                 }
 
-                if (Program.currentShop.Semployes.Count!=0) {
-                    NewOtrabotal();
-                }
+               
             }
             else { 
                throw new Exception("Недостаточное количество смен");
             }
         }
+
+
 
         static public void NewOtrabotal() {
 
@@ -503,7 +549,18 @@ namespace shedule.Code
 
         }
 
-       static public bool CreateSmens()
+        static public void StarSmen()
+        {
+            foreach (employee e in Program.currentShop.Semployes)
+            {
+                if (Program.currentShop.employes.Find(t => t.getID() == e.getID()) != null)
+                {
+                    Program.currentShop.employes.Find(t => t.getID() == e.getID()).smens.AddRange(e.smens);
+                }
+            }
+        }
+
+            static public bool CreateSmens(bool current)
         {
             Smena sm;
             bool sort=false;
@@ -1073,6 +1130,11 @@ namespace shedule.Code
                     {
                         foreach (Smena sm1 in emp.smens)
                         {
+                            if (current) {
+                                if (sm1.getData().Day<=DateTime.Now.Day) {
+                                    continue;
+                                }
+                            }
                             if (sm1 != null)
                                 // {
                                 sm1.delChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm1.getData()));
@@ -1103,8 +1165,16 @@ namespace shedule.Code
                     else
                     {
                         int x = 0;
+                        
                         foreach (Smena sm1 in emp.smens)
                         {
+                            if (current)
+                            {
+                                if (sm1.getData().Day <= DateTime.Now.Day)
+                                {
+                                    continue;
+                                }
+                            }
                             if ((sm1 != null) && (sm1.getLenght() < 12))
                             {
                                 if (emp.GetTip() == 3)
@@ -1131,7 +1201,11 @@ namespace shedule.Code
                 }
                 emp.setStatus(2);
             }
-            Program.itogChass();
+            if (current) {
+                Program.itogChass2();
+            } else {
+                Program.itogChass();
+            }
             return true;
         }
 

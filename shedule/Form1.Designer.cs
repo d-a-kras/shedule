@@ -149,6 +149,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -478,6 +481,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(20, 0);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(408, 185);
             this.dataGridView1.TabIndex = 2;
@@ -486,6 +490,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.comboBox5);
             this.panel4.Controls.Add(this.dataGridViewMVarSmen);
             this.panel4.Controls.Add(this.label14);
             this.panel4.Controls.Add(this.button23);
@@ -497,9 +502,11 @@
             // dataGridViewMVarSmen
             // 
             this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
+            this.dataGridViewMVarSmen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewMVarSmen.Location = new System.Drawing.Point(23, 32);
             this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
+            this.dataGridViewMVarSmen.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridViewMVarSmen.Size = new System.Drawing.Size(310, 131);
             this.dataGridViewMVarSmen.TabIndex = 2;
             this.dataGridViewMVarSmen.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMVarSmen_CellEndEdit);
@@ -507,11 +514,11 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 0);
+            this.label14.Location = new System.Drawing.Point(6, 6);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(89, 13);
+            this.label14.Size = new System.Drawing.Size(107, 13);
             this.label14.TabIndex = 1;
-            this.label14.Text = "Варианты смен:";
+            this.label14.Text = "Варианты смен для";
             // 
             // button23
             // 
@@ -886,6 +893,7 @@
             this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
             this.dataGridViewForTSR.Name = "dataGridViewForTSR";
+            this.dataGridViewForTSR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
             this.dataGridViewForTSR.TabIndex = 0;
@@ -1016,6 +1024,7 @@
             // 
             // panelDopusVarSmen
             // 
+            this.panelDopusVarSmen.Controls.Add(this.comboBox4);
             this.panelDopusVarSmen.Controls.Add(this.label19);
             this.panelDopusVarSmen.Controls.Add(this.label18);
             this.panelDopusVarSmen.Controls.Add(this.label8);
@@ -1167,9 +1176,9 @@
             // dataGridViewVarSmen
             // 
             this.dataGridViewVarSmen.AllowUserToAddRows = false;
-            this.dataGridViewVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewVarSmen.Location = new System.Drawing.Point(15, 31);
             this.dataGridViewVarSmen.Name = "dataGridViewVarSmen";
+            this.dataGridViewVarSmen.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridViewVarSmen.Size = new System.Drawing.Size(339, 138);
             this.dataGridViewVarSmen.TabIndex = 2;
             this.dataGridViewVarSmen.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewVarSmen_CellContentClick);
@@ -1178,11 +1187,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Варианты смен:";
+            this.label1.Text = "Варианты смен для";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // buttonAplyVarSmen
             // 
@@ -1232,6 +1242,7 @@
             this.dataGridViewFactors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFactors.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewFactors.Name = "dataGridViewFactors";
+            this.dataGridViewFactors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewFactors.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewFactors.Size = new System.Drawing.Size(464, 194);
             this.dataGridViewFactors.TabIndex = 2;
@@ -1256,12 +1267,13 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(162, 287);
+            this.button14.Location = new System.Drawing.Point(283, 288);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(120, 40);
             this.button14.TabIndex = 13;
             this.button14.Text = "Добавить график за текущий месяц";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Visible = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button6
@@ -1292,7 +1304,7 @@
             // 
             // buttonExport1
             // 
-            this.buttonExport1.Location = new System.Drawing.Point(288, 287);
+            this.buttonExport1.Location = new System.Drawing.Point(157, 289);
             this.buttonExport1.Name = "buttonExport1";
             this.buttonExport1.Size = new System.Drawing.Size(120, 40);
             this.buttonExport1.TabIndex = 6;
@@ -1304,10 +1316,11 @@
             // 
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "График на месяц",
+            "График на следующий месяц",
             "Прогноз на 3 месяца по кассовым операциям",
             "Потребность в персонале",
-            "Экономический эффект"});
+            "Экономический эффект",
+            "График на текущий месяц"});
             this.comboBox3.Location = new System.Drawing.Point(131, 69);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(204, 21);
@@ -1398,6 +1411,39 @@
             // openFileDialog2
             // 
             this.openFileDialog2.FileName = "openFileDialog2";
+            // 
+            // timer2
+            // 
+            this.timer2.Interval = 1000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "кассиров",
+            "продавцов",
+            "грузчиков",
+            "гастрономов"});
+            this.comboBox4.Location = new System.Drawing.Point(116, 6);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(121, 21);
+            this.comboBox4.TabIndex = 19;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "кассиров",
+            "продавцов",
+            "грузчиков",
+            "гастрономов"});
+            this.comboBox5.Location = new System.Drawing.Point(115, 4);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(121, 21);
+            this.comboBox5.TabIndex = 3;
+            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -1584,6 +1630,9 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox comboBox5;
     }
 }
 
