@@ -1659,7 +1659,7 @@ namespace shedule
             }
             else
             {
-                return Program.currentShop.DFCs.Find(t => t.getData() == this.getData()).getTip();
+                return Program.currentShop.DFCs.Find(t => t.getData().Date == this.getData().Date).getTip();
             }
         }
         public void setTip(int t)

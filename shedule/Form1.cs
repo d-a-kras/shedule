@@ -1831,14 +1831,23 @@ namespace shedule
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBox3.SelectedIndex ) {
-                case 0:  button14.Visible = true;break;
+                case 0:  button14.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0))
+                    {
+                        button14.BackColor = Color.PaleGreen;
+                    }
+                    else
+                    {
+                        button14.BackColor = Color.DarkGray;
+                    }
+                    break;
                 case 1: button14.Visible = false; break;
                 case 2: button14.Visible = false; break;
                 case 3: button14.Visible = false; break;
-                case 4: button14.Visible = true; break;
+                case 4: button14.Visible = true;  break;
 
 
             }
+           
         }
 
         private void buttonExport1_Click(object sender, EventArgs e)
@@ -3566,7 +3575,11 @@ namespace shedule
 
                 try
                 {
-
+                    progressBar1.Visible = true;
+                    progressBar1.Maximum = 100;
+                    progressBar1.Minimum = 0;
+                    progressBar1.Step = 1;
+                    
                     if (comboBox3.SelectedIndex == 0)
                     {
                         ForExcel.thread1 = new Thread(ForExcel.CreateEmployee);
@@ -3589,12 +3602,13 @@ namespace shedule
             }
         }
 
-        public static void CheckDone(Thread ts, System.Windows.Forms.Timer t) {
+        public static void CheckDone(Thread ts, System.Windows.Forms.Timer t, System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1) {
+            pb1.Value = ForExcel.progress;
             if (!ts.IsAlive)
             {
                 t.Enabled = false;
                 t.Stop();
-                Done();
+                Done(btn,pb1);
                
 
             }
@@ -3604,22 +3618,23 @@ namespace shedule
            
         }
 
-        public static void Done() {
+        public static void Done(System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1) {
             if (Program.currentShop.Semployes.Count != 0)
             {
                 MessageBox.Show("Чтение завершено успешно");
+                btn.BackColor = Color.PaleGreen;
             }
             else
             {
                 MessageBox.Show("Ошибка чтения! Файл имеет неверные данные");
                 Program.currentShop.Semployes.Clear();
             }
-           
+            pb1.Visible = false;
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            CheckDone(ForExcel.thread1, timer2);
+            CheckDone(ForExcel.thread1, timer2,button14,progressBar1);
         }
 
         private void label1_Click(object sender, EventArgs e)

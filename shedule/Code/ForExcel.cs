@@ -14,6 +14,7 @@ namespace shedule.Code
     class ForExcel
     {
         public static Thread thread1;
+        public static int progress = 0;
 
         public static void  ExportExcel(string filename, BackgroundWorker bg) {
 
@@ -284,6 +285,9 @@ namespace shedule.Code
 
         public static void CreateEmployee()
         {
+          
+          
+            
             string filepath = Program.file;
             Program.currentShop.Semployes = new List<employee>();
             if (File.Exists(filepath))
@@ -299,6 +303,7 @@ namespace shedule.Code
                     ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
                     for (int i=3;i<100;i++) {
+                        progress = i;
                         if (ObjWorkSheet.Cells[i, 2].Text!="") {
                             int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
                             if (ind != -1) {
@@ -319,6 +324,7 @@ namespace shedule.Code
                     ObjWorkBook.Close();
                     ObjExcel.Quit();
                 }
+                
 
                
             }
@@ -343,6 +349,7 @@ namespace shedule.Code
 
                     for (int i = 3; i < 100; i++)
                     {
+                        progress = i;
                         if (ObjWorkSheet.Cells[i, 2].Text != "")
                         {
                             int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);

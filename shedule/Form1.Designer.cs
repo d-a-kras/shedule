@@ -1271,7 +1271,7 @@
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(120, 40);
             this.button14.TabIndex = 13;
-            this.button14.Text = "Добавить график за текущий месяц";
+            this.button14.Text = "Импорт графика текущего месяца";
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Visible = false;
             this.button14.Click += new System.EventHandler(this.button14_Click);
@@ -1308,7 +1308,7 @@
             this.buttonExport1.Name = "buttonExport1";
             this.buttonExport1.Size = new System.Drawing.Size(120, 40);
             this.buttonExport1.TabIndex = 6;
-            this.buttonExport1.Text = "Экспорт в .xls";
+            this.buttonExport1.Text = "Экспорт в .xlsx";
             this.buttonExport1.UseVisualStyleBackColor = true;
             this.buttonExport1.Click += new System.EventHandler(this.buttonExport1_Click);
             // 
