@@ -1852,7 +1852,11 @@ namespace shedule
 
         private void buttonExport1_Click(object sender, EventArgs e)
         {
-
+            if ((comboBox3.SelectedIndex==4)&&((!(Program.currentShop.Semployes!=null))||(Program.currentShop.Semployes.Count==0)||(Program.currentShop.Semployes[0].smens.Count==0)))
+            {
+                MessageBox.Show("Загрузите график на текущий месяц");
+                return;
+            }
             if (comboBox3.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите что отобразить!");

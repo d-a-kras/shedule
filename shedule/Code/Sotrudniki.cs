@@ -586,7 +586,14 @@ namespace shedule.Code
                     int ck = 0;
                     if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
                     {
-                        ck = (int)Math.Ceiling(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getStartDaySale()+1).ToString()).getCountCheck() ) / (double)60));
+                        if (Program.ParametrOptimization == 0)
+                        {
+                            ck = (int)Math.Round(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getStartDaySale() + 1).ToString()).getCountCheck()) / (double)60));
+                        }
+                        else {
+                            ck = (int)Math.Ceiling(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getStartDaySale() + 1).ToString()).getCountCheck()) / (double)60));
+                        
+                    }
                     }
                     if (ck > wd.minKassUtr)
                     {
@@ -598,7 +605,14 @@ namespace shedule.Code
                     int ps = wd.DS.getEndDaySale() - 1;
                     if (wd.DS.hoursSale.Find(t => t.getNHour() == ps.ToString()) != null)
                     {
-                        ck2 = (int)Math.Ceiling(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getEndDaySale()-2).ToString()).getCountCheck()) / (double) 60));
+                        if (Program.ParametrOptimization == 0)
+                        {
+                            ck2 = (int)Math.Round(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getEndDaySale() - 2).ToString()).getCountCheck()) / (double)60));
+                        }
+                        else {
+                            ck2 = (int)Math.Ceiling(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getEndDaySale() - 2).ToString()).getCountCheck()) / (double)60));
+                        
+                    }
                     }
 
                     if (ck2 > wd.minKassVech)
@@ -730,7 +744,13 @@ namespace shedule.Code
                     int ck = 0;
                     if (wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()) != null)
                     {
-                        ck = (int)Math.Ceiling((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / (double)60));
+                        if (Program.ParametrOptimization == 0) {
+                            ck = (int)Math.Round((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / (double)60));
+                        }
+                        else
+                        {
+                            ck = (int)Math.Ceiling((wd.DS.hoursSale.Find(t => t.getNHour() == wd.DS.getStartDaySale().ToString()).getCountCheck() / (double)60));
+                        }
                     }
                     if (ck > wd.minProdUtr)
                     {
@@ -742,7 +762,15 @@ namespace shedule.Code
                     int ps = wd.DS.getEndDaySale() - 1;
                     if (wd.DS.hoursSale.Find(t => t.getNHour() == ps.ToString()) != null)
                     {
-                        ck2 = (int)Math.Ceiling(wd.DS.hoursSale.Find(t => t.getNHour() == "21").getCountCheck() /(double) 60);
+                        if (Program.ParametrOptimization == 0)
+                        {
+                            ck2 = (int)Math.Round(wd.DS.hoursSale.Find(t => t.getNHour() == "21").getCountCheck() / (double)60);
+                        
+                    }
+                        else
+                        {
+                            ck2 = (int)Math.Ceiling(wd.DS.hoursSale.Find(t => t.getNHour() == "21").getCountCheck() / (double)60);
+                        }
                     }
                     if (ck2 > wd.minProdVech)
                     {
