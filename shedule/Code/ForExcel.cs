@@ -7,6 +7,7 @@ using Microsoft.Office.Interop.Excel;
 using System.IO;
 using LinqToExcel;
 using System.Threading;
+using System.Diagnostics;
 using System.ComponentModel;
 
 namespace shedule.Code
@@ -17,6 +18,18 @@ namespace shedule.Code
         public static int progress = 0;
 
         public static void  ExportExcel(string filename, BackgroundWorker bg) {
+
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("EXCEL"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+              //  MessageBox.Show(ex.ToString());
+            }
 
             System.Drawing.Color color;
             Microsoft.Office.Interop.Excel.Range excelcells;
@@ -44,10 +57,10 @@ namespace shedule.Code
                 excelcells.HorizontalAlignment = Microsoft.Office.Interop.Excel.Constants.xlCenter;
                 excelcells.VerticalAlignment = Microsoft.Office.Interop.Excel.Constants.xlCenter;
                 int i = 6;
-                foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                foreach (daySale twd in Program.currentShop.MouthPrognoz)
                 {
 
-                    ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
+                    ObjWorkSheet.Cells[1, i] = twd.getWeekDay2();
                     ObjWorkSheet.Cells[2, i] = twd.getData().Day;
                     i++;
                 }
@@ -66,42 +79,45 @@ namespace shedule.Code
 
                 // MessageBox.Show(Program.currentShop.employes.Count+" count");
                 int j = 3;
+              
                 foreach (employee emp in Program.currentShop.employes)
                 {
+                    switch (emp.getID() / 100)
+                    {
+                        case 0: color = System.Drawing.Color.LightSkyBlue; break;
+                        case 1: color = System.Drawing.Color.LightGreen; break;
+                        case 2: color = System.Drawing.Color.DarkSeaGreen; break;
+                        case 3: color = System.Drawing.Color.PaleGoldenrod; break;
 
+                        default: color = System.Drawing.Color.White; break;
+
+                    }
+                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                    ObjWorkSheet.Cells[j, 1].Interior.Color = color;
+                    ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
+                    ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+                    ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
                     i = 6;
-                    foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                    foreach (daySale twd in Program.currentShop.MouthPrognoz)
                     {
                         //  MessageBox.Show(emp.getTip() + "");
-                        switch (emp.getID() / 100)
-                        {
-                            case 0: color = System.Drawing.Color.LightSkyBlue; break;
-                            case 1: color = System.Drawing.Color.LightGreen; break;
-                            case 2: color = System.Drawing.Color.DarkSeaGreen; break;
-                            case 3: color = System.Drawing.Color.PaleGoldenrod; break;
-
-                            default: color = System.Drawing.Color.White; break;
-
-                        }
+                       
                         ObjWorkSheet.Cells[j, i].Interior.Color = color;
 
-                        if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
+                        if ((emp.smens.Find(t => t.getData().Date == twd.getData().Date) != null) && (emp.smens.Count != 0))
                         {
                             // MessageBox.Show(emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena());
 
                             ObjWorkSheet.Cells[j, i] =
-                                 emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + " - " +
-                                 emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena();
+                                 emp.smens.Find(t => t.getData().Date == twd.getData().Date).getStartSmena() + " - " +
+                                 emp.smens.Find(t => t.getData().Date == twd.getData().Date).getEndSmena();
                         }
                         //else
                         // { ObjWorkSheet.Cells[emp.getID() + 4, i] = emp.smens.Find(t => t.getData() == twd.getData()).getStartSmena() + "-" + emp.smens.Find(t => t.getData() == twd.getData()).getEndSmena(); }
                         i++;
+                    }
 
-                        ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
-                        ObjWorkSheet.Cells[j, 1].Interior.Color = color;
-                        ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                        ObjWorkSheet.Cells[j, 2].Interior.Color = color;
-                        ObjWorkSheet.Cells[j, 3] = emp.getTipZan();
+                       
                         /*if (Program.currentShop.tsr.Find(t => t.getOtobragenie() == emp.GetDolgnost()) != null)
                         {
                             ObjWorkSheet.Cells[j, 4] =
@@ -114,7 +130,7 @@ namespace shedule.Code
                         ObjWorkSheet.Cells[j, 5] = emp.smens.Count;
                         ObjWorkSheet.Cells[j, 5].Interior.Color = color;
 
-                    }
+                    
 
                     j++;
 
@@ -133,10 +149,10 @@ namespace shedule.Code
                 // excelcells.HorizontalAlignment = Microsoft.Office.Interop.Excel.Constants.xlCenter;
                 //  excelcells.VerticalAlignment = Microsoft.Office.Interop.Excel.Constants.xlCenter;
                 i = 6;
-                foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                foreach (daySale twd in Program.currentShop.MouthPrognoz)
                 {
 
-                    ObjWorkSheet.Cells[1, i] = twd.GetWeekDay();
+                    ObjWorkSheet.Cells[1, i] = twd.getWeekDay2();
                     ObjWorkSheet.Cells[2, i] = twd.getData().Day;
                     i++;
                 }
@@ -160,7 +176,7 @@ namespace shedule.Code
                 {
 
                     i = 6;
-                    foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
+                    foreach (daySale twd in Program.currentShop.MouthPrognoz)
                     {
                         switch (emp.getID() / 100)
                         {
@@ -174,7 +190,7 @@ namespace shedule.Code
                         }
                         ObjWorkSheet.Cells[j, i].Interior.Color = color;
                      
-                        if ((emp.smens.Find(t => t.getData() == twd.getData()) != null) && (emp.smens.Count != 0))
+                        if ((emp.smens.Find(t => t.getData().Date == twd.getData().Date) != null) && (emp.smens.Count != 0))
                         {
                             String c = "График!" + RetutnI(i) + j;
 
@@ -306,7 +322,7 @@ namespace shedule.Code
                         progress = i;
                         if (ObjWorkSheet.Cells[i, 2].Text!="") {
                             int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
-                            if (ind != -1) {
+                            if ((ind != -1)&& getOtdih(i, ObjWorkSheet, getDenM(i, ObjWorkSheet))<5) {
                                 employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet,getDenM(i, ObjWorkSheet)));
                                 Program.currentShop.Semployes.Add(e);
                             }
@@ -353,7 +369,7 @@ namespace shedule.Code
                         if (ObjWorkSheet.Cells[i, 2].Text != "")
                         {
                             int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
-                            if (ind != -1)
+                            if ((ind != -1)&& getOtdih(i, ObjWorkSheet, DateTime.Now.AddDays(1).Day + 5) <5)
                             {
                                 int nd = DateTime.Now.AddDays(1).Day + 4;
                                 employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet, nd ));
@@ -364,7 +380,7 @@ namespace shedule.Code
                                         string s = ObjWorkSheet.Cells[i, j].Text;
                                         string[] sm = new string[2];
                                         sm = s.Split('-');
-                                        int l = int.Parse(sm[1]) - int.Parse(sm[0])-1;
+                                        int l = int.Parse(sm[1]) - int.Parse(sm[0]);
                                         e.AddSmena(new Smena(Program.currentShop.getIdShop(),DateTime.Now.AddDays(k),int.Parse(sm[0]),l));
                                     }
                                     catch {

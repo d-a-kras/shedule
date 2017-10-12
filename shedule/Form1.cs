@@ -103,7 +103,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(false,false);
+                            Program.createPrognoz(false,false,true);
                             bg.ReportProgress(4);
                             //MessageBox.Show("Время создание примерно 2 минуты");
 
@@ -122,7 +122,7 @@ namespace shedule
                             //  
 
 
-                            if (!Sotrudniki.CreateSmens(false))
+                            if (!Sotrudniki.CreateSmens(false, Program.currentShop.employes))
                             {
                                 MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
                                 return;
@@ -139,8 +139,7 @@ namespace shedule
                             if (!Sotrudniki.CheckGrafic2())
                             {
                                 MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
-                                //
-                                return;
+                                // return;
                             }
 
                             if (!Sotrudniki.CheckGrafic())
@@ -315,7 +314,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(false,false);
+                            Program.createPrognoz(false,false,true);
                             bg.ReportProgress(4);
 
                             Sotrudniki.OptimCountSotr();
@@ -438,7 +437,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(false,false);
+                            Program.createPrognoz(false,false,true);
                             bg.ReportProgress(4);
 
 
@@ -564,7 +563,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(true,false);
+                            Program.createPrognoz(true,false,true);
                             bg.ReportProgress(4);
                             //MessageBox.Show("Время создание примерно 2 минуты");
 
@@ -581,13 +580,14 @@ namespace shedule
                             //  
                             bg.ReportProgress(7);
 
-
-                            if (!Sotrudniki.CreateSmens(true))
+                            if (!Sotrudniki.CreateSmens(true,Program.currentShop.employes))
                             {
+
                                 MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
                                 return;
                             }
-
+                           
+                            Sotrudniki.CheckDisp();
 
 
                             bg.ReportProgress(8);
@@ -600,7 +600,7 @@ namespace shedule
                             {
                                 MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
                                 //
-                                return;
+                              //  return;
                             }
 
                             if (!Sotrudniki.CheckGrafic())
@@ -1831,7 +1831,7 @@ namespace shedule
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (comboBox3.SelectedIndex ) {
-                case 0:  button14.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0))
+                case 0:  button14.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count==0))
                     {
                         button14.BackColor = Color.PaleGreen;
                     }
@@ -1843,7 +1843,18 @@ namespace shedule
                 case 1: button14.Visible = false; break;
                 case 2: button14.Visible = false; break;
                 case 3: button14.Visible = false; break;
-                case 4: button14.Visible = true;  break;
+                case 4: button14.Visible = true;
+                    if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count>0))
+                    {
+                        button14.BackColor = Color.PaleGreen;
+                    }
+                    else
+                    {
+                        button14.BackColor = Color.DarkGray;
+                    }
+                    break;
+                case -1: button14.Visible = false; break;
+
 
 
             }
@@ -1982,7 +1993,11 @@ namespace shedule
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            switch (tabControl1.SelectedIndex) {
+                case 2: comboBox3.SelectedIndex = -1;break;
+                case 1: buttonParamOptimiz.PerformClick();break;
+                case 0: buttonKassov.PerformClick();break;
+            }
         }
 
         public void ReadTipOptimizacii()
@@ -2387,7 +2402,7 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                  lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                Program.createPrognoz(false,Program.IsMpRezhim);
+                                Program.createPrognoz(false,Program.IsMpRezhim,true);
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
@@ -2396,7 +2411,7 @@ namespace shedule
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
-                                if (!Sotrudniki.CreateSmens(false))
+                                if (!Sotrudniki.CreateSmens(false,Program.currentShop.employes))
                                 {
                                     MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
                                     return;
@@ -2410,7 +2425,7 @@ namespace shedule
                                 if (!Sotrudniki.CheckGrafic2())
                                 {
                                     MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
-                                    return;
+                                   // return;
                                 }
 
                                 ForExcel.ExportExcel(filename,bg);
@@ -2446,7 +2461,7 @@ namespace shedule
                             {
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
-                                Program.createPrognoz(false,true);
+                                Program.createPrognoz(false,true,true);
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
@@ -2538,7 +2553,7 @@ namespace shedule
                             {
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
-                                Program.createPrognoz(false,true);
+                                Program.createPrognoz(false,true,true);
 
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
@@ -3582,6 +3597,8 @@ namespace shedule
                     progressBar1.Visible = true;
                     progressBar1.Maximum = 100;
                     progressBar1.Minimum = 0;
+                    progressBar1.Value = 0;
+                    ForExcel.progress = 0;
                     progressBar1.Step = 1;
                     
                     if (comboBox3.SelectedIndex == 0)
@@ -3654,6 +3671,11 @@ namespace shedule
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridViewMVarSmen.DataSource = viewVarSmen(true);
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

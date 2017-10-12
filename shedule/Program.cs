@@ -552,6 +552,7 @@ namespace shedule
         }
 
         public void setOtrabotal(int s) {
+          
             this.otrabotal = s;
         }
 
@@ -1208,6 +1209,8 @@ namespace shedule
             else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
 
         }
+
+   
 
         public int getStartSmena()
         {
@@ -2452,9 +2455,9 @@ namespace shedule
 
                 foreach (TemplateWorkingDay twd in currentShop.MouthPrognozT.FindAll(t=>t.DS.getData().Day>DateTime.Now.Day))
                 {
-                    if (e.smens.Find(t => t.getData() == twd.getData()) != null)
+                    if (e.smens.Find(t => t.getData().Date == twd.getData().Date) != null)
                     {
-                        e.smens.Find(t => t.getData() == twd.getData()).obedChas(twd);
+                        e.smens.Find(t => t.getData().Date == twd.getData().Date).obedChas(twd);
                     }
                 }
             }
@@ -2558,7 +2561,7 @@ namespace shedule
 
 
 
-        public static void createPrognoz( bool current, bool isMp  )
+        public static void createPrognoz( bool current, bool isMp, bool first  )
         {
             CheckDeistvFactors();
             currentShop.MouthPrognoz.Clear();
@@ -2568,25 +2571,26 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
+            if (first) {
+                //   if (connect)
+                //  {
+                if (!isOffline)
+                {
+                    currentShop.daysSale.Clear();
+                    if (isMp)
+                    {
+                        createListDaySale(d2, ydt, currentShop.getIdShopFM());
+                    }
+                    else
+                    {
+                        createListDaySale(d2, ydt, currentShop.getIdShop());
+                    }
+                }
 
-            //   if (connect)
-            //  {
-            if (!isOffline)
-            {
-                currentShop.daysSale.Clear();
-                if (isMp)
+                if ((isMp) && (isOffline))
                 {
                     createListDaySale(d2, ydt, currentShop.getIdShopFM());
                 }
-                else
-                {
-                    createListDaySale(d2, ydt, currentShop.getIdShop());
-                }
-            }
-
-            if ((isMp) && (isOffline))
-            {
-                createListDaySale(d2, ydt, currentShop.getIdShopFM());
             }
 
             //     }
@@ -2673,14 +2677,7 @@ namespace shedule
                 dim = DateTime.DaysInMonth(fd.Year, fd.Month);
 
             } else {
-                if (tdt.Month != 12)
-                {
-                    fd = new DateTime(tdt.Year, tdt.Month + 1, 1);
-                }
-                else
-                {
-                    fd = new DateTime(tdt.Year + 1, 1, 1);
-                }
+                fd = new DateTime(tdt.AddMonths(1).Year, tdt.AddMonths(1).Month,1);
                 dim = DateTime.DaysInMonth(fd.Year, fd.Month);
             }
 

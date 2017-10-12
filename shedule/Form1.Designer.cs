@@ -60,6 +60,7 @@
             this.button9 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.dataGridViewMVarSmen = new System.Windows.Forms.DataGridView();
             this.label14 = new System.Windows.Forms.Label();
             this.button23 = new System.Windows.Forms.Button();
@@ -108,6 +109,7 @@
             this.radioButtonMinTime = new System.Windows.Forms.RadioButton();
             this.radioButtonMinFondOpl = new System.Windows.Forms.RadioButton();
             this.panelDopusVarSmen = new System.Windows.Forms.Panel();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -150,8 +152,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -498,6 +498,20 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(462, 245);
             this.panel4.TabIndex = 2;
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "кассиров",
+            "продавцов",
+            "грузчиков",
+            "гастрономов"});
+            this.comboBox5.Location = new System.Drawing.Point(115, 4);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(121, 21);
+            this.comboBox5.TabIndex = 3;
+            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // dataGridViewMVarSmen
             // 
@@ -1046,6 +1060,20 @@
             this.panelDopusVarSmen.Size = new System.Drawing.Size(480, 245);
             this.panelDopusVarSmen.TabIndex = 2;
             // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "кассиров",
+            "продавцов",
+            "грузчиков",
+            "гастрономов"});
+            this.comboBox4.Location = new System.Drawing.Point(116, 6);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(121, 21);
+            this.comboBox4.TabIndex = 19;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -1264,6 +1292,7 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
             // button14
             // 
@@ -1416,34 +1445,6 @@
             // 
             this.timer2.Interval = 1000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "кассиров",
-            "продавцов",
-            "грузчиков",
-            "гастрономов"});
-            this.comboBox4.Location = new System.Drawing.Point(116, 6);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 19;
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
-            "кассиров",
-            "продавцов",
-            "грузчиков",
-            "гастрономов"});
-            this.comboBox5.Location = new System.Drawing.Point(115, 4);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(121, 21);
-            this.comboBox5.TabIndex = 3;
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // Form1
             // 
