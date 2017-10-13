@@ -1432,7 +1432,11 @@ namespace shedule
             Program.currentShop = new Shop(Int16.Parse(s[0]), s[1]);
             Program.currentShop.setMinRab(Program.ReadMinRab());
             buttonParamOptimiz.PerformClick();
-            Program.getListDate(DateTime.Today.Year);
+            Program.getListDate(DateTime.Today.Year, false);
+           string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
+            if (File.Exists(readPath)) {
+                Program.getListDate(DateTime.Today.AddYears(1).Year, true);
+            }
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
@@ -1723,7 +1727,12 @@ namespace shedule
             listBoxMPartShops.Items.Clear();
             Program.currentShop = new Shop(0, "");
             Program.currentShop.setMinRab(Program.ReadMinRab());
-            Program.getListDate(DateTime.Today.Year);
+            Program.getListDate(DateTime.Today.Year,false);
+            string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShopFM() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
+            if (File.Exists(readPath))
+            {
+                Program.getListDate(DateTime.Today.AddYears(1).Year, true);
+            }
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
@@ -2372,7 +2381,12 @@ namespace shedule
                 
                 Program.currentShop.setIdShop(shop.getIdShopFM());
                 Program.currentShop.setIdShopFM(shop.getIdShopFM());
-                Program.getListDate(DateTime.Today.Year);
+                Program.getListDate(DateTime.Today.Year,false);
+                string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
+                if (File.Exists(readPath))
+                {
+                    Program.getListDate(DateTime.Today.AddYears(1).Year, true);
+                }
                 Program.readTSR();
                
 
@@ -3116,7 +3130,8 @@ namespace shedule
 
             buttonImportKasOper.Visible = false;
             // ShowProizvCalendar();
-            Program.getListDate(DateTime.Now.AddYears(1).Year);
+            Program.getListDate(DateTime.Now.AddYears(1).Year,true);
+
             Form4 f4 = new Form4(DateTime.Now.AddYears(1).Year);
             f4.Show();
         }

@@ -610,7 +610,7 @@ namespace shedule.Code
                     int ps = wd.DS.getEndDaySale() - 1;
                     if (wd.DS.hoursSale.Find(t => t.getNHour() == ps.ToString()) != null)
                     {
-                        if (Program.ParametrOptimization == 0)
+                       if (Program.ParametrOptimization == 0)
                         {
                             ck2 = (int)Math.Round(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getEndDaySale() - 2).ToString()).getCountCheck()) / (double)60));
                         }

@@ -2612,7 +2612,7 @@ namespace shedule
 
             }
 
-            if ((tdt.Month == 10) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 4) || (tdt.Month == 5))
+            if ((tdt.Month == 10) || (tdt.Month == 11) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) ||(tdt.Month == 3) || (tdt.Month == 4) || (tdt.Month == 5))
             {
                
                     Helper.readDays8and9();
@@ -2683,11 +2683,16 @@ namespace shedule
 
             for (int i = fd.Day; i <= dim; i++)
             {
-
-                 d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
-                d.whatTip();
-                d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-                currentShop.MouthPrognoz.Add(d);
+                try
+                {
+                    d = new daySale(currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
+                    d.whatTip();
+                    d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                    currentShop.MouthPrognoz.Add(d);
+                }
+                catch {
+                    //нужно чтоб вылазило сообщение о том что даты в календаре нет
+                }
 
             }
 
@@ -2814,12 +2819,16 @@ namespace shedule
             {
                 for (int i = 1; i <= DateTime.DaysInMonth(fd[j].Year, fd[j].Month); i++)
                 {
-
-                    daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd[j].Year, fd[j].Month, i));
-                    d.whatTip();
-                    d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-                    currentShop.MouthPrognoz.Add(d);
-
+                    try
+                    {
+                        daySale d = new daySale(currentShop.getIdShop(), new DateTime(fd[j].Year, fd[j].Month, i));
+                        d.whatTip();
+                        d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                        currentShop.MouthPrognoz.Add(d);
+                    }
+                    catch {
+                        //нужно чтоб вылазило сообщение о том что даты в календаре нет
+                    }
                 }
             }
 
@@ -3286,7 +3295,7 @@ namespace shedule
             return dt;
         }
 
-        static public void getListDate(int year)
+        static public void getListDate(int year, bool next)
         {
             try
             {
@@ -3297,7 +3306,9 @@ namespace shedule
                 throw new Exception($"Значение {year} недопустимо в качестве года!");
             }
 
-            currentShop.DFCs.Clear();
+            if (!next) {
+                currentShop.DFCs.Clear();
+            }
             string readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShop() + $@"\Calendar{year}";
             if (Program.IsMpRezhim) { readPath = Environment.CurrentDirectory + @"\Shops\" + currentShop.getIdShopFM() + $@"\Calendar{year}"; }
 
