@@ -293,7 +293,7 @@ namespace shedule.Code
                         flagg3 = true;
                         continue;
                     }
-                    if ((DVS3.Count != 0 && CountGruz == 1)|| f56gruz)
+                    if ((DVS3.Count != 0 && CountGruz == 1)|| ((DVS3.Count != 0) &&f56gruz))
                     {
 
                        DateTime fd = new DateTime( DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month,1);
@@ -429,7 +429,7 @@ namespace shedule.Code
                         continue;
                     }
 
-                    if ((DVS3.Count != 0 && CountGastr==1)||f56gastr)
+                    if ((DVS3.Count != 0 && CountGastr==1)|| ((DVS3.Count != 0)&&f56gastr))
                     {
                         DateTime fd = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1);
                         DataForCalendary d = new DataForCalendary(fd);
@@ -1191,6 +1191,10 @@ namespace shedule.Code
                 while (emp.getNormRab() < (Program.normchas+dop))
                 {
                     // MessageBox.Show("Меньше");
+                    if ((current)&&(!(Program.currentShop.Semployes.Find(t=>t.getID()==emp.getID())!=null))) {
+                        break; ;
+                    }
+
                     Smena s = emp.smens.Find(t => t.getLenght() < 6);
                     if (s != null)
                     {
@@ -1601,11 +1605,11 @@ namespace shedule.Code
 
           
                
-                List<employee> le=Program.currentShop.employes.FindAll(t=>t.smens.Count==0);
+         /*       List<employee> le=Program.currentShop.employes.FindAll(t=>t.smens.Count==0);
             if (le.Count>0) {
                 Program.createPrognoz(false, false, false);
                 CreateSmens(false, le);
-            }
+            }*/
             
            
                 foreach (employee e in Program.currentShop.Semployes) {
