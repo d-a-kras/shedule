@@ -77,6 +77,7 @@
             this.listBoxMShops = new System.Windows.Forms.ListBox();
             this.panelSingleShop = new System.Windows.Forms.Panel();
             this.bNumberSort = new System.Windows.Forms.Button();
+            this.panelGruz = new System.Windows.Forms.Panel();
             this.bAlphabetSort = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.buttonMultShops = new System.Windows.Forms.Button();
@@ -98,7 +99,6 @@
             this.buttonPTSR = new System.Windows.Forms.Button();
             this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.panelGruz = new System.Windows.Forms.Panel();
             this.panelUpravlenie = new System.Windows.Forms.Panel();
             this.buttonParamOptimiz = new System.Windows.Forms.Button();
             this.buttonVariantsSmen = new System.Windows.Forms.Button();
@@ -660,6 +660,7 @@
             // panelSingleShop
             // 
             this.panelSingleShop.Controls.Add(this.bNumberSort);
+            this.panelSingleShop.Controls.Add(this.panelGruz);
             this.panelSingleShop.Controls.Add(this.bAlphabetSort);
             this.panelSingleShop.Controls.Add(this.label16);
             this.panelSingleShop.Controls.Add(this.buttonMultShops);
@@ -684,6 +685,13 @@
             this.bNumberSort.Text = "№";
             this.bNumberSort.UseVisualStyleBackColor = false;
             this.bNumberSort.Click += new System.EventHandler(this.bNumberSort_Click);
+            // 
+            // panelGruz
+            // 
+            this.panelGruz.Location = new System.Drawing.Point(412, 413);
+            this.panelGruz.Name = "panelGruz";
+            this.panelGruz.Size = new System.Drawing.Size(399, 239);
+            this.panelGruz.TabIndex = 4;
             // 
             // bAlphabetSort
             // 
@@ -724,7 +732,7 @@
             this.tabControl1.Location = new System.Drawing.Point(186, 17);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(518, 368);
+            this.tabControl1.Size = new System.Drawing.Size(518, 390);
             this.tabControl1.TabIndex = 6;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -739,7 +747,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(510, 342);
+            this.tabPage1.Size = new System.Drawing.Size(510, 364);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Вводные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -909,28 +917,20 @@
             this.dataGridViewForTSR.Name = "dataGridViewForTSR";
             this.dataGridViewForTSR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
+            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 124);
             this.dataGridViewForTSR.TabIndex = 0;
             this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.panelGruz);
             this.tabPage2.Controls.Add(this.panelUpravlenie);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(510, 342);
+            this.tabPage2.Size = new System.Drawing.Size(510, 364);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Управление";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // panelGruz
-            // 
-            this.panelGruz.Location = new System.Drawing.Point(137, 342);
-            this.panelGruz.Name = "panelGruz";
-            this.panelGruz.Size = new System.Drawing.Size(399, 239);
-            this.panelGruz.TabIndex = 4;
             // 
             // panelUpravlenie
             // 
@@ -942,7 +942,7 @@
             this.panelUpravlenie.Controls.Add(this.panelFactors);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
-            this.panelUpravlenie.Size = new System.Drawing.Size(498, 330);
+            this.panelUpravlenie.Size = new System.Drawing.Size(498, 352);
             this.panelUpravlenie.TabIndex = 0;
             // 
             // buttonParamOptimiz
@@ -986,13 +986,13 @@
             this.panelParamOptim.Controls.Add(this.radioButtonMinFondOpl);
             this.panelParamOptim.Location = new System.Drawing.Point(6, 57);
             this.panelParamOptim.Name = "panelParamOptim";
-            this.panelParamOptim.Size = new System.Drawing.Size(474, 248);
+            this.panelParamOptim.Size = new System.Drawing.Size(474, 292);
             this.panelParamOptim.TabIndex = 8;
             this.panelParamOptim.Paint += new System.Windows.Forms.PaintEventHandler(this.panelParamOptim_Paint);
             // 
             // buttonApplyParamsOptim
             // 
-            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(384, 216);
+            this.buttonApplyParamsOptim.Location = new System.Drawing.Point(390, 256);
             this.buttonApplyParamsOptim.Name = "buttonApplyParamsOptim";
             this.buttonApplyParamsOptim.Size = new System.Drawing.Size(75, 23);
             this.buttonApplyParamsOptim.TabIndex = 3;
@@ -1057,7 +1057,7 @@
             this.panelDopusVarSmen.Controls.Add(this.buttonAplyVarSmen);
             this.panelDopusVarSmen.Location = new System.Drawing.Point(3, 57);
             this.panelDopusVarSmen.Name = "panelDopusVarSmen";
-            this.panelDopusVarSmen.Size = new System.Drawing.Size(480, 245);
+            this.panelDopusVarSmen.Size = new System.Drawing.Size(480, 292);
             this.panelDopusVarSmen.TabIndex = 2;
             // 
             // comboBox4
@@ -1224,7 +1224,7 @@
             // 
             // buttonAplyVarSmen
             // 
-            this.buttonAplyVarSmen.Location = new System.Drawing.Point(384, 216);
+            this.buttonAplyVarSmen.Location = new System.Drawing.Point(392, 266);
             this.buttonAplyVarSmen.Name = "buttonAplyVarSmen";
             this.buttonAplyVarSmen.Size = new System.Drawing.Size(76, 23);
             this.buttonAplyVarSmen.TabIndex = 0;
@@ -1239,13 +1239,13 @@
             this.panelFactors.Controls.Add(this.dataGridViewFactors);
             this.panelFactors.Location = new System.Drawing.Point(6, 60);
             this.panelFactors.Name = "panelFactors";
-            this.panelFactors.Size = new System.Drawing.Size(477, 245);
+            this.panelFactors.Size = new System.Drawing.Size(477, 289);
             this.panelFactors.TabIndex = 4;
             // 
             // buttonAplyFactors
             // 
             this.buttonAplyFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buttonAplyFactors.Location = new System.Drawing.Point(384, 216);
+            this.buttonAplyFactors.Location = new System.Drawing.Point(384, 263);
             this.buttonAplyFactors.Name = "buttonAplyFactors";
             this.buttonAplyFactors.Size = new System.Drawing.Size(80, 23);
             this.buttonAplyFactors.TabIndex = 1;
@@ -1256,7 +1256,7 @@
             // buttonClearFactors
             // 
             this.buttonClearFactors.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.buttonClearFactors.Location = new System.Drawing.Point(305, 216);
+            this.buttonClearFactors.Location = new System.Drawing.Point(305, 263);
             this.buttonClearFactors.Name = "buttonClearFactors";
             this.buttonClearFactors.Size = new System.Drawing.Size(75, 23);
             this.buttonClearFactors.TabIndex = 0;
@@ -1272,7 +1272,7 @@
             this.dataGridViewFactors.Name = "dataGridViewFactors";
             this.dataGridViewFactors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewFactors.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewFactors.Size = new System.Drawing.Size(464, 194);
+            this.dataGridViewFactors.Size = new System.Drawing.Size(464, 256);
             this.dataGridViewFactors.TabIndex = 2;
             this.dataGridViewFactors.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFactors_CellEndEdit);
             // 
@@ -1288,7 +1288,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(510, 342);
+            this.tabPage3.Size = new System.Drawing.Size(510, 364);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;

@@ -139,10 +139,11 @@
             // dataGridViewCalendar
             // 
             this.dataGridViewCalendar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewCalendar.Location = new System.Drawing.Point(164, 425);
+            this.dataGridViewCalendar.Location = new System.Drawing.Point(211, 423);
             this.dataGridViewCalendar.Name = "dataGridViewCalendar";
+            this.dataGridViewCalendar.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewCalendar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewCalendar.Size = new System.Drawing.Size(602, 223);
+            this.dataGridViewCalendar.Size = new System.Drawing.Size(553, 223);
             this.dataGridViewCalendar.TabIndex = 10;
             this.dataGridViewCalendar.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridViewCalendar_CellBeginEdit);
             this.dataGridViewCalendar.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellEndEdit);
