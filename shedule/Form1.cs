@@ -719,7 +719,7 @@ namespace shedule
 
             DataColumn colCountDayInMonth = new DataColumn("Название", typeof(string));
             DataColumn colCountDayRab = new DataColumn("Текущее значение", typeof(Int16));
-            DataColumn colCountDayVuh = new DataColumn("действует на текущую дату", typeof(bool));
+            DataColumn colCountDayVuh = new DataColumn("Действует на текущую дату", typeof(bool));
             DataColumn normCh = new DataColumn("Действует до даты", typeof(DateTime));
             DataColumn rr = new DataColumn("Новое значение", typeof(int));
 
@@ -758,7 +758,7 @@ namespace shedule
 
             DataColumn colCountDayInMonth = new DataColumn("Количество рабочих дней", typeof(string));
             DataColumn colCountDayRab = new DataColumn("Количество выходных дней", typeof(Int16));
-            DataColumn colCountDayVuh = new DataColumn("действует на текущую дату", typeof(bool));
+            DataColumn colCountDayVuh = new DataColumn("Действует на текущую дату", typeof(bool));
 
 
             //добавляем колонки в таблицу
@@ -795,7 +795,7 @@ namespace shedule
                 row = dt.NewRow();
                 row["Количество рабочих дней"] = f.getR();
                 row["Количество выходных дней"] = f.getV();
-                row["действует на текущую дату"] = f.getDeistvie();
+                row["Действует на текущую дату"] = f.getDeistvie();
 
                 dt.Rows.Add(row);
             }
