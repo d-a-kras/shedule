@@ -2690,8 +2690,10 @@ namespace shedule
                     d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
                     currentShop.MouthPrognoz.Add(d);
                 }
-                catch {
+                catch
+                {
                     //нужно чтоб вылазило сообщение о том что даты в календаре нет
+                    MessageBox.Show($"Даты {i}.{fd.Month}.{fd.Year} нет в календаре!");
                 }
 
             }
@@ -2827,7 +2829,7 @@ namespace shedule
                         currentShop.MouthPrognoz.Add(d);
                     }
                     catch {
-                        //нужно чтоб вылазило сообщение о том что даты в календаре нет
+                        MessageBox.Show($"Даты {i}.{fd[j].Month}.{fd[j].Year} нет в календаре!");
                     }
                 }
             }

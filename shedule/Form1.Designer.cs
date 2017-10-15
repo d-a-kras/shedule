@@ -77,6 +77,7 @@
             this.listBoxMShops = new System.Windows.Forms.ListBox();
             this.panelSingleShop = new System.Windows.Forms.Panel();
             this.bNumberSort = new System.Windows.Forms.Button();
+            this.panelGruz = new System.Windows.Forms.Panel();
             this.bAlphabetSort = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.buttonMultShops = new System.Windows.Forms.Button();
@@ -98,7 +99,6 @@
             this.buttonPTSR = new System.Windows.Forms.Button();
             this.dataGridViewForTSR = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.panelGruz = new System.Windows.Forms.Panel();
             this.panelUpravlenie = new System.Windows.Forms.Panel();
             this.buttonParamOptimiz = new System.Windows.Forms.Button();
             this.buttonVariantsSmen = new System.Windows.Forms.Button();
@@ -686,6 +686,13 @@
             this.bNumberSort.UseVisualStyleBackColor = false;
             this.bNumberSort.Click += new System.EventHandler(this.bNumberSort_Click);
             // 
+            // panelGruz
+            // 
+            this.panelGruz.Location = new System.Drawing.Point(412, 413);
+            this.panelGruz.Name = "panelGruz";
+            this.panelGruz.Size = new System.Drawing.Size(399, 239);
+            this.panelGruz.TabIndex = 4;
+            // 
             // bAlphabetSort
             // 
             this.bAlphabetSort.BackColor = System.Drawing.SystemColors.Control;
@@ -740,7 +747,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(510, 342);
+            this.tabPage1.Size = new System.Drawing.Size(510, 364);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Вводные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -910,7 +917,7 @@
             this.dataGridViewForTSR.Name = "dataGridViewForTSR";
             this.dataGridViewForTSR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 167);
+            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 124);
             this.dataGridViewForTSR.TabIndex = 0;
             this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
             // 
@@ -924,13 +931,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Управление";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // panelGruz
-            // 
-            this.panelGruz.Location = new System.Drawing.Point(412, 413);
-            this.panelGruz.Name = "panelGruz";
-            this.panelGruz.Size = new System.Drawing.Size(399, 239);
-            this.panelGruz.TabIndex = 4;
             // 
             // panelUpravlenie
             // 
@@ -1288,7 +1288,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(510, 342);
+            this.tabPage3.Size = new System.Drawing.Size(510, 364);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Результаты";
             this.tabPage3.UseVisualStyleBackColor = true;
