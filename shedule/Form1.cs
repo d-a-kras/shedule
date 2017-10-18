@@ -3535,13 +3535,13 @@ namespace shedule
             switch (e.ColumnIndex)
             {
                 case 0:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox4.SelectedIndex)).setR(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox5.SelectedIndex)).setR(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
                     break;
                 case 1:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox4.SelectedIndex)).setV(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox5.SelectedIndex)).setV(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
                     break;
                 case 2:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox4.SelectedIndex)).setDeistvie(bool.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
+                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox5.SelectedIndex)).setDeistvie(bool.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
                     break;
 
             }

@@ -1613,13 +1613,13 @@ namespace shedule
 
             switch (this.getData().DayOfWeek.ToString())
             {
-                case "Monday": return "понедельник";
-                case "Tuesday": return "вторник";
-                case "Wednesday": return "среда";
-                case "Thursday": return "четверг";
-                case "Friday": return "пятница";
-                case "Saturday": return "суббота";
-                case "Sunday": return "воскресенье";
+                case "Monday": return "Пн";
+                case "Tuesday": return "Вт";
+                case "Wednesday": return "Ср";
+                case "Thursday": return "Чт";
+                case "Friday": return "Пт";
+                case "Saturday": return "Сб";
+                case "Sunday": return "Вс";
                 default: return "";
             }
 

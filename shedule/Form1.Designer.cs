@@ -278,6 +278,8 @@
             // 
             // panelMultShops
             // 
+            this.panelMultShops.AutoScroll = true;
+            this.panelMultShops.AutoSize = true;
             this.panelMultShops.Controls.Add(this.bNumberSortM);
             this.panelMultShops.Controls.Add(this.bAlphabetSortM);
             this.panelMultShops.Controls.Add(this.groupBox1);
@@ -481,7 +483,6 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(20, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(408, 185);
             this.dataGridView1.TabIndex = 2;
@@ -515,13 +516,14 @@
             // 
             // dataGridViewMVarSmen
             // 
+            this.dataGridViewMVarSmen.AllowUserToAddRows = false;
             this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
             this.dataGridViewMVarSmen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewMVarSmen.Location = new System.Drawing.Point(23, 32);
             this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
             this.dataGridViewMVarSmen.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(310, 131);
+            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(392, 156);
             this.dataGridViewMVarSmen.TabIndex = 2;
             this.dataGridViewMVarSmen.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMVarSmen_CellEndEdit);
             // 
@@ -886,7 +888,7 @@
             this.panelTRasp.Controls.Add(this.dataGridViewForTSR);
             this.panelTRasp.Location = new System.Drawing.Point(23, 55);
             this.panelTRasp.Name = "panelTRasp";
-            this.panelTRasp.Size = new System.Drawing.Size(437, 266);
+            this.panelTRasp.Size = new System.Drawing.Size(437, 265);
             this.panelTRasp.TabIndex = 4;
             // 
             // buttonTSRPG
@@ -896,6 +898,7 @@
             this.buttonTSRPG.Size = new System.Drawing.Size(90, 40);
             this.buttonTSRPG.TabIndex = 0;
             this.buttonTSRPG.Text = "На следующий год";
+            this.buttonTSRPG.Visible = false;
             this.buttonTSRPG.Click += new System.EventHandler(this.buttonTSRPG_Click_1);
             // 
             // buttonPTSR
@@ -912,12 +915,11 @@
             // 
             this.dataGridViewForTSR.AllowUserToAddRows = false;
             this.dataGridViewForTSR.AllowUserToDeleteRows = false;
-            this.dataGridViewForTSR.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewForTSR.Location = new System.Drawing.Point(26, 19);
             this.dataGridViewForTSR.Name = "dataGridViewForTSR";
-            this.dataGridViewForTSR.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridViewForTSR.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridViewForTSR.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridViewForTSR.Size = new System.Drawing.Size(386, 124);
+            this.dataGridViewForTSR.Size = new System.Drawing.Size(405, 110);
             this.dataGridViewForTSR.TabIndex = 0;
             this.dataGridViewForTSR.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewForTSR_CellEndEdit);
             // 
@@ -1270,7 +1272,6 @@
             this.dataGridViewFactors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFactors.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewFactors.Name = "dataGridViewFactors";
-            this.dataGridViewFactors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewFactors.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewFactors.Size = new System.Drawing.Size(464, 256);
             this.dataGridViewFactors.TabIndex = 2;
