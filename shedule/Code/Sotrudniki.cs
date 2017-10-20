@@ -72,11 +72,17 @@ namespace shedule.Code
         static public int shiftSm(ref int i,ref bool f1, List<VarSmen> lvs)
         {
             i++;
-            if (i == lvs.Count)
+            if (i == lvs.Count-1)
             {
-                i = 0;
+                
                 f1 = true;
                
+            }
+            if (i == lvs.Count )
+            {
+
+                i = 0;
+
             }
 
             return i;
@@ -254,11 +260,11 @@ namespace shedule.Code
                 bool f56gruz = false;
                 bool f56gastr = false;
 
-               
-
-            
 
 
+
+
+                flag = true;
                 for (int i = 200; CountGruz > 0; CountGruz--, i++)
                 {
                     if (flag)
@@ -329,6 +335,7 @@ namespace shedule.Code
 
                 int otrPr =0;
                 nvs = -1;
+                flag = true;
                 for (int i = 100; CountProd > 0; CountProd--, i++)
                 {
                     
@@ -363,8 +370,8 @@ namespace shedule.Code
                         flagp3 = true;
                         continue;
                     }
-
-                    if (DVS2.Count != 0)
+                   
+                    if ((DVS2.Count != 0)&&(!flag))
                     {
                         if ((nvs == 0) && (DVS2.Count == 2) && (CountProd == 2)) { otrPr = 2; }
                         if ((nvs == 1) && (DVS2.Count == 2) && (CountProd == 1)) { otrPr = -2; }
@@ -392,6 +399,7 @@ namespace shedule.Code
                 DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
 
                 nvs = -1;
+                flag = true;
                 for (int i = 300; CountGastr > 0; CountGastr--, i++)
                 {
                     if (flag)
@@ -463,7 +471,7 @@ namespace shedule.Code
 
                 int otrKass = 0;
                  nvs = -1;
-
+                flag = true;
                 for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
                 {
                     
@@ -499,7 +507,7 @@ namespace shedule.Code
                         continue;
                     }
 
-                    if (DVS2.Count != 0)
+                    if ((DVS2.Count != 0)&& (!flag))
                     {
                         if ((nvs==0)&&(DVS2.Count==2)&&(CountKassirov==2)) { otrKass = 2; }
                         if ((nvs == 1) && (DVS2.Count == 2) && (CountKassirov == 1)) { otrKass = -2; }
@@ -546,7 +554,11 @@ namespace shedule.Code
                     }
                     else
                     {
-                        e.setOtrabotal(o- Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getV());
+                        o = o - Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getV();
+                        if (o>0) {
+                            o = 0;
+                        }
+                        e.setOtrabotal(o);
                     }
                     Program.currentShop.employes.Find(t => t.getID() == e.getID()).setOtrabotal(e.getOtrabotal());
                 }

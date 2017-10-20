@@ -23,7 +23,7 @@ namespace shedule.Code
             {
                 foreach (Process proc in Process.GetProcessesByName("EXCEL"))
                 {
-                    proc.Kill();
+                    proc.Dispose();
                 }
             }
             catch (Exception ex)
