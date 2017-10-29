@@ -32,7 +32,11 @@ namespace shedule
 
             if (DateTime.Now.Year == year)
             {
-                _handledShop = Program.currentShop;
+               // _handledShop = Program.currentShop;
+                //  _handledShop.DFCs = new List<DataForCalendary>();
+                _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+                _handledShop.DFCs = Program.currentShop.DFCs.FindAll(t => t.getData().Year == DateTime.Now.Year);
+
             }
             else
             {
@@ -51,10 +55,11 @@ namespace shedule
             textBoxStart.Enabled = false;
 
             dataGridViewCalendar.DataSource = CreateTable();
-            for (int i = 0; i < DateTime.Now.Month; i++)
-            {
-                dataGridViewCalendar.Rows[i].Cells[4].ReadOnly = true;
-            }
+            if (calendarYear==DateTime.Now.Year) {
+                for (int i = 0; i < DateTime.Now.Month; i++)
+                {
+                    dataGridViewCalendar.Rows[i].Cells[4].ReadOnly = true;
+                } }
             dataGridViewCalendar.Columns[0].ReadOnly = true;
             dataGridViewCalendar.Columns[1].ReadOnly = true;
             dataGridViewCalendar.Columns[2].ReadOnly = true;
@@ -73,6 +78,7 @@ namespace shedule
 
         private void CreateCalendar()
         {
+            
             ld = new Label[_handledShop.DFCs.Count];
             int m, i, j;
             int k = 0;
@@ -596,6 +602,11 @@ namespace shedule
         }
 
         private void textBoxEnd_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rtbCheckedDays_TextChanged(object sender, EventArgs e)
         {
 
         }

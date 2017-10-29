@@ -587,6 +587,7 @@
             this.rtbCheckedDays.Size = new System.Drawing.Size(155, 292);
             this.rtbCheckedDays.TabIndex = 0;
             this.rtbCheckedDays.Text = "";
+            this.rtbCheckedDays.TextChanged += new System.EventHandler(this.rtbCheckedDays_TextChanged);
             // 
             // bMSelectOff
             // 

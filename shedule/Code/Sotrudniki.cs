@@ -162,7 +162,7 @@ namespace shedule.Code
 
 
 
-        public static void OptimCountSotr()
+        public static void OptimCountSotr(bool current=false)
         {
             bool flag = false;
             int nvs = -1;
@@ -181,6 +181,7 @@ namespace shedule.Code
 
                 return;
             }
+            List<VarSmen> DVS23 = DVS.FindAll(t => ((t.getR() == 2) || (t.getR() == 3)));
             List<VarSmen> DVS2 = DVS.FindAll(t =>!(( t.getR()==2)||(t.getR()==3)));
             List<VarSmen> DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
 
@@ -216,7 +217,13 @@ namespace shedule.Code
                 }
                 else { KP = Program.KoefKassira; }
                 DateTime dt = DateTime.Today;
-                 Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
+                if (current)
+                {
+                    Program.normchas = Program.currentShop.NormaChasov[dt.Month-1].getNormChas();
+                }
+                else {
+                    Program.normchas = Program.currentShop.NormaChasov[dt.Month].getNormChas();
+                }
                 
               
                 int ob = 0;
@@ -233,22 +240,33 @@ namespace shedule.Code
                 List<TSR> LKass = Program.currentShop.tsr.FindAll(t => t.getTip() == 1);
                 List<TSR> LGastr = Program.currentShop.tsr.FindAll(t => t.getPosition() == "gastr");
                 int CountProd=0;
+                int CountKassirov = 0;
                 int CountGastr = 0;
 
-                CountProd = (int)Math.Ceiling((tc * Tobrtov * 60) /(double) (Program.normchas * 3600 * KP));
+               
                 CountGastr= LGastr.Sum(o => o.getCount());
 
 
-
-
                 int CountGruz = LGruz.Sum(o => o.getCount());
-                int CountKassirov = (int)Math.Ceiling(ob / (double)(Program.normchas * K *36 )) + Program.ParametrOptimization;
+
+                if (!current)
+                {
+                    CountProd = (int)Math.Ceiling((tc * Tobrtov * 60) / (double)(Program.normchas * 3600 * KP));
+                    CountKassirov = (int)Math.Ceiling(ob / (double)(Program.normchas * K * 36)) + Program.ParametrOptimization;
+                }
+                else {
+                    CountProd = LProd.Sum(o => o.getCount());
+                    CountKassirov = LKass.Sum(o => o.getCount());
+                }
+
+
+
                 bool flagB = true;
                 if (CountKassirov <= 3) { CountKassirov = 3; flagB = false; }
                 if (CountProd < 2) { CountProd = 2; }
-               
 
-              
+
+                bool fflag = true;
                 bool flagg2 = false;
                 bool flagg3 = false;
                 bool flaggastr2 = false;
@@ -315,7 +333,7 @@ namespace shedule.Code
                         i--;
                         CountGruz++;
                         flag = true;
-                        if (DVS2.Count==0) {
+                        if (DVS23.Count==0) {
                             f56gruz = true;
                         }
                     }
@@ -331,11 +349,13 @@ namespace shedule.Code
                 }
                  DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
                  DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
+                DVS23 = DVS.FindAll(t => ((t.getR() == 2) || (t.getR() == 3)));
 
 
                 int otrPr =0;
                 nvs = -1;
                 flag = true;
+                fflag = false;
                 for (int i = 100; CountProd > 0; CountProd--, i++)
                 {
                     
@@ -375,6 +395,12 @@ namespace shedule.Code
                     {
                         if ((nvs == 0) && (DVS2.Count == 2) && (CountProd == 2)) { otrPr = 2; }
                         if ((nvs == 1) && (DVS2.Count == 2) && (CountProd == 1)) { otrPr = -2; }
+                        if (!fflag) {
+                            DateTime fd = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1);
+                            DataForCalendary d = new DataForCalendary(fd);
+                             otrPr = (d.getNWeekday()) - 1;
+                            fflag = true;
+                        }
                         e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm(ref nvs, ref flag, DVS2)], otrPr, LProd[shiftProd(ref nprod)].getOtobragenie(), "Сменный график");
                         otrPr += 2;
                         Program.currentShop.employes.Add(e);
@@ -397,6 +423,7 @@ namespace shedule.Code
                 }
                 DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
                 DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
+                 DVS23 = DVS.FindAll(t => ((t.getR() == 2) || (t.getR() == 3)));
 
                 nvs = -1;
                 flag = true;
@@ -451,7 +478,7 @@ namespace shedule.Code
                         i--;
                         CountGastr++;
                         flag = true;
-                        if (DVS2.Count == 0)
+                        if (DVS23.Count == 0)
                         {
                             f56gastr = true;
                         }
@@ -472,6 +499,7 @@ namespace shedule.Code
                 int otrKass = 0;
                  nvs = -1;
                 flag = true;
+                fflag = false;
                 for (int i = 0; CountKassirov > 0; CountKassirov--, i++)
                 {
                     
@@ -511,6 +539,13 @@ namespace shedule.Code
                     {
                         if ((nvs==0)&&(DVS2.Count==2)&&(CountKassirov==2)) { otrKass = 2; }
                         if ((nvs == 1) && (DVS2.Count == 2) && (CountKassirov == 1)) { otrKass = -2; }
+                        if (!fflag)
+                        {
+                            DateTime fd = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1);
+                            DataForCalendary d = new DataForCalendary(fd);
+                            otrKass = (d.getNWeekday()) - 1;
+                            fflag = true;
+                        }
                         e = new employee(Program.currentShop.getIdShop(), i, DVS2[shiftSm(ref nvs, ref flag, DVS2)], otrKass, LKass[shiftKass(ref nkass)].getOtobragenie(), "Сменный график");
                         otrKass += 2;
                         
@@ -938,11 +973,7 @@ namespace shedule.Code
                         dlina -= 1;
                     }
 
-                    if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8))
-                    {
-
-                        emp.OtrabotalDay();
-                    }
+                   
 
                     else
                     {
@@ -1163,14 +1194,18 @@ namespace shedule.Code
             // MessageBox.Show("2");
             foreach (employee emp in emplo)
             {
-               
+                int dop = 0;
+                if ((current) && (Program.currentShop.Semployes.Find(t => t.getID() == emp.getID()) != null))
+                {
+                    dop = Program.currentShop.Semployes.Find(t => t.getID() == emp.getID()).smens.Count();
+                }
 
-                while (emp.getNormRab() > Program.normchas)
+                while (emp.getNormRab() > Program.normchas+dop)
                 {
                    
-                    Smena s = emp.smens.Find(t => t.getLenght() > 12);
-                    if ((s != null)&&(!current))
+                    if ((emp.smens.Find(t => t.getLenght() > 12) != null)&&(!current))
                     {
+                        Smena s = emp.smens.Find(t => t.getLenght() > 12);
                         if (((current) && (s.getData()>DateTime.Now))||(!current)) {
                             s.delChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == s.getData())); }
 
@@ -1186,7 +1221,7 @@ namespace shedule.Code
                             }
                             if (sm1 != null)
                                 // {
-                                sm1.delChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm1.getData()));
+                                sm1.delChas(Program.currentShop.MouthPrognozT.Find(f => f.DS.getData().Date == sm1.getData().Date));
                             // }else { MessageBox.Show(emp.smens.Count+"count  id=" +emp.getID()); }
                             if (emp.getNormRab() == Program.normchas) break;
                         }
@@ -1194,11 +1229,7 @@ namespace shedule.Code
 
                 }
 
-                int dop = 0;
-                if ((current) && (Program.currentShop.Semployes.Find(t=>t.getID()==emp.getID()) != null))
-                {
-                    dop = Program.currentShop.Semployes.Find(t => t.getID() == emp.getID()).smens.Count();
-                }
+               
 
                 while (emp.getNormRab() < (Program.normchas+dop))
                 {
@@ -1249,6 +1280,10 @@ namespace shedule.Code
                                 x++;
                             }
                             if ((x == emp.smens.Count)&&(!current)) {
+                                return false;
+                            }
+                            if ((x == emp.smens.FindAll(t=>t.getData().Day>DateTime.Now.Day).Count) && (current))
+                            {
                                 return false;
                             }
                             // }else { MessageBox.Show(emp.smens.Count+"count  id=" +emp.getID()); }

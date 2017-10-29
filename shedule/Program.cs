@@ -3299,6 +3299,7 @@ namespace shedule
 
         static public void getListDate(int year, bool next)
         {
+            RD= new int[12];
             try
             {
                 DateTime.Parse($"01-01-{year}");
@@ -3494,7 +3495,8 @@ namespace shedule
 
             XmlDocument xDoc = new XmlDocument();
             String readPath = Environment.CurrentDirectory + @"\Calendars\" + years + ".xml";
-            xDoc.Load(readPath);
+           xDoc.Load(readPath);
+            
             // получим корневой элемент
             XmlElement xRoot = xDoc.DocumentElement;
 
@@ -3820,7 +3822,9 @@ namespace shedule
             try
             {
                 Logger.InitLogger();
-                Helper.CheckAndDownloadNextYearCalendar();
+               if  (!File.Exists(Environment.CurrentDirectory + "/Calendars/" + (DateTime.Now.Year+1).ToString()+".xml")) {
+                    Helper.CheckAndDownloadNextYearCalendar();
+                    }
                 AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 
                 Application.EnableVisualStyles();
@@ -3829,7 +3833,7 @@ namespace shedule
             }
             catch (Exception ex)
             {
-                Logger.Log.Error("Произошла ошибка! " + ex.Message);
+                Logger.Log.Error("Произошла ошибка! " + ex.ToString());
             }
 
 

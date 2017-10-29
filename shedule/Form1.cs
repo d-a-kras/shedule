@@ -569,7 +569,7 @@ namespace shedule
 
 
                             // 
-                            Sotrudniki.OptimCountSotr();
+                            Sotrudniki.OptimCountSotr(true);
                             bg.ReportProgress(6);
 
                             if (Program.currentShop.Semployes.Count != 0)

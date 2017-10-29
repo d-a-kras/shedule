@@ -92,20 +92,31 @@ namespace shedule.Code
                         }
                     }
                     //  MessageBox.Show("DFCs.Add ex");
+                    int s1 = 8;
+                    int s2 = 9;
+                    int f1 = 23;
+                    int f2 = 23;
+                    if ((Program.currentShop.DFCs.Find(t=>t.getTip()==1)!=null)&&(Program.currentShop.DFCs.Find(t => t.getTip() == 7)!=null)) {
+                        s1 = Program.currentShop.DFCs.Find(t => t.getTip() == 1).getTimeStart();
+                        s2 = Program.currentShop.DFCs.Find(t => t.getTip() == 7).getTimeStart();
+                        f1 = Program.currentShop.DFCs.Find(t => t.getTip() == 1).getTimeEnd();
+                        f2 = Program.currentShop.DFCs.Find(t => t.getTip() == 7).getTimeEnd();
+
+                    }
                     foreach (DataForCalendary dfc in shop.DFCs)
                     {
                         switch (dfc.getTip())
                         {
-                            case 1: dfc.setTimeBaE(8, 23); break;
-                            case 2: dfc.setTimeBaE(8, 23); break;
-                            case 3: dfc.setTimeBaE(8, 23); break;
-                            case 4: dfc.setTimeBaE(8, 23); break;
-                            case 5: dfc.setTimeBaE(8, 23); break;
-                            case 6: dfc.setTimeBaE(9, 23); break;
-                            case 7: dfc.setTimeBaE(9, 23); break;
-                            case 8: dfc.setTimeBaE(9, 23); break;
-                            case 9: dfc.setTimeBaE(9, 23); break;
-                            case 10: dfc.setTimeBaE(9, 23); break;
+                            case 1: dfc.setTimeBaE(s1, f1); break;
+                            case 2: dfc.setTimeBaE(s1, f1); break;
+                            case 3: dfc.setTimeBaE(s1, f1); break;
+                            case 4: dfc.setTimeBaE(s1, f1); break;
+                            case 5: dfc.setTimeBaE(s1, f1); break;
+                            case 6: dfc.setTimeBaE(s2, f2); break;
+                            case 7: dfc.setTimeBaE(s2, f2); break;
+                            case 8: dfc.setTimeBaE(s2, f2); break;
+                            case 9: dfc.setTimeBaE(s2, f2); break;
+                            case 10: dfc.setTimeBaE(s2, f2); break;
                             default: dfc.setTimeBaE(8, 23); break;
                         }
                     }
