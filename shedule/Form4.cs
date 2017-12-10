@@ -54,7 +54,7 @@ namespace shedule
             textBoxEnd.Enabled = false;
             textBoxStart.Enabled = false;
 
-            dataGridViewCalendar.DataSource = CreateTable();
+            dataGridViewCalendar.DataSource = CreateTable(calendarYear);
             if (calendarYear==DateTime.Now.Year) {
                 for (int i = 0; i < DateTime.Now.Month; i++)
                 {
@@ -179,10 +179,10 @@ namespace shedule
 
         }
 
-        private static DataTable CreateTable()
+        private static DataTable CreateTable(int Year)
         {
             //создаём таблицу
-            string[] months = Program.getMonths();
+           // string[] months = Program.getMonths();
             DataTable dt = new DataTable("norm");
             //создаём три колонки
             DataColumn Mounth = new DataColumn("месяц", typeof(string));
@@ -202,20 +202,45 @@ namespace shedule
             //создаём новую строку
 
             //заполняем строку значениями
-
-            for (int i = 1; i <= 12; i++)
+            DateTime dtt = DateTime.Today;
+            Program.ReadNormaChas(Year);
+            foreach (NormaChas nc in Program.currentShop.NormaChasov.FindAll(t=>t.getYear()== Year))
             {
                 row = dt.NewRow();
-                row["месяц"] = months[i - 1];
-                row["количество дней в месяце"] = DateTime.DaysInMonth(DateTime.Today.Year, i);
-                row["количество рабочих дней"] = Program.RD[i - 1];
-                row["количество выходных дней"] = DateTime.DaysInMonth(DateTime.Today.Year, i) - Program.RD[i - 1];
-                row["норма часов"] = _handledShop.NormaChasov[i - 1].getNormChas();
+                row["месяц"] = getNaneMonth( nc.getMonth());
+                row["количество дней в месяце"] = DateTime.DaysInMonth(dtt.AddMonths(nc.getMonth()).Year, dtt.AddMonths(nc.getMonth()).Month);
+                if (nc.getMonth() != 13)
+                {
+                    row["количество рабочих дней"] = Program.RD[nc.getMonth() - 1];
+                    row["количество выходных дней"] = DateTime.DaysInMonth(dtt.AddMonths(nc.getMonth()).Year, dtt.AddMonths(nc.getMonth()).Month) - Program.RD[nc.getMonth() - 1];
+                }
+                row["норма часов"] = _handledShop.NormaChasov[nc.getMonth() - 1].getNormChas();
                 dt.Rows.Add(row);
             }
             return dt;
         }
+        private static String getNaneMonth(int N) {
 
+            switch (N) {
+                case 1: return "Январь";
+                case 2: return "Февраль";
+                case 3: return "Март";
+                case 4: return "Апрель";
+                case 5: return "Май";
+                case 6: return "Июнь";
+                case 7: return "Июль";
+                case 8: return "Август";
+                case 9: return "Сентябрь";
+                case 10: return "Октябрь";
+                case 11: return "Ноябрь";
+                case 12: return "Декабрь";
+                case 13: return "Январь";
+                default: return "";
+            }
+            
+          
+
+        }
         private static void readNarma()
         {
 
@@ -239,7 +264,7 @@ namespace shedule
             }
             else
             {
-                Program.WriteNormChas();
+                Program.WriteNormChas(calendarYear);
                 string readPath = Environment.CurrentDirectory + @"\Shops\" + _handledShop.getIdShop() + $@"\Calendar{calendarYear}";
 
                 foreach (var l in ldfc)
@@ -551,11 +576,13 @@ namespace shedule
             int newZn;
             if (int.TryParse(dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out newZn))
             {
-                if (newZn > 180) { MessageBox.Show("Введите число не более 180"); dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell; }
+                if (newZn > 186) { MessageBox.Show("Введите число не более 186"); dataGridViewCalendar.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = EditCell; }
                 else
                 {
-                    _handledShop.RaznChas += EditCell - newZn;
-                    _handledShop.NormaChasov[e.RowIndex].setCountChas(newZn);
+                    if (e.RowIndex!=12) {
+                        _handledShop.RaznChas += EditCell - newZn;
+                    }
+                   Program.currentShop.NormaChasov.Find(t=>((t.getMonth()==e.RowIndex+1)&&(t.getYear()==calendarYear))).setCountChas(newZn);
                 }
             }
             else
@@ -607,6 +634,11 @@ namespace shedule
         }
 
         private void rtbCheckedDays_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridViewCalendar_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

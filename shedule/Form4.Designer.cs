@@ -146,6 +146,7 @@
             this.dataGridViewCalendar.Size = new System.Drawing.Size(553, 223);
             this.dataGridViewCalendar.TabIndex = 10;
             this.dataGridViewCalendar.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridViewCalendar_CellBeginEdit);
+            this.dataGridViewCalendar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellContentClick);
             this.dataGridViewCalendar.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellEndEdit);
             this.dataGridViewCalendar.CellErrorTextChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellErrorTextChanged);
             this.dataGridViewCalendar.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewCalendar_DataError);

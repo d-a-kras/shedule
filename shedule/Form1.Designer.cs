@@ -87,6 +87,7 @@
             this.buttonCalendar = new System.Windows.Forms.Button();
             this.buttonKassov = new System.Windows.Forms.Button();
             this.panelKassOper = new System.Windows.Forms.Panel();
+            this.progressBar3 = new System.Windows.Forms.ProgressBar();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.buttonImportKasOper = new System.Windows.Forms.Button();
             this.radioButtonIzBD = new System.Windows.Forms.RadioButton();
@@ -104,6 +105,7 @@
             this.buttonVariantsSmen = new System.Windows.Forms.Button();
             this.buttonFactors = new System.Windows.Forms.Button();
             this.panelParamOptim = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.buttonApplyParamsOptim = new System.Windows.Forms.Button();
             this.radioButtonObRabTime = new System.Windows.Forms.RadioButton();
             this.radioButtonMinTime = new System.Windows.Forms.RadioButton();
@@ -131,6 +133,7 @@
             this.buttonClearFactors = new System.Windows.Forms.Button();
             this.dataGridViewFactors = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.button14 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -789,6 +792,7 @@
             // 
             // panelKassOper
             // 
+            this.panelKassOper.Controls.Add(this.progressBar3);
             this.panelKassOper.Controls.Add(this.comboBox2);
             this.panelKassOper.Controls.Add(this.buttonImportKasOper);
             this.panelKassOper.Controls.Add(this.radioButtonIzBD);
@@ -798,6 +802,14 @@
             this.panelKassOper.Name = "panelKassOper";
             this.panelKassOper.Size = new System.Drawing.Size(437, 266);
             this.panelKassOper.TabIndex = 2;
+            // 
+            // progressBar3
+            // 
+            this.progressBar3.Location = new System.Drawing.Point(29, 188);
+            this.progressBar3.Name = "progressBar3";
+            this.progressBar3.Size = new System.Drawing.Size(178, 23);
+            this.progressBar3.TabIndex = 5;
+            this.progressBar3.Visible = false;
             // 
             // comboBox2
             // 
@@ -982,6 +994,7 @@
             // 
             // panelParamOptim
             // 
+            this.panelParamOptim.Controls.Add(this.checkBox1);
             this.panelParamOptim.Controls.Add(this.buttonApplyParamsOptim);
             this.panelParamOptim.Controls.Add(this.radioButtonObRabTime);
             this.panelParamOptim.Controls.Add(this.radioButtonMinTime);
@@ -991,6 +1004,17 @@
             this.panelParamOptim.Size = new System.Drawing.Size(474, 292);
             this.panelParamOptim.TabIndex = 8;
             this.panelParamOptim.Paint += new System.Windows.Forms.PaintEventHandler(this.panelParamOptim_Paint);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(33, 118);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(230, 17);
+            this.checkBox1.TabIndex = 4;
+            this.checkBox1.Text = "Включить перемешивание сотрудников ";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
             // 
             // buttonApplyParamsOptim
             // 
@@ -1279,6 +1303,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.checkBox2);
             this.tabPage3.Controls.Add(this.button14);
             this.tabPage3.Controls.Add(this.button6);
             this.tabPage3.Controls.Add(this.label3);
@@ -1295,9 +1320,21 @@
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(31, 336);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(352, 17);
+            this.checkBox2.TabIndex = 14;
+            this.checkBox2.Text = "Считывать график на текущий месяц без учета вариантов смен";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.Visible = false;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(283, 288);
+            this.button14.Location = new System.Drawing.Point(283, 290);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(120, 40);
             this.button14.TabIndex = 13;
@@ -1308,7 +1345,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(31, 287);
+            this.button6.Location = new System.Drawing.Point(31, 290);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(120, 40);
             this.button6.TabIndex = 12;
@@ -1334,7 +1371,7 @@
             // 
             // buttonExport1
             // 
-            this.buttonExport1.Location = new System.Drawing.Point(157, 289);
+            this.buttonExport1.Location = new System.Drawing.Point(157, 290);
             this.buttonExport1.Name = "buttonExport1";
             this.buttonExport1.Size = new System.Drawing.Size(120, 40);
             this.buttonExport1.TabIndex = 6;
@@ -1635,6 +1672,9 @@
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.ProgressBar progressBar3;
     }
 }
 

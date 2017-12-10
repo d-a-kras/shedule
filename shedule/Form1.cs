@@ -285,7 +285,7 @@ namespace shedule
                         try
                         {
 
-                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
                             Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
@@ -406,7 +406,7 @@ namespace shedule
                         try
                         {
 
-                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
                             Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
@@ -532,7 +532,7 @@ namespace shedule
                         try
                         {
 
-                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                            ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
                             Program.HandledShops.Add(Program.currentShop.getIdShop());
                             // ObjWorkBook.SaveAs(filename);
 
@@ -600,7 +600,7 @@ namespace shedule
                             {
                                 MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
                                 //
-                              //  return;
+                                return;
                             }
 
                             if (!Sotrudniki.CheckGrafic())
@@ -1171,6 +1171,7 @@ namespace shedule
             buttonFactors.BackColor = Color.White;
             buttonVariantsSmen.BackColor = Color.White;
             panelParamOptim.BringToFront();
+            checkBox1.Checked = Program.currentShop.SortSotr;
             String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() +
                               "/parametrOptimization.txt";
             ;
@@ -1311,6 +1312,10 @@ namespace shedule
 
         private void buttonImportKasOper_Click(object sender, EventArgs e)
         {
+            progressBar3.Visible = true;
+            progressBar3.Value = 0;
+            progressBar3.Maximum = 100;
+            progressBar3.Step = 1;
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (Settings.Default.folder=="") {
                 openFileDialog.InitialDirectory = "c:\\";
@@ -1318,7 +1323,7 @@ namespace shedule
             else{
                 openFileDialog.InitialDirectory = Settings.Default.folder;
             }
-            openFileDialog.Filter = "*|*.xls";
+            openFileDialog.Filter = "*|*.xlsx";
             openFileDialog.RestoreDirectory = true;
             string filepath = "";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -1328,9 +1333,13 @@ namespace shedule
 
             try
             {
+                
                 List<hourSale> hourSales = Helper.FillHourSalesList(filepath, Program.currentShop.getIdShop());
+                progressBar3.Value = 50;
+
                 foreach (hourSale hs in hourSales)
                 {
+                    progressBar3.PerformStep();
                     if (Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()) != null)
                     {
                         Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()).Add(hs);
@@ -1341,6 +1350,7 @@ namespace shedule
                         Program.currentShop.daysSale.Find(t => t.getData() == hs.getData()).Add(hs);
                     }
                 }
+                
                 MessageBox.Show("Чтение завершено");
                 Program.ExistFile = true;
 
@@ -1386,12 +1396,15 @@ namespace shedule
             catch (FileNotFoundException ex)
             {
                 MessageBox.Show($"Файл {ex.FileName} поврежден или не найден");
+                
             }
             catch
             {
                 MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                progressBar3.Visible = false;
             }
+            progressBar3.Visible = false;
         }
 
         private void radioButtonIzFile_CheckedChanged(object sender, EventArgs e)
@@ -1408,7 +1421,7 @@ namespace shedule
 
         private void radioButtonIzBD_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonIzBD.Checked && !isConnected)
+            if (radioButtonIzBD.Checked)
             {
                 buttonImportKasOper.Visible = false;
                 buttonVygr.Visible = true;
@@ -1442,7 +1455,8 @@ namespace shedule
             Program.readVarSmen();
             Program.ReadMinRab();
             Program.ReadPrilavki();
-            Program.ReadNarmaChas();
+            Program.ReadSortSotr(); ;
+            Program.ReadNormaChas(DateTime.Now.Year);
             Program.ReadParametrOptimizacii();
             Program.ExistFile = false;
             if (Program.currentShop.VarSmens.Count == 0)
@@ -1637,8 +1651,9 @@ namespace shedule
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
-            Program.ReadNarmaChas();
+            Program.ReadNormaChas(DateTime.Now.Year);
             Program.ReadPrilavki();
+            Program.ReadSortSotr();
             Program.ReadParametrOptimizacii();
             if (Program.currentShop.VarSmens.Count == 0)
             {
@@ -1717,7 +1732,7 @@ namespace shedule
 
         private void buttonApplyParamsOptim_Click(object sender, EventArgs e)
         {
-            String writePath = Environment.CurrentDirectory + @"\parametrzoptimization";
+            String writePath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + @"\parametrzoptimization";
             using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
             {
 
@@ -1726,6 +1741,7 @@ namespace shedule
                     sw.Write(Program.ParametrOptimization.ToString());
                     Program.HandledShops.Add(Program.currentShop.getIdShop());
                     UpdateStatusShops();
+                   
                 }
 
                 catch (Exception ex)
@@ -1735,6 +1751,24 @@ namespace shedule
                 }
             }
 
+            String writePath2 = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + @"\SortSotr"; ;
+            using (StreamWriter sw = new StreamWriter(writePath2, false, Encoding.Default))
+            {
+
+                try
+                {
+                    sw.Write(checkBox1.Checked.ToString());
+                   
+                
+                    
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+
+                }
+            }
             MessageBox.Show("Данные сохранены");
         }
 
@@ -1744,16 +1778,18 @@ namespace shedule
                 case 0:  button14.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count==0))
                     {
                         button14.BackColor = Color.PaleGreen;
+                        checkBox2.Visible = false;
                     }
                     else
                     {
                         button14.BackColor = Color.DarkGray;
+                        checkBox2.Visible = true;
                     }
                     break;
-                case 1: button14.Visible = false; break;
-                case 2: button14.Visible = false; break;
-                case 3: button14.Visible = false; break;
-                case 4: button14.Visible = true;
+                case 1: button14.Visible = false; checkBox2.Visible = false; break;
+                case 2: button14.Visible = false; checkBox2.Visible = false; break;
+                case 3: button14.Visible = false; checkBox2.Visible = false; break;
+                case 4: button14.Visible = true; checkBox2.Visible = false;
                     if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count>0))
                     {
                         button14.BackColor = Color.PaleGreen;
@@ -1763,7 +1799,7 @@ namespace shedule
                         button14.BackColor = Color.DarkGray;
                     }
                     break;
-                case -1: button14.Visible = false; break;
+                case -1: button14.Visible = false; checkBox2.Visible = false; break;
 
 
 
@@ -2274,7 +2310,7 @@ namespace shedule
            
             Program.readFactors();
             Program.readVarSmen();
-            Program.ReadNarmaChas();
+            Program.ReadNormaChas(DateTime.Now.Year);
            // Program.readTSR();
 
             foreach (Shop shop in Program.shops)
@@ -2340,7 +2376,7 @@ namespace shedule
                                 if (!Sotrudniki.CheckGrafic2())
                                 {
                                     MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
-                                   // return;
+                                    return;
                                 }
 
                                 ForExcel.ExportExcel(filename,bg);
@@ -2444,7 +2480,7 @@ namespace shedule
                             {
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
-                                ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                                ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
                                 Program.HandledShops.Add(Program.currentShop.getIdShop());
                                 // ObjWorkBook.SaveAs(filename);
 
@@ -2545,7 +2581,7 @@ namespace shedule
                             {
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Запись в Excel");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
-                                ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                                ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
                                 Program.HandledShops.Add(Program.currentShop.getIdShop());
                                 // ObjWorkBook.SaveAs(filename);
 
@@ -2880,7 +2916,7 @@ namespace shedule
                     buttonMultShops.Enabled = false;
 
                     string filename;
-                    saveFileDialog1.DefaultExt = ".XLS";
+                    saveFileDialog1.DefaultExt = ".xlsx";
                     saveFileDialog1.AddExtension = true;
                     saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
                     if (Settings.Default.folder=="") {
@@ -2937,8 +2973,12 @@ namespace shedule
                     ObjWorkSheet.Cells[1, 6] = "Количество сканирований";
 
                     int i = 2;
+                    progressBar3.Visible = true;
+                    progressBar3.Value = 0;
+                    progressBar3.Maximum = Program.currentShop.daysSale.Count;
                     foreach (daySale twd in Program.currentShop.daysSale)
                     {
+                        progressBar3.PerformStep();
                         foreach (hourSale hs in twd.hoursSale)
                         {
                             ObjWorkSheet.Cells[i, 1] = twd.getWeekDay2();
@@ -2960,7 +3000,7 @@ namespace shedule
                     try
                     {
 
-                        ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookNormal);
+                        ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
                         Program.HandledShops.Add(Program.currentShop.getIdShop());
 
 
@@ -2979,10 +3019,11 @@ namespace shedule
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.ToString());
                 }
                 finally
                 {
+                    progressBar3.Visible = false;
                     buttonRaspisanie.Enabled = true;
                     buttonCalendar.Enabled = true;
                     buttonKassov.Enabled = true;
@@ -3519,14 +3560,25 @@ namespace shedule
                     
                     if (comboBox3.SelectedIndex == 0)
                     {
-                        ForExcel.thread1 = new Thread(ForExcel.CreateEmployee);
+                        if (checkBox2.Checked) {
+                            ForExcel.thread1 = new Thread(ForExcel.CreateEmployee);
+                        }
+                        else {
+                            ForExcel.thread1 = new Thread(ForExcel.CreateEmployeeWithVarSmen);
+                        }
                     }
                     else { 
                         ForExcel.thread1 = new Thread(ForExcel.CreateEmployeeAndSmens);
                     }
                     ForExcel.thread1.Priority = ThreadPriority.Highest;
                     ForExcel.thread1.IsBackground = true;
-                    ForExcel.thread1.Start();
+                    try
+                    {
+                        ForExcel.thread1.Start();
+                    }
+                    catch(Exception ex) {
+                        MessageBox.Show(ex.Message);
+                    }
                     timer2.Enabled = true;
                    
 
@@ -3556,7 +3608,7 @@ namespace shedule
         }
 
         public static void Done(System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1) {
-            if (Program.currentShop.Semployes.Count != 0)
+            if ((Program.currentShop.Semployes.Count != 0)&&(!ForExcel.error))
             {
                 MessageBox.Show("Чтение завершено успешно");
                 btn.BackColor = Color.PaleGreen;
@@ -3592,6 +3644,16 @@ namespace shedule
         private void tabPage3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            Program.currentShop.SortSotr = checkBox1.Checked;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            ForExcel.readVarSmen = checkBox2.Checked;
         }
     }
 }

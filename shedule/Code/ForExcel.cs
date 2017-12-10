@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 using LinqToExcel;
+using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -16,6 +17,8 @@ namespace shedule.Code
     {
         public static Thread thread1;
         public static int progress = 0;
+        public static bool error = false;
+        public static bool readVarSmen = true;
 
         public static void  ExportExcel(string filename, BackgroundWorker bg) {
 
@@ -134,16 +137,23 @@ namespace shedule.Code
                         default: color = System.Drawing.Color.White; break;
 
                     }
-                    ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
-                    ObjWorkSheet.Cells[j, 1].Interior.Color = color;
-                    ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
-                    ObjWorkSheet.Cells[j, 2].Interior.Color = color;
-                  
-                  
-                    ObjWorkSheet.Cells[j, 3].Interior.Color = color;
-                    ObjWorkSheet.Cells[j, 3] = emp.getVS().getR() + "/" + emp.getVS().getR();
-                    ObjWorkSheet.Cells[j, 4].Interior.Color = color;
-                    ObjWorkSheet.Cells[j, 4] = emp.getTipZan();
+                    try
+                    {
+                        ObjWorkSheet.Cells[j, 1] = Program.currentShop.getAddress();
+                        ObjWorkSheet.Cells[j, 1].Interior.Color = color;
+                        ObjWorkSheet.Cells[j, 2] = emp.GetDolgnost();
+                        ObjWorkSheet.Cells[j, 2].Interior.Color = color;
+
+
+                        ObjWorkSheet.Cells[j, 3].Interior.Color = color;
+                        ObjWorkSheet.Cells[j, 3] = emp.getVS().getR() + "/" + emp.getVS().getV();
+                        ObjWorkSheet.Cells[j, 4].Interior.Color = color;
+                        ObjWorkSheet.Cells[j, 4] = emp.getTipZan();
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show(ex.Message);
+                        continue;
+                    }
                     i = 7;
                     foreach (daySale twd in Program.currentShop.MouthPrognoz)
                     {
@@ -309,7 +319,7 @@ namespace shedule.Code
                         ObjWorkSheet.Cells[j, 2].Interior.Color = color;
                        
                         
-                        ObjWorkSheet.Cells[j, 3] = emp.getVS().getR() + "/" + emp.getVS().getR();
+                        ObjWorkSheet.Cells[j, 3] = emp.getVS().getR() + "/" + emp.getVS().getV();
                         ObjWorkSheet.Cells[j, 3].Interior.Color = color;
                         ObjWorkSheet.Cells[j, 4].Interior.Color = color;
                         ObjWorkSheet.Cells[j, 4] = emp.getTipZan();
@@ -458,8 +468,11 @@ namespace shedule.Code
            
         }
 
-        public static void CreateEmployeeAndSmens()
+        public static void CreateEmployeeWithVarSmen()
         {
+
+
+            error = false;
             string filepath = Program.file;
             Program.currentShop.Semployes = new List<employee>();
             if (File.Exists(filepath))
@@ -480,10 +493,119 @@ namespace shedule.Code
                         if (ObjWorkSheet.Cells[i, 2].Text != "")
                         {
                             int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
+                            if ((ind != -1) && getOtdih(i, ObjWorkSheet, getDenM(i, ObjWorkSheet)) < 5)
+                            {
+                                string dolgnost = ObjWorkSheet.Cells[i, 2].Text;
+                                string svs = ObjWorkSheet.Cells[i, 3].Text;
+                                string[] msvs = new string[2];
+                                msvs = svs.Split('/');
+                                int rabdn = 0;
+                                try
+                                {
+                                    rabdn = int.Parse(msvs[0]);
+                                }
+                                catch {
+                                    MessageBox.Show("В файле существует сотрудник с несуществующим вариантом смен");
+                                    error = true;
+                                    return;
+                                }
+                                VarSmen vs = Program.currentShop.VarSmens.Find(t=> (t.getR()==rabdn)&&(t.getDolgnost()==dolgnost));
+                                if ((vs != null)&&(vs.getDeistvie())) {
+
+
+                                    employee e = new employee(Program.currentShop.getIdShop(), ind, vs, dolgnost , "Сменный график", getOtdih(i, ObjWorkSheet, getDenM(i, ObjWorkSheet)));
+                                    Program.currentShop.Semployes.Add(e);
+                                } else {
+                                    MessageBox.Show("В файле существует сотрудник с невыбранным вариантом смен: "+vs.getDolgnost()+" "+vs.getR()+"/"+vs.getV());
+                                    error = true;
+                                    return ; 
+                                }
+                            }
+                        }
+
+                    }
+
+                    ObjExcel.Visible = false;
+                    ObjExcel.UserControl = true;
+                    ObjExcel.DisplayAlerts = false;
+                    ObjWorkBook.Saved = true;
+
+
+
+                    ObjWorkBook.Close();
+                    ObjExcel.Quit();
+                }
+
+
+
+            }
+           // return true;
+        }
+
+        public static void CreateEmployeeAndSmens()
+        {
+            error = false;
+            string filepath = Program.file;
+            Program.currentShop.Semployes = new List<employee>();
+            if (File.Exists(filepath))
+            {
+
+                {
+                    //Создаём приложение.
+                    Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                    //Открываем книгу.                                                                                                                                                        
+                    Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(filepath, 0, true);// 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                    //Выбираем таблицу(лист).
+                    Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
+                    ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+
+                    for (int i = 3; i < 100; i++)
+                    {
+                        progress = i;
+                        if (ObjWorkSheet.Cells[i, 2].Text != "")
+                        {
+                            bool rvs = false;
+                            string dolgnost = ObjWorkSheet.Cells[i, 2].Text;
+                            string svs = ObjWorkSheet.Cells[i, 3].Text;
+                            string[] msvs = new string[2];
+                            msvs = svs.Split('/');
+                            int rabdn = 0;
+                            try
+                            {
+                                rabdn = int.Parse(msvs[0]);
+                            }
+                            catch
+                            {
+                                MessageBox.Show("В файле существует сотрудник с несуществующим вариантом смен");
+                                error = true;
+                                return;
+                            }
+                            VarSmen vs = Program.currentShop.VarSmens.Find(t => (t.getR() == rabdn) && (t.getDolgnost() == dolgnost));
+                            if ((vs != null) && (vs.getDeistvie()))
+                            {
+
+                                rvs = true;
+                                //employee e = new employee(Program.currentShop.getIdShop(), ind, vs, dolgnost, "Сменный график", getOtdih(i, ObjWorkSheet, getDenM(i, ObjWorkSheet)));
+                                //Program.currentShop.Semployes.Add(e);
+                            }
+                            else
+                            {
+                                MessageBox.Show("В файле существует сотрудник с невыбранным вариантом смен: " + vs.getDolgnost() + " " + vs.getR() + "/" + vs.getV());
+                                error = true;
+                                return;
+                            }
+
+
+
+                            int ind = returnIndex(ObjWorkSheet.Cells[i, 2].Text);
                             if ((ind != -1)&& getOtdih(i, ObjWorkSheet, DateTime.Now.AddDays(1).Day + 5) <5)
                             {
+
                                 int nd = DateTime.Now.AddDays(1).Day + 5;
                                 employee e = new employee(Program.currentShop.getIdShop(), ind, ObjWorkSheet.Cells[i, 2].Text, "Сменный график", getOtdih(i, ObjWorkSheet, nd ));
+                                if (rvs) {
+                                    e.setVS(vs);
+                                }
                                 Program.currentShop.Semployes.Add(e);
                                 for (int k=0-nd+7,j=7;k<=0;k++,j++) {
                                     try

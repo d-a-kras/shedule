@@ -27,8 +27,19 @@ using log4net.Config;
 
 namespace shedule
 {
+    public class MinPers{
+        public int Ncount;
+       public  int Tcount;
+        public MinPers(int n, int t) {
+            this.Ncount = n;
+            this.Tcount = t;
+        }
+
+    }
+
     public class NormaChas
     {
+        int Year;
         int NMonth;
         int CountChas;
 
@@ -38,8 +49,9 @@ namespace shedule
             this.CountChas = c;
         }
 
-        public NormaChas(int NM, int C)
+        public NormaChas(int yy, int NM, int C)
         {
+            this.Year = yy;
             this.NMonth = NM;
             this.CountChas = C;
         }
@@ -47,6 +59,16 @@ namespace shedule
         public int getNormChas()
         {
             return this.CountChas;
+        }
+
+        public int getYear()
+        {
+            return this.Year;
+        }
+
+        public int getMonth()
+        {
+            return this.NMonth;
         }
 
         public bool CheckNorma()
@@ -367,10 +389,10 @@ namespace shedule
             {
                 switch (this.getR())
                 {
-                    case 3: this.dlina = 10; return this.dlina;
+                    case 3: this.dlina = 8; return this.dlina;
                     case 5: this.dlina = 7; return this.dlina;
-                    case 2: this.dlina = 10; return this.dlina;
-                    case 4: this.dlina = 9; return this.dlina;
+                    case 2: this.dlina = 8; return this.dlina;
+                    case 4: this.dlina = 8; return this.dlina;
                     case 6: this.dlina = 6; return this.dlina;
                     default: this.dlina = 8; return this.dlina;
                 }
@@ -454,10 +476,19 @@ namespace shedule
         string Dolgnost;
         string TipGraf;
         int otdih;
+        int otdihinholyday;
         public List<Smena> smens;
 
         public int getOtdih() {
             return this.otdih;
+        }
+        public int getOtdihInHolyday()
+        {
+            return this.otdihinholyday;
+        }
+        public void setOtdihInHolyday(int ot)
+        {
+             this.otdihinholyday=ot;
         }
 
         public void OtrabotalDay()
@@ -472,6 +503,10 @@ namespace shedule
         public VarSmen getVS()
         {
             return this.VS;
+        }
+        public void setVS(VarSmen sm)
+        {
+            this.VS = sm;
         }
         public int getOtrabotal()
         {
@@ -524,6 +559,7 @@ namespace shedule
             this.VS = vs;
             this.Dolgnost = d;
             this.TipGraf = tgr;
+            this.otdihinholyday = 0;
             this.smens = new List<Smena>();
 
             int m= otr % (VS.getR() + VS.getV());
@@ -546,9 +582,23 @@ namespace shedule
            
             this.Dolgnost = d;
             this.TipGraf = tgr;
+            this.otdihinholyday = 0;
             this.smens = new List<Smena>();
             this.otdih = o;
            
+        }
+
+        public employee(int ish, int ie, VarSmen vs, string d, string tgr, int o)
+        {
+            this.IdShop = ish;
+            this.IdEmployee = ie;
+            this.VS = vs;
+            this.Dolgnost = d;
+            this.TipGraf = tgr;
+            this.otdihinholyday = 0;
+            this.smens = new List<Smena>();
+            this.otdih = o;
+
         }
 
         public void setOtrabotal(int s) {
@@ -728,55 +778,55 @@ namespace shedule
         public daySale DS;
         public List<Smena> lss;
         public Dictionary<int, int> Raznica;
-        public int minGruzUtr;
-        public int minGruzVech;
-        public int minKassUtr;
-        public int minKassVech;
-        public int minProdUtr;
-        public int minProdVech;
-        public int minGastrUtr;
-        public int minGastrVech;
+        public MinPers minGruzUtr;
+        public MinPers minGruzVech;
+        public MinPers minKassUtr;
+        public MinPers minKassVech;
+        public MinPers minProdUtr;
+        public MinPers minProdVech;
+        public MinPers minGastrUtr;
+        public MinPers minGastrVech;
 
 
         public ForChart Chart;
 
         public void setMinCountSotr(int m, int t)
         {
-            this.minGruzUtr = 1;
-            this.minGruzVech = 1;
-            this.minKassUtr = m;
-            this.minProdUtr = m;
-            this.minKassVech = m;
+            this.minGruzUtr.Ncount = 1;
+            this.minGruzVech.Ncount = 1;
+            this.minKassUtr.Ncount = m;
+            this.minProdUtr.Ncount = m;
+            this.minKassVech.Ncount = m;
             if (m > 1)
             {
-                this.minProdVech = m - 1;
+                this.minProdVech.Ncount = m - 1;
             }
             else
             {
-                this.minProdVech = 1;
+                this.minProdVech.Ncount = 1;
             }
-            this.minGastrUtr = 1;
-            this.minGastrVech = 1;
+            this.minGastrUtr.Ncount = 1;
+            this.minGastrVech.Ncount = 1;
 
         }
 
         public void mMinCountKassUtr()
         {
-            this.minKassUtr -= 1;
+            this.minKassUtr.Ncount -= 1;
         }
 
         public void mMinCountProdUtr()
         {
-            this.minProdUtr -= 1;
+            this.minProdUtr.Ncount -= 1;
         }
 
         public void mMinCountKassVech()
         {
-            this.minKassVech -= 1;
+            this.minKassVech.Ncount -= 1;
         }
         public void mMinCountProdVech()
         {
-            this.minProdVech -= 1;
+            this.minProdVech.Ncount -= 1;
         }
 
         public void PereschetSmen()
@@ -911,18 +961,33 @@ namespace shedule
             }
         }
 
+        public void NM() {
+            this.minGruzUtr = new MinPers(0,0);
+       this.minGruzVech = new MinPers(0,0);
+       this.minKassUtr = new MinPers(0, 0);
+        this.minKassVech = new MinPers(0, 0);
+        this.minProdUtr = new MinPers(0, 0);
+        this.minProdVech = new MinPers(0, 0);
+        this.minGastrUtr = new MinPers(0, 0);
+        this.minGastrVech = new MinPers(0, 0);
+    }
+
         public TemplateWorkingDay(List<Smena> l, daySale d)
         {
             this.lss = l;
             this.DS = d;
+            NM();
             setMinCountSotr(Program.currentShop.minrab.getMinCount(), Program.currentShop.minrab.getTimeMinRab());
+            
+
         }
         public TemplateWorkingDay(daySale d)
         {
             this.DS = d;
             this.lss = new List<Smena>();
+            NM();
             setMinCountSotr(Program.currentShop.minrab.getMinCount(), Program.currentShop.minrab.getTimeMinRab());
-
+           
 
         }
 
@@ -1289,7 +1354,7 @@ namespace shedule
         {
             get { return DFCs.Where(x => x.Tip == 8 || x.Tip == 9).ToList(); }
         }
-        public NormaChas[] NormaChasov = new NormaChas[12];
+        public List<NormaChas> NormaChasov = new List<NormaChas>();
         public List<employee> employes { get; set; }
         public List<employee> Semployes { get; set; }
         public List<TemplateWorkingDay> templates { get; set; }
@@ -1303,7 +1368,7 @@ namespace shedule
         public List<VarSmen> VarSmens = new List<VarSmen>();
         public MinRab minrab;
         public int RaznChas;
-        //  public bool prilavki = false;
+        public bool SortSotr = false;
         // public int countPrilavok = 0;
         public Prilavki prilavki;
 
@@ -1626,6 +1691,27 @@ namespace shedule
 
         }
 
+        public string getWeekDay3()
+        {
+
+
+
+            switch (this.getData().DayOfWeek.ToString())
+            {
+                case "Monday": return "понедельник";
+                case "Tuesday": return "вторник";
+                case "Wednesday": return "среда";
+                case "Thursday": return "четверг";
+                case "Friday": return "пятница";
+                case "Saturday": return "суббота";
+                case "Sunday": return "воскресенье";
+                default: return "";
+            }
+
+
+        }
+
+
         public daySale(int id, DateTime d, int tipOfDay)
         {
             Data = d;
@@ -1650,7 +1736,7 @@ namespace shedule
 
         public void whatTip()
         {
-            //	Program.currentShop.DFCs.Find(x => x.getData()==d).getTip();
+            this.setTip(	Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString()==this.Data.ToShortDateString()).getTip());
 
         }
 
@@ -1782,6 +1868,7 @@ namespace shedule
         // static public bool SozdanPrognoz = false;
         static public List<mShop> listShops = new List<mShop>();
         static public int TipOptimizacii = 0;
+       // static public bool revertSotr = false;
         static public int TipExporta = -1;
         static public int zakr_konkurenta = 4;
         static public int otkr_konkurenta = 4;
@@ -1804,8 +1891,8 @@ namespace shedule
         //   static public int[,] CountClick = new int[25, 15];
         //   static public int[,] CountCheck = new int[25, 15];
         static public List<DateTime> holydays = new List<DateTime>();
-        static public int[] RD = new int[12];
-        static public int[] PHD = new int[12];
+        static public int[] RD = new int[13];
+        static public int[] PHD = new int[13];
 
         static public int KoefKassira = 100;
         static public int KoefObr = 100;
@@ -1852,10 +1939,10 @@ namespace shedule
             }
         }
 
-        static public void ReadNarmaChas()
+        static public void ReadNormaChas(int Year)
         {
-
-            String readPath = Environment.CurrentDirectory + @"\NormaChas";
+            currentShop.NormaChasov.RemoveAll(t => t.getYear() == Year);
+            String readPath = Environment.CurrentDirectory + @"\NormaChas"+Year;
             if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
@@ -1869,14 +1956,14 @@ namespace shedule
 
                 using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
-                    string[] str = new string[2];
+                    string[] str = new string[3];
                     string s;
                     int i = 0;
                     while ((s = sr.ReadLine()) != null)
                     {
 
                         str = s.Split('_');
-                        currentShop.NormaChasov[i] = new NormaChas(int.Parse(str[0]), int.Parse(str[1]));
+                        currentShop.NormaChasov.Add( new NormaChas(int.Parse(str[0]),int.Parse(str[1]), int.Parse(str[2])));
                         i++;
                     }
 
@@ -1886,22 +1973,23 @@ namespace shedule
             }
             catch
             {
-                for (int i = 0; i < 12; i++)
+                for (int i = 1; i < 13; i++)
                 {
-
-                    currentShop.NormaChasov[i] = new NormaChas(i, Program.RD[i] * 8 - Program.PHD[i]);
+                    
+                    currentShop.NormaChasov.Add( new NormaChas(Year,i, Program.RD[i-1] * 8 - Program.PHD[i-1]));
 
                 }
+                currentShop.NormaChasov.Add(new NormaChas(Year, 13, 136));
 
 
 
 
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
-                    for (int i = 0; i < 12; i++)
+                    foreach (NormaChas nc in currentShop.NormaChasov.FindAll(t=>t.getYear()==Year))
                     {
 
-                        sw.WriteLine(i + "_" + currentShop.NormaChasov[i].getNormChas());
+                        sw.WriteLine(nc.getYear()+"_"+ nc.getMonth() + "_" + nc.getNormChas());
 
                     }
 
@@ -1964,17 +2052,62 @@ namespace shedule
 
         }
 
-        static public void WriteNormChas()
+        static public void ReadSortSotr()
+        {
+            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\SortSotr";
+            if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
+            {
+                Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
+
+            }
+
+
+            try
+            {
+
+
+                using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
+                {
+
+                    currentShop.SortSotr = bool.Parse(sr.ReadLine());
+
+                    
+
+
+                }
+
+            }
+            catch
+            {
+
+                currentShop.SortSotr = false;
+
+
+
+
+                using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
+                {
+                    sw.Write(currentShop.SortSotr);
+
+                }
+                // MessageBox.Show(ex.ToString());
+
+            }
+
+
+        }
+
+        static public void WriteNormChas(int year)
         {
 
-            String readPath = Environment.CurrentDirectory + @"\NormaChas";
+            String readPath = Environment.CurrentDirectory + @"\NormaChas"+year;
 
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
-                for (int i = 0; i < 12; i++)
+                foreach (NormaChas nc in currentShop.NormaChasov.FindAll(t=>t.getYear()==year))
                 {
 
-                    sw.WriteLine(i + "_" + currentShop.NormaChasov[i].getNormChas());
+                    sw.WriteLine(nc.getYear()+"_"+nc.getMonth() + "_" + nc.getNormChas());
 
                 }
 
@@ -2104,8 +2237,8 @@ namespace shedule
 
         static public void newShop()
         {
-            RD = new int[12];
-            PHD = new int[12];
+            RD = new int[13];
+            PHD = new int[13];
         }
 
         static public void readTSR()
@@ -2717,9 +2850,10 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
-
-            currentShop.daysSale.Clear();
-            createListDaySale(d2, ydt, currentShop.getIdShop());
+            if (!isOffline) {
+                currentShop.daysSale.Clear();
+                createListDaySale(d2, ydt, currentShop.getIdShop());
+            }
 
             foreach (daySale ds in currentShop.daysSale)
             {
@@ -2828,7 +2962,8 @@ namespace shedule
                         d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
                         currentShop.MouthPrognoz.Add(d);
                     }
-                    catch {
+                    catch(Exception ex) {
+
                         MessageBox.Show($"Даты {i}.{fd[j].Month}.{fd[j].Year} нет в календаре!");
                     }
                 }
@@ -3299,7 +3434,7 @@ namespace shedule
 
         static public void getListDate(int year, bool next)
         {
-            RD= new int[12];
+            RD= new int[13];
             try
             {
                 DateTime.Parse($"01-01-{year}");
@@ -3353,17 +3488,18 @@ namespace shedule
                 //  MessageBox.Show(ex.Message);
 
                 Program.ReadCalendarFromXML(year);
-                for (int i = 1; i <= 12; i++)
+                for (int i = 0; i < 12; i++)
                 {
-                    RD[i - 1] = 0;
-                    PHD[i - 1] = 0;
-                    int countDays = DateTime.DaysInMonth(year, i);
+                    RD[i ] = 0;
+                    PHD[i ] = 0;
+                    DateTime dt = new DateTime(year,1,1);
+                    int countDays = DateTime.DaysInMonth(dt.AddMonths(i).Year, dt.AddMonths(i).Month);
                     for (int k = 1; k <= countDays; k++)
                     {
-                        DataForCalendary dfc = new DataForCalendary(new DateTime(year, i, k));
+                        DataForCalendary dfc = new DataForCalendary(new DateTime(year, i+1, k));
                         int t = dfc.getTip();
-                        if ((t == 1) || (t == 2) || (t == 3) || (t == 4) || (t == 5)) { RD[i - 1]++; }
-                        if (t == 9) { PHD[i - 1]++; }
+                        if ((t == 1) || (t == 2) || (t == 3) || (t == 4) || (t == 5)) { RD[i ]++; }
+                        if (t == 9) { PHD[i ]++; }
 
                         if (currentShop.DFCs.Find(x => x.getData() == dfc.getData()) != null)
                         {

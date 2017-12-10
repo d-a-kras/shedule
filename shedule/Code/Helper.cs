@@ -22,7 +22,7 @@ namespace shedule.Code
         /// <param name="shopId">Id магазина</param>
         /// <returns></returns>
         public static List<hourSale> FillHourSalesList(string filepath, int shopId)
-        {
+         {
             List<hourSale> hourSales = new List<hourSale>();
             if (File.Exists(filepath))
             {
@@ -36,6 +36,14 @@ namespace shedule.Code
                     cntr++;
                     string dayOfWeek = a["День недели"];
                     string time = a["Время"];
+                    time = time.Split(':')[0];
+                    try
+                    {
+                        time = time.Split(' ')[1];
+                    }
+                    catch {
+
+                    }
                     string dateS = a["Дата"];
                     string productS = a["Количество товаров"];
                     string checkS = a["Количество чеков"];
@@ -44,6 +52,7 @@ namespace shedule.Code
                     DateTime dt;
                     int checkCount = 0;
                     int scansCount = 0;
+                    int chas;
                     double productCount = 0;
 
                     //если эти ячейки не смогли преобразоваться в нормальный тип данных - скорее всего там какое-то говнище, такую пропускаем
@@ -51,8 +60,8 @@ namespace shedule.Code
                     var resultChCount = Int32.TryParse(checkS, out checkCount);
                     var resultScCount = Int32.TryParse(scansS, out scansCount);
                     var resultPrCount = Double.TryParse(productS, out productCount);
-                    var resultDayOfWeek = DayOfWeeksDictionary.ContainsValue(dayOfWeek);
-                    bool resultHour = !(time.Split(':').Length < 1);
+                    var resultDayOfWeek = (DayOfWeeksDictionary.ContainsValue(dayOfWeek)||(DayOfWeeksDictionary.ContainsKey(dayOfWeek)));
+                    bool resultHour = time!=null && Int32.TryParse(time, out chas);
 
                     if (resultDt && resultChCount && resultScCount && resultPrCount && resultDayOfWeek && resultHour)
                     {
