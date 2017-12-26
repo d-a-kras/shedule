@@ -155,6 +155,8 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.labelCountSotr = new System.Windows.Forms.Label();
+            this.comboBoxCountSotr = new System.Windows.Forms.ComboBox();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1303,6 +1305,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.comboBoxCountSotr);
+            this.tabPage3.Controls.Add(this.labelCountSotr);
             this.tabPage3.Controls.Add(this.checkBox2);
             this.tabPage3.Controls.Add(this.button14);
             this.tabPage3.Controls.Add(this.button6);
@@ -1334,7 +1338,7 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(283, 290);
+            this.button14.Location = new System.Drawing.Point(279, 240);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(120, 40);
             this.button14.TabIndex = 13;
@@ -1345,7 +1349,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(31, 290);
+            this.button6.Location = new System.Drawing.Point(27, 240);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(120, 40);
             this.button6.TabIndex = 12;
@@ -1371,7 +1375,7 @@
             // 
             // buttonExport1
             // 
-            this.buttonExport1.Location = new System.Drawing.Point(157, 290);
+            this.buttonExport1.Location = new System.Drawing.Point(153, 240);
             this.buttonExport1.Name = "buttonExport1";
             this.buttonExport1.Size = new System.Drawing.Size(120, 40);
             this.buttonExport1.TabIndex = 6;
@@ -1483,6 +1487,31 @@
             // 
             this.timer2.Interval = 1000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // labelCountSotr
+            // 
+            this.labelCountSotr.AutoSize = true;
+            this.labelCountSotr.Location = new System.Drawing.Point(28, 298);
+            this.labelCountSotr.Name = "labelCountSotr";
+            this.labelCountSotr.Size = new System.Drawing.Size(245, 13);
+            this.labelCountSotr.TabIndex = 15;
+            this.labelCountSotr.Text = "Количество персонала формиравать с учетом ";
+            this.labelCountSotr.Visible = false;
+            this.labelCountSotr.Click += new System.EventHandler(this.labelCountSotr_Click);
+            // 
+            // comboBoxCountSotr
+            // 
+            this.comboBoxCountSotr.FormattingEnabled = true;
+            this.comboBoxCountSotr.Items.AddRange(new object[] {
+            "прогноза продаж",
+            "штатного расписания",
+            "загруженного графика"});
+            this.comboBoxCountSotr.Location = new System.Drawing.Point(280, 296);
+            this.comboBoxCountSotr.Name = "comboBoxCountSotr";
+            this.comboBoxCountSotr.Size = new System.Drawing.Size(158, 21);
+            this.comboBoxCountSotr.TabIndex = 16;
+            this.comboBoxCountSotr.Visible = false;
+            this.comboBoxCountSotr.SelectedIndexChanged += new System.EventHandler(this.comboBoxCountSotr_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -1675,6 +1704,8 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.ProgressBar progressBar3;
+        private System.Windows.Forms.ComboBox comboBoxCountSotr;
+        private System.Windows.Forms.Label labelCountSotr;
     }
 }
 

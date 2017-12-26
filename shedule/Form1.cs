@@ -103,7 +103,11 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(false,false,true);
+                            if (!Program.createPrognoz(false, false, true))
+                            {
+                                MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                return;
+                            }
                             bg.ReportProgress(4);
                             //MessageBox.Show("Время создание примерно 2 минуты");
 
@@ -314,7 +318,11 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(false,false,true);
+                            if (!Program.createPrognoz(false, false, true))
+                            {
+                                MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                return;
+                            }
                             bg.ReportProgress(4);
 
                             Sotrudniki.OptimCountSotr();
@@ -437,7 +445,11 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(false,false,true);
+                            if(!Program.createPrognoz(false, false, true))
+                            {
+                                MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                return;
+                            }
                             bg.ReportProgress(4);
 
 
@@ -563,7 +575,11 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz(true,false,true);
+                            if (!Program.createPrognoz(true, false, true))
+                            {
+                                MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                return;
+                            }
                             bg.ReportProgress(4);
                             //MessageBox.Show("Время создание примерно 2 минуты");
 
@@ -1398,9 +1414,9 @@ namespace shedule
                 MessageBox.Show($"Файл {ex.FileName} поврежден или не найден");
                 
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!", "Ошибка",
+                MessageBox.Show("Произошла критическая ошибка! Использование данных из файла невозможно!"+ex.ToString(), "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 progressBar3.Visible = false;
             }
@@ -1450,6 +1466,7 @@ namespace shedule
             if (File.Exists(readPath)) {
                 Program.getListDate(DateTime.Today.AddYears(1).Year, true);
             }
+            Program.currentShop.daysSale.Clear();
             Program.readTSR();
             Program.readFactors();
             Program.readVarSmen();
@@ -1774,35 +1791,55 @@ namespace shedule
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             switch (comboBox3.SelectedIndex ) {
-                case 0:  button14.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count==0))
+                case 0:  button14.Visible = true; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count==0))
                     {
                         button14.BackColor = Color.PaleGreen;
                         checkBox2.Visible = false;
+                        comboBoxCountSotr.Items.Clear();
+                        comboBoxCountSotr.Items.Add("штатного расписания");
+                        comboBoxCountSotr.Items.Add("загруженного графика");
+                        comboBoxCountSotr.Items.Add("прогноза продаж");
                     }
                     else
                     {
                         button14.BackColor = Color.DarkGray;
                         checkBox2.Visible = true;
+                        comboBoxCountSotr.Items.Clear();
+                        comboBoxCountSotr.Items.Add("штатного расписания");
+                        comboBoxCountSotr.Items.Add("прогноза продаж");
                     }
                     break;
-                case 1: button14.Visible = false; checkBox2.Visible = false; break;
-                case 2: button14.Visible = false; checkBox2.Visible = false; break;
-                case 3: button14.Visible = false; checkBox2.Visible = false; break;
-                case 4: button14.Visible = true; checkBox2.Visible = false;
+                case 1: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case 2: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case 3: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case 4: button14.Visible = true; checkBox2.Visible = true; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = false;
                     if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0)&&(Program.currentShop.Semployes[0].smens.Count>0))
                     {
                         button14.BackColor = Color.PaleGreen;
+                        checkBox2.Visible = false;
+                        comboBoxCountSotr.Items.Clear();
+                        comboBoxCountSotr.Items.Add("штатного расписания");
+                        comboBoxCountSotr.Items.Add("загруженного графика");
                     }
                     else
                     {
                         button14.BackColor = Color.DarkGray;
+                        checkBox2.Visible = true;
+                        comboBoxCountSotr.Items.Clear();
+                        comboBoxCountSotr.Items.Add("штатного расписания");
                     }
                     break;
-                case -1: button14.Visible = false; checkBox2.Visible = false; break;
+                case -1: button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
 
 
 
+            }
+
+            if ((comboBoxCountSotr.Items.Count > 0)&&(Sotrudniki.CountSotr=="")) {
+                comboBoxCountSotr.SelectedIndex = 0;
+                Sotrudniki.CountSotr = comboBoxCountSotr.SelectedItem.ToString();
             }
            
         }
@@ -2353,7 +2390,10 @@ namespace shedule
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                  lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                Program.createPrognoz(false,Program.IsMpRezhim,true);
+                                if (!Program.createPrognoz(false, Program.IsMpRezhim, true)) {
+                                    MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                    return;
+                                }
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
@@ -2412,7 +2452,11 @@ namespace shedule
                             {
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
-                                Program.createPrognoz(false,true,true);
+
+                                if (!Program.createPrognoz(false, true, true)) {
+                                    MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                    return;
+                                }
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
@@ -2504,7 +2548,11 @@ namespace shedule
                             {
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
-                                Program.createPrognoz(false,true,true);
+
+                                if (!Program.createPrognoz(false, true, true)) {
+                                    MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
+                                    return;
+                                }
 
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
@@ -3591,13 +3639,13 @@ namespace shedule
             }
         }
 
-        public static void CheckDone(Thread ts, System.Windows.Forms.Timer t, System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1) {
+        public static void CheckDone(Thread ts, System.Windows.Forms.Timer t, System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1, ComboBox cb1) {
             pb1.Value = ForExcel.progress;
             if (!ts.IsAlive)
             {
                 t.Enabled = false;
                 t.Stop();
-                Done(btn,pb1);
+                Done(btn,pb1,cb1);
                
 
             }
@@ -3607,11 +3655,12 @@ namespace shedule
            
         }
 
-        public static void Done(System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1) {
+        public static void Done(System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1, ComboBox cb1) {
             if ((Program.currentShop.Semployes.Count != 0)&&(!ForExcel.error))
             {
                 MessageBox.Show("Чтение завершено успешно");
                 btn.BackColor = Color.PaleGreen;
+                refreshCountSotr(cb1);
             }
             else
             {
@@ -3621,9 +3670,33 @@ namespace shedule
             pb1.Visible = false;
         }
 
+        public static void refreshCountSotr(ComboBox cb) {
+            if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count == 0))
+            {
+                cb.Items.Clear();
+                cb.Items.Add("штатного расписания");
+                cb.Items.Add("загруженного графика");
+                cb.Items.Add("прогноза продаж");
+            }
+            else if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count > 0))
+            {
+               
+                cb.Items.Clear();
+                cb.Items.Add("штатного расписания");
+                cb.Items.Add("загруженного графика");
+            }
+            else 
+            {
+              
+                cb.Items.Clear();
+                cb.Items.Add("штатного расписания");
+            }
+
+        }
+
         private void timer2_Tick(object sender, EventArgs e)
         {
-            CheckDone(ForExcel.thread1, timer2,button14,progressBar1);
+            CheckDone(ForExcel.thread1, timer2,button14,progressBar1, comboBoxCountSotr);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -3654,6 +3727,16 @@ namespace shedule
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             ForExcel.readVarSmen = checkBox2.Checked;
+        }
+
+        private void labelCountSotr_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxCountSotr_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Sotrudniki.CountSotr = comboBoxCountSotr.SelectedItem.ToString();
         }
     }
 }

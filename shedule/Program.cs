@@ -277,7 +277,7 @@ namespace shedule
 
             if (this.Tip == 0)
             {
-                if (Program.currentShop.DFCs.Find(t => t.getData() == this.getData()) != null)
+                if (Program.currentShop.DFCs.Find(t => t.getData().ToShortDateString() == this.getData().ToShortDateString()) != null)
                 {
                     return Program.currentShop.DFCs.Find(t => t.getData() == this.getData()).gettip();
                 }
@@ -1727,10 +1727,11 @@ namespace shedule
             this.Data = d;
             this.idShop = id;
             this.hoursSale = new List<hourSale>();
-            this.startDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeStart();
-            // MessageBox.Show("Start "+this.startDaySale);
+            if (Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString())!=null) {
+                this.startDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeStart();
+                // MessageBox.Show("Start "+this.startDaySale);
 
-            this.endDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeEnd();
+                this.endDaySale = Program.currentShop.DFCs.Find(x => x.getData().ToShortDateString() == d.ToShortDateString()).getTimeEnd(); }
             // MessageBox.Show("END"+this.getData().ToShortDateString() + "");
         }
 
@@ -1742,14 +1743,30 @@ namespace shedule
 
         public int getTip()
         {
-            if (this.tip != 0)
+            
+            if (this.tip == 0)
             {
-                return this.tip;
+                if (Program.currentShop.DFCs.Find(t => t.getData().ToShortDateString() == this.getData().ToShortDateString()) != null)
+                {
+                    return Program.currentShop.DFCs.Find(t => t.getData().ToShortDateString() == this.getData().ToShortDateString()).getTip();
+                }
+                else
+                {
+                    switch (this.getData().DayOfWeek.ToString())
+                    {
+                        case "Monday": return 1; ;
+                        case "Tuesday": return 2;
+                        case "Wednesday": return 3;
+                        case "Thursday": return 4;
+                        case "Friday": return 5;
+                        case "Saturday": return 6; ;
+                        case "Sunday": return 7;
+                        default: return 0;
+                    }
+
+                }
             }
-            else
-            {
-                return Program.currentShop.DFCs.Find(t => t.getData().Date == this.getData().Date).getTip();
-            }
+            else return this.tip;
         }
         public void setTip(int t)
         {
@@ -2633,7 +2650,9 @@ namespace shedule
         public static bool CheckDlinaDnya()
         {
             int min = 14;
-            List<DataForCalendary> ldfc = Program.currentShop.DFCs.FindAll(t => t.getMonth() == DateTime.Now.AddMonths(1).Month);
+
+            List<DataForCalendary> ldfc = new List<DataForCalendary>();
+                ldfc =Program.currentShop.DFCs.FindAll(t => t.getMonth() == DateTime.Now.AddMonths(1).Month);
             foreach (DataForCalendary ds in ldfc)
             {
                 if (ds.getLenght() < min)
@@ -2694,7 +2713,7 @@ namespace shedule
 
 
 
-        public static void createPrognoz( bool current, bool isMp, bool first  )
+        public static bool createPrognoz( bool current, bool isMp, bool first  )
         {
             CheckDeistvFactors();
             currentShop.MouthPrognoz.Clear();
@@ -2704,7 +2723,7 @@ namespace shedule
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             DateTime d2 = DateTime.Now.AddDays(-30);
 
-            if (first) {
+            if ((first)||(currentShop.daysSale.Count==0)) {
                 //   if (connect)
                 //  {
                 if (!isOffline)
@@ -2740,7 +2759,8 @@ namespace shedule
 
             foreach (daySale ds in currentShop.daysSale)
             {
-                ds.setTip(currentShop.DFCs.Find(x => x.getData().ToShortDateString() == ds.getData().ToShortDateString()).getTip());
+
+                ds.setTip(ds.getTip());
 
 
             }
@@ -2827,6 +2847,7 @@ namespace shedule
                 {
                     //нужно чтоб вылазило сообщение о том что даты в календаре нет
                     MessageBox.Show($"Даты {i}.{fd.Month}.{fd.Year} нет в календаре!");
+                    return false;
                 }
 
             }
@@ -2838,7 +2859,7 @@ namespace shedule
                 createPrognozTemplate(ds);
             }
 
-
+            return true;
         }
 
         public static void createPrognoz3()
@@ -3077,6 +3098,15 @@ namespace shedule
             }
             else
             {
+                if (hss.Count > 0)
+                {
+                    string max = hss.Max(t => t.getData()).ToShortDateString();
+
+                    MessageBox.Show("Данных недостаточно. Последняя запись в базу данных " + max);
+                }
+                else {
+                    MessageBox.Show("Из базы данных не вернулись значения за прошлый месяц");
+                }
                 Form6 f6 = new Form6();
                 f6.ShowDialog();
                 var newid = f6.newId;

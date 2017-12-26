@@ -11,7 +11,7 @@ namespace shedule.Code
 
  public  class Sotrudniki
     {
-
+       public static string CountSotr = "";
         static public bool CheckGrafic13()
         {
             
@@ -246,22 +246,48 @@ namespace shedule.Code
                 int CountProd=0;
                 int CountKassirov = 0;
                 int CountGastr = 0;
+                int CountGruz = 0;
+
+                switch (CountSotr) {
+                    case "штатного расписания":
+                        CountGastr = LGastr.Sum(o => o.getCount());
+                        CountGruz = LGruz.Sum(o => o.getCount());
+                        CountProd = LProd.Sum(o => o.getCount());
+                        CountKassirov = LKass.Sum(o => o.getCount());
+                        break;
+                    case "загруженного графика":
+                        if (Program.currentShop.Semployes.Count > 0)
+                        {
+                            CountGastr = Program.currentShop.Semployes.FindAll(t => t.GetDolgnost() == "Гастроном").Count;
+                            CountGruz = Program.currentShop.Semployes.FindAll(t => t.GetDolgnost() == "Грузчик").Count;
+                            CountProd = Program.currentShop.Semployes.FindAll(t => t.GetDolgnost() == "Продавец").Count;
+                            CountKassirov = Program.currentShop.Semployes.FindAll(t => t.GetDolgnost() == "Кассир").Count;
+                        }
+                        else {
+                            CountGastr = LGastr.Sum(o => o.getCount());
+                            CountGruz = LGruz.Sum(o => o.getCount());
+                            CountProd = LProd.Sum(o => o.getCount());
+                            CountKassirov = LKass.Sum(o => o.getCount());
+                        }
+
+                        break;
+                    case "прогноза продаж":
+                        CountGastr = LGastr.Sum(o => o.getCount());
+                        CountGruz = LGruz.Sum(o => o.getCount());
+                        CountProd = (int)Math.Ceiling((tc * Tobrtov * 60) / (double)(Program.normchas * 3600 * KP));
+                        CountKassirov = (int)Math.Ceiling(ob / (double)(Program.normchas * K * 36)) + Program.ParametrOptimization;
+                
+                break;
+                    default:
+                        CountGastr = LGastr.Sum(o => o.getCount());
+                        CountGruz = LGruz.Sum(o => o.getCount());
+                        CountProd = LProd.Sum(o => o.getCount());
+                        CountKassirov = LKass.Sum(o => o.getCount());
+                        break;
+                }
+                
 
                
-                CountGastr= LGastr.Sum(o => o.getCount());
-
-
-                int CountGruz = LGruz.Sum(o => o.getCount());
-
-                if (!current)
-                {
-                    CountProd = (int)Math.Ceiling((tc * Tobrtov * 60) / (double)(Program.normchas * 3600 * KP));
-                    CountKassirov = (int)Math.Ceiling(ob / (double)(Program.normchas * K * 36)) + Program.ParametrOptimization;
-                }
-                else {
-                    CountProd = LProd.Sum(o => o.getCount());
-                    CountKassirov = LKass.Sum(o => o.getCount());
-                }
 
 
 
@@ -586,20 +612,22 @@ namespace shedule.Code
 
         static public void NewOtrabotal() {
 
-          
 
-                foreach (employee e in Program.currentShop.Semployes) {
-                if (Program.currentShop.employes.Find(t=>t.getID()==e.getID())!=null) {
-                    if ((ForExcel.readVarSmen)&&(e.getVS()!=null))
+
+            foreach (employee e in Program.currentShop.Semployes) {
+                if (Program.currentShop.employes.Find(t => t.getID() == e.getID()) != null)
+                {
+                    if ((ForExcel.readVarSmen) && (e.getVS() != null))
                     {
                         Program.currentShop.employes.Find(t => t.getID() == e.getID()).setVS(e.getVS());
                     }
                     int o = e.getOtdih();
                     if (o < 0)
                     {
-                        o = (-1) * o ;
-                        if (o>= Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getR()){
-                            o = (-1)*Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getV();
+                        o = (-1) * o;
+                        if (o >= Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getR())
+                        {
+                            o = (-1) * Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getV();
                         }
                         e.setOtrabotal(o);
 
@@ -607,16 +635,40 @@ namespace shedule.Code
                     else
                     {
                         o = o - Program.currentShop.employes.Find(t => t.getID() == e.getID()).getVS().getV();
-                        if (o>0) {
+                        if (o > 0)
+                        {
                             o = 0;
                         }
                         e.setOtrabotal(o);
                     }
                     Program.currentShop.employes.Find(t => t.getID() == e.getID()).setOtrabotal(e.getOtrabotal());
-                    
+
+                }
+                else {
+                    if ((e.getVS().getR() == 2) || (e.getVS().getR() == 3))
+                    {
+                        if (Program.currentShop.VarSmens.Find(t => (t.getDeistvie() == true) && (t.getDolgnost() == e.GetDolgnost()) && (t.getR() > t.getV())) != null)
+                        {
+                            e.setVS(Program.currentShop.VarSmens.Find(t => (t.getDeistvie() == true) && (t.getDolgnost() == e.GetDolgnost()) && (t.getR() > t.getV())));
+                        }
+                    }
                 }
             }
+         //   if ((Program.currentShop.employes.Count - Program.currentShop.Semployes.Count)>0) {
+                foreach (employee e in Program.currentShop.employes) {
+                    if (Program.currentShop.Semployes.Find(t => t.getID() == e.getID()) != null)
+                    {
 
+                    }
+                    else {
+                        if ((e.getVS().getR()==2)||(e.getVS().getR() == 3)) {
+                            if (Program.currentShop.VarSmens.Find(t => (t.getDeistvie() == true) && (t.getDolgnost() == e.GetDolgnost())&&(t.getR()>t.getV()))!=null) {
+                                e.setVS(Program.currentShop.VarSmens.Find(t => (t.getDeistvie() == true) && (t.getDolgnost() == e.GetDolgnost()) && (t.getR() > t.getV())));
+                            }
+                        }
+                    }
+            //    }
+            }
         }
 
         static public void StarSmen()
@@ -677,7 +729,7 @@ namespace shedule.Code
                     int ps = wd.DS.getEndDaySale() - 1;
                     if (wd.DS.hoursSale.Find(t => t.getNHour() == ps.ToString()) != null)
                     {
-                       if (Program.ParametrOptimization == 0)
+                        if (Program.ParametrOptimization == 0)
                         {
                             ck2 = (int)Math.Round(((wd.DS.hoursSale.Find(t => t.getNHour() == (wd.DS.getEndDaySale() - 2).ToString()).getCountCheck()) / (double)60));
                         }
@@ -719,7 +771,10 @@ namespace shedule.Code
                         { return s2.getID().CompareTo(s1.getID()); });
                     }
                 }
-
+                if (wd.DS.getTip() == 8)
+                {
+                    emplo = emplo.OrderBy(u => u.getVS().getR()).ThenByDescending(u => u.getOtdihInHolyday()).ToList();
+                }
 
                 foreach (employee emp in emplo)
             {
@@ -731,7 +786,7 @@ namespace shedule.Code
                   
                   if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8) && (emp.getOtrabotal() >= 0))
                     {
-                        dlina -= 1;
+                      
                         if (emp.getOtdihInHolyday()==0) {
                             emp.setOtdihInHolyday(1);
                                }
@@ -741,11 +796,11 @@ namespace shedule.Code
                             List<employee> les = Program.currentShop.employes.FindAll(t => (t.getOtdihInHolyday() != 0 && t.GetDolgnost() == "Кассир"));
                             int max =les.Max(t=>t.getOtdihInHolyday());
                             int over = les.Sum(t => t.getOtdihInHolyday()) / les.Count();
-                            if ((emp.getOtdihInHolyday() < max)||(max==over)) {
+                         //   if ((emp.getOtdihInHolyday() < max)||(max==over)) {
                                 emp.OtrabotalDay();
                                 emp.setOtdihInHolyday(emp.getOtdihInHolyday() + 1);
                                 continue;
-                            }
+                          //  }
                         }
                     }
 
@@ -905,7 +960,10 @@ namespace shedule.Code
                         { return s2.getID().CompareTo(s1.getID()); });
                     }
                 }
-
+                
+                if (wd.DS.getTip() == 8) {
+                   emplo =  emplo.OrderBy(u => u.getVS().getR()).ThenByDescending(u => u.getOtdihInHolyday()).ToList();
+                }
 
                 foreach (employee emp in emplo)
             {
@@ -913,7 +971,7 @@ namespace shedule.Code
 
                     if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8)&&(emp.getOtrabotal()>=0))
                     {
-                        dlina -= 1;
+                        
                         if (emp.getOtdihInHolyday() == 0)
                         {
                             emp.setOtdihInHolyday(1);
@@ -925,12 +983,12 @@ namespace shedule.Code
                             List<employee> les = Program.currentShop.employes.FindAll(t => (t.getOtdihInHolyday() != 0 && t.GetDolgnost() == "Продавец"));
                             int max = les.Max(t => t.getOtdihInHolyday());
                             int over = les.Sum(t => t.getOtdihInHolyday()) / les.Count();
-                            if ((emp.getOtdihInHolyday() < max) || (max == over))
-                            {
+                           // if ((emp.getOtdihInHolyday() < max) || (max == over))
+                           // {
                                 emp.OtrabotalDay();
                                 emp.setOtdihInHolyday(emp.getOtdihInHolyday() + 1);
                                 continue;
-                            }
+                          //  }
                         }
                     }
 
@@ -1039,7 +1097,7 @@ namespace shedule.Code
                     
                     if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 9))
                     {
-                        dlina -= 1;
+                       // dlina -= 1;
                     }
 
                    
