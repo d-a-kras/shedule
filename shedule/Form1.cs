@@ -2346,7 +2346,7 @@ namespace shedule
            
            
             Program.readFactors();
-            Program.readVarSmen();
+            
             Program.ReadNormaChas(DateTime.Now.Year);
            // Program.readTSR();
 
@@ -2362,9 +2362,9 @@ namespace shedule
                     Program.getListDate(DateTime.Today.AddYears(1).Year, true);
                 }
                 Program.readTSR();
-               
+                Program.readVarSmen();
 
-               shop.setMinRab(Program.ReadMinRab());
+                shop.setMinRab(Program.ReadMinRab());
                Program.currentShop.setMinRab(shop.minrab);
                // Program.currentShop.setIdShop(0);
                 Program.currentShop.setAdresShop(shop.getAddress());
@@ -2387,7 +2387,60 @@ namespace shedule
                         {
                             try
                             {
-                                bg.ReportProgress(Program.BgProgress += TaskStep);
+                                if (checkBoxMPeremSotr.Checked)
+                                {
+                                    Program.currentShop.SortSotr = true;
+                                }
+                                else {
+                                    Program.currentShop.SortSotr = false;
+                                }
+                                if (!checkBoxMReadShedule.Checked)
+                                {
+                                    string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + "график на текущий месяц.xlsx";
+
+                                    if (!File.Exists(fc))
+                                    {
+                                        /* OpenFileDialog openFileDialog = new OpenFileDialog();
+                                         if (Settings.Default.folder == "")
+                                         {
+                                             openFileDialog.InitialDirectory = "c:\\";
+                                         }
+                                         else
+                                         {
+                                             openFileDialog.InitialDirectory = Settings.Default.folder;
+                                         }
+                                         openFileDialog.Filter = "*|*.xlsx";
+                                         openFileDialog.RestoreDirectory = true;
+
+                                         if (openFileDialog.ShowDialog() == DialogResult.OK)
+                                         {
+                                             Program.file = openFileDialog.FileName;
+
+                                         }*/
+                                        MessageBox.Show("Файл с текущим графиком для магазина "+shop.getIdShopFM()+"  не найден");
+                                    }
+                                    else {
+                                        Program.file = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + "график на текущий месяц.xlsx";
+                                    }
+
+                                    if (comboBoxMCountPerson.SelectedIndex == 0)
+                                    {
+                                        if (checkBoxMUchetSmen.Checked)
+                                        {
+                                            ForExcel.CreateEmployee();
+                                        }
+                                        else
+                                        {
+                                            ForExcel.CreateEmployeeWithVarSmen();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ForExcel.CreateEmployeeAndSmens();
+                                    }
+                                }
+
+                                    bg.ReportProgress(Program.BgProgress += TaskStep);
                                  lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
                                 if (!Program.createPrognoz(false, Program.IsMpRezhim, true)) {
@@ -2399,6 +2452,14 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Подсчет оптимальной загруженности");
 
                                 Sotrudniki.OptimCountSotr();
+
+                                if (Program.currentShop.Semployes != null)
+                                {
+                                    if (Program.currentShop.Semployes.Count != 0)
+                                    {
+                                        Sotrudniki.NewOtrabotal();
+                                    }
+                                }
 
                                 bg.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
@@ -2436,7 +2497,7 @@ namespace shedule
                                 MessageBox.Show("Расписание не создано");
                                 //CloseProcessOnError();
                                 //return;
-                                throw ex;
+                               // throw ex;
                             }
                             //  System.Drawing.Color color;
 
