@@ -478,7 +478,7 @@ namespace shedule
 
                         ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                        excelcells = ObjWorkSheet.get_Range("A3", "AL100");
+                        excelcells = ObjWorkSheet.get_Range("A1", "D3");
                         excelcells.Font.Size = 10;
                         // excelcells.NumberFormat = "@";
                         bg.ReportProgress(10);
@@ -489,7 +489,7 @@ namespace shedule
                         chartY1 = new int[Program.currentShop.tsr.Count + 1];
                         chartY2 = new int[Program.currentShop.tsr.Count + 1];
 
-                        int i = 0;
+                        int i = 1;
                         foreach (TSR tsr in Program.currentShop.tsr)
                         {
                             //  chartXStr[i] = tsr.getOtobragenie();
@@ -523,7 +523,7 @@ namespace shedule
 
 
 
-                        chartRange = ObjWorkSheet.get_Range("a1", "h3");
+                        chartRange = ObjWorkSheet.get_Range("a1", "d3");
 
                         chartPage.SetSourceData(chartRange, misValue);
 

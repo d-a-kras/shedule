@@ -327,10 +327,10 @@ namespace shedule.Code
             return ds;
         }
 
-        public static void readDays8and9() { 
+        public static void readDays8and9(int year) { 
         
 
-            string filepath = Environment.CurrentDirectory + "/ShopsH/" + Program.currentShop.getIdShop() + "/days89.dat";
+            string filepath = Environment.CurrentDirectory + "/ShopsH/" + Program.currentShop.getIdShop() + "/days89_"+year+".dat";
 
             BinaryFormatter formatter = new BinaryFormatter();
             if (File.Exists(filepath))
@@ -345,14 +345,14 @@ namespace shedule.Code
                     }
                 }
             }
-            SaveHolidayDaysOfShop(Program.currentShop.getIdShop(), CreateListHolidays());
+            SaveHolidayDaysOfShop(Program.currentShop.getIdShop(), CreateListHolidays(year), year);
         }
 
         /// <summary>
         /// Сохраняет данные о праздничных и предпраздничных днях в файл
         /// </summary>
         /// <param name="shopId">Id магазина</param>
-        public static void createListDays8and9(int shopId, List<daySale> shopHolidayDays)
+        public static void createListDays8and9(int shopId, List<daySale> shopHolidayDays,int year)
         {
             string filepath = Environment.CurrentDirectory + "/ShopsH/" + shopId;
             BinaryFormatter formatter = new BinaryFormatter();
@@ -363,7 +363,7 @@ namespace shedule.Code
                 {
                     Directory.CreateDirectory(filepath);
                 }
-                using (FileStream fs = new FileStream(filepath + "/days89.dat", FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(filepath + "/days89_"+year+".dat", FileMode.OpenOrCreate))
                 {
                     //пустые не записываем
                     if (shopHolidayDays.Count > 0 && shopHolidayDays.FirstOrDefault().hoursSale.Count > 0)
@@ -381,7 +381,7 @@ namespace shedule.Code
         /// </summary>
         /// <param name="shop"></param>
         /// <param name="_holidayList"></param>
-        public static void SaveHolidayDaysOfShop(int id, List<DataForCalendary> _holidayList)
+        public static void SaveHolidayDaysOfShop(int id, List<DataForCalendary> _holidayList, int year)
         {
             List<daySale> holidayDaySales = new List<daySale>(_holidayList.Count);
 
@@ -391,29 +391,32 @@ namespace shedule.Code
             }
             Logger.Log.Info($"Выгружено для магазина {id}");
 
-            createListDays8and9(id, holidayDaySales);
+            createListDays8and9(id, holidayDaySales, year);
 
 
         }
 
-        public static void CreateHolidaysForAllShops()
+        public static void CreateHolidaysForAllShops(int year)
         {
             var completedShops = new List<string>();
             foreach (var shop in Program.listShops)
             {
-                var hr = new HolidayUnloader(shop.getIdShop(), CreateListHolidays());
-                hr.MakeHolidayDaysForShops();
+                var hr = new HolidayUnloader(shop.getIdShop(), CreateListHolidays(year));
+                hr.MakeHolidayDaysForShops(year);
                 completedShops.Add(shop.getIdShop().ToString());
             }
 
             MessageBox.Show("Праздничные дни выгружены для: " + completedShops.ToString());
         }
 
-        public static List<DataForCalendary> CreateListHolidays()
+        public static List<DataForCalendary> CreateListHolidays(int year)
         {
             List<DataForCalendary> dd = new List<DataForCalendary>();
-            dd.Add(new DataForCalendary(new DateTime(2017, 3, 8), 8));
-            dd.Add(new DataForCalendary(new DateTime(2017, 3, 7), 9));
+            dd.Add(new DataForCalendary(new DateTime(year, 5, 1), 8));
+            dd.Add(new DataForCalendary(new DateTime(year, 5, 8), 9));
+            dd.Add(new DataForCalendary(new DateTime(year, 6, 11), 9));
+            dd.Add(new DataForCalendary(new DateTime(year, 5, 9), 8));
+            dd.Add(new DataForCalendary(new DateTime(year, 6, 12), 8));
             return dd;
         }
 

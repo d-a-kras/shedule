@@ -27,13 +27,13 @@ namespace shedule
         /// <summary>
         /// Запускает процесс
         /// </summary>
-        public void MakeHolidayDaysForShops()
+        public void MakeHolidayDaysForShops(int year)
         {
             List<string> errorShops = new List<string>();
            
                 try
                 {
-                    Helper.SaveHolidayDaysOfShop(_shopid, _holidayList);
+                    Helper.SaveHolidayDaysOfShop(_shopid, _holidayList, year);
                 }
                 catch (Exception ex)
                 {
@@ -42,7 +42,8 @@ namespace shedule
                 }
 
             if (errorShops.Any())
-                MessageBox.Show($"Дни типа 8 и 9 не выгружены для магазинов:\n{string.Join(",", errorShops)}");
+            { }
+             //MessageBox.Show($"Дни типа 8 и 9 не выгружены для магазинов:\n{string.Join(",", errorShops)}");
             //MessageBox.Show(!errorShops.Any()
             //    ? "Дни типа 8 и 9 успешно выгружены для всех магазинов"
             //    : $"Дни типа 8 и 9 не выгружены для магазинов:\n{string.Join(",", errorShops)}");

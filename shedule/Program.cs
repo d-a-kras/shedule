@@ -477,10 +477,30 @@ namespace shedule
         string TipGraf;
         int otdih;
         int otdihinholyday;
+
         public List<Smena> smens;
+        public Dictionary<DateTime,int> statusDays;
 
         public int getOtdih() {
             return this.otdih;
+        }
+        public int getStatusDay(DateTime dt)
+        {
+            int status=0;
+            try
+            {
+                this.statusDays.TryGetValue(dt, out status);
+            }
+            catch { }
+             return status;
+            
+        }
+
+        public void otrabDay(DateTime dt)
+        {
+            
+            this.statusDays.Add(dt,1);
+            
         }
         public int getOtdihInHolyday()
         {
@@ -561,7 +581,7 @@ namespace shedule
             this.TipGraf = tgr;
             this.otdihinholyday = 0;
             this.smens = new List<Smena>();
-
+            this.statusDays = new Dictionary<DateTime, int>();
             int m= otr % (VS.getR() + VS.getV());
 
             if (m >= VS.getR()) {
@@ -585,7 +605,8 @@ namespace shedule
             this.otdihinholyday = 0;
             this.smens = new List<Smena>();
             this.otdih = o;
-           
+            this.statusDays = new Dictionary<DateTime, int>();
+
         }
 
         public employee(int ish, int ie, VarSmen vs, string d, string tgr, int o)
@@ -598,6 +619,7 @@ namespace shedule
             this.otdihinholyday = 0;
             this.smens = new List<Smena>();
             this.otdih = o;
+            this.statusDays = new Dictionary<DateTime, int>();
 
         }
 
@@ -1918,8 +1940,8 @@ namespace shedule
         static public int TimeObrTov = 14;
 
         static public string file = "";
-        static public string login = "";
-        static public string password = "";
+        static public string login = "VShleyev";
+        static public string password = "gjkrjdybr@93";
         static public int tipDiagram = 0;
         static public bool TSRTG = true;
         static public bool exit = true;
@@ -2765,10 +2787,10 @@ namespace shedule
 
             }
 
-            if ((tdt.Month == 10) || (tdt.Month == 11) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) ||(tdt.Month == 3) || (tdt.Month == 4) || (tdt.Month == 5))
+            if ((tdt.Month == 10) || (tdt.Month == 11) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) ||(tdt.Month == 3) || (tdt.Month == 4) || (tdt.Month == 5) || (tdt.Month == 6))
             {
                
-                    Helper.readDays8and9();
+                    Helper.readDays8and9(DateTime.Now.Year);
               
             }
 
@@ -3197,8 +3219,8 @@ namespace shedule
             var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
-          //  string s1 = "2016/4/11";
-           // string s2 = "2016/4/11";
+            //string s1 = "2018/8/3";
+            //string s2 = "2018/8/3";
             List< hourSale> lhs=new List<hourSale>();
             string sql;
             sql = "select * from dbo.get_StatisticByShopsDayHour('" + idShop + "', '" + s1 + "', '" + s2 + " 23:59:00')";
@@ -3711,7 +3733,8 @@ namespace shedule
         {
 
             //Helper.readDays8and9();
-            Helper.CreateHolidaysForAllShops();
+
+            Helper.CreateHolidaysForAllShops(DateTime.Now.Year);
 
 
         }
