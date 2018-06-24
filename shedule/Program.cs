@@ -487,11 +487,11 @@ namespace shedule
         public int getStatusDay(DateTime dt)
         {
             int status=0;
-            try
-            {
-                this.statusDays.TryGetValue(dt, out status);
-            }
-            catch { }
+
+
+            if (!this.statusDays.TryGetValue(dt, out status)) { status = 0; }
+            
+            
              return status;
             
         }
@@ -1061,9 +1061,9 @@ namespace shedule
 
 
 
-        public DateTime getData()
+        public DateTime getData(int d=0)    
         {
-            return this.DS.getData();
+            return this.DS.getData(d);
         }
 
         public void AddSmena(Smena smena)
@@ -1804,9 +1804,9 @@ namespace shedule
             return this.idShop;
         }
 
-        public DateTime getData()
+        public DateTime getData(int d=0)
         {
-            return this.Data;
+            return this.Data.AddDays(d);
         }
 
         public int getStartDaySale()

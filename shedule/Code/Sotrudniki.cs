@@ -796,114 +796,135 @@ namespace shedule.Code
                 }
 
                 //проверки пройдены выше
-
-                while (!EZanyt(wd.getData(), emplo ))
-                 {
-                    employee emp = emplo.Find(t => t.getStatusDay(wd.getData()) == 0);
-
-                    int dlina = emp.getVS().getDlina();
-
-
-
-                   /*
-                  
-                  if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8) && (emp.getOtrabotal() >= 0))
-                    {
-                      
-                        if (emp.getOtdihInHolyday()==0) {
-                            emp.setOtdihInHolyday(1);
-                               }
-
-                        if ((wd.minKassUtr.Ncount == 0)&&(wd.minKassVech.Ncount==0)) {
-
-                            List<employee> les = Program.currentShop.employes.FindAll(t => (t.getOtdihInHolyday() != 0 && t.GetDolgnost() == "Кассир"));
-                            int max =les.Max(t=>t.getOtdihInHolyday());
-                            int over = les.Sum(t => t.getOtdihInHolyday()) / les.Count();
-                         //   if ((emp.getOtdihInHolyday() < max)||(max==over)) {
-                                emp.OtrabotalDay();
-                                emp.setOtdihInHolyday(emp.getOtdihInHolyday() + 1);
-                                continue;
-                          //  }
-                        }
-                    }
-                    */
-
-
+                foreach (var emp in emplo.FindAll(t => t.getOtrabotal() < 0))
+                {
+                    emp.otrabDay(wd.getData());
+                    emp.OtrabotalDay();
                     
-                    if (((wd.minKassUtr.Ncount > 0)&& (wd.minKassVech.Tcount > 0))||(wd.minKassUtr.Tcount==0))
-                        {
-                           
+                }
+                while (!EZanyt(wd.getData(), emplo))
+                {
+                    
 
-                            if (emp.getOtrabotal() >= 0)
+
+
+                    /*
+
+                   if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8) && (emp.getOtrabotal() >= 0))
+                     {
+
+                         if (emp.getOtdihInHolyday()==0) {
+                             emp.setOtdihInHolyday(1);
+                                }
+
+                         if ((wd.minKassUtr.Ncount == 0)&&(wd.minKassVech.Ncount==0)) {
+
+                             List<employee> les = Program.currentShop.employes.FindAll(t => (t.getOtdihInHolyday() != 0 && t.GetDolgnost() == "Кассир"));
+                             int max =les.Max(t=>t.getOtdihInHolyday());
+                             int over = les.Sum(t => t.getOtdihInHolyday()) / les.Count();
+                          //   if ((emp.getOtdihInHolyday() < max)||(max==over)) {
+                                 emp.OtrabotalDay();
+                                 emp.setOtdihInHolyday(emp.getOtdihInHolyday() + 1);
+                                 continue;
+                           //  }
+                         }
+                     }
+                     */
+
+
+
+                    if (((wd.minKassUtr.Ncount > 0) && (wd.minKassVech.Tcount > 0)) || (wd.minKassUtr.Tcount == 0))
+                    {
+                        employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 1)));
+                        if (emp == null) {
+                            emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
+                        }
+                        int dlina = emp.getVS().getDlina();
+
+
+                        sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina);
+                        if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
+                        emp.AddSmena(sm);
+                        sm.Zanyta();
+                        emp.TipTekSmen = 1;
+                        wd.minKassUtr.Ncount--;
+                        wd.minKassUtr.Tcount++;
+                        emp.otrabDay(wd.getData());
+                        emp.OtrabotalDay();
+
+                    }
+
+                    else if ((wd.minKassVech.Ncount > 0))
+                    {
+
+                        employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 3)));
+                        if (emp == null)
+                        {
+                            emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
+                        }
+                        int dlina = emp.getVS().getDlina();
+
+                        sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), wd.DS.getEndDaySale() - dlina, dlina);
+                        if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
+                        emp.AddSmena(sm);
+                        sm.Zanyta();
+                        emp.TipTekSmen = 3;
+                        wd.minKassVech.Ncount--;
+                        wd.minKassVech.Tcount++;
+                        emp.otrabDay(wd.getData());
+                        emp.OtrabotalDay();
+
+                    }
+
+
+
+                    else
+                    {
+                        employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
+                   
+                        int dlina = emp.getVS().getDlina();
+                        if (emp!=null)
+                        {
+                            if (ostatok > 0)
                             {
-                                
-                                sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), wd.DS.getStartDaySale(), dlina);
-                                if (sm.getEndSmena()>wd.DS.getEndDaySale()) { sm.SetStarnAndLenght( wd.DS.getEndDaySale() - dlina, dlina); }
-                                emp.AddSmena(sm);
-                                sm.Zanyta();
-                                emp.TipTekSmen = 1;
-                                wd.minKassUtr.Ncount--;
-                                wd.minKassUtr.Tcount++;
+                                start = ostatok - dlina;
+                                ostatok = -1;
                             }
 
-                        }
-
-                        else if ((wd.minKassVech.Ncount > 0) )
-                        {
-                           
-
-                            if (emp.getOtrabotal() >= 0)
+                            else if (wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != (start + 1))) != null)
                             {
-                                sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), wd.DS.getEndDaySale() - dlina, dlina);
-                                if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
-                                emp.AddSmena(sm);
-                            sm.Zanyta();
-                                emp.TipTekSmen = 3;
-                            wd.minKassVech.Ncount--;
-                            wd.minKassVech.Tcount++;
+                                Smena s = wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != (start + 1)));
+                                start = s.getStartSmena();
+                                if (s.getLenght() > dlina)
+                                {
+                                    ostatok = s.getEndSmena();
+                                }
+                                s.Zanyta();
+                            }
+                            else if (wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (t.getStartSmena() != start)) != null)
+                            {
+
+                                Smena s = wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()));
+                                start = s.getStartSmena() + sdvig;
+                                sdvig += 2;
+                                s.Zanyta();
+                            }
+                            Smena sm1 = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
+                            if (sm1.getEndSmena() >= wd.DS.getEndDaySale())
+                            {
+                                sm1.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina);
                             }
 
-                        }
-
-                        else if (emp.getOtrabotal() >= 0)
-                        {
-                        if (ostatok>0) {
-                            start = ostatok-dlina;
-                            ostatok = -1;
-                        }
-
-                        else if (wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != (start + 1))) != null)
-                        {
-                            Smena s = wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != (start+1)));
-                            start = s.getStartSmena();
-                            if (s.getLenght()>dlina) {
-                                ostatok = s.getEndSmena();
-                            }
-                            s.Zanyta();
-                        }
-                        else if (wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (t.getStartSmena() != start)) != null)
-                        {
-
-                            Smena s = wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()));
-                            start = s.getStartSmena()+sdvig;
-                            sdvig += 2;
-                            s.Zanyta();
-                        }
-                        Smena sm1 =new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
-                        if (sm1.getEndSmena()>=wd.DS.getEndDaySale())
-                        {
-                            sm1.SetStarnAndLenght(wd.DS.getEndDaySale()-dlina,dlina);
-                        }
-                       
-                        emp.AddSmena(sm1);
+                            emp.AddSmena(sm1);
 
                             emp.TipTekSmen = 2;
-
+                            emp.otrabDay(wd.getData());
+                            emp.OtrabotalDay();
                         }
+                    }
 
 
-                        emp.OtrabotalDay();
-                        emp.otrabDay(wd.getData());
+                       
                  }
                 
                
@@ -996,37 +1017,39 @@ namespace shedule.Code
                   // emplo =  emplo.OrderBy(u => u.getVS().getR()).ThenByDescending(u => u.getOtdihInHolyday()).ToList();
                 }
 
-
+                foreach (var emp in emplo.FindAll(t => t.getOtrabotal() < 0))
+                {
+                    emp.otrabDay(wd.getData());
+                    emp.OtrabotalDay();
+                }
                 while (!EZanyt(wd.getData(), emplo))
                 {
-                    employee emp = emplo.Find(t => t.getStatusDay(wd.getData()) == 0);
 
-                    int dlina = emp.getVS().getDlina();
 
-                   
 
-                /*    if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8)&&(emp.getOtrabotal()>=0))
-                    {
-                        
-                        if (emp.getOtdihInHolyday() == 0)
-                        {
-                            emp.setOtdihInHolyday(1);
-                        }
 
-                        if ((wd.minProdUtr.Ncount == 0) && (wd.minProdVech.Ncount == 0))
+                    /*    if (((emp.getVS().getR() == 4) || (emp.getVS().getR() == 5) || (emp.getVS().getR() == 6)) && (wd.DS.getTip() == 8)&&(emp.getOtrabotal()>=0))
                         {
 
-                            List<employee> les = Program.currentShop.employes.FindAll(t => (t.getOtdihInHolyday() != 0 && t.GetDolgnost() == "Продавец"));
-                            int max = les.Max(t => t.getOtdihInHolyday());
-                            int over = les.Sum(t => t.getOtdihInHolyday()) / les.Count();
-                           // if ((emp.getOtdihInHolyday() < max) || (max == over))
-                           // {
-                                emp.OtrabotalDay();
-                                emp.setOtdihInHolyday(emp.getOtdihInHolyday() + 1);
-                                continue;
-                          //  }
-                        }
-                    }*/
+                            if (emp.getOtdihInHolyday() == 0)
+                            {
+                                emp.setOtdihInHolyday(1);
+                            }
+
+                            if ((wd.minProdUtr.Ncount == 0) && (wd.minProdVech.Ncount == 0))
+                            {
+
+                                List<employee> les = Program.currentShop.employes.FindAll(t => (t.getOtdihInHolyday() != 0 && t.GetDolgnost() == "Продавец"));
+                                int max = les.Max(t => t.getOtdihInHolyday());
+                                int over = les.Sum(t => t.getOtdihInHolyday()) / les.Count();
+                               // if ((emp.getOtdihInHolyday() < max) || (max == over))
+                               // {
+                                    emp.OtrabotalDay();
+                                    emp.setOtdihInHolyday(emp.getOtdihInHolyday() + 1);
+                                    continue;
+                              //  }
+                            }
+                        }*/
 
                     if (Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() != start) && (!t.isZanyta())) != null)
                     {
@@ -1038,60 +1061,83 @@ namespace shedule.Code
                     }
 
 
-                    
-
-             
-
-                         if (((wd.minProdUtr.Ncount > 0) && (wd.minProdVech.Tcount > 0)) || (wd.minProdUtr.Tcount == 0))
-                          {
 
 
-                            if (emp.getOtrabotal() >= 0)
-                            {
-                                start = wd.DS.getStartDaySale();
-                                sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
-                                if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
-                                emp.AddSmena(sm);
-                                sm.Zanyta();
-                                emp.TipTekSmen = 2;
-                                wd.minProdUtr.Ncount--;
-                            wd.minProdUtr.Tcount++;
 
-                        }
 
-                        }
+                    if (((wd.minProdUtr.Ncount > 0) && (wd.minProdVech.Tcount > 0)) || (wd.minProdUtr.Tcount == 0))
+                    {
 
-                        else if ((wd.minProdVech.Ncount > 0))
+                        employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 1)));
+                        if (emp == null)
                         {
-                            start = wd.DS.getEndDaySale() - dlina;
+                            emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
+                        }
+                        int dlina = emp.getVS().getDlina();
 
-                            if (emp.getOtrabotal() >= 0)
-                            {
-                                sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
-                                if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
-                                emp.AddSmena(sm);
-                                sm.Zanyta();
-                                emp.TipTekSmen = 3;
-                                wd.minProdVech.Ncount--;
+
+
+                        start = wd.DS.getStartDaySale();
+                        sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
+                        if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
+                        emp.AddSmena(sm);
+                        sm.Zanyta();
+                        emp.TipTekSmen = 1;
+                        wd.minProdUtr.Ncount--;
+                        wd.minProdUtr.Tcount++;
+                        emp.otrabDay(wd.getData());
+                        emp.OtrabotalDay();
+
+
+                    }
+
+                    else if ((wd.minProdVech.Ncount > 0))
+                    {
+                        employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 3)));
+                        if (emp == null)
+                        {
+                            emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
+                        }
+                        int dlina = emp.getVS().getDlina();
+
+                        start = wd.DS.getEndDaySale() - dlina;
+
+                        if (emp.getOtrabotal() >= 0)
+                        {
+                            sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
+                            if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
+                            emp.AddSmena(sm);
+                            sm.Zanyta();
+                            emp.TipTekSmen = 3;
+                            wd.minProdVech.Ncount--;
                             wd.minProdVech.Tcount++;
 
-                            }
-
                         }
 
-                        else if (emp.getOtrabotal() >= 0)
+                        emp.otrabDay(wd.getData());
+                        emp.OtrabotalDay();
+
+                    }
+
+                    else
+                    {
+                        employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
+                       
+                        int dlina = emp.getVS().getDlina();
+                        if (emp.getOtrabotal() >= 0)
                         {
 
                             sm = new Smena(Program.currentShop.getIdShop(), wd.getData(), start, dlina);
                             if (sm.getEndSmena() > wd.DS.getEndDaySale()) { sm.SetStarnAndLenght(wd.DS.getEndDaySale() - dlina, dlina); }
                             emp.AddSmena(sm);
                             sm.Zanyta();
-                            emp.TipTekSmen = 1;
+                            emp.TipTekSmen = 2;
 
                         }
+                        emp.otrabDay(wd.getData());
                         emp.OtrabotalDay();
-                    emp.otrabDay(wd.getData());
 
+                    }
                 }
                 
             }
