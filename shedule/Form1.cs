@@ -198,7 +198,13 @@ namespace shedule
                         object misValue = System.Reflection.Missing.Value;
                         BackgroundWorker bg = sender as BackgroundWorker;
                         bg.ReportProgress(2);
-                        Program.createPrognoz3();
+                        try
+                        {
+                            Program.createPrognoz3();
+                        }
+                        catch {
+                            MessageBox.Show("Данные из БД не были получены");
+                        }
                         foreach (TemplateWorkingDay t in Program.currentShop.MouthPrognozT)
                         {
                             t.createChartTemplate();
@@ -871,7 +877,7 @@ namespace shedule
                 workSheet.Cells[rowExcel, "C"] = dataGridViewFactors.Rows[i].Cells["Age"].Value;
                 ++rowExcel;
             }
-            workSheet.SaveAs("MyFile.xls");
+            workSheet.SaveAs("MyFile.xlsx");
             exApp.Quit();
         }
 
@@ -1822,6 +1828,7 @@ namespace shedule
                         comboBoxCountSotr.Items.Clear();
                         comboBoxCountSotr.Items.Add("штатного расписания");
                         comboBoxCountSotr.Items.Add("загруженного графика");
+                        comboBoxCountSotr.Items.Add("прогноза продаж");
                     }
                     else
                     {
@@ -1829,6 +1836,7 @@ namespace shedule
                         checkBox2.Visible = true;
                         comboBoxCountSotr.Items.Clear();
                         comboBoxCountSotr.Items.Add("штатного расписания");
+                        comboBoxCountSotr.Items.Add("прогноза продаж");
                     }
                     break;
                 case -1: button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
@@ -2202,6 +2210,11 @@ namespace shedule
         private void button13_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(Program.shops.Count + "");
+            ForExcel.comboBoxMCountPerson1 = comboBoxMCountPerson.SelectedIndex;
+            ForExcel.checkBoxMPeremSotr1 = checkBoxMPeremSotr.Checked;
+            ForExcel.checkBoxMReadShedule1 = checkBoxMReadShedule.Checked;
+            ForExcel.checkBoxMUchetSmen1=checkBoxMUchetSmen.Checked;
+
             if (Program.isConnected(Program.login, Program.password))
             {
                 CreateZip();
@@ -2380,23 +2393,23 @@ namespace shedule
                     Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
                 }
 
-                filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getIdShopFM() + ".xls";
+                filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getIdShopFM() + ".xlsx";
                 switch (Program.TipExporta)
                 {
                     case 0:
                         {
                             try
                             {
-                                if (checkBoxMPeremSotr.Checked)
+                                if (ForExcel.checkBoxMPeremSotr1)
                                 {
                                     Program.currentShop.SortSotr = true;
                                 }
                                 else {
                                     Program.currentShop.SortSotr = false;
                                 }
-                                if (!checkBoxMReadShedule.Checked)
+                                if (!ForExcel.checkBoxMReadShedule1)
                                 {
-                                    string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + "график на текущий месяц.xlsx";
+                                    string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\график.xlsx";
 
                                     if (!File.Exists(fc))
                                     {
@@ -2417,15 +2430,24 @@ namespace shedule
                                              Program.file = openFileDialog.FileName;
 
                                          }*/
-                                        MessageBox.Show("Файл с текущим графиком для магазина "+shop.getIdShopFM()+"  не найден");
-                                    }
-                                    else {
-                                        Program.file = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + "график на текущий месяц.xlsx";
-                                    }
+                                        fc = Settings.Default.folder + @"\" + shop.getIdShopFM() + ".xlsx";
 
-                                    if (comboBoxMCountPerson.SelectedIndex == 0)
+                                    }
+                                    else
                                     {
-                                        if (checkBoxMUchetSmen.Checked)
+
+                                        if (!File.Exists(fc))
+                                        {
+                                            MessageBox.Show("Файл с текущим графиком для магазина " + shop.getIdShopFM() + "  не найден");
+                                        }
+                                        else
+                                        {
+                                            Program.file = fc;
+                                        }
+                                    }
+                                    if (ForExcel.comboBoxMCountPerson1 == 0)
+                                    {
+                                        if (ForExcel.checkBoxMUchetSmen1)
                                         {
                                             ForExcel.CreateEmployee();
                                         }
@@ -3745,12 +3767,14 @@ namespace shedule
                 cb.Items.Clear();
                 cb.Items.Add("штатного расписания");
                 cb.Items.Add("загруженного графика");
+                cb.Items.Add("прогноза продаж");
             }
             else 
             {
               
                 cb.Items.Clear();
                 cb.Items.Add("штатного расписания");
+                cb.Items.Add("прогноза продаж");
             }
 
         }
@@ -3798,6 +3822,11 @@ namespace shedule
         private void comboBoxCountSotr_SelectedIndexChanged(object sender, EventArgs e)
         {
             Sotrudniki.CountSotr = comboBoxCountSotr.SelectedItem.ToString();
+        }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

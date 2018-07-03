@@ -44,7 +44,6 @@
             this.bNumberSortM = new System.Windows.Forms.Button();
             this.bAlphabetSortM = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listBoxMPartShops = new System.Windows.Forms.ListBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -65,12 +64,18 @@
             this.label14 = new System.Windows.Forms.Label();
             this.button23 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.checkBoxMReadShedule = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.checkBoxMUchetSmen = new System.Windows.Forms.CheckBox();
+            this.comboBoxMCountPerson = new System.Windows.Forms.ComboBox();
+            this.checkBoxMPeremSotr = new System.Windows.Forms.CheckBox();
             this.lbProgressMessages = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.button13 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.listBoxMPartShops = new System.Windows.Forms.ListBox();
             this.buttonSingleShop = new System.Windows.Forms.Button();
             this.buttonMdel = new System.Windows.Forms.Button();
             this.buttonMadd = new System.Windows.Forms.Button();
@@ -157,11 +162,6 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.checkBoxMPeremSotr = new System.Windows.Forms.CheckBox();
-            this.comboBoxMCountPerson = new System.Windows.Forms.ComboBox();
-            this.checkBoxMUchetSmen = new System.Windows.Forms.CheckBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.checkBoxMReadShedule = new System.Windows.Forms.CheckBox();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -325,23 +325,14 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.listBoxMPartShops);
             this.groupBox1.Controls.Add(this.tabControl2);
+            this.groupBox1.Controls.Add(this.listBoxMPartShops);
             this.groupBox1.Location = new System.Drawing.Point(192, 4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(663, 428);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // listBoxMPartShops
-            // 
-            this.listBoxMPartShops.FormattingEnabled = true;
-            this.listBoxMPartShops.Location = new System.Drawing.Point(10, 31);
-            this.listBoxMPartShops.Name = "listBoxMPartShops";
-            this.listBoxMPartShops.Size = new System.Drawing.Size(120, 342);
-            this.listBoxMPartShops.TabIndex = 1;
-            this.listBoxMPartShops.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
             // 
             // tabControl2
             // 
@@ -352,6 +343,7 @@
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(512, 345);
             this.tabControl2.TabIndex = 4;
+            this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
             // tabPage6
             // 
@@ -397,6 +389,7 @@
             this.button7.TabIndex = 2;
             this.button7.Text = "Допустимые варианты смен";
             this.button7.UseVisualStyleBackColor = false;
+            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button8
@@ -577,6 +570,56 @@
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // checkBoxMReadShedule
+            // 
+            this.checkBoxMReadShedule.AutoSize = true;
+            this.checkBoxMReadShedule.Location = new System.Drawing.Point(50, 216);
+            this.checkBoxMReadShedule.Name = "checkBoxMReadShedule";
+            this.checkBoxMReadShedule.Size = new System.Drawing.Size(233, 17);
+            this.checkBoxMReadShedule.TabIndex = 14;
+            this.checkBoxMReadShedule.Text = "не считывать график за прошлый месяц";
+            this.checkBoxMReadShedule.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(47, 245);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(241, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "количество персонала формировать с учетом";
+            // 
+            // checkBoxMUchetSmen
+            // 
+            this.checkBoxMUchetSmen.AutoSize = true;
+            this.checkBoxMUchetSmen.Location = new System.Drawing.Point(50, 192);
+            this.checkBoxMUchetSmen.Name = "checkBoxMUchetSmen";
+            this.checkBoxMUchetSmen.Size = new System.Drawing.Size(351, 17);
+            this.checkBoxMUchetSmen.TabIndex = 12;
+            this.checkBoxMUchetSmen.Text = "считывать график на текущий месяц без учета вариантов смен";
+            this.checkBoxMUchetSmen.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxMCountPerson
+            // 
+            this.comboBoxMCountPerson.FormattingEnabled = true;
+            this.comboBoxMCountPerson.Items.AddRange(new object[] {
+            "штатного расписания",
+            "прогноза продаж"});
+            this.comboBoxMCountPerson.Location = new System.Drawing.Point(294, 242);
+            this.comboBoxMCountPerson.Name = "comboBoxMCountPerson";
+            this.comboBoxMCountPerson.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxMCountPerson.TabIndex = 11;
+            // 
+            // checkBoxMPeremSotr
+            // 
+            this.checkBoxMPeremSotr.AutoSize = true;
+            this.checkBoxMPeremSotr.Location = new System.Drawing.Point(50, 169);
+            this.checkBoxMPeremSotr.Name = "checkBoxMPeremSotr";
+            this.checkBoxMPeremSotr.Size = new System.Drawing.Size(168, 17);
+            this.checkBoxMPeremSotr.TabIndex = 10;
+            this.checkBoxMPeremSotr.Text = "перемешивать сотрудников";
+            this.checkBoxMPeremSotr.UseVisualStyleBackColor = true;
+            // 
             // lbProgressMessages
             // 
             this.lbProgressMessages.AutoSize = true;
@@ -634,6 +677,15 @@
             this.label5.Size = new System.Drawing.Size(248, 34);
             this.label5.TabIndex = 1;
             this.label5.Text = "Что отобразить (с учетом факторов и параметров оптимизации)";
+            // 
+            // listBoxMPartShops
+            // 
+            this.listBoxMPartShops.FormattingEnabled = true;
+            this.listBoxMPartShops.Location = new System.Drawing.Point(10, 31);
+            this.listBoxMPartShops.Name = "listBoxMPartShops";
+            this.listBoxMPartShops.Size = new System.Drawing.Size(120, 342);
+            this.listBoxMPartShops.TabIndex = 1;
+            this.listBoxMPartShops.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
             // 
             // buttonSingleShop
             // 
@@ -1522,56 +1574,6 @@
             // 
             this.timer2.Interval = 1000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // checkBoxMPeremSotr
-            // 
-            this.checkBoxMPeremSotr.AutoSize = true;
-            this.checkBoxMPeremSotr.Location = new System.Drawing.Point(50, 169);
-            this.checkBoxMPeremSotr.Name = "checkBoxMPeremSotr";
-            this.checkBoxMPeremSotr.Size = new System.Drawing.Size(168, 17);
-            this.checkBoxMPeremSotr.TabIndex = 10;
-            this.checkBoxMPeremSotr.Text = "перемешивать сотрудников";
-            this.checkBoxMPeremSotr.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxMCountPerson
-            // 
-            this.comboBoxMCountPerson.FormattingEnabled = true;
-            this.comboBoxMCountPerson.Items.AddRange(new object[] {
-            "штатного расписания",
-            "прогноза продаж"});
-            this.comboBoxMCountPerson.Location = new System.Drawing.Point(294, 242);
-            this.comboBoxMCountPerson.Name = "comboBoxMCountPerson";
-            this.comboBoxMCountPerson.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxMCountPerson.TabIndex = 11;
-            // 
-            // checkBoxMUchetSmen
-            // 
-            this.checkBoxMUchetSmen.AutoSize = true;
-            this.checkBoxMUchetSmen.Location = new System.Drawing.Point(50, 192);
-            this.checkBoxMUchetSmen.Name = "checkBoxMUchetSmen";
-            this.checkBoxMUchetSmen.Size = new System.Drawing.Size(351, 17);
-            this.checkBoxMUchetSmen.TabIndex = 12;
-            this.checkBoxMUchetSmen.Text = "считывать график на текущий месяц без учета вариантов смен";
-            this.checkBoxMUchetSmen.UseVisualStyleBackColor = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(47, 245);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(241, 13);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "количество персонала формировать с учетом";
-            // 
-            // checkBoxMReadShedule
-            // 
-            this.checkBoxMReadShedule.AutoSize = true;
-            this.checkBoxMReadShedule.Location = new System.Drawing.Point(50, 216);
-            this.checkBoxMReadShedule.Name = "checkBoxMReadShedule";
-            this.checkBoxMReadShedule.Size = new System.Drawing.Size(233, 17);
-            this.checkBoxMReadShedule.TabIndex = 14;
-            this.checkBoxMReadShedule.Text = "не считывать график за прошлый месяц";
-            this.checkBoxMReadShedule.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

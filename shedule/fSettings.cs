@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace shedule
 {
@@ -59,6 +60,40 @@ namespace shedule
                 Settings.Default.folder= folderBrowserDialog1.SelectedPath;
             }
                 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Shop shop = Program.currentShop;
+            string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + "\\текущий график.xlsx";
+          
+            if (!File.Exists(fc))
+            {
+                MessageBox.Show(File.Exists(fc).ToString());
+                fc = Settings.Default.folder + @"\" + shop.getIdShop() + ".xlsx";
+
+            }
+            else if (!File.Exists(fc))
+            {
+                MessageBox.Show("Файл с текущим графиком для магазина " + shop.getIdShop() + "  не найден");
+            }
+            else
+            {
+                Program.file = fc;
+                MessageBox.Show("Файл с текущим графиком для магазина " + shop.getIdShop() + "  найден"+ Program.file);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }

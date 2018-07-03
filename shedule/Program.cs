@@ -477,9 +477,19 @@ namespace shedule
         string TipGraf;
         int otdih;
         int otdihinholyday;
+        int tipsmen;
 
         public List<Smena> smens;
         public Dictionary<DateTime,int> statusDays;
+
+        public int getTipSmen()
+        {
+            return this.tipsmen;
+        }
+        public void setTipSmen(int ts)
+        {
+             this.tipsmen=ts;
+        }
 
         public int getOtdih() {
             return this.otdih;
@@ -575,6 +585,7 @@ namespace shedule
         public employee(int ish, int ie, VarSmen vs, int otr, string d, string tgr)
         {
             this.IdShop = ish;
+            this.tipsmen = 0;
             this.IdEmployee = ie;
             this.VS = vs;
             this.Dolgnost = d;
@@ -599,7 +610,7 @@ namespace shedule
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
-           
+            this.tipsmen = 0;
             this.Dolgnost = d;
             this.TipGraf = tgr;
             this.otdihinholyday = 0;
@@ -613,6 +624,7 @@ namespace shedule
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
+            this.tipsmen = 0;
             this.VS = vs;
             this.Dolgnost = d;
             this.TipGraf = tgr;
@@ -1203,6 +1215,7 @@ namespace shedule
         int Lenght;
       bool zanyta;
         DateTime Data;
+        int Tip;
 
         public void Zanyta()
         {
@@ -1225,7 +1238,7 @@ namespace shedule
             this.Lenght = lenght;
             this.Data = dt;
             this.zanyta = false;
-
+            this.Tip = 0;
 
         }
         static public void giveHoursSdvig(Smena sm1, Smena sm2, int x)
@@ -1246,10 +1259,21 @@ namespace shedule
             NStart = start;
             Lenght = lenght;
             Data = dt;
+            this.Tip = 0;
         }
         public int getIdShop()
         {
             return this.idShop;
+        }
+
+        public int getTip()
+        {
+            return this.Tip;
+        }
+
+        public void setTip(int t)
+        {
+            this.Tip=t;
         }
 
         public void addChas(TemplateWorkingDay w)
@@ -2778,16 +2802,16 @@ namespace shedule
             //      }
 
 
-
+            bool pr = false;
             foreach (daySale ds in currentShop.daysSale)
             {
 
                 ds.setTip(ds.getTip());
-
+                if (ds.getTip() == 8 || ds.getTip() == 9) { pr = true; }
 
             }
 
-            if ((tdt.Month == 10) || (tdt.Month == 11) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) ||(tdt.Month == 3) || (tdt.Month == 4) || (tdt.Month == 5) || (tdt.Month == 6))
+            if (pr)
             {
                
                     Helper.readDays8and9(DateTime.Now.Year);
@@ -2905,12 +2929,11 @@ namespace shedule
 
             }
 
-            if ((tdt.Month == 10) || (tdt.Month == 11) || (tdt.Month == 12) || (tdt.Month == 1) || (tdt.Month == 2) || (tdt.Month == 3) || (tdt.Month == 4) || (tdt.Month == 5) || (tdt.Month == 6))
-            {
+            
 
-                Helper.readDays8and9(DateTime.Now.Year);
+            Helper.readDays8and9(DateTime.Now.Year);
 
-            }
+            
 
             for (int i = 0; i < 10; i++)
             {
@@ -3087,6 +3110,7 @@ namespace shedule
             {
                 countRecords = 0;
                 countAttemption = 0;
+                MessageBox.Show("Ошибка соединения с базой данных ");
                 throw new Exception("Соединение с базой нестабильно, данные не были получены.");
             }
 
@@ -3742,6 +3766,7 @@ namespace shedule
             //Helper.readDays8and9();
 
             Helper.CreateHolidaysForAllShops(DateTime.Now.Year);
+            
 
 
         }

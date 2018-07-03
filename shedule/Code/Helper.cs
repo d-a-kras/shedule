@@ -345,7 +345,7 @@ namespace shedule.Code
                     }
                 }
             }
-            SaveHolidayDaysOfShop(Program.currentShop.getIdShop(), CreateListHolidays(year), year);
+            //SaveHolidayDaysOfShop(Program.currentShop.getIdShop(), CreateListHolidays(year), year);
         }
 
         /// <summary>
