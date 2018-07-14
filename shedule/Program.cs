@@ -2562,9 +2562,15 @@ namespace shedule
 
         }
 
-        public static void readVarSmen()
+        public static void readVarSmen(bool m=false)
         {
+            currentShop.VarSmens = new List<VarSmen>();
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\VarSmen2";
+            if (m) {
+                readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM() + @"\VarSmen2";
+            }
+           
+
             // String readPath = Environment.CurrentDirectory + "/" + currentShop.getIdShop() + @"\varSmen.txt";
             try
             {
@@ -2811,12 +2817,11 @@ namespace shedule
 
             }
 
-            if (pr)
-            {
+           
                
                     Helper.readDays8and9(DateTime.Now.Year);
               
-            }
+            
 
             for (int i = 1; i < 10; i++)
             {

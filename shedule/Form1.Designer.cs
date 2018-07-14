@@ -48,8 +48,6 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button5 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button11 = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
@@ -359,8 +357,6 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.button5);
-            this.panel1.Controls.Add(this.button7);
-            this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.panel4);
@@ -379,29 +375,6 @@
             this.button5.Text = "Параметры оптимизации";
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click_1);
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.White;
-            this.button7.Location = new System.Drawing.Point(286, 18);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(102, 36);
-            this.button7.TabIndex = 2;
-            this.button7.Text = "Допустимые варианты смен";
-            this.button7.UseVisualStyleBackColor = false;
-            this.button7.Visible = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button8
-            // 
-            this.button8.BackColor = System.Drawing.Color.White;
-            this.button8.Location = new System.Drawing.Point(161, 18);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(102, 36);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Факторы";
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // panel3
             // 
@@ -609,6 +582,7 @@
             this.comboBoxMCountPerson.Name = "comboBoxMCountPerson";
             this.comboBoxMCountPerson.Size = new System.Drawing.Size(121, 21);
             this.comboBoxMCountPerson.TabIndex = 11;
+            this.comboBoxMCountPerson.SelectedIndexChanged += new System.EventHandler(this.comboBoxMCountPerson_SelectedIndexChanged);
             // 
             // checkBoxMPeremSotr
             // 
@@ -619,6 +593,7 @@
             this.checkBoxMPeremSotr.TabIndex = 10;
             this.checkBoxMPeremSotr.Text = "перемешивать сотрудников";
             this.checkBoxMPeremSotr.UseVisualStyleBackColor = true;
+            this.checkBoxMPeremSotr.CheckedChanged += new System.EventHandler(this.checkBoxMPeremSotr_CheckedChanged);
             // 
             // lbProgressMessages
             // 
@@ -659,9 +634,10 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "График на месяц",
+            "График на следующий месяц",
             "Потребность в персонале",
-            "Экономический эффект"});
+            "Экономический эффект",
+            "График на текущий месяц"});
             this.comboBox1.Location = new System.Drawing.Point(124, 60);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(204, 21);
@@ -1407,7 +1383,7 @@
             this.labelCountSotr.Name = "labelCountSotr";
             this.labelCountSotr.Size = new System.Drawing.Size(245, 13);
             this.labelCountSotr.TabIndex = 15;
-            this.labelCountSotr.Text = "Количество персонала формиравать с учетом ";
+            this.labelCountSotr.Text = "Количество персонала формировать с учетом ";
             this.labelCountSotr.Visible = false;
             this.labelCountSotr.Click += new System.EventHandler(this.labelCountSotr_Click);
             // 
@@ -1499,7 +1475,7 @@
             // notifyIcon1
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "График работы персонала, v1.0";
+            this.notifyIcon1.Text = "График работы персонала, v1.3";
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // label17
@@ -1596,7 +1572,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "График работы персонала, v1.2";
+            this.Text = "График работы персонала, v1.3";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelMultShops.ResumeLayout(false);
@@ -1709,8 +1685,6 @@
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView dataGridViewMVarSmen;
         private System.Windows.Forms.Label label14;

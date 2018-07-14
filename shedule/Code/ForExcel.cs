@@ -23,6 +23,7 @@ namespace shedule.Code
         public static bool checkBoxMPeremSotr1 = false;
         public static bool checkBoxMReadShedule1 = false;
         public static bool checkBoxMUchetSmen1 = false;
+        public static string NameExcel;
 
         public static void  ExportExcel(string filename, BackgroundWorker bg) {
 
@@ -521,7 +522,7 @@ namespace shedule.Code
 
                 ObjExcel.Visible = false;
                 ObjExcel.UserControl = true;
-                ObjExcel.DisplayAlerts = true;
+               // ObjExcel.DisplayAlerts = true;
                 ObjWorkBook.Saved = true;
 
                 ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
@@ -622,7 +623,7 @@ namespace shedule.Code
 
                     ObjExcel.Visible = false;
                     ObjExcel.UserControl = true;
-                    ObjExcel.DisplayAlerts = false;
+                   // ObjExcel.DisplayAlerts = false;
                     ObjWorkBook.Saved = true;
 
                   
@@ -696,9 +697,9 @@ namespace shedule.Code
 
                     ObjExcel.Visible = false;
                     ObjExcel.UserControl = true;
-                    ObjExcel.DisplayAlerts = false;
+                   ObjExcel.DisplayAlerts = false;
                     ObjWorkBook.Saved = true;
-
+                    ObjExcel.DisplayAlerts = true;
 
 
                     ObjWorkBook.Close();
@@ -797,7 +798,7 @@ namespace shedule.Code
                     ObjExcel.UserControl = true;
                     ObjExcel.DisplayAlerts = false;
                     ObjWorkBook.Saved = true;
-
+                    ObjExcel.DisplayAlerts = true;
 
 
                     ObjWorkBook.Close();
