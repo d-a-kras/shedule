@@ -45,23 +45,8 @@
             this.bAlphabetSortM = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.button11 = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button9 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.dataGridViewMVarSmen = new System.Windows.Forms.DataGridView();
-            this.label14 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.buttonReadMGraf = new System.Windows.Forms.Button();
             this.checkBoxMReadShedule = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.checkBoxMUchetSmen = new System.Windows.Forms.CheckBox();
@@ -163,13 +148,6 @@
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.panelSingleShop.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -334,7 +312,6 @@
             // 
             // tabControl2
             // 
-            this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Location = new System.Drawing.Point(145, 28);
             this.tabControl2.Name = "tabControl2";
@@ -343,187 +320,9 @@
             this.tabControl2.TabIndex = 4;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.panel1);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(504, 319);
-            this.tabPage6.TabIndex = 0;
-            this.tabPage6.Text = "Управление";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.button5);
-            this.panel1.Controls.Add(this.panel3);
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.panel4);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(472, 304);
-            this.panel1.TabIndex = 1;
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.MistyRose;
-            this.button5.Location = new System.Drawing.Point(39, 15);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(102, 36);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "Параметры оптимизации";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click_1);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.button11);
-            this.panel3.Controls.Add(this.radioButton1);
-            this.panel3.Controls.Add(this.radioButton2);
-            this.panel3.Controls.Add(this.radioButton3);
-            this.panel3.Location = new System.Drawing.Point(6, 57);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(456, 248);
-            this.panel3.TabIndex = 8;
-            // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(373, 217);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
-            this.button11.TabIndex = 3;
-            this.button11.Text = "Применить ";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(33, 65);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(332, 17);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Общее рабочее время, отработанное персоналом магазина";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(33, 42);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(310, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Минимизировать время ожидания покупателя на кассе";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(33, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(213, 17);
-            this.radioButton3.TabIndex = 0;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Минимизировать фонд оплаты труда";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.button9);
-            this.panel2.Controls.Add(this.dataGridView1);
-            this.panel2.Location = new System.Drawing.Point(6, 60);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(448, 245);
-            this.panel2.TabIndex = 4;
-            // 
-            // button9
-            // 
-            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.button9.Location = new System.Drawing.Point(357, 217);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(78, 23);
-            this.button9.TabIndex = 1;
-            this.button9.Text = "Применить";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(20, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(408, 185);
-            this.dataGridView1.TabIndex = 2;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
-            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.comboBox5);
-            this.panel4.Controls.Add(this.dataGridViewMVarSmen);
-            this.panel4.Controls.Add(this.label14);
-            this.panel4.Controls.Add(this.button23);
-            this.panel4.Location = new System.Drawing.Point(3, 57);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(462, 245);
-            this.panel4.TabIndex = 2;
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
-            "кассиров",
-            "продавцов",
-            "грузчиков",
-            "гастрономов"});
-            this.comboBox5.Location = new System.Drawing.Point(115, 4);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(121, 21);
-            this.comboBox5.TabIndex = 3;
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
-            // 
-            // dataGridViewMVarSmen
-            // 
-            this.dataGridViewMVarSmen.AllowUserToAddRows = false;
-            this.dataGridViewMVarSmen.AllowUserToDeleteRows = false;
-            this.dataGridViewMVarSmen.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridViewMVarSmen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewMVarSmen.Location = new System.Drawing.Point(23, 32);
-            this.dataGridViewMVarSmen.Name = "dataGridViewMVarSmen";
-            this.dataGridViewMVarSmen.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridViewMVarSmen.Size = new System.Drawing.Size(392, 156);
-            this.dataGridViewMVarSmen.TabIndex = 2;
-            this.dataGridViewMVarSmen.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMVarSmen_CellEndEdit);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 6);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(107, 13);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "Варианты смен для";
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(373, 217);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(76, 23);
-            this.button23.TabIndex = 0;
-            this.button23.Text = "Применить";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
-            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.buttonReadMGraf);
             this.tabPage4.Controls.Add(this.checkBoxMReadShedule);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.checkBoxMUchetSmen);
@@ -543,6 +342,16 @@
             this.tabPage4.Text = "Результаты";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // buttonReadMGraf
+            // 
+            this.buttonReadMGraf.Location = new System.Drawing.Point(146, 287);
+            this.buttonReadMGraf.Name = "buttonReadMGraf";
+            this.buttonReadMGraf.Size = new System.Drawing.Size(235, 23);
+            this.buttonReadMGraf.TabIndex = 15;
+            this.buttonReadMGraf.Text = "Считать графики за прошлый месяц";
+            this.buttonReadMGraf.UseVisualStyleBackColor = true;
+            this.buttonReadMGraf.Click += new System.EventHandler(this.buttonReadMGraf_Click);
+            // 
             // checkBoxMReadShedule
             // 
             this.checkBoxMReadShedule.AutoSize = true;
@@ -552,6 +361,7 @@
             this.checkBoxMReadShedule.TabIndex = 14;
             this.checkBoxMReadShedule.Text = "не считывать график за прошлый месяц";
             this.checkBoxMReadShedule.UseVisualStyleBackColor = true;
+            this.checkBoxMReadShedule.CheckedChanged += new System.EventHandler(this.checkBoxMReadShedule_CheckedChanged);
             // 
             // label9
             // 
@@ -1572,21 +1382,12 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "График работы персонала, v1.3";
+            this.Text = "График работы персонала, v1.3.1";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelMultShops.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMVarSmen)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.panelSingleShop.ResumeLayout(false);
@@ -1681,31 +1482,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridView dataGridViewVarSmen;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.DataGridView dataGridViewMVarSmen;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbKassirCount;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lbProgressMessages;
         private System.Windows.Forms.Button buttonTSRPG;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         public System.Windows.Forms.Button buttonVygr;
@@ -1736,17 +1514,25 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.ProgressBar progressBar3;
         private System.Windows.Forms.ComboBox comboBoxCountSotr;
         private System.Windows.Forms.Label labelCountSotr;
-        private System.Windows.Forms.ComboBox comboBoxMCountPerson;
-        private System.Windows.Forms.CheckBox checkBoxMPeremSotr;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button buttonReadMGraf;
+        private System.Windows.Forms.CheckBox checkBoxMReadShedule;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkBoxMUchetSmen;
-        private System.Windows.Forms.CheckBox checkBoxMReadShedule;
+        private System.Windows.Forms.ComboBox comboBoxMCountPerson;
+        private System.Windows.Forms.CheckBox checkBoxMPeremSotr;
+        private System.Windows.Forms.Label lbProgressMessages;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ProgressBar progressBar2;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label5;
     }
 }
 

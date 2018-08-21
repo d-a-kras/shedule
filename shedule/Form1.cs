@@ -96,24 +96,8 @@ namespace shedule
             switch (e.ProgressPercentage)
             {
                 case 0:
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    if (Settings.Default.folder == "")
-                    {
-                        openFileDialog.InitialDirectory = "c:\\";
-                    }
-                    else
-                    {
-                        openFileDialog.InitialDirectory = Settings.Default.folder;
-                    }
-                    openFileDialog.Filter = "*|*.xlsx";
-                    openFileDialog.RestoreDirectory = true;
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        Program.file = openFileDialog.FileName;
 
-                    }
-                    
                     break;
                 case -1:
                     MessageBox.Show("Ошибка загрузки файла.");
@@ -265,20 +249,23 @@ namespace shedule
                         }
 
                         int i = 1;
+                        bg.ReportProgress(12);
                         foreach (TemplateWorkingDay twd in Program.currentShop.MouthPrognozT)
                         {
                             try
                             {
                                 ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[i];
                                 ObjWorkSheet.Name = "Прогноз" + twd.getData().ToShortDateString();
-                                excelcells = ObjWorkSheet.get_Range("A3", "AL100");
+                                excelcells = ObjWorkSheet.get_Range("A1", "AL100");
                                 excelcells.Font.Size = 10;
                                 //  excelcells.NumberFormat = "@";
                                 bg.ReportProgress(10);
                                 excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
                                 excelcells.VerticalAlignment = Excel.Constants.xlCenter;
+                                ObjWorkSheet.Cells[2, 1] = "Чеки";
+                                ObjWorkSheet.Cells[3, 1] = "Клики";
 
-                                int j = 1;
+                                int j = 2;
                                 foreach (int x in twd.Chart.X)
                                 {
                                     ObjWorkSheet.Cells[1, j] = x.ToString() + ":00";
@@ -287,7 +274,7 @@ namespace shedule
                                     j++;
                                 }
 
-                                bg.ReportProgress(12);
+
 
                                 Range chartRange1;
                                 ChartObjects xlCharts = (ChartObjects)ObjWorkSheet.ChartObjects(Type.Missing);
@@ -296,30 +283,30 @@ namespace shedule
                                 //myChart.Legends.Add(new Legend("Legend2"));
                                 Chart chartPage = myChart.Chart;
                                 chartPage.ChartType = XlChartType.xlLineMarkers;
-                                chartRange1 = ObjWorkSheet.get_Range("a1", "p3");
+                                chartRange1 = ObjWorkSheet.get_Range("A1", "Q3");
                                 // chartRange1 = ObjWorkSheet.get_Range("a1", "c" + twd.DS.hoursSale.Count);
 
                                 chartPage.SetSourceData(chartRange1, misValue);
 
-                                Excel.Range axis_range = ObjWorkSheet.get_Range("A1", "P1");
+                                Excel.Range axis_range = ObjWorkSheet.get_Range("A1", "Q3");
                                 Excel.Series series = (Excel.Series)chartPage.SeriesCollection(2);
                                 series.XValues = axis_range;
 
-                                Excel.Series series0 = (Excel.Series)chartPage.SeriesCollection(2);
-                                series0.Name = "Чеки";
+                                /* Excel.Series series0 = (Excel.Series)chartPage.SeriesCollection(2);
+                                 series0.Name = "Чеки";
 
-                                Excel.Series series1 = (Excel.Series)chartPage.SeriesCollection(3);
-                                series1.Name = "Клики";
+                                 Excel.Series series1 = (Excel.Series)chartPage.SeriesCollection(2);
+                                 series1.Name = "Клики";
 
-                                var serie = (SeriesCollection)chartPage.SeriesCollection();
-                                serie.Item(1).Delete();
+                                 var serie = (SeriesCollection)chartPage.SeriesCollection();
+                                 serie.Item(1).Delete();*/
 
 
                                 i++;
                             }
-                            catch
+                            catch (Exception ex)
                             {
-
+                                Logger.Log.Error(ex.ToString());
                             }
 
 
@@ -456,7 +443,7 @@ namespace shedule
 
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
-                       ObjExcel.DisplayAlerts = false;
+                        ObjExcel.DisplayAlerts = false;
                         ObjWorkBook.Saved = true;
                         ObjExcel.DisplayAlerts = true;
                         try
@@ -589,7 +576,7 @@ namespace shedule
 
                         ObjExcel.Visible = false;
                         ObjExcel.UserControl = true;
-                       ObjExcel.DisplayAlerts = false;
+                        ObjExcel.DisplayAlerts = false;
                         ObjWorkBook.Saved = true;
                         ObjExcel.DisplayAlerts = true;
                         try
@@ -665,9 +652,9 @@ namespace shedule
                             }
                             if (!Sotrudniki.CheckGrafic2())
                             {
-                                MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
+                               // MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
                                 //
-                                return;
+                              //  return;
                             }
 
                             if (!Sotrudniki.CheckGrafic())
@@ -841,18 +828,7 @@ namespace shedule
             Program.currentShop.VarSmens.Clear();
             Program.readVarSmen();
             List<VarSmen> lvs = new List<VarSmen>();
-            if (Mult)
-            {
-                switch (comboBox5.SelectedIndex)
-                {
-                    case 0: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Кассир"); break;
-                    case 1: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Продавец"); break;
-                    case 2: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Грузчик"); break;
-                    case 3: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Гастроном"); break;
-                }
-            }
-            else
-            {
+    
                 switch (comboBox4.SelectedIndex)
                 {
                     case 0: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Кассир"); break;
@@ -860,7 +836,7 @@ namespace shedule
                     case 2: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Грузчик"); break;
                     case 3: lvs = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Гастроном"); break;
                 }
-            }
+            
             foreach (VarSmen f in lvs)
             {
                 row = dt.NewRow();
@@ -1526,7 +1502,7 @@ namespace shedule
             }
             Program.currentShop.daysSale.Clear();
             Program.readTSR();
-            Program.readFactors();
+            Program.readFactors(Program.currentShop.getIdShop());
             Program.readVarSmen();
             Program.ReadMinRab();
             Program.ReadPrilavki();
@@ -1724,7 +1700,7 @@ namespace shedule
                 Program.getListDate(DateTime.Today.AddYears(1).Year, true);
             }
             Program.readTSR();
-            Program.readFactors();
+            Program.readFactors(Program.currentShop.getIdShopFM());
             Program.readVarSmen();
             Program.ReadNormaChas(DateTime.Now.Year);
             Program.ReadPrilavki();
@@ -1749,8 +1725,24 @@ namespace shedule
             //Program.shops = new List<Shop>();
         }
 
+        public void CheckMShops() {
+            if (Program.shops.Count==0) {
+                buttonReadMGraf.BackColor = Color.White;
+                return;
+            }
+            foreach (Shop shop in Program.shops) {
+                String s;
+                if (!Program.GrafM.TryGetValue(shop.getIdShopFM(), out s)) {
+                    buttonReadMGraf.BackColor = Color.Yellow;
+                    return;
+                }
+            }
+            buttonReadMGraf.BackColor = Color.Green;
+        }
+
         private void buttonMadd_Click(object sender, EventArgs e)
         {
+
             string ss = listBoxMShops.Text;
             string[] aaa = new string[2];
             aaa = ss.Split('_');
@@ -1766,9 +1758,9 @@ namespace shedule
             if (ss != "")
             {
                 listBoxMPartShops.Items.Add(ss);
-                Program.shops.Add(new Shop(0, aaa[1], int.Parse(aaa[0])));
+                Program.shops.Add(new Shop(int.Parse(aaa[0]), aaa[1]));
             }
-
+            CheckMShops();
         }
 
         private void buttonMdel_Click(object sender, EventArgs e)
@@ -1787,7 +1779,7 @@ namespace shedule
                 }
             }
             catch { }
-
+            
         }
 
         private void radioButtonMinFondOpl_CheckedChanged(object sender, EventArgs e)
@@ -1875,7 +1867,7 @@ namespace shedule
                 case 2: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
                 case 3: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
                 case 4:
-                    button14.Visible = true; checkBox2.Visible = true; comboBoxCountSotr.Visible = true;
+                    button14.Visible = true; checkBox2.Visible = true; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true;
                     if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count > 0))
                     {
                         button14.BackColor = Color.PaleGreen;
@@ -2225,41 +2217,11 @@ namespace shedule
             }
         }
 
-        private void button5_Click_1(object sender, EventArgs e)
-        {
-            //button5.BackColor = Color.MistyRose;
-            //button8.BackColor = Color.White;
-            //button7.BackColor = Color.White;
-            panel3.BringToFront();
-        }
+       
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            //button8.BackColor = Color.MistyRose;
-           // button7.BackColor = Color.White;
-            button5.BackColor = Color.White;
-            panel2.BringToFront();
-            dataGridView1.DataSource = viewFactors();
-            dataGridView1.Columns[0].ReadOnly = true;
-        }
+       
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-            comboBox5.SelectedIndex = 0;
-            //button7.BackColor = Color.MistyRose;
-            //button8.BackColor = Color.White;
-            button5.BackColor = Color.White;
-            panel4.BringToFront();
-
-            dataGridViewMVarSmen.DataSource = viewVarSmen(true);
-
-
-            dataGridViewMVarSmen.Columns[0].ReadOnly = true;
-            dataGridViewMVarSmen.Columns[1].ReadOnly = true;
-            //Program.writeVarSmen();
-
-        }
+        
 
         private void button12_Click(object sender, EventArgs e)
         {
@@ -2268,21 +2230,27 @@ namespace shedule
 
         private void button13_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show(Program.shops.Count + "");
-            //ForExcel.comboBoxMCountPerson1 = comboBoxMCountPerson.SelectedIndex;
-            ForExcel.checkBoxMPeremSotr1 = checkBoxMPeremSotr.Checked;
-            ForExcel.checkBoxMReadShedule1 = checkBoxMReadShedule.Checked;
-            ForExcel.checkBoxMUchetSmen1 = checkBoxMUchetSmen.Checked;
+            if (Program.shops.Count >0)
+            {
+                //MessageBox.Show(Program.shops.Count + "");
+                //ForExcel.comboBoxMCountPerson1 = comboBoxMCountPerson.SelectedIndex;
+                ForExcel.checkBoxMPeremSotr1 = checkBoxMPeremSotr.Checked;
+                ForExcel.checkBoxMReadShedule1 = checkBoxMReadShedule.Checked;
+                ForExcel.checkBoxMUchetSmen1 = checkBoxMUchetSmen.Checked;
 
-            if (Program.isConnected(Program.login, Program.password))
-            {
-                CreateZip();
+                if (Program.isConnected(Program.login, Program.password))
+                {
+                    CreateZip();
+                }
+                else
+                {
+                    Form3 f3 = new Form3(1);
+                    f3.Show(this);
+                    this.Enabled = false;
+                }
             }
-            else
-            {
-                Form3 f3 = new Form3(1);
-                f3.Show(this);
-                this.Enabled = false;
+            else {
+                MessageBox.Show("Не сформирован список магазинов.");
             }
 
         }
@@ -2377,7 +2345,7 @@ namespace shedule
         private void bw1_DoWork(object sender, DoWorkEventArgs e)
         {
             Program.isProcessing = true;
-            
+
             try
             {
                 foreach (Process proc in Process.GetProcessesByName("EXCEL"))
@@ -2427,16 +2395,15 @@ namespace shedule
 
 
 
-            Program.readFactors();
 
-            Program.ReadNormaChas(DateTime.Now.Year);
             // Program.readTSR();
 
             foreach (Shop shop in Program.shops)
             {
-
-                Program.currentShop.setIdShop(shop.getIdShopFM());
-                Program.currentShop.setIdShopFM(shop.getIdShopFM());
+                
+                Program.readFactors(shop.getIdShop());
+                Program.ReadNormaChas(DateTime.Now.Year);
+                Program.currentShop.setIdShopFM(shop.getIdShop());
                 Program.getListDate(DateTime.Today.Year, false);
                 string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
                 if (File.Exists(readPath))
@@ -2462,7 +2429,7 @@ namespace shedule
                     Directory.CreateDirectory(Environment.CurrentDirectory + @"\mult\");
                 }
 
-                
+
                 switch (Program.TipExporta)
                 {
                     case 0:
@@ -2481,36 +2448,29 @@ namespace shedule
                                 }
                                 if (!ForExcel.checkBoxMReadShedule1)
                                 {
-                                    string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
-                                               Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
 
-                                    if (!File.Exists(fc))
+                                    bool b = Program.GrafM.TryGetValue(shop.getIdShop(), out Program.file);
+
+                                    if (b)
                                     {
 
-                                        bg1.ReportProgress(0);
-
-                                        fc = Program.file;
-
-                                    }
-                                    else if (!File.Exists(fc))
-                                    {
-                                        bg1.ReportProgress(-1);
-                                        continue;
-                                    }
-                                   
-
-                                    if (ForExcel.checkBoxMUchetSmen1)
-                                    {
-                                        ForExcel.CreateEmployee();
+                                        if (ForExcel.checkBoxMUchetSmen1)
+                                        {
+                                            ForExcel.CreateEmployee();
+                                        }
+                                        else
+                                        {
+                                            ForExcel.CreateEmployeeWithVarSmen();
+                                        }
                                     }
                                     else
                                     {
-                                        ForExcel.CreateEmployeeWithVarSmen();
+                                        b = false;
                                     }
                                 }
 
 
-                             
+
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
@@ -2537,19 +2497,19 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Оптимальная расстановка смен");
                                 if (!Sotrudniki.CreateSmens(false, Program.currentShop.employes))
                                 {
-                                    MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
-                                    return;
+                                    MessageBox.Show("График не удалось построить для "+ shop.getAddress()+" из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                   continue;
                                 }
 
                                 if (!Sotrudniki.CheckGrafic13())
                                 {
-                                    MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
-                                    return;
+                                    MessageBox.Show("График не удалось построить для " + shop.getAddress() + " из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                   continue;
                                 }
                                 if (!Sotrudniki.CheckGrafic2())
                                 {
-                                    MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
-                                    return;
+                                  //  MessageBox.Show("График не удалось построить для " + shop.getAddress() + " из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
+                                   // return;
                                 }
 
                                 ForExcel.ExportExcel(filename, bg1);
@@ -2580,7 +2540,7 @@ namespace shedule
                         }
                     case 1:
                         {
-                            filename = Environment.CurrentDirectory + @"\mult\" +  Program.currentShop.getAddress() + ".xlsx";
+                            filename = Environment.CurrentDirectory + @"\mult\" + Program.currentShop.getAddress() + ".xlsx";
                             try
                             {
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
@@ -2652,7 +2612,7 @@ namespace shedule
 
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
-                           // ObjExcel.DisplayAlerts = false;
+                            // ObjExcel.DisplayAlerts = false;
                             ObjWorkBook.Saved = true;
                             try
                             {
@@ -2758,7 +2718,7 @@ namespace shedule
 
                             ObjExcel.Visible = false;
                             ObjExcel.UserControl = true;
-                           // ObjExcel.DisplayAlerts = false;
+                            // ObjExcel.DisplayAlerts = false;
                             ObjWorkBook.Saved = true;
                             try
                             {
@@ -2783,7 +2743,8 @@ namespace shedule
 
                             break;
                         }
-                    case 3: {
+                    case 3:
+                        {
                             filename = Environment.CurrentDirectory + @"\mult\" + "График_" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
                             try
@@ -2796,9 +2757,9 @@ namespace shedule
                                 {
                                     Program.currentShop.SortSotr = false;
                                 }
-                                
-                                    string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
-                                               Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
+
+                                string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
+                                           Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
 
                                 if (!File.Exists(fc))
                                 {
@@ -2846,8 +2807,8 @@ namespace shedule
                                 if (!Sotrudniki.CreateSmens(true, Program.currentShop.employes))
                                 {
 
-                                    MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
-                                    return;
+                                    MessageBox.Show("График не удалось построить для " + shop.getAddress() + " из-за большой нормы часов в текущем месяце. Все смены у одного из сотрудников 12 часов и не хватает часов до нормы. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                    continue;
                                 }
 
                                 Sotrudniki.CheckDisp();
@@ -2855,13 +2816,13 @@ namespace shedule
 
                                 if (!Sotrudniki.CheckGrafic13())
                                 {
-                                    MessageBox.Show("График не удалось построить из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
-                                    return;
+                                    MessageBox.Show("График не удалось построить для " + shop.getAddress() + " из-за большой нормы часов в текущем месяце. Перейдите на вкладку производственный календарь и уменьшите текущее значение.");
+                                    continue;
                                 }
                                 if (!Sotrudniki.CheckGrafic2())
                                 {
-                                    MessageBox.Show("График не удалось построить из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
-                                    return;
+                                   // MessageBox.Show("График не удалось построить для " + shop.getAddress() + " из-за выбранных вариантов смен и минимального числа сотрудников. Уменьшите минимальное число сотрудников и используйте другие смены");
+                                    //return;
                                 }
 
                                 ForExcel.ExportExcel(filename, bg1);
@@ -2890,7 +2851,7 @@ namespace shedule
                             break;
 
                         }
-                
+
                     default:
                         {
                             CloseProcessOnError();
@@ -3089,8 +3050,7 @@ namespace shedule
             dataGridViewForTSR.DataError += dataGridViewForTSR_DataError;
             dataGridViewFactors.DataError += dataGridViewFactors_DataError;
             dataGridViewVarSmen.DataError += dataGridViewVarSmen_DataError;
-            dataGridView1.DataError += dataGridViewFactors_DataError;
-            dataGridViewMVarSmen.DataError += dataGridViewVarSmen_DataError;
+            
         }
 
         void dataGridViewForTSR_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -3772,50 +3732,9 @@ namespace shedule
 
         }
 
-        private void dataGridViewMVarSmen_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            switch (e.ColumnIndex)
-            {
-                case 0:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox5.SelectedIndex)).setR(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 1:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox5.SelectedIndex)).setV(int.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 2:
-                    Program.currentShop.VarSmens.Find(t => t.getR().ToString() == dataGridViewMVarSmen[0, e.RowIndex].Value.ToString() && t.getDolgnost() == getDolgn(comboBox5.SelectedIndex)).setDeistvie(bool.Parse(dataGridViewMVarSmen[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
+      
 
-            }
-        }
-
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            switch (e.ColumnIndex)
-            {
-                case 1:
-                    Program.currentShop.factors.Find(
-                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
-                        .setTZnach(int.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 2:
-                    Program.currentShop.factors.Find(
-                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
-                        .setDeistvie(bool.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 3:
-                    Program.currentShop.factors.Find(
-                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
-                        .setData(DateTime.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-                case 4:
-                    Program.currentShop.factors.Find(
-                            t => t.getOtobragenie() == dataGridView1[0, e.RowIndex].Value.ToString())
-                        .setNewZnach(int.Parse(dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString()));
-                    break;
-
-            }
-        }
+      
 
         private void dataGridViewVarSmen_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -3973,10 +3892,7 @@ namespace shedule
             dataGridViewVarSmen.DataSource = viewVarSmen(false);
         }
 
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            dataGridViewMVarSmen.DataSource = viewVarSmen(true);
-        }
+      
 
         private void tabPage3_Click(object sender, EventArgs e)
         {
@@ -4014,6 +3930,78 @@ namespace shedule
         }
 
         private void checkBoxMPeremSotr_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxMReadShedule_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxMReadShedule.Checked == true)
+            {
+                buttonReadMGraf.Visible = false;
+            }
+            else
+            {
+                buttonReadMGraf.Visible = true;
+            }
+        }
+
+        private void buttonReadMGraf_Click(object sender, EventArgs e)
+        {
+            if (Program.shops.Count>0) {
+                try
+                {
+                    foreach (Shop shop in Program.shops)
+                    {
+                        Program.currentShop.setIdShop(shop.getIdShopFM());
+                        Program.currentShop.setAdresShop(shop.getAddress());
+                        Program.GrafM = new Dictionary<int, string>();
+                        string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
+                                                      Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
+                        while (!File.Exists(fc))
+                        {
+                            OpenFileDialog openFileDialog = new OpenFileDialog();
+                            openFileDialog.Title = "Выберите график для " + Program.currentShop.getAddress();
+                            if (Settings.Default.folder == "")
+                            {
+                                openFileDialog.InitialDirectory = "c:\\";
+                            }
+                            else
+                            {
+                                openFileDialog.InitialDirectory = Settings.Default.folder;
+                            }
+                            openFileDialog.Filter = "*|*.xlsx";
+                            openFileDialog.RestoreDirectory = true;
+
+                            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                fc = openFileDialog.FileName;
+
+                            }
+
+                        }
+
+                        Program.GrafM.Add(shop.getIdShop(), fc);
+
+                    }
+                    MessageBox.Show("Считывание графиков завершено успешно");
+                    buttonReadMGraf.BackColor = Color.Green;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                } }
+            else {
+                MessageBox.Show("Не сформирован список магазинов.");
+            }
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
 
         }

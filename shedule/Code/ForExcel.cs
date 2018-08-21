@@ -517,7 +517,7 @@ namespace shedule.Code
                 excelcells = ObjWorkSheet.get_Range("A1", "AL2");
                 excelcells.Cells.Font.Bold = true;
 
-
+                ObjWorkSheet.Visible= XlSheetVisibility.xlSheetHidden; ;
                 //3 list end
 
                 ObjExcel.Visible = false;

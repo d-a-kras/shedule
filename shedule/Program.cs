@@ -390,11 +390,11 @@ namespace shedule
                 switch (this.getR())
                 {
                     case 3: this.dlina = 8; return this.dlina;
-                    case 5: this.dlina = 7; return this.dlina;
+                    case 5: this.dlina = 6; return this.dlina;
                     case 2: this.dlina = 8; return this.dlina;
                     case 4: this.dlina = 8; return this.dlina;
                     case 6: this.dlina = 6; return this.dlina;
-                    default: this.dlina = 8; return this.dlina;
+                    default: this.dlina = 6; return this.dlina;
                 }
 
 
@@ -469,6 +469,7 @@ namespace shedule
         public int TipTekSmen;
         int IdShop;
         int IdEmployee;
+       public int IdEmployee2;
         int status;
         int tip;
         VarSmen VS;
@@ -587,6 +588,7 @@ namespace shedule
             this.IdShop = ish;
             this.tipsmen = 0;
             this.IdEmployee = ie;
+            
             this.VS = vs;
             this.Dolgnost = d;
             this.TipGraf = tgr;
@@ -606,10 +608,11 @@ namespace shedule
 
 
 
-        public employee(int ish, int ie, string d, string tgr, int o)
+        public employee(int ish, int ie,  string d, string tgr, int o)
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
+           
             this.tipsmen = 0;
             this.Dolgnost = d;
             this.TipGraf = tgr;
@@ -624,6 +627,7 @@ namespace shedule
         {
             this.IdShop = ish;
             this.IdEmployee = ie;
+           
             this.tipsmen = 0;
             this.VS = vs;
             this.Dolgnost = d;
@@ -1216,6 +1220,7 @@ namespace shedule
       bool zanyta;
         DateTime Data;
         int Tip;
+        public bool F2;
 
         public void Zanyta()
         {
@@ -1239,7 +1244,7 @@ namespace shedule
             this.Data = dt;
             this.zanyta = false;
             this.Tip = 0;
-
+            this.F2 = false;
         }
         static public void giveHoursSdvig(Smena sm1, Smena sm2, int x)
         {
@@ -1280,13 +1285,38 @@ namespace shedule
         {
             if (this.getLenght() >= (w.DS.getLenghtDaySale() - 1)){return;}
             if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { return; }
-            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); return; }
-            else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
-            else if (this.getEndSmena() < w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
-            else if (this.getStartSmena() == (w.DS.getStartDaySale() + 1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
-            
+            if (this.Tip!=2) { 
+             if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); return; }
+                else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+                else if (this.getEndSmena() < w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+                else if (this.getStartSmena() == (w.DS.getStartDaySale() + 1)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
 
-            else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); }
+
+                else { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); } }
+            else {
+                if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() - 2, this.getLenght()+1);
+
+                    if (this.getStartSmena() <= w.DS.getStartDaySale()) {
+
+                        this.SetStarnAndLenght(this.getStartSmena() + 2, this.getLenght());
+
+                    } return; }
+                else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena()+2, this.getLenght()+1 );
+                    if (this.getEndSmena() >= w.DS.getEndDaySale())
+                    {
+
+                        this.SetStarnAndLenght(this.getStartSmena() - 2, this.getLenght());
+
+                    }
+                    return; }
+                else if (this.getEndSmena() > w.DS.getEndDaySale() - 2) { this.SetStarnAndLenght(this.getStartSmena()-1, this.getLenght()+1 ); return; }
+                else if (this.getStartSmena() < (w.DS.getStartDaySale() + 2)) { this.SetStarnAndLenght(this.getStartSmena() +1, this.getLenght()+1 ); return; }
+                else if (this.getEndSmena() < w.DS.getEndDaySale()-2) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+                else if (this.getStartSmena() > (w.DS.getStartDaySale() + 2)) { this.SetStarnAndLenght(this.getStartSmena()-1, this.getLenght() + 1); return; }
+                else if ((this.getEndSmena() < w.DS.getEndDaySale())&&(this.F2)) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() + 1); return; }
+                else if ((this.getStartSmena() > w.DS.getStartDaySale())&&(this.F2)) { this.SetStarnAndLenght(this.getStartSmena() - 1, this.getLenght() + 1); return; }
+
+            }
 
         }
 
@@ -1314,11 +1344,22 @@ namespace shedule
 
         public void delChas(TemplateWorkingDay w)
         {
-            if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
-            else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() + 1, this.getLenght() - 1); }
-            else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
-            else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
-
+            if (this.Tip != 12)
+            {
+                if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
+                else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() + 1, this.getLenght() - 1); }
+                else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
+                else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); }
+            }
+            else {
+                if (this.getEndSmena() >= w.DS.getEndDaySale()){
+                    this.SetStarnAndLenght(this.getStartSmena(), w.DS.getEndDaySale()- w.DS.getStartDaySale()-1);
+                }
+                if ((this.getEndSmena() == w.DS.getEndDaySale()) && (this.getStartSmena() == w.DS.getStartDaySale())) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); this.setTip(13); }
+                else if (this.getEndSmena() == w.DS.getEndDaySale()) { this.SetStarnAndLenght(this.getStartSmena() + 1, this.getLenght() - 1); this.setTip(13); }
+                else if (this.getStartSmena() == w.DS.getStartDaySale()) { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); this.setTip(13); }
+                else { this.SetStarnAndLenght(this.getStartSmena(), this.getLenght() - 1); this.setTip(13); }
+            }
         }
 
    
@@ -1343,6 +1384,24 @@ namespace shedule
         public DateTime getData()
         {
             return this.Data;
+        }
+
+        public int getDataTip()
+        {
+            int i = 0;
+            // MessageBox.Show(this.getWeekday());
+            switch (this.getData().DayOfWeek.ToString())
+            {
+                case "Monday": i = 1; break;
+                case "Tuesday": i = 2; break;
+                case "Wednesday": i = 3; break;
+                case "Thursday": i = 4; break;
+                case "Friday": i = 5; break;
+                case "Saturday": i = 6; break;
+                case "Sunday": i = 7; break;
+                default: i = 8; break;
+            }
+            return i;
         }
     }
 
@@ -1924,6 +1983,7 @@ namespace shedule
     {
         static public List<DataForCalendary> minholidays;
         static public List<Shop> shops;
+        static public Dictionary<int, String> GrafM=new Dictionary<int, string>();
         static public int normchas = 0;
         static public bool connect = false;
         static public SqlConnection connection;
@@ -2461,9 +2521,10 @@ namespace shedule
 
 
 
-        static public void readFactors()
+        static public void readFactors(int id)
         {
-            String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\factors";
+
+            String readPath = Environment.CurrentDirectory + "/Shops/" + id + @"\factors";
 
             try
             {
