@@ -1900,9 +1900,18 @@ namespace shedule
 
         }
 
+        public bool CheckSmens() {
+            foreach (var sempl in Program.currentShop.Semployes) {
+                if (sempl.smens.Count>0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void buttonExport1_Click(object sender, EventArgs e)
         {
-            if ((comboBox3.SelectedIndex == 4) && ((!(Program.currentShop.Semployes != null)) || (Program.currentShop.Semployes.Count == 0) || (Program.currentShop.Semployes[0].smens.Count == 0)))
+            if ((comboBox3.SelectedIndex == 4) && ((!(Program.currentShop.Semployes != null)) || (Program.currentShop.Semployes.Count == 0) || (!CheckSmens())))
             {
                 MessageBox.Show("Загрузите график на текущий месяц");
                 return;

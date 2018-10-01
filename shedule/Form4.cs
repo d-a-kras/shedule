@@ -214,7 +214,7 @@ namespace shedule
                     row["количество рабочих дней"] = Program.RD[nc.getMonth() - 1];
                     row["количество выходных дней"] = DateTime.DaysInMonth(dtt.AddMonths(nc.getMonth()).Year, dtt.AddMonths(nc.getMonth()).Month) - Program.RD[nc.getMonth() - 1];
                 }
-                row["норма часов"] = _handledShop.NormaChasov[nc.getMonth() - 1].getNormChas();
+                row["норма часов"] = nc.getNormChas();
                 dt.Rows.Add(row);
             }
             return dt;

@@ -2066,6 +2066,7 @@ namespace shedule.Code
                 while (emp.getNormRab() < (Program.normchas + dop))
                 {
 
+
                     // MessageBox.Show("Меньше");
                     if ((current) && (!(Program.currentShop.Semployes.Find(t => t.getID() == emp.getID()) != null)))
                     {
@@ -2121,7 +2122,7 @@ namespace shedule.Code
                                 var mpd = Program.currentShop.MouthPrognozT.Find(f => f.DS.getData() == sm1.getData());
                                 int minb = emp.smens.FindAll(t => ((t.getDataTip() < 6))).Min(t => t.getLenght());
 
-                                if ((mpd.DS.getTip() > 5) && (sm1.getLenght() >= minb))
+                                if ((mpd.DS.getTip() > 5) && (sm1.getLenght() >= minb)&&(x<1000))
                                 {
                                     continue;
                                 }
@@ -2154,7 +2155,14 @@ namespace shedule.Code
 
                                 if ((sm1.getLenght() < (maxl-1))&&(sm1.getTip()<10))
                                 {
-                                    sm1.addChas(mpd);
+                                    if (emp.GetTip() == 3)
+                                    {
+                                        sm1.addChas2(mpd);
+                                    }
+                                    else
+                                    {
+                                        sm1.addChas(mpd);
+                                    }
 
                                 }
                                 if (emp.getNormRab() == (Program.normchas + dop)) break;
@@ -2165,11 +2173,11 @@ namespace shedule.Code
                             {
                                 x++;
                             }
-                            if ((x == 50 * emp.smens.Count) && (!current))
+                            if ((x > 500 * emp.smens.Count) && (!current))
                             {
                                 return false;
                             }
-                            if ((x == 1000 * emp.smens.FindAll(t => t.getData().Day > DateTime.Now.Day).Count) && (current))
+                            if ((x > 1000 * emp.smens.FindAll(t => t.getData().Day > DateTime.Now.Day).Count) && (current))
                             {
                                 return false;
                             }
