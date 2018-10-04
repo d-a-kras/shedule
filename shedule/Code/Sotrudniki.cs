@@ -1119,51 +1119,24 @@ namespace shedule.Code
                         }
                       }
 
-
-                    if (wd.DS.getTip() == 8)
+                  
+                    if ((wd.DS.getTip() == 8)&&(wd.lss.FindAll(t => (t.isZanyta() == false)).Count <= 0)&&(emplo.FindAll(t => ((t.getStatusDay(wd.getData()) != 1) )).Count>0))
                     {
-                        if (wd.lss.FindAll(t =>(t.isZanyta()==false)).Count()>0) {
-                            employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 2)));
-                            if (emp == null)
-                            {
-                                emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && ((t.TipTekSmen == 7) || (t.TipTekSmen == 6))));
-                            }
-                            if (emp == null)
-                            {
-                                emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && ((t.TipTekSmen == 4) || (t.TipTekSmen == 5))));
-                            }
-                         
-                            if (emp == null)
-                            {
-                                emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) ));
-                            }
+                        
+                        
+                            
+                            employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) &&(!t.praz) &&(t.getOtrabotal() >= 0)&&((t.getVS().getR()==5)||(t.getVS().getR() == 4) ||(t.getVS().getR() == 6))));
+                           
                             if (emp != null)
                             {
-                                int dlina = emp.getVS().getDlina();
-                                Smena s = wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()) && (t.getStartSmena() != (start + 1)));
-                                if (s != null)
-                                {
-                                    start = s.getStartSmena();
-                                    if (s.getLenght() > dlina)
-                                    {
-                                        ostatok = s.getEndSmena();
-                                    }
-                                    s.Zanyta();
-                                    s.setTip(2);
-                                    emp.AddSmena(s);
-
-                                    emp.TipTekSmen = 2;
+                                    emp.praz = true;
                                     emp.otrabDay(wd.getData());
                                     emp.OtrabotalDay();
-                                }
+                                
+                            
                             }
-                        }
-
-                        else {
-                            break;
-                        }
                     }
-                    else {
+                     {
                         employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)&&(t.TipTekSmen==1)));
                         if (emp!=null) {
                             int dlina = emp.getVS().getDlina();
@@ -1633,49 +1606,21 @@ namespace shedule.Code
                         start = Program.currentShop.MouthPrognozT.Find(t => t.getData() == wd.getData()).lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale())).getStartSmena() - 1;
                     }
 
-                    if (wd.DS.getTip() == 8)
+                    if ((wd.DS.getTip() == 8)&& (wd.lss.FindAll(t => (t.isZanyta() == false)).Count <= 0)&&(emplo.FindAll(t => ((t.getStatusDay(wd.getData()) != 1) )).Count > 0))
                     {
-                        if (wd.lss.FindAll(t => (t.isZanyta() == false)).Count() > 0)
+                        
+                            employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1)&&(!t.praz) && (t.getOtrabotal() >= 0) && ((t.getVS().getR()==5)||(t.getVS().getR()==4)||(t.getVS().getR() == 6))));
+
+                        if (emp!=null)
                         {
-                            employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 2)));
-                            if (emp == null)
-                            {
-                                emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && ((t.TipTekSmen == 7) || (t.TipTekSmen == 6))));
-                            }
-                            if (emp == null)
-                            {
-                                emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && ((t.TipTekSmen == 4) || (t.TipTekSmen == 5))));
-                            }
-
-                            if (emp == null)
-                            {
-                                emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0)));
-                            }
-                            if (emp != null)
-                            {
-                                int dlina = emp.getVS().getDlina();
-                                Smena s = wd.lss.Find(t => (t.getStartSmena() > wd.DS.getStartDaySale()) && (!t.isZanyta()));
-                                if (s != null)
-                                {
-                                    start = s.getStartSmena();
-                                    s.SetStarnAndLenght(start,dlina);
-                                    s.Zanyta();
-                                    s.setTip(2);
-                                    emp.AddSmena(s);
-
-                                    emp.TipTekSmen = 2;
-                                    emp.otrabDay(wd.getData());
-                                    emp.OtrabotalDay();
-                                }
-                            }
+                            emp.praz = true;
+                            emp.otrabDay(wd.getData());
+                            emp.OtrabotalDay();
                         }
 
-                        else
-                        {
-                            break;
-                        }
+
                     }
-                    else
+                   
                     {
                         employee emp = emplo.Find(t => ((t.getStatusDay(wd.getData()) != 1) && (t.getOtrabotal() >= 0) && (t.TipTekSmen == 1)));
                         if (emp != null)

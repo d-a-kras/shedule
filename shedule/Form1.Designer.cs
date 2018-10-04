@@ -1382,7 +1382,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "График работы персонала, v1.3.2";
+            this.Text = "График работы персонала, v1.3.3";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelMultShops.ResumeLayout(false);

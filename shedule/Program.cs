@@ -479,6 +479,7 @@ namespace shedule
         int otdih;
         int otdihinholyday;
         int tipsmen;
+        public bool praz = false;
 
         public List<Smena> smens;
         public Dictionary<DateTime,int> statusDays;
@@ -620,6 +621,7 @@ namespace shedule
             this.smens = new List<Smena>();
             this.otdih = o;
             this.statusDays = new Dictionary<DateTime, int>();
+            
 
         }
 
@@ -2765,6 +2767,7 @@ namespace shedule
             int min = 14;
 
             List<DataForCalendary> ldfc = new List<DataForCalendary>();
+            Program.currentShop.DFCs = Program.currentShop.DFCs.FindAll(t => t.getTimeStart() != 0);
                 ldfc =Program.currentShop.DFCs.FindAll(t => t.getMonth() == DateTime.Now.AddMonths(1).Month);
             foreach (DataForCalendary ds in ldfc)
             {
