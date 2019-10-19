@@ -13,6 +13,8 @@ namespace shedule.Code
 {
     public static class Helper
     {
+
+           public static string dbFileName = "db/workScheduleDB.db";
         /// <summary>
         /// Парсит xls файл с часами/днями/прочим.
         /// Если значение даты или количества чеков или количества сканов 

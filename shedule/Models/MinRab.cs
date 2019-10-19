@@ -1,16 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace shedule.Models
 {
-    public class MinRab
+    public class MinRab  : INotifyPropertyChanged
     {
         int MinCount;
         int Time;
         bool Otobragenie;
+
+        public int Id { get; set; }
+
+        public int minCount
+        {
+            get { return MinCount; }
+            set
+            {
+                MinCount = value;
+                OnPropertyChanged("MinCount");
+            }
+        }
+        public int time
+        {
+            get { return Time; }
+            set
+            {
+                Time = value;
+                OnPropertyChanged("Time");
+            }
+        }
+        public bool otobragenie
+        {
+            get { return Otobragenie; }
+            set
+            {
+                Otobragenie = value;
+                OnPropertyChanged("Otobragenie");
+            }
+        }
+
         public MinRab(int mc, int t, bool o)
         {
             this.MinCount = mc;
@@ -47,7 +80,12 @@ namespace shedule.Models
             this.Time = mt;
         }
 
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
     }
 
 }

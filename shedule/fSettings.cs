@@ -19,7 +19,7 @@ namespace shedule
     public partial class fSettings : Form
     {
         Models.ApplicationContext db;
-        private String dbFileName= "db/workScheduleDB.db";
+        
         private SQLiteConnection m_dbConn;
         private SQLiteCommand m_sqlCmd;
         public BindingList<Connection> DataContext { get; }
