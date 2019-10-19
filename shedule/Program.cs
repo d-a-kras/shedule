@@ -18,6 +18,7 @@ using shedule.Code;
 using System.Runtime.Serialization.Formatters.Binary;
 using log4net;
 using log4net.Config;
+using shedule.Models;
 
 //DataVisualization.Charting.SeriesChartType.Renko
 //Excel.XlChartType.xlLineMarker
@@ -79,50 +80,6 @@ namespace shedule
             }
             else return true;
         }
-
-    }
-
-    public class MinRab
-    {
-        int MinCount;
-        int Time;
-        bool Otobragenie;
-        public MinRab(int mc, int t, bool o)
-        {
-            this.MinCount = mc;
-            this.Time = t;
-            this.Otobragenie = o;
-        }
-
-        public int getMinCount()
-        {
-            return this.MinCount;
-        }
-
-        public int getTimeMinRab()
-        {
-            return this.Time;
-        }
-        public bool getOtobragenie()
-        {
-            return this.Otobragenie;
-        }
-
-        public void setOtobragenie(bool b)
-        {
-            this.Otobragenie = b;
-        }
-
-        public void setMinCount(int mc)
-        {
-            this.MinCount = mc;
-        }
-
-        public void setTime(int mt)
-        {
-            this.Time = mt;
-        }
-
 
     }
 
@@ -3638,8 +3595,14 @@ namespace shedule
             catch
             {
                 //  MessageBox.Show(ex.Message);
+                try
+                {
+                    Program.ReadCalendarFromXML(year);
+                }
+                catch {
+                    MessageBox.Show("Отсутствует файл календаря на "+year+" год");
+                }
 
-                Program.ReadCalendarFromXML(year);
                 for (int i = 0; i < 12; i++)
                 {
                     RD[i ] = 0;
