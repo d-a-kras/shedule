@@ -95,6 +95,7 @@
     <Compile Include="Code\CalendarHelper.cs" />
     <Compile Include="Code\ForExcel.cs" />
     <Compile Include="Code\CopyHelper.cs" />
+    <Compile Include="Code\Logger.cs" />
     <Compile Include="Code\Sotrudniki.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\Helper.cs" />
@@ -153,6 +154,8 @@
     </Compile>
     <Compile Include="HolidayUnloader.cs" />
     <Compile Include="Models\ApplicationContext.cs" />
+    <Compile Include="Models\EmployeeType.cs" />
+    <Compile Include="Models\MinRab.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

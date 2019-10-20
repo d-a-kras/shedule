@@ -11,6 +11,7 @@ using System.IO;
 using shedule.Models;
 using System.Data.Entity;
 using System.Data.SQLite;
+using shedule.Code;
 
 namespace shedule
 {
@@ -42,7 +43,6 @@ namespace shedule
             List<ListViewItem> listViewItems = new List<ListViewItem>();
             m_dbConn = new SQLiteConnection();
             m_sqlCmd = new SQLiteCommand();
-            dbFileName = "db/workScheduleDB.db";
 
             ConnectionReadAll();
         }
@@ -111,7 +111,9 @@ namespace shedule
         {
 
         }
-
+        /**
+         Update connection
+             */
         private void button4_Click(object sender, EventArgs e)
         {
             if (dataGridViewDB.SelectedRows.Count > 0)
@@ -167,12 +169,12 @@ namespace shedule
 
         private void ConnectionReadAll()
         {
-            if (!File.Exists(dbFileName))
-                SQLiteConnection.CreateFile(dbFileName);
+            if (!File.Exists(Helper.dbFileName))
+                SQLiteConnection.CreateFile(Helper.dbFileName);
 
             try
             {
-                m_dbConn = new SQLiteConnection("Data Source=" + dbFileName + ";Version=3;");
+                m_dbConn = new SQLiteConnection("Data Source=" + Helper.dbFileName + ";Version=3;");
                 m_dbConn.Open();
                 m_sqlCmd.Connection = m_dbConn;
                 

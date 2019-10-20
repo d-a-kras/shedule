@@ -18,6 +18,7 @@ using Point = System.Drawing.Point;
 using System.Diagnostics;
 using System.Linq;
 using Application = System.Windows.Forms.Application;
+using shedule.Models;
 
 namespace shedule
 {
@@ -1189,25 +1190,22 @@ namespace shedule
             dataGridViewVarSmen.Columns[1].ReadOnly = true;
 
 
+            /*  if (Program.currentShop.minrab.getOtobragenie())
+              {
+                  tbMinRabCount.Text = Program.currentShop.minrab.getMinCount().ToString();
+                  // tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
+              }
+              else
+              {
+                  tbMinRabCount.Text = "";
+                  // tbLastHour.Text = "";
+              }
+              // Program.ReadMinRab();
 
+              */
 
-
-            if (Program.currentShop.minrab.getOtobragenie())
-            {
-                tbKassirCount.Text = Program.currentShop.minrab.getMinCount().ToString();
-                // tbLastHour.Text = Program.currentShop.minrab.getTimeMinRab().ToString();
-            }
-            else
-            {
-                tbKassirCount.Text = "";
-                // tbLastHour.Text = "";
-            }
-            // Program.ReadMinRab();
-
-
-
-
-
+            tbMinRabCount.Text= MinRab.Read(EmployeeType.Cashier, Program.currentShop.getIdShop()).getMinCount().ToString();
+            labelMinRabCount.Text = comboBox4.Text + " с времени";
 
         }
 
@@ -1492,7 +1490,7 @@ namespace shedule
             string[] s = new string[2];
             s = listBox1.Text.Split('_');
             Program.currentShop = new Shop(Int16.Parse(s[0]), s[1]);
-            Program.currentShop.setMinRab(Program.ReadMinRab());
+            Program.currentShop.setMinRab(Program.ReadMinRabForShop());
             buttonParamOptimiz.PerformClick();
             Program.getListDate(DateTime.Today.Year, false);
             string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
@@ -1504,7 +1502,7 @@ namespace shedule
             Program.readTSR();
             Program.readFactors(Program.currentShop.getIdShop());
             Program.readVarSmen();
-            Program.ReadMinRab();
+           // Program.ReadMinRab();
             Program.ReadPrilavki();
             Program.ReadSortSotr(); ;
             Program.ReadNormaChas(DateTime.Now.Year);
@@ -1672,15 +1670,19 @@ namespace shedule
 
         private void buttonAplyVarSmen_Click(object sender, EventArgs e)
         {
-            if (tbKassirCount.Text == "")
+            if (tbMinRabCount.Text == "")
             {
-                tbKassirCount.Text = "1";
+                tbMinRabCount.Text = "1";
             }
             Program.writeVarSmen();
             Program.HandledShops.Add(Program.currentShop.getIdShop());
             UpdateStatusShops();
 
             Program.WriteMinRab();
+            int minRabCount = 0;
+            int.TryParse(tbMinRabCount.Text, out minRabCount);
+
+            MinRab.Update(new MinRab(MinRab.getType(comboBox4.Text), minRabCount, Program.currentShop.getIdShop() ));
             MessageBox.Show("Данные сохранены");
         }
 
@@ -1692,7 +1694,7 @@ namespace shedule
             Program.IsMpRezhim = true;
             listBoxMPartShops.Items.Clear();
             Program.currentShop = new Shop(0, "");
-            Program.currentShop.setMinRab(Program.ReadMinRab());
+            Program.currentShop.setMinRab(Program.ReadMinRabForShop());
             Program.getListDate(DateTime.Today.Year, false);
             string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShopFM() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
             if (File.Exists(readPath))
@@ -2422,8 +2424,8 @@ namespace shedule
                 Program.readTSR();
                 Program.readVarSmen(true);
 
-                shop.setMinRab(Program.ReadMinRab());
-                Program.currentShop.setMinRab(shop.minrab);
+                shop.setMinRab(Program.ReadMinRabForShop());
+                Program.currentShop.setMinRab(MinRab.ReadForShop(shop.getIdShop()));
                 // Program.currentShop.setIdShop(0);
                 Program.currentShop.setAdresShop(shop.getAddress());
 
@@ -2894,34 +2896,34 @@ namespace shedule
 
         private void tbKassirCount_TextChanged(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(tbKassirCount.Text))
+            if (!String.IsNullOrEmpty(tbMinRabCount.Text))
             {
-                if (int.Parse(tbKassirCount.Text) < 1)
+                if (int.Parse(tbMinRabCount.Text) < 1)
                 {
                     MessageBox.Show("Меньше 1 нельзя");
-                    tbKassirCount.Text = "";
+                    tbMinRabCount.Text = "";
                     return;
                 }
 
-                if (int.Parse(tbKassirCount.Text) > 5)
+                if (int.Parse(tbMinRabCount.Text) > 5)
                 {
                     MessageBox.Show("Не оптимальное количество. Допустимо от 1 до 5.");
-                    tbKassirCount.Text = "";
+                    tbMinRabCount.Text = "";
                     return;
                 }
 
                 int kassirCount;
 
-                if (int.TryParse(tbKassirCount.Text, out kassirCount))
+               /* if (int.TryParse(tbMinRabCount.Text, out kassirCount))
                 {
                     Program.currentShop.minrab.setMinCount(kassirCount);
 
-                }
+                }*/
 
             }
             else
             {
-                Program.currentShop.minrab.setMinCount(1);
+               /* Program.currentShop.minrab.setMinCount(1);*/
             }
 
         }
@@ -3624,10 +3626,10 @@ namespace shedule
 
         private void tbKassirCount_Leave(object sender, EventArgs e)
         {
-            if (tbKassirCount.Text == "")
+            if (tbMinRabCount.Text == "")
             {
 
-                tbKassirCount.Text = "";
+                tbMinRabCount.Text = "";
             }
         }
 
@@ -3899,6 +3901,9 @@ namespace shedule
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridViewVarSmen.DataSource = viewVarSmen(false);
+            labelMinRabCount.Text = comboBox4.Text + " с времени";
+            EmployeeType employeeType = MinRab.getType(comboBox4.Text);
+            tbMinRabCount.Text = MinRab.Read(employeeType, Program.currentShop.getIdShop()).getMinCount().ToString();
         }
 
       
@@ -4011,6 +4016,11 @@ namespace shedule
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelMinRabCount_Click(object sender, EventArgs e)
         {
 
         }

@@ -787,7 +787,7 @@ namespace shedule
 
         public ForChart Chart;
 
-        public void setMinCountSotr(int m, int t)
+        public void setMinCountSotr(int m)
         {
             this.minGruzUtr.Ncount = 1;
             this.minGruzVech.Ncount = 1;
@@ -797,6 +797,27 @@ namespace shedule
             if (m > 1)
             {
                 this.minProdVech.Ncount = m - 1;
+            }
+            else
+            {
+                this.minProdVech.Ncount = 1;
+            }
+            this.minGastrUtr.Ncount = 1;
+            this.minGastrVech.Ncount = 1;
+
+        }
+
+        public void setMinCountSotr(List<MinRab> minRabs)
+        {
+            this.minGruzUtr.Ncount = minRabs.First(t => t.getEmployeeType() == EmployeeType.Porter).getMinCount(); ;
+            this.minGruzVech.Ncount = 1;
+            this.minKassUtr.Ncount = minRabs.First(t=>t.getEmployeeType()==EmployeeType.Cashier).getMinCount();
+            this.minProdUtr.Ncount = minRabs.First(t => t.getEmployeeType() == EmployeeType.Seller).getMinCount();
+            this.minKassVech.Ncount = minRabs.First(t => t.getEmployeeType() == EmployeeType.Cashier).getMinCount();
+            int prodvech= minRabs.First(t => t.getEmployeeType() == EmployeeType.Seller).getMinCount();
+            if (prodvech > 1)
+            {
+                this.minProdVech.Ncount = prodvech - 1;
             }
             else
             {
@@ -974,7 +995,7 @@ namespace shedule
             this.lss = l;
             this.DS = d;
             NM();
-            setMinCountSotr(Program.currentShop.minrab.getMinCount(), Program.currentShop.minrab.getTimeMinRab());
+            setMinCountSotr(Program.currentShop.ListMinRab);
             
 
         }
@@ -983,7 +1004,7 @@ namespace shedule
             this.DS = d;
             this.lss = new List<Smena>();
             NM();
-            setMinCountSotr(Program.currentShop.minrab.getMinCount(), Program.currentShop.minrab.getTimeMinRab());
+            setMinCountSotr(Program.currentShop.ListMinRab);
            
 
         }
@@ -1430,7 +1451,7 @@ namespace shedule
         public List<daySale> MouthPrognoz = new List<daySale>();
         public List<TemplateWorkingDay> MouthPrognozT = new List<TemplateWorkingDay>();
         public List<VarSmen> VarSmens = new List<VarSmen>();
-        public MinRab minrab;
+        public List<MinRab> ListMinRab;
         public int RaznChas;
         public bool SortSotr = false;
         // public int countPrilavok = 0;
@@ -1479,7 +1500,8 @@ namespace shedule
             Program.newShop();
 
         }
-        public void setMinRab(MinRab mr) { this.minrab = mr; }
+       /* public void setMinRab(MinRab mr) { this.minrab = mr; }*/
+        public void setMinRab(List<MinRab> listMinRab) { this.ListMinRab = listMinRab; }
         public void AddTemplate(TemplateWorkingDay t)
         {
             this.templates.Add(t);
@@ -2011,7 +2033,7 @@ namespace shedule
 
         static public void WritePrilavki()
         {
-            Program.currentShop.minrab.setOtobragenie(true);
+            /*Program.currentShop.minrab.setOtobragenie(true);*/
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\Prilavki";
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
@@ -2199,13 +2221,13 @@ namespace shedule
 
         static public void WriteMinRab()
         {
-            Program.currentShop.minrab.setOtobragenie(true);
+           /* Program.currentShop.minrab.setOtobragenie(true);
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\MinRab";
             using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
             {
                 sw.Write(Program.currentShop.minrab.getMinCount() + "_" + Program.currentShop.minrab.getTimeMinRab() + "_" + Program.currentShop.minrab.getOtobragenie());
                 Program.HandledShops.Add(Program.currentShop.getIdShop());
-            }
+            }*/
         }
 
         static public void ReadParametrOptimizacii()
@@ -2262,6 +2284,7 @@ namespace shedule
             if (IsMpRezhim)
             {
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM().ToString() + @"\MinRab";
+
             }
 
             if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop().ToString()))
@@ -2312,6 +2335,21 @@ namespace shedule
             }
 
             return mr;
+        }
+
+        static public List<MinRab> ReadMinRabForShop()
+        {
+
+            List<MinRab> lmr;
+            if (IsMpRezhim)
+            {
+                lmr = MinRab.ReadForShop(currentShop.getIdShopFM());
+            }
+            else {
+                lmr = MinRab.ReadForShop(currentShop.getIdShop());
+            }
+
+            return lmr;
         }
 
 
@@ -4106,19 +4144,5 @@ namespace shedule
         }
 
     }
-
-    public static class Logger
-    {
-        public static ILog Log { get; } = LogManager.GetLogger("LOGGER");
-
-        public static void InitLogger()
-        {
-            XmlConfigurator.Configure();
-            Log.Info("Logger has started at " + DateTime.Now);
-        }
-    }
-
-
-
 
 }
