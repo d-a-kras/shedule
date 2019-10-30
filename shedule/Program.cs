@@ -3976,8 +3976,9 @@ namespace shedule
         {
 
             mShop h;
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
-            string sql = "select * from get_shops() order by КодМагазина";
+            Connection connect = Connection.getActiveConnection();
+            var connectionString = Connection.getConnectionString(connect);
+            string sql = "select * from "+Connection.getSheme(connect)+"get_shops() order by КодМагазина";
 
 
             using (connection = new SqlConnection(connectionString))

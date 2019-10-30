@@ -23,6 +23,7 @@ namespace shedule
             this.tbServerAddress.Text = con.server;
             this.tbServerLogin.Text = con.login;
             this.tbServerPassword.Text = con.password;
+            this.tbSheme.Text = con.sheme;
         }
 
         public string GetLogin() {
@@ -35,6 +36,10 @@ namespace shedule
         public string GetAddress()
         {
             return this.tbServerAddress.Text;
+        }
+        public string GetSheme()
+        {
+            return this.tbSheme.Text;
         }
 
         public void SetLogin(String value)
@@ -50,6 +55,11 @@ namespace shedule
             this.tbServerAddress.Text = value;
         }
 
+        public void SetSheme(String value)
+        {
+            this.tbSheme.Text = value;
+        }
+
         private void DBConnectionForm_Load(object sender, EventArgs e)
         {
            
@@ -58,6 +68,11 @@ namespace shedule
         private void bSaveSettings_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void DBConnectionForm_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

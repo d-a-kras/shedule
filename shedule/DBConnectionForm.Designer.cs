@@ -29,20 +29,23 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bSaveSettings = new System.Windows.Forms.Button();
             this.tbServerPassword = new System.Windows.Forms.TextBox();
             this.tbServerLogin = new System.Windows.Forms.TextBox();
             this.tbServerAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.bSaveSettings = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbSheme = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.bSaveSettings);
+            this.groupBox1.Controls.Add(this.tbSheme);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tbServerPassword);
             this.groupBox1.Controls.Add(this.tbServerLogin);
             this.groupBox1.Controls.Add(this.tbServerAddress);
@@ -55,6 +58,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки подключения к базе данных";
+            // 
+            // bSaveSettings
+            // 
+            this.bSaveSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bSaveSettings.Location = new System.Drawing.Point(197, 181);
+            this.bSaveSettings.Name = "bSaveSettings";
+            this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
+            this.bSaveSettings.TabIndex = 1;
+            this.bSaveSettings.Text = "Сохранить";
+            this.bSaveSettings.UseVisualStyleBackColor = true;
+            this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
             // 
             // tbServerPassword
             // 
@@ -105,25 +119,32 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Логин:";
             // 
-            // bSaveSettings
+            // label4
             // 
-            this.bSaveSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSaveSettings.Location = new System.Drawing.Point(182, 121);
-            this.bSaveSettings.Name = "bSaveSettings";
-            this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
-            this.bSaveSettings.TabIndex = 1;
-            this.bSaveSettings.Text = "Сохранить";
-            this.bSaveSettings.UseVisualStyleBackColor = true;
-            this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 121);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Схема";
+            // 
+            // tbSheme
+            // 
+            this.tbSheme.Location = new System.Drawing.Point(72, 121);
+            this.tbSheme.Name = "tbSheme";
+            this.tbSheme.Size = new System.Drawing.Size(199, 20);
+            this.tbSheme.TabIndex = 8;
             // 
             // DBConnectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 166);
+            this.ClientSize = new System.Drawing.Size(284, 225);
+            this.Controls.Add(this.bSaveSettings);
             this.Controls.Add(this.groupBox1);
             this.Name = "DBConnectionForm";
             this.Text = "Настройки";
+            this.Load += new System.EventHandler(this.DBConnectionForm_Load_1);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -141,5 +162,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.TextBox tbSheme;
+        private System.Windows.Forms.Label label4;
     }
 }

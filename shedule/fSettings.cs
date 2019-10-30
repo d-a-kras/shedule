@@ -30,8 +30,8 @@ namespace shedule
         {
             InitializeComponent();
             db = new Models.ApplicationContext();
-            db.Connections.Load();
-            this.DataContext = db.Connections.Local.ToBindingList();
+            //db.Connections.Load();
+            //this.DataContext = db.Connections.Local.ToBindingList();
         }
 
         private void fSettings_Load(object sender, EventArgs e)
@@ -128,9 +128,9 @@ namespace shedule
 
                 DBConnectionForm plForm = new DBConnectionForm(connection);
 
-               /* plForm.SetAddress(connection.server);
-                plForm.SetLogin(connection.login);
-                plForm.SetPassword(connection.password);*/
+                /* plForm.SetAddress(connection.server);
+                 plForm.SetLogin(connection.login);
+                 plForm.SetPassword(connection.password);*/
 
                 DialogResult result = plForm.ShowDialog(this);
 
@@ -140,11 +140,15 @@ namespace shedule
                 connection.server = plForm.GetAddress(); ;
                 connection.login = plForm.GetLogin();
                 connection.password = plForm.GetPassword();
+                connection.sheme = plForm.GetSheme();
 
                 db.SaveChanges();
                 ConnectionReadAll();
-                MessageBox.Show("Объект обновлен");
+                MessageBox.Show("Соединение обновлено");
 
+            }
+            else {
+                MessageBox.Show("Выберите соединение");
             }
         }
 
@@ -160,6 +164,7 @@ namespace shedule
             connection.server = plForm.GetAddress();
             connection.login = plForm.GetLogin();
             connection.password = plForm.GetPassword();
+            connection.sheme = plForm.GetSheme();
 
             db.Connections.Add(connection);
             db.SaveChanges();
@@ -239,6 +244,33 @@ namespace shedule
             }
         }
 
-        
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            if (dataGridViewDB.SelectedRows.Count > 0)
+            {
+                int index = dataGridViewDB.SelectedRows[0].Index;
+                int id = 0;
+                bool converted = Int32.TryParse(dataGridViewDB[0, index].Value.ToString(), out id);
+                if (converted == false)
+                    return;
+                List<Connection> listconnections = db.Connections.Where(t=>t.Id!=id).ToList();
+                foreach (var con in listconnections) {
+                    con.IsActive = false;
+                }
+                Connection connection = db.Connections.Find(id);
+                DBConnectionForm plForm = new DBConnectionForm(connection);
+
+                connection.IsActive = true;
+
+
+                db.SaveChanges();
+                ConnectionReadAll();
+                MessageBox.Show("Соединение выбрано основным");
+
+            }
+            else {
+                MessageBox.Show("Выберите соединение");
+            }
+        }
     }
 }
