@@ -3121,15 +3121,17 @@ namespace shedule
 
         public static void createListDaySale(DateTime n, DateTime k, int id)
         {
+            Connection activeconnect = Connection.getActiveConnection();
+            var connectionString = Connection.getConnectionString(activeconnect);
 
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
+           // var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
             //string s1 = "2015" + "/" + "9" + "/" + "6";
             //string s2 = "2015" + "/" + "8" + "/" + "7";
             string sql;
-            sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
-            if (currentShop.getIdShop() == 0) { sql = "select * from dbo.get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
+            sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
+            if (currentShop.getIdShop() == 0) { sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
             //string sql = "select * from dbo.get_StatisticByShopsDayHour('301','17/01/01', '2017/01/20 23:59:00')";
             //string sql = "select * from dbo.get_StatisticByShopsDayHour('103','2017/05/01', '2017/15/09 23:59:00')";
             //MessageBox.Show(sql);
@@ -3311,14 +3313,16 @@ namespace shedule
 
         static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
-            var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
+            //var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
+            Connection activeconnect = Connection.getActiveConnection();
+            var connectionString = Connection.getConnectionString(activeconnect);
             string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             //string s1 = "2018/8/3";
             //string s2 = "2018/8/3";
             List< hourSale> lhs=new List<hourSale>();
             string sql;
-            sql = "select * from dbo.get_StatisticByShopsDayHour('" + idShop + "', '" + s1 + "', '" + s2 + " 23:59:00')";
+            sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + idShop + "', '" + s1 + "', '" + s2 + " 23:59:00')";
 
             int countAttemption = 0;
             int countRecords = 0;
@@ -4018,9 +4022,11 @@ namespace shedule
 
         public static bool isConnect() { return connect; }
 
-        public static bool isConnected(string l, string p)
+        public static bool isConnected()
         {
-            var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
+           // var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
+            Connection activeconnect = Connection.getActiveConnection();
+            var connectionString = Connection.getConnectionString(activeconnect);
 
             //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
             using (connection = new SqlConnection(connectionString))

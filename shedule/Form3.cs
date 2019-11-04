@@ -29,7 +29,7 @@ namespace shedule
         {
             string login = textBoxLogin.Text;
             string password = textBoxPassword.Text;
-            if (Program.isConnected(login, password))
+            if (Program.isConnected())
             {
                 ((Form1)this.Owner).Enabled = true;
                 ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";

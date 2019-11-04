@@ -1926,14 +1926,32 @@ namespace shedule
 
             if (radioButtonIzBD.Checked && !isConnected)
             {
-                Form3 f3 = new Form3(3);
-                f3.Show(this);
-                this.Enabled = false;
+                // Form3 f3 = new Form3(3);
+                // f3.Show(this);
+                if (Program.isConnected())
+                {
+                    Enabled = true;
+                    labelStatus2.Text = "режим работы сетевой ";
+                    buttonVygr.Visible = true;
+                    comboBox2.Visible = true;
+                    isConnected = true;
+                    StartExportingToExcel();
+
+                }
+                else
+                {
+                    isConnected = false;
+                    isConnected = false;
+                    radioButtonIzFile.Checked = true;
+                    Enabled = true;
+                    labelStatus2.Text = "режим работы локальный ";
+                    buttonVygr.Visible = false;
+                    comboBox2.Visible = false;
+                }
+                
                 return;
             }
 
-
-            StartExportingToExcel();
         }
 
         public void StartExportingToExcel()
@@ -2000,7 +2018,7 @@ namespace shedule
                 return;
             // получаем выбранный файл
 
-            if (radioButtonIzBD.Checked && !Program.isConnected(Program.login, Program.password))
+            if (radioButtonIzBD.Checked && !Program.isConnected())
             {
                 MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
                 return;
@@ -2087,9 +2105,28 @@ namespace shedule
             }
             else if (radioButtonIzBD.Checked && !isConnected)
             {
-                Form3 f3 = new Form3(2);
-                f3.Show(this);
-                this.Enabled = false;
+                //  Form3 f3 = new Form3(2);
+                //  f3.Show(this);
+                // this.Enabled = false;
+                if (Program.isConnected())
+                {
+                    Enabled = true;
+                    labelStatus2.Text = "режим работы сетевой ";
+                    buttonVygr.Visible = true;
+                    comboBox2.Visible = true;
+                    isConnected = true;
+                   StartDiagramForm();
+
+                }
+                else
+                {
+                    isConnected = false;
+                    radioButtonIzFile.Checked = true;
+                    Enabled = true;
+                    labelStatus2.Text = "режим работы локальный ";
+                    buttonVygr.Visible = false;
+                    comboBox2.Visible = false;
+                }
                 return;
             }
             else if (radioButtonIzFile.Checked && !Program.ExistFile)
@@ -2249,15 +2286,42 @@ namespace shedule
                 ForExcel.checkBoxMReadShedule1 = checkBoxMReadShedule.Checked;
                 ForExcel.checkBoxMUchetSmen1 = checkBoxMUchetSmen.Checked;
 
-                if (Program.isConnected(Program.login, Program.password))
+                if (Program.isConnected())
                 {
                     CreateZip();
                 }
                 else
                 {
-                    Form3 f3 = new Form3(1);
-                    f3.Show(this);
-                    this.Enabled = false;
+                    //  Form3 f3 = new Form3(1);
+                    //  f3.Show(this);
+                    //this.Enabled = false;
+                    if (Program.isConnected())
+                    {
+                        ((Form1)this.Owner).Enabled = true;
+                        ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
+                        ((Form1)this.Owner).buttonVygr.Visible = true;
+                        ((Form1)this.Owner).comboBox2.Visible = true;
+                        isConnected = true;
+                        ((Form1)this.Owner).isConnected = true;
+
+                       ((Form1)this.Owner).CreateZip();
+                           
+
+                       // this.Close();
+                    }
+                    else
+                    {
+                        isConnected = false;
+                        ((Form1)this.Owner).isConnected = false;
+                        ((Form1)this.Owner).radioButtonIzFile.Checked = true;
+                        ((Form1)this.Owner).Enabled = true;
+                        ((Form1)this.Owner).labelStatus2.Text = "режим работы локальный ";
+                        ((Form1)this.Owner).buttonVygr.Visible = false;
+                        ((Form1)this.Owner).comboBox2.Visible = false;
+
+                       // this.Close();
+                    }
+                    return;
                 }
             }
             else {
@@ -3163,9 +3227,35 @@ namespace shedule
         {
             if (radioButtonIzBD.Checked && !isConnected)
             {
-                Form3 f3 = new Form3();
-                f3.Show(this);
-                this.Enabled = false;
+                // Form3 f3 = new Form3();
+                // f3.Show(this);
+                //this.Enabled = false;
+                if (Program.isConnected())
+                {
+                    ((Form1)this.Owner).Enabled = true;
+                    ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
+                    ((Form1)this.Owner).buttonVygr.Visible = true;
+                    ((Form1)this.Owner).comboBox2.Visible = true;
+                    isConnected = true;
+                    ((Form1)this.Owner).isConnected = true;
+
+
+                  
+                }
+                else
+                {
+                    isConnected = false;
+                    ((Form1)this.Owner).isConnected = false;
+                    ((Form1)this.Owner).radioButtonIzFile.Checked = true;
+                    ((Form1)this.Owner).Enabled = true;
+                    ((Form1)this.Owner).labelStatus2.Text = "режим работы локальный ";
+                    ((Form1)this.Owner).buttonVygr.Visible = false;
+                    ((Form1)this.Owner).comboBox2.Visible = false;
+
+                    // this.Close();
+                }
+
+                return;
             }
             else
             {
