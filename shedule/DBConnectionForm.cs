@@ -24,6 +24,7 @@ namespace shedule
             this.tbServerLogin.Text = con.login;
             this.tbServerPassword.Text = con.password;
             this.tbSheme.Text = con.sheme;
+            this.tbNameDB.Text = con.nameDB;
         }
 
         public string GetLogin() {
@@ -40,6 +41,10 @@ namespace shedule
         public string GetSheme()
         {
             return this.tbSheme.Text;
+        }
+        public string GetNameDB()
+        {
+            return this.tbNameDB.Text;
         }
 
         public void SetLogin(String value)

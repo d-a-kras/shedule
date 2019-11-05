@@ -20,6 +20,7 @@ namespace shedule.Models
         private string Password;
         private string Sheme;
         private bool isActive;
+        private string NameDB;
 
         static private SQLiteConnection m_dbConn;
         static private SQLiteCommand m_sqlCmd;
@@ -33,6 +34,16 @@ namespace shedule.Models
             {
                 Server = value;
                 OnPropertyChanged("Server");
+            }
+        }
+
+        public string nameDB
+        {
+            get { return NameDB; }
+            set
+            {
+                NameDB = value;
+                OnPropertyChanged("NameDB");
             }
         }
 
@@ -91,7 +102,10 @@ namespace shedule.Models
                 db.Connections.Load();
                 BindingList<Connection> DataContext = db.Connections.Local.ToBindingList();
                 Connection con = db.Connections.First(t => t.IsActive==true);
-                String connectionString= $"Data Source="+con.Server+";Persist Security Info=True;User ID="+con.Login+";Password="+con.Password;
+
+                // String connectionString= $"Data Source="+con.Server+";Persist Security Info=True;User ID="+con.Login+";Password="+con.Password;
+                // String connectionString = $"Provider=PostgreSQL OLE DB Provider;Data Source=" + con.Server + ";location=" + con.NameDB + ";User ID=" + con.Login + ";password=" + con.Password + ";timeout=1000;";
+                String connectionString = $"Host=" + con.Server + ";Port=5432;Database=" + con.NameDB + ";Username=" + con.Login + ";Password=" + con.Password;
                 return connectionString;
 
 
@@ -116,8 +130,9 @@ namespace shedule.Models
         {
             try
             {
-
-                String connectionString = $"Data Source=" + con.Server + ";Persist Security Info=True;User ID=" + con.Login + ";Password=" + con.Password;
+                String connectionString = $"Host=" + con.Server + ";Port=5432;Database=" + con.NameDB + ";Username=" + con.Login + ";Password=" + con.Password;
+                //String connectionString = $"Provider=PostgreSQL OLE DB Provider;Data Source=" + con.Server + ";location="+ con.NameDB + ";User ID="+ con.Login +";password="+ con.Password + ";timeout=1000;";
+                //String connectionString = $"Data Source=" + con.Server + ";Persist Security Info=True;User ID=" + con.Login + ";Password=" + con.Password;
                 return connectionString;
 
 

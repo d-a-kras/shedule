@@ -40,14 +40,15 @@
             this.buttonDBEdit = new System.Windows.Forms.Button();
             this.buttonDBAdd = new System.Windows.Forms.Button();
             this.buttonDBDelete = new System.Windows.Forms.Button();
+            this.buttonActivateConnection = new System.Windows.Forms.Button();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Server = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sheme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.buttonActivateConnection = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
@@ -60,7 +61,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(550, 181);
+            this.groupBox1.Size = new System.Drawing.Size(655, 222);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки подключения к базе данных";
@@ -75,19 +76,20 @@
             this.Id,
             this.IsActive,
             this.Server,
+            this.NameDB,
             this.Login,
             this.Password,
             this.Sheme});
             this.dataGridViewDB.Location = new System.Drawing.Point(7, 19);
             this.dataGridViewDB.Name = "dataGridViewDB";
             this.dataGridViewDB.ReadOnly = true;
-            this.dataGridViewDB.Size = new System.Drawing.Size(543, 104);
+            this.dataGridViewDB.Size = new System.Drawing.Size(642, 155);
             this.dataGridViewDB.TabIndex = 9;
             this.dataGridViewDB.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(426, 132);
+            this.button2.Location = new System.Drawing.Point(531, 180);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(118, 36);
             this.button2.TabIndex = 8;
@@ -98,7 +100,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 144);
+            this.label4.Location = new System.Drawing.Point(19, 192);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 13);
             this.label4.TabIndex = 7;
@@ -106,7 +108,7 @@
             // 
             // bSaveSettings
             // 
-            this.bSaveSettings.Location = new System.Drawing.Point(556, 199);
+            this.bSaveSettings.Location = new System.Drawing.Point(666, 250);
             this.bSaveSettings.Name = "bSaveSettings";
             this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
             this.bSaveSettings.TabIndex = 1;
@@ -116,7 +118,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 199);
+            this.button1.Location = new System.Drawing.Point(27, 240);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -127,7 +129,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(93, 199);
+            this.button3.Location = new System.Drawing.Point(108, 240);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 3;
@@ -139,7 +141,7 @@
             // buttonDBEdit
             // 
             this.buttonDBEdit.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.buttonDBEdit.Location = new System.Drawing.Point(561, 73);
+            this.buttonDBEdit.Location = new System.Drawing.Point(666, 79);
             this.buttonDBEdit.Name = "buttonDBEdit";
             this.buttonDBEdit.Size = new System.Drawing.Size(75, 23);
             this.buttonDBEdit.TabIndex = 4;
@@ -149,7 +151,7 @@
             // 
             // buttonDBAdd
             // 
-            this.buttonDBAdd.Location = new System.Drawing.Point(561, 102);
+            this.buttonDBAdd.Location = new System.Drawing.Point(666, 108);
             this.buttonDBAdd.Name = "buttonDBAdd";
             this.buttonDBAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonDBAdd.TabIndex = 5;
@@ -159,13 +161,23 @@
             // 
             // buttonDBDelete
             // 
-            this.buttonDBDelete.Location = new System.Drawing.Point(561, 131);
+            this.buttonDBDelete.Location = new System.Drawing.Point(666, 137);
             this.buttonDBDelete.Name = "buttonDBDelete";
             this.buttonDBDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDBDelete.TabIndex = 6;
             this.buttonDBDelete.Text = "Удалить";
             this.buttonDBDelete.UseVisualStyleBackColor = true;
             this.buttonDBDelete.Click += new System.EventHandler(this.buttonDBDelete_Click);
+            // 
+            // buttonActivateConnection
+            // 
+            this.buttonActivateConnection.Location = new System.Drawing.Point(666, 31);
+            this.buttonActivateConnection.Name = "buttonActivateConnection";
+            this.buttonActivateConnection.Size = new System.Drawing.Size(75, 42);
+            this.buttonActivateConnection.TabIndex = 7;
+            this.buttonActivateConnection.Text = "Сделать по умолчанию";
+            this.buttonActivateConnection.UseVisualStyleBackColor = true;
+            this.buttonActivateConnection.Click += new System.EventHandler(this.button4_Click_1);
             // 
             // Id
             // 
@@ -187,6 +199,12 @@
             this.Server.HeaderText = "Сервер";
             this.Server.Name = "Server";
             this.Server.ReadOnly = true;
+            // 
+            // NameDB
+            // 
+            this.NameDB.HeaderText = "Имя БД";
+            this.NameDB.Name = "NameDB";
+            this.NameDB.ReadOnly = true;
             // 
             // Login
             // 
@@ -210,21 +228,11 @@
             // 
             this.form1BindingSource.DataSource = typeof(shedule.Form1);
             // 
-            // buttonActivateConnection
-            // 
-            this.buttonActivateConnection.Location = new System.Drawing.Point(561, 25);
-            this.buttonActivateConnection.Name = "buttonActivateConnection";
-            this.buttonActivateConnection.Size = new System.Drawing.Size(75, 42);
-            this.buttonActivateConnection.TabIndex = 7;
-            this.buttonActivateConnection.Text = "Сделать по умолчанию";
-            this.buttonActivateConnection.UseVisualStyleBackColor = true;
-            this.buttonActivateConnection.Click += new System.EventHandler(this.button4_Click_1);
-            // 
             // fSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 234);
+            this.ClientSize = new System.Drawing.Size(744, 275);
             this.Controls.Add(this.buttonActivateConnection);
             this.Controls.Add(this.buttonDBDelete);
             this.Controls.Add(this.buttonDBAdd);
@@ -258,12 +266,13 @@
         private System.Windows.Forms.Button buttonDBDelete;
         private System.Windows.Forms.DataGridView dataGridViewDB;
         private System.Windows.Forms.BindingSource form1BindingSource;
+        private System.Windows.Forms.Button buttonActivateConnection;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewCheckBoxColumn IsActive;
         private System.Windows.Forms.DataGridViewTextBoxColumn Server;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameDB;
         private System.Windows.Forms.DataGridViewTextBoxColumn Login;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sheme;
-        private System.Windows.Forms.Button buttonActivateConnection;
     }
 }

@@ -141,6 +141,7 @@ namespace shedule
                 connection.login = plForm.GetLogin();
                 connection.password = plForm.GetPassword();
                 connection.sheme = plForm.GetSheme();
+                connection.nameDB = plForm.GetNameDB();
 
                 db.SaveChanges();
                 ConnectionReadAll();

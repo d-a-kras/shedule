@@ -19,6 +19,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using log4net;
 using log4net.Config;
 using shedule.Models;
+using Npgsql;
 
 //DataVisualization.Charting.SeriesChartType.Renko
 //Excel.XlChartType.xlLineMarker
@@ -3123,44 +3124,42 @@ namespace shedule
         {
             Connection activeconnect = Connection.getActiveConnection();
             var connectionString = Connection.getConnectionString(activeconnect);
-
-           // var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
             string s1 = n.Year + "/" + n.Day + "/" + n.Month;
             string s2 = k.Year + "/" + k.Day + "/" + k.Month;
-            //string s1 = "2015" + "/" + "9" + "/" + "6";
-            //string s2 = "2015" + "/" + "8" + "/" + "7";
             string sql;
             sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
             if (currentShop.getIdShop() == 0) { sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
-            //string sql = "select * from dbo.get_StatisticByShopsDayHour('301','17/01/01', '2017/01/20 23:59:00')";
-            //string sql = "select * from dbo.get_StatisticByShopsDayHour('103','2017/05/01', '2017/15/09 23:59:00')";
-            //MessageBox.Show(sql);
             currentShop.daysSale = new List<daySale>();
             List<hourSale> hss = new List<hourSale>();
             daySale ds;
-            //List<string> results = new List<string>();
 
             int countAttemption = 0;
             int countRecords = 0;
             while (countRecords == 0 && countAttemption < 2)
             {
                 countAttemption++;
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
+                    
                     try
                     {
                         connection.Open();
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        command.CommandTimeout = 3000;
-                        SqlDataReader reader = command.ExecuteReader();
 
-                        while (reader.Read())
+                        using (var command = new NpgsqlCommand())
                         {
-                            hourSale h = new hourSale(currentShop.getIdShop(), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                            //results.Add($"{reader.GetInt16(0)};{reader.GetDateTime(1)};{reader.GetString(2)};{reader.GetString(3)};{reader.GetInt32(4)};{reader.GetInt32(5)};{reader.GetDouble(6)}");
-                            hss.Add(h);
-                            countRecords++;
+                            command.Connection = connection;
+                            command.CommandText = sql;
+                            command.CommandTimeout = 3000;
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    hourSale h = new hourSale(currentShop.getIdShop(), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                                    hss.Add(h);
+                                    countRecords++;
 
+                                }
+                            }
                         }
                     }
                     catch (System.Data.SqlClient.SqlException ex)
@@ -4029,14 +4028,16 @@ namespace shedule
             var connectionString = Connection.getConnectionString(activeconnect);
 
             //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-            using (connection = new SqlConnection(connectionString))
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
+
                 try
                 {
                     connection.Open();
+
                     if (connection.State == System.Data.ConnectionState.Open) { connect = true; return connect; }
                     else { connect = false; return connect; }
-
                 }
                 catch (SqlException ex)
                 {
@@ -4044,8 +4045,8 @@ namespace shedule
                     connect = false;
                     return connect;
                 }
-            }
 
+            }
 
         }
         /* public static void Http(int year){

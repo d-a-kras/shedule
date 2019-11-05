@@ -29,21 +29,25 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.bSaveSettings = new System.Windows.Forms.Button();
+            this.tbSheme = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.tbServerPassword = new System.Windows.Forms.TextBox();
             this.tbServerLogin = new System.Windows.Forms.TextBox();
             this.tbServerAddress = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.bSaveSettings = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbSheme = new System.Windows.Forms.TextBox();
+            this.tbNameDB = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.tbNameDB);
             this.groupBox1.Controls.Add(this.tbSheme);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tbServerPassword);
@@ -54,21 +58,26 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(277, 150);
+            this.groupBox1.Size = new System.Drawing.Size(277, 172);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки подключения к базе данных";
             // 
-            // bSaveSettings
+            // tbSheme
             // 
-            this.bSaveSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSaveSettings.Location = new System.Drawing.Point(197, 181);
-            this.bSaveSettings.Name = "bSaveSettings";
-            this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
-            this.bSaveSettings.TabIndex = 1;
-            this.bSaveSettings.Text = "Сохранить";
-            this.bSaveSettings.UseVisualStyleBackColor = true;
-            this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
+            this.tbSheme.Location = new System.Drawing.Point(72, 144);
+            this.tbSheme.Name = "tbSheme";
+            this.tbSheme.Size = new System.Drawing.Size(199, 20);
+            this.tbSheme.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 147);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Схема";
             // 
             // tbServerPassword
             // 
@@ -119,21 +128,32 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Логин:";
             // 
-            // label4
+            // bSaveSettings
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 121);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Схема";
+            this.bSaveSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bSaveSettings.Location = new System.Drawing.Point(201, 190);
+            this.bSaveSettings.Name = "bSaveSettings";
+            this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
+            this.bSaveSettings.TabIndex = 1;
+            this.bSaveSettings.Text = "Сохранить";
+            this.bSaveSettings.UseVisualStyleBackColor = true;
+            this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
             // 
-            // tbSheme
+            // tbNameDB
             // 
-            this.tbSheme.Location = new System.Drawing.Point(72, 121);
-            this.tbSheme.Name = "tbSheme";
-            this.tbSheme.Size = new System.Drawing.Size(199, 20);
-            this.tbSheme.TabIndex = 8;
+            this.tbNameDB.Location = new System.Drawing.Point(72, 118);
+            this.tbNameDB.Name = "tbNameDB";
+            this.tbNameDB.Size = new System.Drawing.Size(199, 20);
+            this.tbNameDB.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 121);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Имя ДБ";
             // 
             // DBConnectionForm
             // 
@@ -164,5 +184,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox tbSheme;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbNameDB;
     }
 }
