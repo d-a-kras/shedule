@@ -433,5 +433,14 @@ namespace shedule.Code
                 }
             }
         }
+
+        public static string NumberToString(int n)
+        {
+            string s = n.ToString();
+            if (s.Length==1) {
+                s = "0" + s;
+            }
+            return s;
+        }
     }
 }

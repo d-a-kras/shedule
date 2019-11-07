@@ -1893,7 +1893,7 @@ namespace shedule.Code
                     foreach (Smena sm1 in emp.smens)
                         if (sm1.getLenght() > 12)
                         {
-                            int x = 0;
+                           // int x = 0;
 
 
                         }

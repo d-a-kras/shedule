@@ -159,7 +159,7 @@ namespace shedule.Models
             }
             catch (SQLiteException ex)
             {
-
+                Logger.Error(ex.ToString());
                
             }
 
@@ -188,7 +188,7 @@ namespace shedule.Models
             }
             catch (SQLiteException ex)
             {
-
+                Logger.Error(ex.ToString());
             }
         }
 
@@ -229,14 +229,26 @@ namespace shedule.Models
                 db = new Models.ApplicationContext();
                 db.MinRab.Load();
                 BindingList<MinRab> DataContext = db.MinRab.Local.ToBindingList();
-
                 List<MinRab> mr = db.MinRab.Where(t => t.shopId == shopId).ToList();
+                if (mr.Count < 4)
+                {
+                    for (int i = 1; i < 5; i++)
+                    {
+                        MinRab minRab = db.MinRab.FirstOrDefault(t => t.shopId == shopId && t.employeetype == i);
+                        if (minRab==null) { 
+                        MinRab newmr = new MinRab((EmployeeType)i, 1, Program.currentShop.getIdShop(), 9, true);
+                        Create(newmr); 
+                      }
+                    }
+                     mr = db.MinRab.Where(t => t.shopId == shopId).ToList();
+                }
                 return mr;
 
 
             }
             catch (Exception ex)
             {
+                Logger.Error(ex.ToString());
                 return new List<MinRab>();
             }
 

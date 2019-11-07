@@ -22,9 +22,6 @@ namespace shedule.Models
         private bool isActive;
         private string NameDB;
 
-        static private SQLiteConnection m_dbConn;
-        static private SQLiteCommand m_sqlCmd;
-
         public int Id { get; set; }
 
         public string server

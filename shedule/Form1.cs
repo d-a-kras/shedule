@@ -1521,12 +1521,19 @@ namespace shedule
 
         private void button_refresh_list_shops_Click(object sender, EventArgs e)
         {
-            Program.setListShops();
-            Program.refreshFoldersShops();
+            ForDB.getShopsFromDB(); 
+            
             foreach (mShop h in Program.listShops)
             {
 
                 listBox1.Items.Add(h.getIdShop() + "_" + h.getAddress());
+            }
+            if (Program.listShops.Count > 0)
+            {
+                MessageBox.Show("Список магазинов обновлен");
+            }
+            else {
+                MessageBox.Show("Ошибка обновления списка магазинов");
             }
         }
 
@@ -1924,7 +1931,7 @@ namespace shedule
                 return;
             }
 
-            if (radioButtonIzBD.Checked && !isConnected)
+            if (radioButtonIzBD.Checked)
             {
                 // Form3 f3 = new Form3(3);
                 // f3.Show(this);
@@ -2976,7 +2983,7 @@ namespace shedule
                     return;
                 }
 
-                int kassirCount;
+               // int kassirCount;
 
                /* if (int.TryParse(tbMinRabCount.Text, out kassirCount))
                 {

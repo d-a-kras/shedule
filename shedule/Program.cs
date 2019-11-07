@@ -1963,12 +1963,11 @@ namespace shedule
 
     static class Program
     {
-        static public List<DataForCalendary> minholidays;
+       // static public List<DataForCalendary> minholidays;
         static public List<Shop> shops;
         static public Dictionary<int, String> GrafM=new Dictionary<int, string>();
         static public int normchas = 0;
         static public bool connect = false;
-        static public SqlConnection connection;
 
         // static public bool SozdanPrognoz = false;
         static public List<mShop> listShops = new List<mShop>();
@@ -3101,7 +3100,7 @@ namespace shedule
                         currentShop.MouthPrognoz.Add(d);
                     }
                     catch(Exception ex) {
-
+                        Logger.Error(ex.ToString());
                         MessageBox.Show($"Даты {i}.{fd[j].Month}.{fd[j].Year} нет в календаре!");
                     }
                 }
@@ -3124,62 +3123,35 @@ namespace shedule
         {
             Connection activeconnect = Connection.getActiveConnection();
             var connectionString = Connection.getConnectionString(activeconnect);
-            string s1 = n.Year + "/" + n.Day + "/" + n.Month;
-            string s2 = k.Year + "/" + k.Day + "/" + k.Month;
+            string s1 = n.Year + "/" + Helper.NumberToString(n.Month) + "/" + Helper.NumberToString(n.Day);
+            string s2 = k.Year + "/" + Helper.NumberToString(k.Month) + "/" + Helper.NumberToString(k.Day);
             string sql;
-            sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')";
-            if (currentShop.getIdShop() == 0) { sql = "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + Program.currentShop.getIdShopFM() + "', '" + s1 + "', '" + s2 + " 23:59:00')"; }
+            if (currentShop.getIdShop() == 0) {
+                id = Program.currentShop.getIdShopFM();
+            }
+
+            sql = ForDB.getSQL_statisticbyshopsdayhour(id,s1,s2, Connection.getSheme(activeconnect));  // "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')"; 
+
             currentShop.daysSale = new List<daySale>();
             List<hourSale> hss = new List<hourSale>();
             daySale ds;
 
             int countAttemption = 0;
-            int countRecords = 0;
-            while (countRecords == 0 && countAttemption < 2)
+            while (hss.Count == 0 && countAttemption < 2)
             {
                 countAttemption++;
-                using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-                {
-                    
-                    try
-                    {
-                        connection.Open();
+                hss = ForDB.getHourFromDB(connectionString, sql, currentShop.getIdShop());
 
-                        using (var command = new NpgsqlCommand())
-                        {
-                            command.Connection = connection;
-                            command.CommandText = sql;
-                            command.CommandTimeout = 3000;
-                            using (var reader = command.ExecuteReader())
-                            {
-                                while (reader.Read())
-                                {
-                                    hourSale h = new hourSale(currentShop.getIdShop(), reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                                    hss.Add(h);
-                                    countRecords++;
-
-                                }
-                            }
-                        }
-                    }
-                    catch (System.Data.SqlClient.SqlException ex)
-                    {
-                        MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
-
-                    }
-                    if (countRecords > 1) countAttemption = 2;
-                }
+                if (hss.Count > 1) countAttemption = 2;
             }
 
-            if (countRecords < 2 && Constants.IsThrowExceptionOnNullResult)
+            if (hss.Count < 2 && Constants.IsThrowExceptionOnNullResult)
             {
-                countRecords = 0;
                 countAttemption = 0;
                 MessageBox.Show("Ошибка соединения с базой данных ");
                 throw new Exception("Соединение с базой нестабильно, данные не были получены.");
             }
 
-            countRecords = 0;
             countAttemption = 0;
 
 
@@ -3508,19 +3480,6 @@ namespace shedule
 
         }
 
-        static public void refreshFoldersShops()
-        {
-            foreach (mShop shop in Program.listShops)
-            {
-                string pyth = Environment.CurrentDirectory + "/Shops/" + shop.getIdShop().ToString();
-                if (!Directory.Exists(pyth))
-                {
-                    Directory.CreateDirectory(pyth);
-                }
-
-            }
-        }
-
 
 
 
@@ -3591,6 +3550,7 @@ namespace shedule
             }
             catch (Exception ex)
             {
+                Logger.Error(ex.ToString());
                 throw new Exception($"Значение {year} недопустимо в качестве года!");
             }
 
@@ -3968,87 +3928,21 @@ namespace shedule
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                setListShops();
-
+                ForDB.getShopsFromDB();
             }
         }
-
-
-
-        static public void setListShops()
-        {
-
-            mShop h;
-            Connection connect = Connection.getActiveConnection();
-            var connectionString = Connection.getConnectionString(connect);
-            string sql = "select * from "+Connection.getSheme(connect)+"get_shops() order by КодМагазина";
-
-
-            using (connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    listShops.Clear();
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    command.CommandTimeout = 500;
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        // MessageBox.Show(reader.GetInt16(0)+" "+ reader.GetString(1));
-                        h = new mShop(reader.GetInt16(0), reader.GetString(1));
-                        listShops.Add(h);
-                        string writePath = Environment.CurrentDirectory + @"\Shops.txt";
-                        using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
-                        {
-                            foreach (mShop s in listShops)
-                                sw.WriteLine(s.getIdShop() + "_" + s.getAddress());
-                        }
-
-                    }
-
-                }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    MessageBox.Show("Ошибка соединения с базой данных " + ex.Message);
-                    // ReadListShops();
-                }
-            }
-
-
-        }
-
-        public static bool isConnect() { return connect; }
 
         public static bool isConnected()
         {
-           // var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
-            Connection activeconnect = Connection.getActiveConnection();
-            var connectionString = Connection.getConnectionString(activeconnect);
-
-            //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-
-                try
-                {
-                    connection.Open();
-
-                    if (connection.State == System.Data.ConnectionState.Open) { connect = true; return connect; }
-                    else { connect = false; return connect; }
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    connect = false;
-                    return connect;
-                }
-
-            }
-
+            Program.connect = ForDB.isConnected();
+            return Program.connect;
         }
+
+
+
+        public static bool isConnect() { return connect; }
+
+       
         /* public static void Http(int year){
              try{
                  string content;

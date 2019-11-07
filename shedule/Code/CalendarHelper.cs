@@ -28,6 +28,7 @@ namespace shedule.Code
                 }
                 catch (Exception ex)
                 {
+                    Logger.Error(ex.ToString());
                     throw new Exception($"Значение {year} недопустимо в качестве года!");
                 }
 

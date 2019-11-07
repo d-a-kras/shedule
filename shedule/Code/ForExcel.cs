@@ -23,7 +23,7 @@ namespace shedule.Code
         public static bool checkBoxMPeremSotr1 = false;
         public static bool checkBoxMReadShedule1 = false;
         public static bool checkBoxMUchetSmen1 = false;
-        public static string NameExcel;
+       // public static string NameExcel;
 
         public static void  ExportExcel(string filename, BackgroundWorker bg) {
 
