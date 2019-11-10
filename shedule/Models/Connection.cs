@@ -151,8 +151,19 @@ namespace shedule.Models
                 db = new Models.ApplicationContext();
                 db.Connections.Load();
                 BindingList<Connection> DataContext = db.Connections.Local.ToBindingList();
-                Connection con = db.Connections.First(t => t.IsActive == true);
-                
+                int connectionId = 0;
+                if (Program.currentShop!=null) {
+                    int shopid = Program.currentShop.getIdShop();
+                    DBShop shop = db.DBShops.First(t=>t.shopid==shopid);
+                    connectionId=shop.connectionId;
+                }
+                Connection con;
+                if (connectionId==0) {
+                    con = db.Connections.First(t => t.IsActive == true);
+                }
+                else {
+                    con = db.Connections.Find(connectionId);
+                }
                 return con;
 
 

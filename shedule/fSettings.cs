@@ -45,6 +45,19 @@ namespace shedule
             m_sqlCmd = new SQLiteCommand();
 
             ConnectionReadAll();
+            if (Program.currentShop != null)
+            {
+                int idshop = Program.currentShop.getIdShop();
+                DBShop shop = db.DBShops.First(t => t.shopid == idshop );
+                Connection connection = db.Connections.Find(shop.connectionId);
+
+                labelDBdefault.Text = connection.server + " " + connection.nameDB;
+                label2.Visible = true;
+            }
+            else {
+                buttonDefaultForShop.Visible = false;
+                label2.Visible=false;
+            }
         }
 
         private void bSaveSettings_Click(object sender, EventArgs e)
@@ -270,6 +283,36 @@ namespace shedule
 
             }
             else {
+                MessageBox.Show("Выберите соединение");
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click_2(object sender, EventArgs e)
+        {
+            if (dataGridViewDB.SelectedRows.Count > 0)
+            {
+                int index = dataGridViewDB.SelectedRows[0].Index;
+                int id = 0;
+                bool converted = Int32.TryParse(dataGridViewDB[0, index].Value.ToString(), out id);
+                if (converted == false)
+                    return;
+                int idshop = Program.currentShop.getIdShop();
+                DBShop shop = db.DBShops.First(t => t.shopid == idshop);
+
+                shop.connectionId = id;
+
+                db.SaveChanges();
+                Connection connection = db.Connections.Find(id);
+                MessageBox.Show("Соединение выбрано для магазина основным");
+                labelDBdefault.Text = connection.server + " " + connection.nameDB;
+            }
+            else
+            {
                 MessageBox.Show("Выберите соединение");
             }
         }

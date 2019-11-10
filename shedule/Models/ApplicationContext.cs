@@ -10,5 +10,6 @@ namespace shedule.Models
         }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<MinRab> MinRab { get; set; }
+        public DbSet<DBShop> DBShops { get; set; }
     }
 }

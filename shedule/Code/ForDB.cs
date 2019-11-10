@@ -86,21 +86,23 @@ namespace shedule.Code
                         }
                     }
 
-                    string writePath = Environment.CurrentDirectory + @"\Shops.txt";
-                    using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
-                    {
-                        
-                        foreach (mShop shop in Program.listShops)
-                        {
-                            string pyth = Environment.CurrentDirectory + "/Shops/" + shop.getIdShop().ToString();
-                            if (!Directory.Exists(pyth))
-                            {
-                                Directory.CreateDirectory(pyth);
-                            }
+                    /* string writePath = Environment.CurrentDirectory + @"\Shops.txt";
+                     using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
+                     {
 
-                            sw.WriteLine(shop.getIdShop() + "_" + shop.getAddress());
-                        }
-                    }
+                         foreach (mShop shop in Program.listShops)
+                         {
+                             string pyth = Environment.CurrentDirectory + "/Shops/" + shop.getIdShop().ToString();
+                             if (!Directory.Exists(pyth))
+                             {
+                                 Directory.CreateDirectory(pyth);
+                             }
+
+                             sw.WriteLine(shop.getIdShop() + "_" + shop.getAddress());
+                         }
+                     }*/
+                    DBShop.setShops(Program.listShops);
+                
 
                 }
                 catch (Exception ex)
