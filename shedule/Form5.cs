@@ -1,4 +1,5 @@
 ﻿
+using shedule.Code;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -166,17 +167,17 @@ namespace shedule
             switch (Program.tipDiagram)
             {
                 case 1: bg.ReportProgress(4);
-                    Program.createPrognoz3();
+                    Forecast.createPrognoz3();
                     bg.ReportProgress(10); break;
                 case 3:
                     bg.ReportProgress(4);
-                    Program.createPrognoz(false,false,true);
+                    Forecast.createPrognoz(false,false,true);
                     bg.ReportProgress(8);
                     Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12); break;
                 case 2:
                     bg.ReportProgress(4);
-                    Program.createPrognoz(false,false,true);
+                    Forecast.createPrognoz(false,false,true);
                     bg.ReportProgress(8);
                    Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12);break;

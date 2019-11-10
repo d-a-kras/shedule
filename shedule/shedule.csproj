@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="Code\CalendarHelper.cs" />
     <Compile Include="Code\ForDB.cs" />
+    <Compile Include="Code\Forecast.cs" />
     <Compile Include="Code\ForExcel.cs" />
     <Compile Include="Code\CopyHelper.cs" />
     <Compile Include="Code\Logger.cs" />

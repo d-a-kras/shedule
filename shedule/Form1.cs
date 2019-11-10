@@ -126,7 +126,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!Program.createPrognoz(false, false, true))
+                            if (!Forecast.createPrognoz(false, false, true))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -224,7 +224,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            Program.createPrognoz3();
+                            Forecast.createPrognoz3();
                         }
                         catch
                         {
@@ -353,7 +353,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!Program.createPrognoz(false, false, true))
+                            if (!Forecast.createPrognoz(false, false, true))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -481,7 +481,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!Program.createPrognoz(false, false, true))
+                            if (!Forecast.createPrognoz(false, false, true))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -614,7 +614,7 @@ namespace shedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!Program.createPrognoz(true, false, true))
+                            if (!Forecast.createPrognoz(true, false, true))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -2556,7 +2556,7 @@ namespace shedule
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                if (!Program.createPrognoz(false, Program.IsMpRezhim, true))
+                                if (!Forecast.createPrognoz(false, Program.IsMpRezhim, true))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
@@ -2628,7 +2628,7 @@ namespace shedule
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                if (!Program.createPrognoz(false, true, true))
+                                if (!Forecast.createPrognoz(false, true, true))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
@@ -2725,7 +2725,7 @@ namespace shedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
 
-                                if (!Program.createPrognoz(false, true, true))
+                                if (!Forecast.createPrognoz(false, true, true))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
@@ -2866,7 +2866,7 @@ namespace shedule
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                if (!Program.createPrognoz(true, Program.IsMpRezhim, true))
+                                if (!Forecast.createPrognoz(true, Program.IsMpRezhim, true))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
