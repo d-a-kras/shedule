@@ -117,7 +117,7 @@ namespace shedule.Models
 
         public static DBShop convertDBShop(mShop shop)
         {
-            return new DBShop(shop.getIdShop(), shop.getAddress(), Connection.getActiveConnection().Id );
+            return new DBShop(shop.getIdShop(), shop.getAddress(), Connection.getActiveConnection(Program.currentShop.getIdShop()).Id );
         }
 
         public static int getConnection(int Id)

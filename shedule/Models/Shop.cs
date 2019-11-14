@@ -74,6 +74,9 @@ namespace shedule.Models
             Program.newShop();
 
         }
+
+        public mShop convertShoptoMShop() => new mShop(this.getIdShop(), this.getAddress());
+
         /* public void setMinRab(MinRab mr) { this.minrab = mr; }*/
         public void setMinRab(List<MinRab> listMinRab) { this.ListMinRab = listMinRab; }
         public void AddTemplate(TemplateWorkingDay t)

@@ -142,7 +142,7 @@ namespace shedule.Models
             }
         }
 
-        public static Connection getActiveConnection()
+        public static Connection getActiveConnection(int currentShopId)
         {
             try
             {
@@ -152,8 +152,8 @@ namespace shedule.Models
                 db.Connections.Load();
                 BindingList<Connection> DataContext = db.Connections.Local.ToBindingList();
                 int connectionId = 0;
-                if (Program.currentShop!=null) {
-                    int shopid = Program.currentShop.getIdShop();
+                if (currentShopId!=0) {
+                    int shopid = currentShopId;
                     DBShop shop = db.DBShops.First(t=>t.shopid==shopid);
                     connectionId=shop.connectionId;
                 }

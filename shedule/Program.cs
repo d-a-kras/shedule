@@ -1521,112 +1521,6 @@ namespace shedule
     }
 
     [Serializable]
-    public class hourSale
-    {
-
-        private int idShop;
-        private DateTime Data;
-        private string weekday;
-        private string NHour;
-        private int countCheck;
-        private int countClick;
-        private double countTov;
-        private int Minute;
-
-        public double getCountTov()
-        {
-            return this.countTov;
-        }
-
-        public void setClick(int c)
-        {
-            this.countClick = c;
-        }
-
-        public void setCheck(int ch)
-        {
-            this.countCheck = ch;
-        }
-
-        public hourSale(int idS, DateTime D, string NH, int countCh, int countCl)
-        {
-            this.idShop = idS;
-            this.Data = D;
-
-            this.NHour = NH;
-            this.countCheck = countCh;
-            this.countClick = countCl;
-
-        }
-
-        public hourSale(int idS, DateTime D, string NH, string dn, int countCh, int countCl)
-        {
-            this.idShop = idS;
-            this.Data = D;
-            this.weekday = dn;
-            this.NHour = NH;
-            this.countCheck = countCh;
-            this.countClick = countCl;
-
-        }
-
-        public hourSale(int ids, DateTime D, string NH, int m)
-        {
-            this.idShop = ids;
-            this.Data = D;
-            this.NHour = NH;
-            this.Minute = m;
-        }
-
-        public hourSale(int idS, DateTime D, string NH, string w, int countCh, int countCl, double ct)
-        {
-            this.idShop = idS;
-            this.Data = D;
-            this.weekday = w;
-            this.NHour = NH;
-            this.countCheck = countCh;
-            this.countClick = countCl;
-            this.countTov = ct;
-        }
-
-        public void setTime(int n)
-        {
-            this.Minute = n;
-
-        }
-
-        public int getIdShop()
-        {
-            return this.idShop;
-        }
-
-        public DateTime getData() { return this.Data; }
-
-        public string getWeekday() { return this.weekday; }
-
-        public string getNHour() { return this.NHour; }
-
-        public int getCountClick() { return this.countClick; }
-
-        public int getCountCheck() { return this.countCheck; }
-
-        public int getMinut()
-        {
-            if (this.Minute == 0)
-            {
-                return (this.getCountCheck() * Program.TimeRech + this.getCountClick() * Program.TimeClick) * Program.KoefKassira / 100;
-            }
-            else return this.Minute;
-        }
-
-        public int getTime()
-        {
-            return (this.getCountCheck() * Program.TimeClick + this.getCountClick() * Program.TimeClick);
-        }
-
-    }
-
-    [Serializable]
     public class daySale
     {
         public List<hourSale> hoursSale;
@@ -2726,105 +2620,7 @@ namespace shedule
         }
 
 
-
-
        
-
-
-
-
-        public static void createListDaySale(DateTime n, DateTime k, int id)
-        {
-            Connection activeconnect = Connection.getActiveConnection();
-            var connectionString = Connection.getConnectionString(activeconnect);
-            string s1 = n.Year + "/" + Helper.NumberToString(n.Month) + "/" + Helper.NumberToString(n.Day);
-            string s2 = k.Year + "/" + Helper.NumberToString(k.Month) + "/" + Helper.NumberToString(k.Day);
-            string sql;
-            if (currentShop.getIdShop() == 0) {
-                id = Program.currentShop.getIdShopFM();
-            }
-
-            sql = ForDB.getSQL_statisticbyshopsdayhour(id,s1,s2, Connection.getSheme(activeconnect));  // "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')"; 
-
-            currentShop.daysSale = new List<daySale>();
-            List<hourSale> hss = new List<hourSale>();
-            daySale ds;
-
-            int countAttemption = 0;
-            while (hss.Count == 0 && countAttemption < 2)
-            {
-                countAttemption++;
-                hss = ForDB.getHourFromDB(connectionString, sql, currentShop.getIdShop());
-
-                if (hss.Count > 1) countAttemption = 2;
-            }
-
-            if (hss.Count < 2 && Constants.IsThrowExceptionOnNullResult)
-            {
-                countAttemption = 0;
-                MessageBox.Show("Ошибка соединения с базой данных ");
-                throw new Exception("Соединение с базой нестабильно, данные не были получены.");
-            }
-
-            countAttemption = 0;
-
-
-            if (hss.Count > 200)
-            {
-                //посчитать количество дней 
-                TimeSpan ts = k - n;
-
-                DateTime d = n;
-
-                for (int i = 0; i <= ts.Days + 1; i++)
-                {
-
-                    ds = new daySale(Program.currentShop.getIdShop(), d);
-                    currentShop.daysSale.Add(ds);
-                    d = d.AddDays(1.0d);
-                }
-                // MessageBox.Show("Количество дней по ts " + ts.Days.ToString());
-                //  MessageBox.Show("Количество часов "+hss.Count.ToString());
-                foreach (hourSale hs in hss)
-                {
-                    currentShop.daysSale.Find(x => x.getData().ToShortDateString() == hs.getData().ToShortDateString()).Add(hs);
-                }
-
-                //using (StreamWriter sm = new StreamWriter(@"D:\Users\tailer_d\Desktop\test\test.txt"))
-                //{
-                //    foreach (var s in results)
-                //    {
-                //        sm.WriteLine(s);
-                //    }
-                //}
-
-
-            }
-            else
-            {
-                if (hss.Count > 0)
-                {
-                    string max = hss.Max(t => t.getData()).ToShortDateString();
-
-                    MessageBox.Show("Данных недостаточно. Последняя запись в базу данных " + max);
-                }
-                else {
-                    MessageBox.Show("Из базы данных не вернулись значения за прошлый месяц");
-                }
-                Form6 f6 = new Form6();
-                f6.ShowDialog();
-                var newid = f6.newId;
-                if (++errorNum <= maxErrorNum)
-                {
-                    createListDaySale(n, k, newid);
-                }
-                else
-                {
-                    throw new Exception("Соединение с базой нестабильно, выгрузка невозможна.");
-                }
-
-            }
-        }
 
         /*static List<ForChart> createSaleForChart(){
 
@@ -2899,7 +2695,7 @@ namespace shedule
         static public List<hourSale> createDaySale(int idShop, DateTime dt)
         {
             //var connectionString = $"Data Source={Settings.Default.DatabaseAddress};Persist Security Info=True;User ID={Program.login};Password={Program.password}";
-            Connection activeconnect = Connection.getActiveConnection();
+            Connection activeconnect = Connection.getActiveConnection(Program.currentShop.getIdShop());
             var connectionString = Connection.getConnectionString(activeconnect);
             string s1 = dt.Year + "/" + dt.Day + "/" + dt.Month;
             string s2 = dt.Year + "/" + dt.Day + "/" + dt.Month;
@@ -3514,10 +3310,6 @@ namespace shedule
             {
                 Logger.Log.Error("Произошла ошибка! " + ex.ToString());
             }
-
-
-
-
 
         }
 

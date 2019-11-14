@@ -21,7 +21,7 @@ namespace shedule.Code
                 try
                 {
                     connection.Open();
-
+                    
                     using (var command = new NpgsqlCommand())
                     {
                         command.Connection = connection;
@@ -58,7 +58,7 @@ namespace shedule.Code
         public static void getShopsFromDB()
         {
             mShop h;
-            Connection connect = Connection.getActiveConnection();
+            Connection connect = Connection.getActiveConnection(Program.currentShop.getIdShop());
             var connectionString = Connection.getConnectionString(connect);
             string sql = "select * from " + Connection.getSheme(connect) + "get_shops() order by КодМагазина";
             using (var connection = new NpgsqlConnection(connectionString))
@@ -116,7 +116,7 @@ namespace shedule.Code
         {
             bool connect = false;
             // var connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=" + l + ";Password=" + p;
-            Connection activeconnect = Connection.getActiveConnection();
+            Connection activeconnect = Connection.getActiveConnection(Program.currentShop.getIdShop());
             var connectionString = Connection.getConnectionString(activeconnect);
 
             //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";

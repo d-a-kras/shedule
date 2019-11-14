@@ -98,26 +98,7 @@ namespace shedule
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Shop shop = Program.currentShop;
-            string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + "\\текущий график.xlsx";
-          
-            if (!File.Exists(fc))
-            {
-                MessageBox.Show(File.Exists(fc).ToString());
-                fc = Settings.Default.folder + @"\" + shop.getIdShop() + ".xlsx";
-
-            }
-            else if (!File.Exists(fc))
-            {
-                MessageBox.Show("Файл с текущим графиком для магазина " + shop.getIdShop() + "  не найден");
-            }
-            else
-            {
-                Program.file = fc;
-                MessageBox.Show("Файл с текущим графиком для магазина " + shop.getIdShop() + "  найден"+ Program.file);
-            }
-
-
+            ForForecast.initForecasts();
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)

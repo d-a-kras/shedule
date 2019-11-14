@@ -167,17 +167,17 @@ namespace shedule
             switch (Program.tipDiagram)
             {
                 case 1: bg.ReportProgress(4);
-                    Forecast.createPrognoz3();
+                    ForForecast.createPrognoz3();
                     bg.ReportProgress(10); break;
                 case 3:
                     bg.ReportProgress(4);
-                    Forecast.createPrognoz(false,false,true);
+                    ForForecast.createPrognoz(false,false,true);
                     bg.ReportProgress(8);
                     Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12); break;
                 case 2:
                     bg.ReportProgress(4);
-                    Forecast.createPrognoz(false,false,true);
+                    ForForecast.createPrognoz(false,false,true);
                     bg.ReportProgress(8);
                    Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12);break;

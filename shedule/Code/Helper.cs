@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using LinqToExcel;
+using shedule.Models;
 
 namespace shedule.Code
 {

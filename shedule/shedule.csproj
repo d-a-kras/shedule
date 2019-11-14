@@ -126,7 +126,7 @@
   <ItemGroup>
     <Compile Include="Code\CalendarHelper.cs" />
     <Compile Include="Code\ForDB.cs" />
-    <Compile Include="Code\Forecast.cs" />
+    <Compile Include="Code\ForForecast.cs" />
     <Compile Include="Code\ForExcel.cs" />
     <Compile Include="Code\CopyHelper.cs" />
     <Compile Include="Code\Logger.cs" />
@@ -190,8 +190,10 @@
     <Compile Include="Models\ApplicationContext.cs" />
     <Compile Include="Models\DBShop.cs" />
     <Compile Include="Models\EmployeeType.cs" />
+    <Compile Include="Models\hourSale.cs" />
     <Compile Include="Models\MinRab.cs" />
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Forecast.cs" />
     <Compile Include="Models\Shop.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

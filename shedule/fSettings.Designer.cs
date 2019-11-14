@@ -30,7 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.labelDBdefault = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.dataGridViewDB = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Server = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sheme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.bSaveSettings = new System.Windows.Forms.Button();
@@ -42,17 +52,7 @@
             this.buttonDBDelete = new System.Windows.Forms.Button();
             this.buttonActivateConnection = new System.Windows.Forms.Button();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Server = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sheme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonDefaultForShop = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.labelDBdefault = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
@@ -75,6 +75,32 @@
             this.groupBox1.Text = "Настройки подключения к базе данных";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // labelDBdefault
+            // 
+            this.labelDBdefault.AutoSize = true;
+            this.labelDBdefault.Location = new System.Drawing.Point(248, 178);
+            this.labelDBdefault.Name = "labelDBdefault";
+            this.labelDBdefault.Size = new System.Drawing.Size(0, 13);
+            this.labelDBdefault.TabIndex = 13;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 204);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(218, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Путь до папки сохранения по умолчанию:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 178);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(235, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Текущее соединение для данного магазина:";
+            // 
             // dataGridViewDB
             // 
             this.dataGridViewDB.AllowUserToAddRows = false;
@@ -94,6 +120,51 @@
             this.dataGridViewDB.Size = new System.Drawing.Size(642, 153);
             this.dataGridViewDB.TabIndex = 9;
             this.dataGridViewDB.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // IsActive
+            // 
+            this.IsActive.HeaderText = "Основное соединение";
+            this.IsActive.Name = "IsActive";
+            this.IsActive.ReadOnly = true;
+            this.IsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Server
+            // 
+            this.Server.HeaderText = "Сервер";
+            this.Server.Name = "Server";
+            this.Server.ReadOnly = true;
+            // 
+            // NameDB
+            // 
+            this.NameDB.HeaderText = "Имя БД";
+            this.NameDB.Name = "NameDB";
+            this.NameDB.ReadOnly = true;
+            // 
+            // Login
+            // 
+            this.Login.HeaderText = "Пользователь";
+            this.Login.Name = "Login";
+            this.Login.ReadOnly = true;
+            // 
+            // Password
+            // 
+            this.Password.HeaderText = "Пароль";
+            this.Password.Name = "Password";
+            this.Password.ReadOnly = true;
+            // 
+            // Sheme
+            // 
+            this.Sheme.HeaderText = "Схема";
+            this.Sheme.Name = "Sheme";
+            this.Sheme.ReadOnly = true;
             // 
             // button2
             // 
@@ -143,7 +214,6 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // buttonDBEdit
@@ -191,51 +261,6 @@
             // 
             this.form1BindingSource.DataSource = typeof(shedule.Form1);
             // 
-            // Id
-            // 
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // IsActive
-            // 
-            this.IsActive.HeaderText = "Основное соединение";
-            this.IsActive.Name = "IsActive";
-            this.IsActive.ReadOnly = true;
-            this.IsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.IsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Server
-            // 
-            this.Server.HeaderText = "Сервер";
-            this.Server.Name = "Server";
-            this.Server.ReadOnly = true;
-            // 
-            // NameDB
-            // 
-            this.NameDB.HeaderText = "Имя БД";
-            this.NameDB.Name = "NameDB";
-            this.NameDB.ReadOnly = true;
-            // 
-            // Login
-            // 
-            this.Login.HeaderText = "Пользователь";
-            this.Login.Name = "Login";
-            this.Login.ReadOnly = true;
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.Name = "Password";
-            this.Password.ReadOnly = true;
-            // 
-            // Sheme
-            // 
-            this.Sheme.HeaderText = "Схема";
-            this.Sheme.Name = "Sheme";
-            this.Sheme.ReadOnly = true;
-            // 
             // buttonDefaultForShop
             // 
             this.buttonDefaultForShop.Location = new System.Drawing.Point(666, 60);
@@ -245,32 +270,6 @@
             this.buttonDefaultForShop.Text = "Сделать по умолчанию для магазина";
             this.buttonDefaultForShop.UseVisualStyleBackColor = true;
             this.buttonDefaultForShop.Click += new System.EventHandler(this.button4_Click_2);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 178);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(235, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Текущее соединение для данного магазина:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 204);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(218, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Путь до папки сохранения по умолчанию:";
-            // 
-            // labelDBdefault
-            // 
-            this.labelDBdefault.AutoSize = true;
-            this.labelDBdefault.Location = new System.Drawing.Point(248, 178);
-            this.labelDBdefault.Name = "labelDBdefault";
-            this.labelDBdefault.Size = new System.Drawing.Size(0, 13);
-            this.labelDBdefault.TabIndex = 13;
             // 
             // fSettings
             // 
