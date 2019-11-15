@@ -1,4 +1,4 @@
-﻿using shedule.Models;
+﻿using schedule.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shedule.Code
+namespace schedule.Code
 {
     public static class CalendarHelper
     {

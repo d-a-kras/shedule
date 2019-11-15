@@ -11,7 +11,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace shedule.Code
+namespace schedule.Code
 {
     class ForExcel
     {
@@ -21,7 +21,7 @@ namespace shedule.Code
         public static bool readVarSmen = true;
         public static int comboBoxMCountPerson1 = 0;
         public static bool checkBoxMPeremSotr1 = false;
-        public static bool checkBoxMReadShedule1 = false;
+        public static bool checkBoxMReadschedule1 = false;
         public static bool checkBoxMUchetSmen1 = false;
        // public static string NameExcel;
 

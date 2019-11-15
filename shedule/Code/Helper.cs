@@ -8,9 +8,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using LinqToExcel;
-using shedule.Models;
+using schedule.Models;
 
-namespace shedule.Code
+namespace schedule.Code
 {
     public static class Helper
     {

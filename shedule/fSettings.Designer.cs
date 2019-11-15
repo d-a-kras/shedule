@@ -1,4 +1,4 @@
-﻿namespace shedule
+﻿namespace schedule
 {
     partial class fSettings
     {
@@ -46,7 +46,6 @@
             this.bSaveSettings = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.button3 = new System.Windows.Forms.Button();
             this.buttonDBEdit = new System.Windows.Forms.Button();
             this.buttonDBAdd = new System.Windows.Forms.Button();
             this.buttonDBDelete = new System.Windows.Forms.Button();
@@ -206,16 +205,6 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(93, 250);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // buttonDBEdit
             // 
             this.buttonDBEdit.Cursor = System.Windows.Forms.Cursors.Arrow;
@@ -259,7 +248,7 @@
             // 
             // form1BindingSource
             // 
-            this.form1BindingSource.DataSource = typeof(shedule.Form1);
+            this.form1BindingSource.DataSource = typeof(schedule.Form1);
             // 
             // buttonDefaultForShop
             // 
@@ -281,7 +270,6 @@
             this.Controls.Add(this.buttonDBDelete);
             this.Controls.Add(this.buttonDBAdd);
             this.Controls.Add(this.buttonDBEdit);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.bSaveSettings);
             this.Controls.Add(this.groupBox1);
@@ -304,7 +292,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button buttonDBEdit;
         private System.Windows.Forms.Button buttonDBAdd;
         private System.Windows.Forms.Button buttonDBDelete;

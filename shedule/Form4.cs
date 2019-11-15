@@ -6,10 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using shedule.Code;
-using shedule.Models;
+using schedule.Code;
+using schedule.Models;
 
-namespace shedule
+namespace schedule
 {
     public partial class Form4 : Form
     {

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shedule.Code
+namespace schedule.Code
 {
     /// <summary>
     /// Класс для полного глубокого копирования объектов

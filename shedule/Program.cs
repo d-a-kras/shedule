@@ -14,11 +14,11 @@ using System.Drawing;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Xml.Linq;
 using System.Net.Mail;
-using shedule.Code;
+using schedule.Code;
 using System.Runtime.Serialization.Formatters.Binary;
 using log4net;
 using log4net.Config;
-using shedule.Models;
+using schedule.Models;
 using Npgsql;
 
 //DataVisualization.Charting.SeriesChartType.Renko
@@ -27,7 +27,7 @@ using Npgsql;
 //.Salmon розовый
 // .LightGreen зеленый
 
-namespace shedule
+namespace schedule
 {
     public class MinPers{
         public int Ncount;

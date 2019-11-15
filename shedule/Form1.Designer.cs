@@ -1,4 +1,4 @@
-﻿namespace shedule
+﻿namespace schedule
 {
     partial class Form1
     {
@@ -47,7 +47,7 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.buttonReadMGraf = new System.Windows.Forms.Button();
-            this.checkBoxMReadShedule = new System.Windows.Forms.CheckBox();
+            this.checkBoxMReadschedule = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.checkBoxMUchetSmen = new System.Windows.Forms.CheckBox();
             this.comboBoxMCountPerson = new System.Windows.Forms.ComboBox();
@@ -136,15 +136,15 @@
             this.label17 = new System.Windows.Forms.Label();
             this.lbCurrentVersion = new System.Windows.Forms.Label();
             this.bSettings = new System.Windows.Forms.Button();
-            this.getStatisticByShopsDayHourBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataSet1 = new shedule.DataSet1();
-            this.get_StatisticByShopsDayHourTableAdapter = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
-            this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.button12 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.getStatisticByShopsDayHourBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataSet1 = new schedule.DataSet1();
+            this.get_StatisticByShopsDayHourTableAdapter = new schedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
+            this.get_StatisticByShopsDayHourTableAdapter1 = new schedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.panelMultShops.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -260,6 +260,7 @@
             this.buttonTest.TabIndex = 11;
             this.buttonTest.Text = "Test";
             this.buttonTest.UseVisualStyleBackColor = true;
+            this.buttonTest.UseWaitCursor = true;
             this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
             // panelMultShops
@@ -323,7 +324,7 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.buttonReadMGraf);
-            this.tabPage4.Controls.Add(this.checkBoxMReadShedule);
+            this.tabPage4.Controls.Add(this.checkBoxMReadschedule);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.checkBoxMUchetSmen);
             this.tabPage4.Controls.Add(this.comboBoxMCountPerson);
@@ -352,16 +353,16 @@
             this.buttonReadMGraf.UseVisualStyleBackColor = true;
             this.buttonReadMGraf.Click += new System.EventHandler(this.buttonReadMGraf_Click);
             // 
-            // checkBoxMReadShedule
+            // checkBoxMReadschedule
             // 
-            this.checkBoxMReadShedule.AutoSize = true;
-            this.checkBoxMReadShedule.Location = new System.Drawing.Point(50, 216);
-            this.checkBoxMReadShedule.Name = "checkBoxMReadShedule";
-            this.checkBoxMReadShedule.Size = new System.Drawing.Size(233, 17);
-            this.checkBoxMReadShedule.TabIndex = 14;
-            this.checkBoxMReadShedule.Text = "не считывать график за прошлый месяц";
-            this.checkBoxMReadShedule.UseVisualStyleBackColor = true;
-            this.checkBoxMReadShedule.CheckedChanged += new System.EventHandler(this.checkBoxMReadShedule_CheckedChanged);
+            this.checkBoxMReadschedule.AutoSize = true;
+            this.checkBoxMReadschedule.Location = new System.Drawing.Point(50, 216);
+            this.checkBoxMReadschedule.Name = "checkBoxMReadschedule";
+            this.checkBoxMReadschedule.Size = new System.Drawing.Size(233, 17);
+            this.checkBoxMReadschedule.TabIndex = 14;
+            this.checkBoxMReadschedule.Text = "не считывать график за прошлый месяц";
+            this.checkBoxMReadschedule.UseVisualStyleBackColor = true;
+            this.checkBoxMReadschedule.CheckedChanged += new System.EventHandler(this.checkBoxMReadschedule_CheckedChanged);
             // 
             // label9
             // 
@@ -1320,24 +1321,6 @@
             this.bSettings.UseVisualStyleBackColor = true;
             this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
             // 
-            // getStatisticByShopsDayHourBindingSource
-            // 
-            this.getStatisticByShopsDayHourBindingSource.DataMember = "get_StatisticByShopsDayHour";
-            this.getStatisticByShopsDayHourBindingSource.DataSource = this.dataSet1;
-            // 
-            // dataSet1
-            // 
-            this.dataSet1.DataSetName = "DataSet1";
-            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // get_StatisticByShopsDayHourTableAdapter
-            // 
-            this.get_StatisticByShopsDayHourTableAdapter.ClearBeforeFill = true;
-            // 
-            // get_StatisticByShopsDayHourTableAdapter1
-            // 
-            this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
-            // 
             // button12
             // 
             this.button12.Location = new System.Drawing.Point(838, 13);
@@ -1362,6 +1345,24 @@
             this.timer2.Interval = 1000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
+            // getStatisticByShopsDayHourBindingSource
+            // 
+            this.getStatisticByShopsDayHourBindingSource.DataMember = "get_StatisticByShopsDayHour";
+            this.getStatisticByShopsDayHourBindingSource.DataSource = this.dataSet1;
+            // 
+            // dataSet1
+            // 
+            this.dataSet1.DataSetName = "DataSet1";
+            this.dataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // get_StatisticByShopsDayHourTableAdapter
+            // 
+            this.get_StatisticByShopsDayHourTableAdapter.ClearBeforeFill = true;
+            // 
+            // get_StatisticByShopsDayHourTableAdapter1
+            // 
+            this.get_StatisticByShopsDayHourTableAdapter1.ClearBeforeFill = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1383,7 +1384,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "График работы персонала, v1.3.3";
+            this.Text = "График работы персонала";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelMultShops.ResumeLayout(false);
@@ -1523,7 +1524,7 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Button buttonReadMGraf;
-        private System.Windows.Forms.CheckBox checkBoxMReadShedule;
+        private System.Windows.Forms.CheckBox checkBoxMReadschedule;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkBoxMUchetSmen;
         private System.Windows.Forms.ComboBox comboBoxMCountPerson;

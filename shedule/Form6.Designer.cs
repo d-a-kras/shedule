@@ -1,4 +1,4 @@
-﻿namespace shedule
+﻿namespace schedule
 {
     partial class Form6
     {

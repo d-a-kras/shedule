@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shedule.Models
+namespace schedule.Models
 {
     public enum EmployeeType
     {

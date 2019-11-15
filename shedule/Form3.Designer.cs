@@ -1,4 +1,4 @@
-﻿namespace shedule
+﻿namespace schedule
 {
     partial class Form3
     {
@@ -33,7 +33,7 @@
             this.labelLogin = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.get_StatisticByShopsDayHourTableAdapter1 = new shedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
+            this.get_StatisticByShopsDayHourTableAdapter1 = new schedule.DataSet1TableAdapters.get_StatisticByShopsDayHourTableAdapter();
             this.SuspendLayout();
             // 
             // textBoxLogin
@@ -42,7 +42,7 @@
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
             this.textBoxLogin.TabIndex = 0;
-            this.textBoxLogin.Text = global::shedule.Settings.Default.DatabaseLogin;
+            this.textBoxLogin.Text = global::schedule.Settings.Default.DatabaseLogin;
             // 
             // textBoxPassword
             // 
@@ -50,7 +50,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.textBoxPassword.TabIndex = 1;
-            this.textBoxPassword.Text = global::shedule.Settings.Default.DatabasePassword;
+            this.textBoxPassword.Text = global::schedule.Settings.Default.DatabasePassword;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // labelLogin

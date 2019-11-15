@@ -13,14 +13,14 @@ using System.Threading;
 using System.ComponentModel;
 using System.IO.Compression;
 using Ionic.Zip;
-using shedule.Code;
+using schedule.Code;
 using Point = System.Drawing.Point;
 using System.Diagnostics;
 using System.Linq;
 using Application = System.Windows.Forms.Application;
-using shedule.Models;
+using schedule.Models;
 
-namespace shedule
+namespace schedule
 {
     public partial class Form1 : Form
     {
@@ -1135,7 +1135,7 @@ namespace shedule
             Program.ReadListShops();
             // Program.setListShops();
             tabControl1.Visible = false;
-            buttonTest.Visible = false;
+           // buttonTest.Visible = false;
             progressBar1.Visible = false;
             label3.Visible = false;
 
@@ -1574,7 +1574,7 @@ namespace shedule
             Program.ReadTekChedule(openFileDialog1.FileName);
         }
 
-        private void buttonReadTekShedule_Click(object sender, EventArgs e)
+        private void buttonReadTekschedule_Click(object sender, EventArgs e)
         {
             // openFileDialog1.ShowDialog();
         }
@@ -1615,10 +1615,7 @@ namespace shedule
         {
             try
             {
-                foreach (Process proc in Process.GetProcessesByName("EXCEL"))
-                {
-                    proc.Dispose();
-                }
+                ForForecast.initForecasts();
             }
             catch (Exception ex)
             {
@@ -2290,7 +2287,7 @@ namespace shedule
                 //MessageBox.Show(Program.shops.Count + "");
                 //ForExcel.comboBoxMCountPerson1 = comboBoxMCountPerson.SelectedIndex;
                 ForExcel.checkBoxMPeremSotr1 = checkBoxMPeremSotr.Checked;
-                ForExcel.checkBoxMReadShedule1 = checkBoxMReadShedule.Checked;
+                ForExcel.checkBoxMReadschedule1 = checkBoxMReadschedule.Checked;
                 ForExcel.checkBoxMUchetSmen1 = checkBoxMUchetSmen.Checked;
 
                 if (Program.isConnected())
@@ -2528,7 +2525,7 @@ namespace shedule
                                 {
                                     Program.currentShop.SortSotr = false;
                                 }
-                                if (!ForExcel.checkBoxMReadShedule1)
+                                if (!ForExcel.checkBoxMReadschedule1)
                                 {
 
                                     bool b = Program.GrafM.TryGetValue(shop.getIdShop(), out Program.file);
@@ -4045,9 +4042,9 @@ namespace shedule
 
         }
 
-        private void checkBoxMReadShedule_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxMReadschedule_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBoxMReadShedule.Checked == true)
+            if (checkBoxMReadschedule.Checked == true)
             {
                 buttonReadMGraf.Visible = false;
             }

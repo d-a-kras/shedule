@@ -6,9 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using shedule.Code;
+using schedule.Code;
 
-namespace shedule
+namespace schedule
 {
     /// <summary>
     /// Класс для генерации файлика с праздничными и предпраздничными днями для всех магазинов

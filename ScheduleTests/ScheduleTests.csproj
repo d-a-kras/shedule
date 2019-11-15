@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\shedule\shedule.csproj">
+    <ProjectReference Include="..\shedule\Schedule.csproj">
       <Project>{a90d9962-fbb3-497e-8428-bf4e26420f4d}</Project>
-      <Name>shedule</Name>
+      <Name>Schedule</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

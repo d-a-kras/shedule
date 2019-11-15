@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using shedule.Models;
+using schedule.Models;
 
-namespace shedule
+namespace schedule
 {
     public partial class DBConnectionForm : Form
     {

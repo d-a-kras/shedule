@@ -1,4 +1,4 @@
-﻿using shedule.Code;
+﻿using schedule.Code;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shedule.Models
+namespace schedule.Models
 {
     public class MinRab  : INotifyPropertyChanged
     {

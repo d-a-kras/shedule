@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using shedule.Models;
+using schedule.Models;
 using System.Data.Entity;
 using System.Data.SQLite;
-using shedule.Code;
+using schedule.Code;
 
-namespace shedule
+namespace schedule
 {
 
    
@@ -98,7 +98,7 @@ namespace shedule
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ForForecast.initForecasts();
+            
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)

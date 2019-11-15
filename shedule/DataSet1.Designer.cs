@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace shedule {
+namespace schedule {
     
     
     /// <summary>
@@ -858,7 +858,7 @@ namespace shedule {
         }
     }
 }
-namespace shedule.DataSet1TableAdapters {
+namespace schedule.DataSet1TableAdapters {
     
     
     /// <summary>
@@ -996,7 +996,7 @@ namespace shedule.DataSet1TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::shedule.Properties.Settings.Default.ConnectionString;
+            this._connection.ConnectionString = global::schedule.Properties.Settings.Default.ConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

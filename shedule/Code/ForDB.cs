@@ -1,5 +1,5 @@
 ﻿using Npgsql;
-using shedule.Models;
+using schedule.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace shedule.Code
+namespace schedule.Code
 {
     class ForDB
     {

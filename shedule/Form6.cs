@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace shedule
+namespace schedule
 {
     public partial class Form6 : Form
     {

@@ -1,7 +1,7 @@
 ﻿
 using System.Data.Entity;
  
-namespace shedule.Models
+namespace schedule.Models
 {
     public class ApplicationContext : DbContext
     {

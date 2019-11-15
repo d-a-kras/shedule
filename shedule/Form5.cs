@@ -1,11 +1,11 @@
 ﻿
-using shedule.Code;
+using schedule.Code;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace shedule
+namespace schedule
 {
     public partial class Form5 : Form
     {

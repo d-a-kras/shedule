@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using shedule;
-using shedule.Code;
+using schedule;
+using schedule.Code;
 
 namespace ScheduleTests
 {
