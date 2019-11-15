@@ -12,6 +12,59 @@ namespace schedule.Code
     {
         static List<hourSale> Raznica = new List<hourSale>();
 
+        private static Dictionary<int,double> getKoeff(int type) {
+            Dictionary<int,double> koeff = new Dictionary<int, double>();
+
+            switch (type) {
+                case 1: koeff.Add(1,1);break;
+                case 2: koeff.Add(1,0.6); koeff.Add(2,0.4); break;
+                case 3: koeff.Add(1,0.45); koeff.Add(2,0.3); koeff.Add(3,0.25); break;
+                case 4: koeff.Add(1,0.35); koeff.Add(2,0.25); koeff.Add(1,0.2); koeff.Add(4,0.2); break;
+                
+            }
+            return koeff;
+        }
+
+        private static List<daySale> createCalendarPrognoz(bool current, List<PrognDaySale> PDSs) {
+            DateTime fd;
+            DateTime tdt = DateTime.Today;
+            int dim;
+            daySale d;
+            List<daySale> MonthPrognoz = new List<daySale>();
+            if (current)
+            {
+
+                fd = new DateTime(tdt.Year, tdt.Month, tdt.AddDays(1).Day);
+                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
+
+            }
+            else
+            {
+                fd = new DateTime(tdt.AddMonths(1).Year, tdt.AddMonths(1).Month, 1);
+                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
+            }
+
+            for (int i = fd.Day; i <= dim; i++)
+            {
+                try
+                {
+                    d = new daySale(Program.currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
+                    d.whatTip();
+                    //нужный прогноз в нужный час
+                    d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
+                    MonthPrognoz.Add(d);
+                }
+                catch
+                {
+                    //нужно чтоб вылазило сообщение о том что даты в календаре нет
+                    MessageBox.Show($"Даты {i}.{fd.Month}.{fd.Year} нет в календаре!");
+                    //return false;
+                }
+
+            }
+
+            return MonthPrognoz;
+        }
         public static List<PrognDaySale> kernelForecast(List<daySale> daysSale, int shopId) {
 
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
@@ -85,7 +138,7 @@ namespace schedule.Code
             Program.currentShop.MouthPrognoz.Clear();
             Program.currentShop.MouthPrognozT.Clear();
             DateTime ydt = DateTime.Now.AddDays(-1);
-            DateTime tdt = DateTime.Today;
+            
 
             DateTime d2 = DateTime.Now.AddDays(-30);
 
@@ -112,61 +165,17 @@ namespace schedule.Code
                 }
             }
 
-            //     }
-            //   else if(ExistFile) {
-            //        SozdanPrognoz = ExistFile;
-
-            //  }
-            //    else
-            //   {
-            //   throw new Exception("Загрузите данные из файла или установите соединение с БД");
-            //      }
-
-
-           
 
             List<PrognDaySale> PDSs = kernelForecast(Program.currentShop.daysSale,Program.currentShop.getIdShop());
-            /////
-
-            DateTime fd;
-
-            int dim;
-            daySale d;
-            if (current)
-            {
-
-                fd = new DateTime(tdt.Year, tdt.Month, tdt.AddDays(1).Day);
-                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
-
+            
+            Program.currentShop.MouthPrognoz = createCalendarPrognoz(current, PDSs);
+            if (Program.currentShop.MouthPrognoz.Count==0) {
+                return false;
             }
-            else
-            {
-                fd = new DateTime(tdt.AddMonths(1).Year, tdt.AddMonths(1).Month, 1);
-                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
-            }
-
-            for (int i = fd.Day; i <= dim; i++)
-            {
-                try
-                {
-                    d = new daySale(Program.currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
-                    d.whatTip();
-                    d.hoursSale = PDSs.Find(t => t.getTip() == d.getTip()).hoursSale;
-                    Program.currentShop.MouthPrognoz.Add(d);
-                }
-                catch
-                {
-                    //нужно чтоб вылазило сообщение о том что даты в календаре нет
-                    MessageBox.Show($"Даты {i}.{fd.Month}.{fd.Year} нет в календаре!");
-                    return false;
-                }
-
-            }
-
-
 
             foreach (daySale ds in Program.currentShop.MouthPrognoz)
             {
+                //создание прогнозных смен
                 createPrognozTemplate(ds);
             }
 
