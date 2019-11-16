@@ -1,4 +1,5 @@
 ﻿using schedule.Models;
+using shedule.Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,129 @@ namespace schedule.Code
                 case 2: koeff.Add(1,0.6); koeff.Add(2,0.4); break;
                 case 3: koeff.Add(1,0.45); koeff.Add(2,0.3); koeff.Add(3,0.25); break;
                 case 4: koeff.Add(1,0.35); koeff.Add(2,0.25); koeff.Add(1,0.2); koeff.Add(4,0.2); break;
-                
+                case 5: koeff.Add(1, 0.6); koeff.Add(3, 0.4); break;
+
             }
             return koeff;
+        }
+
+        private static int getType(List<Dict<int,Forecast>> forecasts)
+        {
+            int result = 1;
+            bool switc=true;
+            if (forecasts.Exists(t => t.type == 4)) {
+                result = 4;
+                switc = false;
+            }
+            if (switc && forecasts.Exists(t => t.type == 3) && !forecasts.Exists(t => t.type == 2))
+            {
+                result = 5;
+                switc = false;
+            }
+            if (switc && forecasts.Exists(t => t.type == 3) && forecasts.Exists(t => t.type == 2))
+            {
+                result = 3;
+                switc = false;
+            }
+            if (switc && forecasts.Exists(t => t.type == 2))
+            {
+                result = 2;
+                switc = false;
+            }
+
+            return result;
+        }
+
+        public static bool createPrognoz(bool current, bool isMp, bool first)
+        {
+            Program.CheckDeistvFactors();
+            Program.currentShop.MouthPrognoz.Clear();
+            Program.currentShop.MouthPrognozT.Clear();
+
+            List<Dict<int,Forecast>> forecasts = Forecast.getForecastForShop(Program.currentShop.getIdShop());
+
+            forecasts.AddRange(HolyDayCalendarPrognoz(Program.currentShop.getIdShop(), current));
+
+            if (!CheckForecast(forecasts)) {
+                daysaleFromDB(first, isMp);
+            }
+
+
+            List<PrognDaySale> PDSs = kernelForecast(Program.currentShop.getIdShop(),Program.currentShop.daysSale, forecasts);
+
+            Program.currentShop.MouthPrognoz = createCalendarPrognoz(current, PDSs);
+
+            if (Program.currentShop.MouthPrognoz.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (daySale ds in Program.currentShop.MouthPrognoz)
+            {
+                //создание прогнозных смен
+                createPrognozTemplate(ds);
+            }
+
+            return true;
+        }
+
+        private static bool CheckForecast(List<Dict<int, Forecast>> forecasts) {
+            DateTime dt = DateTime.Now.AddMonths(-1);
+            return forecasts.Count(t=>t.getValue().year==dt.Year && t.getValue().month ==dt.Month)>300;
+        }
+
+        private static List<Dict<int,Forecast>> HolyDayCalendarPrognoz(int shopId,bool current)
+        {
+            DateTime fd;
+            DateTime tdt = DateTime.Today;
+            int dim;
+            daySale d;
+            bool result8 = false;
+            bool result9 = false;
+            List<Dict<int, Forecast>> result = new List<Dict<int, Forecast>>();
+            if (current)
+            {
+
+                fd = new DateTime(tdt.Year, tdt.Month, tdt.AddDays(1).Day);
+                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
+
+            }
+            else
+            {
+                fd = new DateTime(tdt.AddMonths(1).Year, tdt.AddMonths(1).Month, 1);
+                dim = DateTime.DaysInMonth(fd.Year, fd.Month);
+            }
+
+            for (int i = fd.Day; i <= dim; i++)
+            {
+                try
+                {
+                    d = new daySale(Program.currentShop.getIdShop(), new DateTime(fd.Year, fd.Month, i));
+                    d.whatTip();
+                    if (d.getTip()==8 ) {
+                        result8 = true;
+                    }
+                    if (d.getTip() == 9) {
+                        result9 = true;
+                    }
+
+                }
+                catch(Exception ex)
+                {
+                    Logger.Error(ex.ToString());
+               }
+
+            }
+
+            if (result8) {
+                result.AddRange(Forecast.GetForecastHolyDay(shopId, fd.Month, 8));
+            }
+            if (result9)
+            {
+                result.AddRange(Forecast.GetForecastHolyDay(shopId, fd.Month, 9));
+            }
+
+            return result;
         }
 
         private static List<daySale> createCalendarPrognoz(bool current, List<PrognDaySale> PDSs) {
@@ -65,9 +186,13 @@ namespace schedule.Code
 
             return MonthPrognoz;
         }
-        public static List<PrognDaySale> kernelForecast(List<daySale> daysSale, int shopId) {
+        public static List<PrognDaySale> kernelForecast(int shopId,List<daySale> daysSale, List<Dict<int,Forecast>> forecasts=null ) {
 
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
+            List<Forecast> forecastfordb = new List<Forecast>();
+            List<Forecast> temp = new List<Forecast>();
+            Forecast forecast = new Forecast();
+            List<PrognDaySale> prognDaySales = new List<PrognDaySale>();
             DateTime tdt = DateTime.Today;
             bool pr = false;
 
@@ -75,12 +200,12 @@ namespace schedule.Code
             {
 
                 ds.setTip(ds.getTip());
-                if (ds.getTip() == 8 || ds.getTip() == 9) { pr = true; }
+                //if (ds.getTip() == 8 || ds.getTip() == 9) { pr = true; }
 
             }
 
 
-            Helper.readDays8and9(DateTime.Now.Year);
+           // Helper.readDays8and9(DateTime.Now.Year);
 
 
             for (int i = 1; i < 10; i++)
@@ -130,17 +255,100 @@ namespace schedule.Code
 
 
             }
+
+            foreach (var pd in PDSs)
+            { 
+                foreach (hourSale hourSale in pd.hoursSale) {
+                    forecast = new Forecast(shopId, hourSale.getIntHour(), pd.getTip(), tdt.AddMonths(-1).Month, tdt.AddMonths(-1).Year, hourSale.getCountClick(), hourSale.getCountCheck());
+                    forecastfordb.Add(forecast);
+                    forecasts.Add(new Dict<int, Forecast> { type = 1, value = forecast });
+                }
+            }
+
+            if (forecastfordb.Count>0) {
+                Forecast.CreateOrUpdate(forecastfordb);
+            }
+
+            for (int i = 1; i < 10; i++)
+            {
+                for (int j = 7; j < 24; j++)
+                {
+                    var tempforecasts = forecasts.FindAll(t => t.getValue().dayType == i && t.getValue().hour == j);
+
+                    if (tempforecasts.Count > 0) {
+
+                        temp.Add(ActualPrognoz(tempforecasts));
+                        if (PDSs.ElementAtOrDefault(i).hoursSale.Find(t => t.getIntHour() == j) == null)
+                        {
+                            PDSs.ElementAtOrDefault(i).hoursSale.Add(new hourSale(shopId, new DateTime(), j.ToString(), temp.Find(t => t.hour == j && t.dayType == i).countCheques, temp.Find(t => t.hour == j && t.dayType == i).countClick));
+                        }
+                        else {
+                            PDSs.ElementAtOrDefault(i).hoursSale.Find( x=> x.getIntHour()== j).setCheck(temp.Find(t => t.hour == j && t.dayType == i).countCheques);
+                            PDSs.ElementAtOrDefault(i).hoursSale.Find(x => x.getIntHour() == j).setClick(temp.Find(t => t.hour == j && t.dayType == i).countClick);
+                        }
+                    } 
+                    
+                }
+            }
+
+          /*  foreach (var pd in PDSs)
+            {
+                foreach (hourSale hourSale in pd.hoursSale)
+                {
+                    
+                }
+            }*/
+
             return PDSs;
         }
-        public static bool createPrognoz(bool current, bool isMp, bool first)
-        {
-            Program.CheckDeistvFactors();
-            Program.currentShop.MouthPrognoz.Clear();
-            Program.currentShop.MouthPrognozT.Clear();
-            DateTime ydt = DateTime.Now.AddDays(-1);
-            
 
+        private static Dict<int,int> Calc(List<Dict<int, Forecast>> forecasts) {
+            List<Forecast> templistForecast = new List<Forecast>();
+            int type = getType(forecasts);
+            Dictionary<int, double> koeff = getKoeff(type);
+            double click = 0;
+            double check = 0;
+            double tempclick = 0;
+            double tempcheck = 0;
+
+            for (int i = 1; i < 5; i++)
+            {
+                templistForecast = forecasts.FindAll(t => t.type == i).Select(t => t.value).ToList();
+                foreach (var temp in templistForecast)
+                {
+                    tempcheck += temp.countCheques * koeff.First(t => t.Key == i).Value;
+                    tempclick += temp.countClick * koeff.First(t => t.Key == i).Value;
+                }
+                if (templistForecast.Count>0) {
+                    click += tempclick / templistForecast.Count; tempclick = 0;
+                    check += tempcheck / templistForecast.Count; tempcheck = 0; 
+                }
+            }
+            return new Dict<int, int> { type = (int)check, value = (int)click };
+        }
+
+        private static Forecast ActualPrognoz(List<Dict<int, Forecast>> forecasts)
+        {
+
+            Forecast result = new Forecast(forecasts[0].value.shopId, forecasts[0].value.hour, forecasts[0].value.dayType, forecasts[0].value.month, forecasts[0].value.year, forecasts[0].value.countClick, forecasts[0].value.countCheques);
+
+            if (forecasts.Count == 1) {
+                result = forecasts[0].getValue();
+            }
+            else
+            {
+              Dict<int,int> dict = Calc(forecasts);
+              result.countCheques = dict.type;
+              result.countClick = dict.value;
+
+            }
+           return result;
+        }
+
+         private static void daysaleFromDB(bool first, bool isMp) {
+            DateTime ydt = DateTime.Now.AddDays(-1);
             DateTime d2 = DateTime.Now.AddDays(-30);
+            List<Dict<int,Forecast>> forecasts = new List<Dict<int, Forecast>>();
 
             if ((first) || (Program.currentShop.daysSale.Count == 0))
             {
@@ -151,7 +359,7 @@ namespace schedule.Code
                     Program.currentShop.daysSale.Clear();
                     if (isMp)
                     {
-                      Program.currentShop.daysSale=createListDaySale(d2, ydt, Program.currentShop.getIdShopFM());
+                        Program.currentShop.daysSale = createListDaySale(d2, ydt, Program.currentShop.getIdShopFM());
                     }
                     else
                     {
@@ -165,22 +373,11 @@ namespace schedule.Code
                 }
             }
 
+          
 
-            List<PrognDaySale> PDSs = kernelForecast(Program.currentShop.daysSale,Program.currentShop.getIdShop());
-            
-            Program.currentShop.MouthPrognoz = createCalendarPrognoz(current, PDSs);
-            if (Program.currentShop.MouthPrognoz.Count==0) {
-                return false;
-            }
 
-            foreach (daySale ds in Program.currentShop.MouthPrognoz)
-            {
-                //создание прогнозных смен
-                createPrognozTemplate(ds);
-            }
-
-            return true;
         }
+
 
         public static void createPrognoz3()
         {
@@ -188,7 +385,7 @@ namespace schedule.Code
             Program.currentShop.MouthPrognozT.Clear();
             DateTime ydt = DateTime.Now.AddDays(-1);
             DateTime tdt = DateTime.Today;
-            List<PrognDaySale> PDSs = new List<PrognDaySale>();
+            
             DateTime d2 = DateTime.Now.AddDays(-30);
 
             if (!Program.isOffline)
@@ -204,9 +401,14 @@ namespace schedule.Code
 
             }
 
-            PDSs = kernelForecast(Program.currentShop.daysSale, Program.currentShop.getIdShop());
+            List<Dict<int, Forecast>> forecasts = Forecast.getForecastForShop(Program.currentShop.getIdShop());
 
-            
+            forecasts.AddRange(HolyDayCalendarPrognoz(Program.currentShop.getIdShop(), false));
+
+
+            List<PrognDaySale> PDSs = kernelForecast(Program.currentShop.getIdShop(),Program.currentShop.daysSale, forecasts);
+
+
 
             DateTime[] fd = new DateTime[3];
             // DateTime fd2;
@@ -518,7 +720,7 @@ namespace schedule.Code
 
         public static List<Forecast> convertToForecast(List<daySale> ds, int shopId, int month,int year)
         {
-            List<PrognDaySale> prognDaySales = kernelForecast(ds,shopId);
+            List<PrognDaySale> prognDaySales = kernelForecast(shopId,ds);
             List<Forecast> forecasts = new List<Forecast>();
             //pds.hoursSale.Add(new hourSale(shopId, h[0].getData(), h[0].getNHour(), Scheck, Sclick));
 

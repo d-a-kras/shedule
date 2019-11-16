@@ -1,4 +1,5 @@
 ﻿using schedule.Code;
+using shedule.Code;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,7 +69,7 @@ namespace schedule.Models
             get { return Year; }
             set
             {
-                Month = value;
+                Year = value;
                 OnPropertyChanged("Year");
             }
         }
@@ -134,8 +135,92 @@ namespace schedule.Models
             return forecasts;
         }
 
+        public static List<Dict<int,Forecast>> GetForecastHolyDay(int shopId, int month, int type)
+        {
+            List<Dict<int,Forecast>> dict_forecasts = new List<Dict<int,Forecast>>();
+            List<Forecast> forecasts = new List< Forecast>();
+            List<Forecast> tempforecasts= new List<Forecast>();
+            try
+            {
+                Models.ApplicationContext db;
+                db = new Models.ApplicationContext();
+                db.Forecasts.Load();
+                BindingList<Forecast> DataContext = db.Forecasts.Local.ToBindingList();
+                forecasts = db.Forecasts.Where(t => t.shopId == shopId && t.dayType == type && t.month == month).ToList();
+                tempforecasts = forecasts.Where(t => t.month == month).ToList();
+                foreach(var forecast in tempforecasts)
+                {
+                    dict_forecasts.Add(new Dict<int,Forecast>{ type = 1, value = forecast });
+                }
+                tempforecasts = forecasts.Where(t => t.month != month).ToList();
+                foreach (var forecast in tempforecasts)
+                {
+                    dict_forecasts.Add(new Dict<int, Forecast> { type = 2, value = forecast });
+                }
 
-        
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+            return dict_forecasts;
+        }
+
+        public static List<Dict<int,Forecast>> getForecastForShop(int shopId)
+        {
+            List<Dict<int, Forecast>> forecasts = new List<Dict<int, Forecast>>();
+           
+            List<Forecast> forecasts1 = new List<Forecast>();
+            List<Forecast> temp = new List<Forecast>();
+            try
+            {
+                Models.ApplicationContext db;
+                db = new Models.ApplicationContext();
+                db.Forecasts.Load();
+                BindingList<Forecast> DataContext = db.Forecasts.Local.ToBindingList();
+
+                forecasts1 = db.Forecasts.Where(t => t.shopId == shopId).ToList();
+                List< DateTime> dates = new List< DateTime>();
+                DateTime now = DateTime.Now;
+                dates.Add( new DateTime(now.Year, now.AddMonths(-1).Month, 1));
+                dates.Add( new DateTime(now.Year, now.AddMonths(-2).Month, 1));
+                dates.Add( new DateTime(now.Year, now.AddMonths(-3).Month, 1));
+                dates.Add( new DateTime(now.AddYears(-1).Year, now.AddMonths(1).Month, 1));
+
+
+                temp= forecasts1.FindAll(t => 
+                 t.year == dates[0].Year && t.month == dates[0].Month) ;
+                foreach (Forecast t in temp) {
+                    forecasts.Add(new Dict<int, Forecast> { type = 1, value = t });
+                }
+                temp = forecasts1.FindAll(t =>
+                  t.year == dates[1].Year && t.month == dates[1].Month);
+                foreach (Forecast t in temp)
+                {
+                    forecasts.Add(new Dict<int, Forecast> { type = 3, value = t });
+                }
+                temp = forecasts1.FindAll(t =>
+                 t.year == dates[2].Year && t.month == dates[2].Month);
+                foreach (Forecast t in temp)
+                {
+                    forecasts.Add(new Dict<int, Forecast> { type = 4, value = t });
+                }
+                temp = forecasts1.FindAll(t =>
+                 t.year == dates[3].Year && t.month == dates[3].Month);
+                foreach (Forecast t in temp)
+                {
+                    forecasts.Add(new Dict<int, Forecast> { type = 2, value = t });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+            return forecasts;
+
+        }
+
 
 
         public static void CreateOrUpdate(List<Forecast> forecasts)
