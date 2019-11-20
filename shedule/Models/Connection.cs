@@ -142,11 +142,10 @@ namespace schedule.Models
             }
         }
 
-        public static Connection getActiveConnection(int currentShopId)
+        public static Connection getActiveConnection(int currentShopId=0)
         {
             try
             {
-
                 Models.ApplicationContext db;
                 db = new Models.ApplicationContext();
                 db.Connections.Load();
