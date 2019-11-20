@@ -1135,7 +1135,7 @@ namespace schedule
             Program.ReadListShops();
             // Program.setListShops();
             tabControl1.Visible = false;
-           // buttonTest.Visible = false;
+            buttonTest.Visible = false;
             progressBar1.Visible = false;
             label3.Visible = false;
 
@@ -3238,12 +3238,12 @@ namespace schedule
                 //this.Enabled = false;
                 if (Program.isConnected())
                 {
-                    ((Form1)this.Owner).Enabled = true;
-                    ((Form1)this.Owner).labelStatus2.Text = "режим работы сетевой ";
-                    ((Form1)this.Owner).buttonVygr.Visible = true;
-                    ((Form1)this.Owner).comboBox2.Visible = true;
+               //     ((Form1)this.Owner).Enabled = true;
+                    labelStatus2.Text = "режим работы сетевой ";
+                    buttonVygr.Visible = true;
+                    comboBox2.Visible = true;
                     isConnected = true;
-                    ((Form1)this.Owner).isConnected = true;
+                    isConnected = true;
 
 
                   
@@ -3251,12 +3251,12 @@ namespace schedule
                 else
                 {
                     isConnected = false;
-                    ((Form1)this.Owner).isConnected = false;
-                    ((Form1)this.Owner).radioButtonIzFile.Checked = true;
-                    ((Form1)this.Owner).Enabled = true;
-                    ((Form1)this.Owner).labelStatus2.Text = "режим работы локальный ";
-                    ((Form1)this.Owner).buttonVygr.Visible = false;
-                    ((Form1)this.Owner).comboBox2.Visible = false;
+                    
+                    radioButtonIzFile.Checked = true;
+                    Enabled = true;
+                    labelStatus2.Text = "режим работы локальный ";
+                    buttonVygr.Visible = false;
+                    comboBox2.Visible = false;
 
                     // this.Close();
                 }

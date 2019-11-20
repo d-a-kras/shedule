@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbNameDB = new System.Windows.Forms.TextBox();
             this.tbSheme = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tbServerPassword = new System.Windows.Forms.TextBox();
@@ -39,8 +41,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.bSaveSettings = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.tbNameDB = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +62,22 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки подключения к базе данных";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 121);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Имя БД";
+            // 
+            // tbNameDB
+            // 
+            this.tbNameDB.Location = new System.Drawing.Point(72, 118);
+            this.tbNameDB.Name = "tbNameDB";
+            this.tbNameDB.Size = new System.Drawing.Size(199, 20);
+            this.tbNameDB.TabIndex = 9;
             // 
             // tbSheme
             // 
@@ -138,22 +154,6 @@
             this.bSaveSettings.Text = "Сохранить";
             this.bSaveSettings.UseVisualStyleBackColor = true;
             this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
-            // 
-            // tbNameDB
-            // 
-            this.tbNameDB.Location = new System.Drawing.Point(72, 118);
-            this.tbNameDB.Name = "tbNameDB";
-            this.tbNameDB.Size = new System.Drawing.Size(199, 20);
-            this.tbNameDB.TabIndex = 9;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 121);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Имя ДБ";
             // 
             // DBConnectionForm
             // 
