@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using shedule.Code;
 
 namespace schedule.Models
 {
@@ -227,23 +228,32 @@ namespace schedule.Models
         {
             try
             {
-
                 Models.ApplicationContext db;
                 db = new Models.ApplicationContext();
                 db.Forecasts.Load();
+                List<Dict<bool, Forecast>> dicts = Dict<bool,Forecast>.Init(false,forecasts);
+                List<Forecast> result = new List<Forecast>();
                 BindingList<Forecast> DataContext = db.Forecasts.Local.ToBindingList();
-                foreach (var forecast in forecasts) {
-                    Forecast forecast1 = db.Forecasts.FirstOrDefault(t => t.shopId == forecast.shopId && t.year == forecast.year && t.month == forecast.month && t.dayType == forecast.dayType);
-                    if (forecast1 == null)
-                    {
-                        db.Forecasts.Add(forecast);
+                foreach (var forecast in dicts)
+                {
+                    if (forecast.type) {
+                        continue;
                     }
-                    else
-                    {
-                        forecast1.countCheques = forecast.countCheques;
-                        forecast1.countClick = forecast.countClick;
-                        
-                    }
+                    int shopid = forecast.getValue().shopId;
+                    int yearValue = forecast.getValue().year;
+                    int monthValue = forecast.getValue().month;
+                    int hourValue = forecast.getValue().hour;
+                    int dayTypeValue = forecast.getValue().dayType;
+                    Forecast tempForecast = new Forecast { shopId = shopid, year = yearValue, month = monthValue, hour = hourValue, dayType = dayTypeValue };
+                    List<Forecast> forecast1 = db.Forecasts.Where(t => t.shopId == shopid && t.year == yearValue && t.month == monthValue &&  t.hour == hourValue && t.dayType == dayTypeValue).ToList();
+                    List<Dict<bool, Forecast>> forecast2 = dicts.Where(t => t.value.shopId == shopid && t.value.year == yearValue && t.value.month == monthValue && t.value.hour == hourValue && t.value.dayType == dayTypeValue).ToList();
+                    forecast1.AddRange(Dict<bool, Forecast>.getList(forecast2));
+                    forecast2.ForEach(t => t.type = true);
+                    tempForecast.countCheques = (int)forecast1.Average(t => t.countCheques);
+                    tempForecast.countClick = (int)forecast1.Average(t => t.countClick);
+                    foreach (Forecast f in db.Forecasts.Where(t => t.shopId == shopid && t.year == yearValue && t.month == monthValue && t.hour == hourValue && t.dayType == dayTypeValue))
+                        db.Forecasts.Remove(f);
+                    db.Forecasts.Add(tempForecast);
                 }
                 db.SaveChanges();
 

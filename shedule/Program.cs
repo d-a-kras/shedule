@@ -1956,37 +1956,23 @@ namespace schedule
 
         static public void ReadSortSotr()
         {
+            /*
             String readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\SortSotr";
             if (!Directory.Exists(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop()))
             {
                 Directory.CreateDirectory(Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop());
-
             }
-
-
             try
             {
-
-
                 using (StreamReader sr = new StreamReader(readPath, Encoding.Default))
                 {
 
                     currentShop.SortSotr = bool.Parse(sr.ReadLine());
-
-                    
-
-
                 }
-
             }
             catch
             {
-
                 currentShop.SortSotr = false;
-
-
-
-
                 using (StreamWriter sw = new StreamWriter(readPath, false, Encoding.Default))
                 {
                     sw.Write(currentShop.SortSotr);
@@ -1995,7 +1981,8 @@ namespace schedule
                 // MessageBox.Show(ex.ToString());
 
             }
-
+            */
+            currentShop.SortSotr = DBShop.getMixing(currentShop.getIdShop());
 
         }
 

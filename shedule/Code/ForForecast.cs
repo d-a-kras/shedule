@@ -20,8 +20,10 @@ namespace schedule.Code
                 case 1: koeff.Add(1,1);break;
                 case 2: koeff.Add(1,0.6); koeff.Add(2,0.4); break;
                 case 3: koeff.Add(1,0.45); koeff.Add(2,0.3); koeff.Add(3,0.25); break;
-                case 4: koeff.Add(1,0.35); koeff.Add(2,0.25); koeff.Add(1,0.2); koeff.Add(4,0.2); break;
+                case 4: koeff.Add(1,0.35); koeff.Add(2,0.25); koeff.Add(3,0.2); koeff.Add(4,0.2); break;
                 case 5: koeff.Add(1, 0.6); koeff.Add(3, 0.4); break;
+                case 6: koeff.Add(2, 0.6); koeff.Add(3, 0.4); break;
+                case 7: koeff.Add(2, 0.35); koeff.Add(3, 0.25); koeff.Add(4, 0.2); break;
 
             }
             return koeff;
@@ -30,25 +32,31 @@ namespace schedule.Code
         private static int getType(List<Dict<int,Forecast>> forecasts)
         {
             int result = 1;
-            bool switc=true;
             if (forecasts.Exists(t => t.type == 4)) {
-                result = 4;
-                switc = false;
-            }
-            if (switc && forecasts.Exists(t => t.type == 3) && !forecasts.Exists(t => t.type == 2))
+                if (!forecasts.Exists(t => t.type == 2))
+                {
+                    result = 7;
+                }
+                else
+                {
+                    result = 4;
+                }
+            }else if (forecasts.Exists(t => t.type == 3) && !forecasts.Exists(t => t.type == 2))
             {
                 result = 5;
-                switc = false;
-            }
-            if (switc && forecasts.Exists(t => t.type == 3) && forecasts.Exists(t => t.type == 2))
+            }else if (forecasts.Exists(t => t.type == 3) )
             {
-                result = 3;
-                switc = false;
-            }
-            if (switc && forecasts.Exists(t => t.type == 2))
+                if (forecasts.Exists(t => t.type == 1))
+                {
+                    result = 3;
+                }
+                else {
+                    result = 6;
+                }
+                
+            }else if (forecasts.Exists(t => t.type == 2))
             {
                 result = 2;
-                switc = false;
             }
 
             return result;
@@ -186,8 +194,10 @@ namespace schedule.Code
 
             return MonthPrognoz;
         }
-        public static List<PrognDaySale> kernelForecast(int shopId,List<daySale> daysSale, List<Dict<int,Forecast>> forecasts=null ) {
-
+        public static List<PrognDaySale> kernelForecast(int shopId,List<daySale> daysSale, List<Dict<int,Forecast>> forecasts=null) {
+            if (forecasts==null) {
+                forecasts = new List<Dict<int, Forecast>>();
+            }
             List<PrognDaySale> PDSs = new List<PrognDaySale>();
             List<Forecast> forecastfordb = new List<Forecast>();
             List<Forecast> temp = new List<Forecast>();
@@ -260,6 +270,7 @@ namespace schedule.Code
             { 
                 foreach (hourSale hourSale in pd.hoursSale) {
                     forecast = new Forecast(shopId, hourSale.getIntHour(), pd.getTip(), tdt.AddMonths(-1).Month, tdt.AddMonths(-1).Year, hourSale.getCountClick(), hourSale.getCountCheck());
+                    
                     forecastfordb.Add(forecast);
                     forecasts.Add(new Dict<int, Forecast> { type = 1, value = forecast });
                 }
@@ -743,12 +754,14 @@ namespace schedule.Code
             List<Forecast> forecasts = new List<Forecast>();
 
             foreach (var shop in shops) {
+           // Shop shop = new Shop(301, "");
+                Program.currentShop = new Shop(shop.getIdShop(), shop.getAddress());
                 DateTime dt = new DateTime(2019,9,1);
                 for (int i=0;i<2;i++) {
                 listDaySale = createListDaySale(dt.AddMonths(i), dt.AddMonths(i+1), shop.getIdShop(), true);
                 forecasts = convertToForecast(listDaySale,shop.getIdShop(), dt.AddMonths(i).Month, dt.AddMonths(i).Year);
                 Forecast.CreateOrUpdate(forecasts);
-                }
+               }
             }
         }
 

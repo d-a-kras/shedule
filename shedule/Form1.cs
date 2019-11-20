@@ -1824,7 +1824,8 @@ namespace schedule
                 }
             }
 
-            String writePath2 = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + @"\SortSotr"; ;
+            DBShop.SaveMixing(Program.currentShop.getIdShop(), checkBox1.Checked);
+           /* String writePath2 = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + @"\SortSotr"; ;
             using (StreamWriter sw = new StreamWriter(writePath2, false, Encoding.Default))
             {
 
@@ -1841,7 +1842,8 @@ namespace schedule
                     MessageBox.Show(ex.ToString());
 
                 }
-            }
+            }*/
+
             MessageBox.Show("Данные сохранены");
         }
 

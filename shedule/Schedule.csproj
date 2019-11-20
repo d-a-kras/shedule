@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\CalendarHelper.cs" />
-    <Compile Include="Code\Dict.cs" />
+    <Compile Include="Struct\Dict.cs" />
     <Compile Include="Code\ForDB.cs" />
     <Compile Include="Code\ForForecast.cs" />
     <Compile Include="Code\ForExcel.cs" />
@@ -203,6 +203,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Struct\Wrapper.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

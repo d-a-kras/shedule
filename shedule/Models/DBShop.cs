@@ -18,11 +18,14 @@ namespace schedule.Models
         private int ShopId;
         private string Address;
         private int ConnectionId;
+        private bool Mixing;
 
         public DBShop(int id, string address, int connection) {
             this.Address = address;
             this.ShopId = id;
             this.ConnectionId = connection;
+            this.Mixing = false;
+            this.ConnectionId = Connection.getActiveConnection().Id;
         }
         public DBShop()
         {
@@ -57,6 +60,16 @@ namespace schedule.Models
             {
                 ConnectionId = value;
                 OnPropertyChanged("ConnectionId");
+            }
+        }
+
+        public bool mixing
+        {
+            get { return Mixing; }
+            set
+            {
+                Mixing = value;
+                OnPropertyChanged("Mixing");
             }
         }
 
@@ -108,6 +121,45 @@ namespace schedule.Models
             {
                 Logger.Error(ex.ToString());
             }
+        }
+
+        public static void SaveMixing(int shopId, bool isMixing)
+        {
+            try
+            {
+
+                Models.ApplicationContext db;
+                db = new Models.ApplicationContext();
+                db.DBShops.Load();
+                BindingList<DBShop> DataContext = db.DBShops.Local.ToBindingList();
+                DBShop dBShop = db.DBShops.First(t => t.shopid == shopId);
+                dBShop.mixing = isMixing;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+        }
+
+        public static bool getMixing(int shopId)
+        {
+            bool mix=false;
+            try
+            {
+                
+                Models.ApplicationContext db;
+                db = new Models.ApplicationContext();
+                db.DBShops.Load();
+                BindingList<DBShop> DataContext = db.DBShops.Local.ToBindingList();
+                mix=db.DBShops.First(t => t.shopid == shopId).mixing;
+               
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+            return mix;
         }
 
 
