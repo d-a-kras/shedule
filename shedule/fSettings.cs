@@ -136,6 +136,7 @@ namespace schedule
                 connection.password = plForm.GetPassword();
                 connection.sheme = plForm.GetSheme();
                 connection.nameDB = plForm.GetNameDB();
+                connection.typeDB = plForm.GetTypeBD();
 
                 db.SaveChanges();
                 ConnectionReadAll();
@@ -160,6 +161,7 @@ namespace schedule
             connection.login = plForm.GetLogin();
             connection.password = plForm.GetPassword();
             connection.sheme = plForm.GetSheme();
+            connection.typeDB = plForm.GetTypeBD();
 
             db.Connections.Add(connection);
             db.SaveChanges();

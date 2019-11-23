@@ -25,6 +25,7 @@ namespace schedule
             this.tbServerPassword.Text = con.password;
             this.tbSheme.Text = con.sheme;
             this.tbNameDB.Text = con.nameDB;
+            this.comboBoxTypeDB.SelectedItem = con.typeDB;
         }
 
         public string GetLogin() {
@@ -46,6 +47,10 @@ namespace schedule
         {
             return this.tbNameDB.Text;
         }
+        public string GetTypeBD()
+        {
+            return this.comboBoxTypeDB.Text;
+        }
 
         public void SetLogin(String value)
         {
@@ -65,6 +70,11 @@ namespace schedule
             this.tbSheme.Text = value;
         }
 
+        public void SetTypeDB(string value)
+        {
+            this.comboBoxTypeDB.SelectedText = value;
+        }
+
         private void DBConnectionForm_Load(object sender, EventArgs e)
         {
            
@@ -76,6 +86,16 @@ namespace schedule
         }
 
         private void DBConnectionForm_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }

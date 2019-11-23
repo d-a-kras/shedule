@@ -41,11 +41,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.bSaveSettings = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.comboBoxTypeDB = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.comboBoxTypeDB);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tbNameDB);
             this.groupBox1.Controls.Add(this.tbSheme);
@@ -58,30 +64,31 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(277, 172);
+            this.groupBox1.Size = new System.Drawing.Size(277, 184);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Настройки подключения к базе данных";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 121);
+            this.label5.Location = new System.Drawing.Point(15, 130);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Имя БД";
+            this.label5.Text = "Имя БД:";
             // 
             // tbNameDB
             // 
-            this.tbNameDB.Location = new System.Drawing.Point(72, 118);
+            this.tbNameDB.Location = new System.Drawing.Point(78, 127);
             this.tbNameDB.Name = "tbNameDB";
             this.tbNameDB.Size = new System.Drawing.Size(199, 20);
             this.tbNameDB.TabIndex = 9;
             // 
             // tbSheme
             // 
-            this.tbSheme.Location = new System.Drawing.Point(72, 144);
+            this.tbSheme.Location = new System.Drawing.Point(78, 153);
             this.tbSheme.Name = "tbSheme";
             this.tbSheme.Size = new System.Drawing.Size(199, 20);
             this.tbSheme.TabIndex = 8;
@@ -89,15 +96,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 147);
+            this.label4.Location = new System.Drawing.Point(20, 156);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Схема";
+            this.label4.Text = "Схема:";
             // 
             // tbServerPassword
             // 
-            this.tbServerPassword.Location = new System.Drawing.Point(72, 91);
+            this.tbServerPassword.Location = new System.Drawing.Point(78, 101);
             this.tbServerPassword.Name = "tbServerPassword";
             this.tbServerPassword.PasswordChar = '*';
             this.tbServerPassword.Size = new System.Drawing.Size(199, 20);
@@ -105,31 +112,32 @@
             // 
             // tbServerLogin
             // 
-            this.tbServerLogin.Location = new System.Drawing.Point(72, 65);
+            this.tbServerLogin.Location = new System.Drawing.Point(78, 75);
             this.tbServerLogin.Name = "tbServerLogin";
             this.tbServerLogin.Size = new System.Drawing.Size(199, 20);
             this.tbServerLogin.TabIndex = 5;
             // 
             // tbServerAddress
             // 
-            this.tbServerAddress.Location = new System.Drawing.Point(101, 39);
+            this.tbServerAddress.Location = new System.Drawing.Point(78, 49);
             this.tbServerAddress.Name = "tbServerAddress";
-            this.tbServerAddress.Size = new System.Drawing.Size(170, 20);
+            this.tbServerAddress.Size = new System.Drawing.Size(199, 20);
             this.tbServerAddress.TabIndex = 4;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 42);
+            this.label1.Location = new System.Drawing.Point(24, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Адрес сервера:";
+            this.label1.Text = "Адрес";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 94);
+            this.label3.Location = new System.Drawing.Point(18, 104);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 13);
             this.label3.TabIndex = 2;
@@ -138,7 +146,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 68);
+            this.label2.Location = new System.Drawing.Point(25, 82);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 1;
@@ -147,7 +155,7 @@
             // bSaveSettings
             // 
             this.bSaveSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSaveSettings.Location = new System.Drawing.Point(201, 190);
+            this.bSaveSettings.Location = new System.Drawing.Point(213, 202);
             this.bSaveSettings.Name = "bSaveSettings";
             this.bSaveSettings.Size = new System.Drawing.Size(75, 23);
             this.bSaveSettings.TabIndex = 1;
@@ -155,11 +163,40 @@
             this.bSaveSettings.UseVisualStyleBackColor = true;
             this.bSaveSettings.Click += new System.EventHandler(this.bSaveSettings_Click);
             // 
+            // comboBoxTypeDB
+            // 
+            this.comboBoxTypeDB.FormattingEnabled = true;
+            this.comboBoxTypeDB.Items.AddRange(new object[] {
+            "MS SQL",
+            "PostgreSQL"});
+            this.comboBoxTypeDB.Location = new System.Drawing.Point(78, 19);
+            this.comboBoxTypeDB.Name = "comboBoxTypeDB";
+            this.comboBoxTypeDB.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxTypeDB.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(11, 62);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = " сервера:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(18, 27);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Тип БД:";
+            // 
             // DBConnectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 225);
+            this.ClientSize = new System.Drawing.Size(300, 229);
             this.Controls.Add(this.bSaveSettings);
             this.Controls.Add(this.groupBox1);
             this.Name = "DBConnectionForm";
@@ -186,5 +223,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbNameDB;
+        private System.Windows.Forms.ComboBox comboBoxTypeDB;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
     }
 }

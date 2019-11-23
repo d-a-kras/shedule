@@ -1,8 +1,10 @@
-﻿using schedule.Code;
+﻿using Npgsql;
+using schedule.Code;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 namespace schedule.Models
 {
 
-
+   
     public class Connection : INotifyPropertyChanged
     {
         private string Server;
@@ -21,6 +23,7 @@ namespace schedule.Models
         private string Sheme;
         private bool isActive;
         private string NameDB;
+        private string TypeDB;
 
         public int Id { get; set; }
 
@@ -31,6 +34,17 @@ namespace schedule.Models
             {
                 Server = value;
                 OnPropertyChanged("Server");
+            }
+        }
+
+       
+        public string typeDB
+        {
+            get { return TypeDB; }
+            set
+            {
+                TypeDB = value; 
+                OnPropertyChanged("TypeDB");
             }
         }
 
@@ -174,8 +188,6 @@ namespace schedule.Models
                 return new Connection();
             }
         }
-
-        
 
     }
 }

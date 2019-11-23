@@ -204,7 +204,7 @@ namespace schedule.Code
             Forecast forecast = new Forecast();
             List<PrognDaySale> prognDaySales = new List<PrognDaySale>();
             DateTime tdt = DateTime.Today;
-            bool pr = false;
+            //bool pr = false;
 
             foreach (daySale ds in daysSale)
             {
@@ -501,7 +501,7 @@ namespace schedule.Code
 
 
             TemplateWorkingDay twd = new TemplateWorkingDay(ds);
-            int i = 0;
+            //int i = 0;
             twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
             twd.AddSmena(addRecl(new Smena(twd.DS.getStartDaySale(), twd.DS.getLenghtDaySale(), ds.getData())));
             while (checkGraph())
@@ -652,7 +652,7 @@ namespace schedule.Code
                 while (hss.Count == 0 && countAttemption < 2)
                 {
                     countAttemption++;
-                    hss = ForDB.getHourFromDB(connectionString, sql, id);
+                    hss = ForDB.getHourFromDB(connectionString, sql, id, activeconnect.typeDB);
 
                     if (hss.Count > 1) countAttemption = 2;
                 }
@@ -667,7 +667,7 @@ namespace schedule.Code
                 countAttemption = 0;
             }
             else {
-                hss = ForDB.getHourFromDB(connectionString, sql, id);
+                hss = ForDB.getHourFromDB(connectionString, sql, id, activeconnect.typeDB);
             }
 
             if (hss.Count > 200)

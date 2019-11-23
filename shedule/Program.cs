@@ -1746,7 +1746,7 @@ namespace schedule
 
     public class PrognDaySale : daySale
     {
-        int tip;
+        private int tip;
         public List<hourSale> hss;
         public PrognDaySale(int id, DateTime d, int t) : base(id, d)
         {
@@ -1755,7 +1755,7 @@ namespace schedule
             this.tip = t;
         }
 
-        public int getTip()
+        public new int getTip()
         { return this.tip; }
     }
 

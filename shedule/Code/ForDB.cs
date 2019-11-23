@@ -12,39 +12,60 @@ namespace schedule.Code
 {
     class ForDB
     {
-        public static List<hourSale> getHourFromDB(string connectionString, string sql, int idShop)
+        public static List<hourSale> getHourFromDB(string connectionString, string sql, int idShop, string connectionType)
         {
             List<hourSale> hss = new List<hourSale>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            object connection = new object();
+            switch (connectionType)
             {
+                case "PostgreSQL": connection = new NpgsqlConnection(connectionString);  break;
+                case "MS SQL": connection = new SqlConnection(connectionString);  break;   
+            }
 
-                try
+            try
+            {
+                if (connection as NpgsqlConnection != null)
                 {
-                    connection.Open();
-                    
-                    using (var command = new NpgsqlCommand())
+                    var command = new NpgsqlCommand();
+                    ((NpgsqlConnection)connection).Open();
+                    (command).Connection = (NpgsqlConnection)connection;
+                    (command).CommandText = sql;
+                    (command).CommandTimeout = 3000;
+                    using (var reader = command.ExecuteReader())
                     {
-                        command.Connection = connection;
-                        command.CommandText = sql;
-                        command.CommandTimeout = 3000;
-                        using (var reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                                hss.Add(h);
+                            hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                            hss.Add(h);
 
-
-                            }
                         }
                     }
                 }
-                catch (Exception ex)
+                else if (connection as SqlConnection != null)
                 {
-                    Logger.Error(ex.ToString());
+                    var command = new SqlCommand();
+                    ((SqlConnection)connection).Open();
+                    (command).Connection = (SqlConnection)connection;
+                    (command).CommandText = sql;
+                    (command).CommandTimeout = 3000;
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                            hss.Add(h);
 
-                }
+                        }
+                    }
+                }   
+
             }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+
+            }
+            
 
             return hss;
         }
