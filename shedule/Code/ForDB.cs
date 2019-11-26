@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using schedule.Models;
+using shedule.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -70,65 +71,99 @@ namespace schedule.Code
             return hss;
         }
 
-        public static string getSQL_statisticbyshopsdayhour(int id, string date1, string date2,string sheme)
+        public static string getSQL_statisticbyshopsdayhour(int id, DateTime start, DateTime end,string sheme, string connectionType)
         {
-            return "SELECT * FROM "+ sheme + "get_statisticbyshopsdayhour('" + id + "', to_timestamp('"+date1+"', 'YYYY/MM/DD')::timestamp without time zone, to_timestamp('"+date2+" 23:59', 'YYYY/MM/DD hh24:mi')::timestamp without time zone)";
+            string sql = "";
+            
+            if (connectionType=="PostgreSQL") {
+                string date1 = start.Year + "/" + Helper.NumberToString(start.Month) + "/" + Helper.NumberToString(start.Day);
+                string date2 = end.Year + "/" + Helper.NumberToString(end.Month) + "/" + Helper.NumberToString(end.Day);
+                sql = "SELECT * FROM " + sheme + "get_statisticbyshopsdayhour('" + id + "', to_timestamp('" + date1 + "', 'YYYY/MM/DD')::timestamp without time zone, to_timestamp('" + date2 + " 23:59', 'YYYY/MM/DD hh24:mi')::timestamp without time zone)";
+            }else if (connectionType == "MS SQL")
+            {
+                string date1 = start.Year + "/" + Helper.NumberToString(start.Day) + "/" +  Helper.NumberToString(start.Month);
+                string date2 = end.Year + "/" + Helper.NumberToString(end.Day) + "/" + Helper.NumberToString(end.Month);
+                sql = "select * from dbo.get_StatisticByShopsDayHour('" + id + "', '" + date1 + "', '" + date2 + " 23:59:00')"; 
+
+            }
+
+            return sql;
+
+
         }
 
 
         public static void getShopsFromDB()
         {
             mShop h;
-            Connection connect = Connection.getActiveConnection(Program.currentShop.getIdShop());
+            Connection connect = Connection.getActiveConnection();
             var connectionString = Connection.getConnectionString(connect);
             string sql = "select * from " + Connection.getSheme(connect) + "get_shops() order by КодМагазина";
-            using (var connection = new NpgsqlConnection(connectionString))
-            {
-                try
+            if (connect.typeDB=="PostgreSQL") {
+                using (var connection = new NpgsqlConnection(connectionString))
                 {
-                    Program.listShops.Clear();
-                    connection.Open();
-                    using (var command = new NpgsqlCommand())
+                    try
                     {
-                        command.Connection = connection;
-                        command.CommandText = sql;
-                        command.CommandTimeout = 500;
-
-                        using (var reader = command.ExecuteReader())
+                        Program.listShops.Clear();
+                        connection.Open();
+                        using (var command = new NpgsqlCommand())
                         {
-                            while (reader.Read())
-                            {
-                                // MessageBox.Show(reader.GetInt16(0)+" "+ reader.GetString(1));
-                                h = new mShop(reader.GetInt16(0), reader.GetString(1));
-                                Program.listShops.Add(h);
-                               
+                            command.Connection = connection;
+                            command.CommandText = sql;
+                            command.CommandTimeout = 500;
 
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                   
+                                    h = new mShop(reader.GetInt16(0), reader.GetString(1));
+                                    Program.listShops.Add(h);
+
+
+                                }
                             }
                         }
+                        DBShop.setShops(Program.listShops);
+
                     }
-
-                    /* string writePath = Environment.CurrentDirectory + @"\Shops.txt";
-                     using (StreamWriter sw = new StreamWriter(writePath, false, Encoding.Default))
-                     {
-
-                         foreach (mShop shop in Program.listShops)
-                         {
-                             string pyth = Environment.CurrentDirectory + "/Shops/" + shop.getIdShop().ToString();
-                             if (!Directory.Exists(pyth))
-                             {
-                                 Directory.CreateDirectory(pyth);
-                             }
-
-                             sw.WriteLine(shop.getIdShop() + "_" + shop.getAddress());
-                         }
-                     }*/
-                    DBShop.setShops(Program.listShops);
-                
-
+                    catch (Exception ex)
+                    {
+                        Logger.Error("Ошибка соединения с базой данных " + ex.Message);
+                    }
                 }
-                catch (Exception ex)
+            } else if (connect.typeDB == "MS SQL") {
+                using (var connection = new SqlConnection(connectionString))
                 {
-                    Logger.Error("Ошибка соединения с базой данных " + ex.Message);
+                    try
+                    {
+                        Program.listShops.Clear();
+                        connection.Open();
+                        using (var command = new SqlCommand())
+                        {
+                            command.Connection = connection;
+                            command.CommandText = sql;
+                            command.CommandTimeout = 500;
+
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+
+                                    h = new mShop(reader.GetInt16(0), reader.GetString(1));
+                                    Program.listShops.Add(h);
+
+
+                                }
+                            }
+                        }
+                        DBShop.setShops(Program.listShops);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error("Ошибка соединения с базой данных " + ex.Message);
+                    }
                 }
             }
         }
@@ -141,8 +176,9 @@ namespace schedule.Code
             var connectionString = Connection.getConnectionString(activeconnect);
 
             //  connectionString = "Data Source=CENTRUMSRV;Persist Security Info=True;User ID=VShleyev;Password=gjkrjdybr@93";
-
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            if (activeconnect.typeDB == "PostgreSQL")
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
 
                 try
@@ -160,7 +196,30 @@ namespace schedule.Code
                 }
 
             }
+            
+        } else if (activeconnect.typeDB == "MS SQL") {
+             using (SqlConnection connection = new SqlConnection(connectionString))
+            {
 
+                try
+                {
+                    connection.Open();
+
+                    if (connection.State == System.Data.ConnectionState.Open) { connect = true; return connect; }
+                    else { connect = false; return connect; }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.ToString());
+                    connect = false;
+                    return connect;
+                }
+
+            }
+            }
+            return connect;
         }
+
+        
     }
 }

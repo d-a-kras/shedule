@@ -104,19 +104,23 @@ namespace schedule.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        public static string getConnectionString() {
+        public static string getConnectionString(string type) {
             try
             {
-
+                String connectionString = "";
                 Models.ApplicationContext db;
                 db = new Models.ApplicationContext();
                 db.Connections.Load();
                 BindingList<Connection> DataContext = db.Connections.Local.ToBindingList();
                 Connection con = db.Connections.First(t => t.IsActive==true);
 
-                // String connectionString= $"Data Source="+con.Server+";Persist Security Info=True;User ID="+con.Login+";Password="+con.Password;
-                // String connectionString = $"Provider=PostgreSQL OLE DB Provider;Data Source=" + con.Server + ";location=" + con.NameDB + ";User ID=" + con.Login + ";password=" + con.Password + ";timeout=1000;";
-                String connectionString = $"Host=" + con.Server + ";Port=5432;Database=" + con.NameDB + ";Username=" + con.Login + ";Password=" + con.Password;
+                if (type == "MS SQL") {
+                     connectionString = $"Data Source=" + con.Server + ";Persist Security Info=True;User ID=" + con.Login + ";Password=" + con.Password;
+                }
+                else if (type== "PostgreSQL") {
+                    // String connectionString = $"Provider=PostgreSQL OLE DB Provider;Data Source=" + con.Server + ";location=" + con.NameDB + ";User ID=" + con.Login + ";password=" + con.Password + ";timeout=1000;";
+                    connectionString = $"Host=" + con.Server + ";Port=5432;Database=" + con.NameDB + ";Username=" + con.Login + ";Password=" + con.Password; 
+                }
                 return connectionString;
 
 
@@ -141,9 +145,18 @@ namespace schedule.Models
         {
             try
             {
-                String connectionString = $"Host=" + con.Server + ";Port=5432;Database=" + con.NameDB + ";Username=" + con.Login + ";Password=" + con.Password;
+                string connectionString = "";
+                
+                if (con.typeDB == "MS SQL")
+                {
+                    connectionString = $"Data Source=" + con.Server + ";Persist Security Info=True;User ID=" + con.Login + ";Password=" + con.Password;
+                }
+                else if (con.typeDB == "PostgreSQL")
+                {
+                     connectionString = $"Host=" + con.Server + ";Port=5432;Database=" + con.NameDB + ";Username=" + con.Login + ";Password=" + con.Password;
                 //String connectionString = $"Provider=PostgreSQL OLE DB Provider;Data Source=" + con.Server + ";location="+ con.NameDB + ";User ID="+ con.Login +";password="+ con.Password + ";timeout=1000;";
                 //String connectionString = $"Data Source=" + con.Server + ";Persist Security Info=True;User ID=" + con.Login + ";Password=" + con.Password;
+                }
                 return connectionString;
 
 

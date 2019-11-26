@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
+using shedule.Models;
 
 namespace schedule.Code
 {

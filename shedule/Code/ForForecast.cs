@@ -1,5 +1,6 @@
 ﻿using schedule.Models;
 using shedule.Code;
+using shedule.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace schedule.Code
             return result;
         }
 
-        public static bool createPrognoz(bool current, bool isMp, bool first)
+        public static bool createPrognoz(bool current, bool isMp, bool first, bool localDB)
         {
             Program.CheckDeistvFactors();
             Program.currentShop.MouthPrognoz.Clear();
@@ -72,11 +73,13 @@ namespace schedule.Code
 
             forecasts.AddRange(HolyDayCalendarPrognoz(Program.currentShop.getIdShop(), current));
 
-            if (!CheckForecast(forecasts)) {
+            if (!CheckForecast(forecasts) && !localDB) {
                 daysaleFromDB(first, isMp);
             }
 
-
+            if (localDB && forecasts.Count<100) {
+                return false;
+            }
             List<PrognDaySale> PDSs = kernelForecast(Program.currentShop.getIdShop(),Program.currentShop.daysSale, forecasts);
 
             Program.currentShop.MouthPrognoz = createCalendarPrognoz(current, PDSs);
@@ -97,7 +100,7 @@ namespace schedule.Code
 
         private static bool CheckForecast(List<Dict<int, Forecast>> forecasts) {
             DateTime dt = DateTime.Now.AddMonths(-1);
-            return forecasts.Count(t=>t.getValue().year==dt.Year && t.getValue().month ==dt.Month)>300;
+            return forecasts.Count(t=>t.getValue().year==dt.Year && t.getValue().month ==dt.Month)>80;
         }
 
         private static List<Dict<int,Forecast>> HolyDayCalendarPrognoz(int shopId,bool current)
@@ -635,14 +638,13 @@ namespace schedule.Code
         {
             Connection activeconnect = Connection.getActiveConnection(id);
             var connectionString = Connection.getConnectionString(activeconnect);
-            string s1 = n.Year + "/" + Helper.NumberToString(n.Month) + "/" + Helper.NumberToString(n.Day);
-            string s2 = k.Year + "/" + Helper.NumberToString(k.Month) + "/" + Helper.NumberToString(k.Day);
+           
             string sql;
             /* if (curShop.getIdShop() == 0) {
                  id = Program.currentShop.getIdShopFM();
              }*/
 
-            sql = ForDB.getSQL_statisticbyshopsdayhour(id, s1, s2, Connection.getSheme(activeconnect));  // "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')"; 
+            sql = ForDB.getSQL_statisticbyshopsdayhour(id, n, k, Connection.getSheme(activeconnect), activeconnect.typeDB);  // "select * from "+ Connection.getSheme(activeconnect) + "get_StatisticByShopsDayHour('" + id + "', '" + s1 + "', '" + s2 + " 23:59:00')"; 
 
             var daysSale = new List<daySale>();
             List<hourSale> hss = new List<hourSale>();

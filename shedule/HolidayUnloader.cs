@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using schedule.Code;
+using shedule.Models;
 
 namespace schedule
 {

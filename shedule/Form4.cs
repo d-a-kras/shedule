@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using schedule.Code;
 using schedule.Models;
+using shedule.Models;
 
 namespace schedule
 {

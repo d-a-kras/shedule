@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\CalendarHelper.cs" />
+    <Compile Include="Models\Models.cs" />
     <Compile Include="Struct\Dict.cs" />
     <Compile Include="Code\ForDB.cs" />
     <Compile Include="Code\ForForecast.cs" />

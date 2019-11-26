@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Linq;
 using Application = System.Windows.Forms.Application;
 using schedule.Models;
+using shedule.Models;
 
 namespace schedule
 {
@@ -126,7 +127,7 @@ namespace schedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!ForForecast.createPrognoz(false, false, true))
+                            if (!ForForecast.createPrognoz(false, false, true,Program.isLocalDB))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -353,7 +354,7 @@ namespace schedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!ForForecast.createPrognoz(false, false, true))
+                            if (!ForForecast.createPrognoz(false, false, true,Program.isLocalDB))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -481,7 +482,7 @@ namespace schedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!ForForecast.createPrognoz(false, false, true))
+                            if (!ForForecast.createPrognoz(false, false, true, Program.isLocalDB))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -614,7 +615,7 @@ namespace schedule
                         bg.ReportProgress(2);
                         try
                         {
-                            if (!ForForecast.createPrognoz(true, false, true))
+                            if (!ForForecast.createPrognoz(true, false, true, Program.isLocalDB))
                             {
                                 MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                 return;
@@ -1160,7 +1161,8 @@ namespace schedule
             UpdateStatusShops();
             //labelStatus1.Text = "Статус: Обработано " + Program.HandledShops.Count + " магазинов из " + Program.listShops.Count;
             labelStatus2.Text = " режим работы локальный";
-            radioButtonIzFile.Checked = true;
+            //radioButtonIzFile.Checked = true;
+            radioButtonLocalDB.Checked = true;
 
         }
 
@@ -1946,18 +1948,24 @@ namespace schedule
                 }
                 else
                 {
+                   
                     isConnected = false;
-                    isConnected = false;
-                    radioButtonIzFile.Checked = true;
+                    radioButtonLocalDB.Checked = true;
                     Enabled = true;
                     labelStatus2.Text = "режим работы локальный ";
                     buttonVygr.Visible = false;
                     comboBox2.Visible = false;
+                    MessageBox.Show("Ошибка подключения к БД\n Проверьте соединение");
                 }
-                
-                return;
-            }
 
+                return;
+            }else {
+                isConnected = false;
+                Enabled = true;
+                labelStatus2.Text = "режим работы локальный ";
+                StartExportingToExcel();
+            }
+            return;
         }
 
         public void StartExportingToExcel()
@@ -2028,12 +2036,11 @@ namespace schedule
             {
                 MessageBox.Show("Соединение с базой не установлено! Выберите режим \"из файла\" или подключитесь к базе данных.");
                 return;
-            }
-            if (radioButtonIzFile.Checked && !Program.ExistFile)
+            } else if (radioButtonIzFile.Checked && !Program.ExistFile)
             {
                 MessageBox.Show("Загрузите данные из файла");
                 return;
-            }
+            } 
 
             try
             {
@@ -2043,12 +2050,15 @@ namespace schedule
 
                 label3.Text = "";
                 label3.Visible = true;
+                Program.isLocalDB = radioButtonLocalDB.Checked;
                 progressBar1.Maximum = 20;
                 progressBar1.Minimum = 0;
                 progressBar1.Step = 2;
+
                 ReadTipOptimizacii();
                 if (Program.CheckDlinaDnya() && Program.CheckParnSmen())
                 {
+
                     bw.RunWorkerAsync();
                 }
                 else
@@ -2555,7 +2565,7 @@ namespace schedule
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                if (!ForForecast.createPrognoz(false, Program.IsMpRezhim, true))
+                                if (!ForForecast.createPrognoz(false, Program.IsMpRezhim, true, false))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
@@ -2627,7 +2637,7 @@ namespace schedule
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                if (!ForForecast.createPrognoz(false, true, true))
+                                if (!ForForecast.createPrognoz(false, true, true, false))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
@@ -2724,7 +2734,7 @@ namespace schedule
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
 
-                                if (!ForForecast.createPrognoz(false, true, true))
+                                if (!ForForecast.createPrognoz(false, true, true, Program.isLocalDB))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;
@@ -2865,7 +2875,7 @@ namespace schedule
                                 bg1.ReportProgress(Program.BgProgress += TaskStep);
                                 lbProgressMessages.BeginInvoke(new updateLabel3Delegate(ChangeLabel3Text), $"{shop.getAddress()}: Создание прогноза продаж");
 
-                                if (!ForForecast.createPrognoz(true, Program.IsMpRezhim, true))
+                                if (!ForForecast.createPrognoz(true, Program.IsMpRezhim, true, Program.isLocalDB))
                                 {
                                     MessageBox.Show("График не удалось построить. Ошибка в построении прогноза.");
                                     return;

@@ -1,5 +1,6 @@
 ﻿
 using schedule.Code;
+using shedule.Models;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -171,13 +172,13 @@ namespace schedule
                     bg.ReportProgress(10); break;
                 case 3:
                     bg.ReportProgress(4);
-                    ForForecast.createPrognoz(false,false,true);
+                    ForForecast.createPrognoz(false,false,true,Program.isLocalDB);
                     bg.ReportProgress(8);
                     Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12); break;
                 case 2:
                     bg.ReportProgress(4);
-                    ForForecast.createPrognoz(false,false,true);
+                    ForForecast.createPrognoz(false,false,true, Program.isLocalDB);
                     bg.ReportProgress(8);
                    Code.Sotrudniki.OptimCountSotr();
                     bg.ReportProgress(12);break;
