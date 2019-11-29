@@ -34,15 +34,17 @@ namespace schedule
 
             if (DateTime.Now.Year == year)
             {
-               // _handledShop = Program.currentShop;
+                // _handledShop = Program.currentShop;
                 //  _handledShop.DFCs = new List<DataForCalendary>();
-                _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+                // _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+                _handledShop = new Shop(Program.currentShop.getIdShop(), Program.currentShop.getAddress());
                 _handledShop.DFCs = Program.currentShop.DFCs.FindAll(t => t.getData().Year == DateTime.Now.Year);
 
             }
             else
             {
-                _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+               // _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
+                _handledShop = new Shop(Program.currentShop.getIdShop(), Program.currentShop.getAddress());
                 CalendarHelper.GetListDateForShop(_handledShop, year);
             }
 

@@ -69,19 +69,31 @@ namespace schedule.Code
             }
             else
             {
-                Type o_type = o.GetType();
-                if (o_type.IsPrimitive)
-                    return o;
-                object copy = memberwise_clone.Invoke(o, null);
-                state[o] = copy;
-                foreach (FieldInfo f in o_type.GetFields(
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                try
                 {
-                    object original = f.GetValue(o);
-                    if (!ReferenceEquals(original, null))
-                        f.SetValue(copy, CreateDeepCopyInternal(state, original));
+                    Type o_type = o.GetType();
+                    if (o_type.IsPrimitive)
+                        return o;
+                    object copy=new object();
+                    try
+                    {
+                        copy = memberwise_clone.Invoke(o, null);
+                    }
+                    catch (StackOverflowException ex) { Logger.Error(ex.ToString()); }
+                    state[o] = copy;
+                    foreach (FieldInfo f in o_type.GetFields(
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                    {
+                        object original = f.GetValue(o);
+                        if (!ReferenceEquals(original, null))
+                            f.SetValue(copy, CreateDeepCopyInternal(state, original));
+                    }
+                    return copy;
                 }
-                return copy;
+                catch (Exception ex) {
+                    Logger.Error(ex.ToString());
+                    return new object();
+                }
             }
         }
 
