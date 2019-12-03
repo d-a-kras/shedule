@@ -220,12 +220,16 @@ namespace schedule
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+          
+                dataGridViewDB.ClearSelection();
+                dataGridViewDB.Rows[e.RowIndex].Selected = true;
+                dataGridViewDB.CurrentCell = dataGridViewDB.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            
         }
 
         private void buttonDBDelete_Click(object sender, EventArgs e)
         {
-            if (dataGridViewDB.SelectedRows.Count > 0)
+            if (dataGridViewDB.SelectedRows.Count == 1)
             {
                 int index = dataGridViewDB.SelectedRows[0].Index;
                 int id = 0;
@@ -243,7 +247,7 @@ namespace schedule
 
         private void button4_Click_1(object sender, EventArgs e)
         {
-            if (dataGridViewDB.SelectedRows.Count > 0)
+            if (dataGridViewDB.SelectedRows.Count == 1)
             {
                 int index = dataGridViewDB.SelectedRows[0].Index;
                 int id = 0;
@@ -277,7 +281,7 @@ namespace schedule
 
         private void button4_Click_2(object sender, EventArgs e)
         {
-            if (dataGridViewDB.SelectedRows.Count > 0)
+            if (dataGridViewDB.SelectedRows.Count == 1)
             {
                 int index = dataGridViewDB.SelectedRows[0].Index;
                 int id = 0;

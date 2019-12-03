@@ -27,39 +27,44 @@ namespace schedule.Code
             {
                 if (connection as NpgsqlConnection != null)
                 {
-                    var command = new NpgsqlCommand();
-                    ((NpgsqlConnection)connection).Open();
-                    (command).Connection = (NpgsqlConnection)connection;
-                    (command).CommandText = sql;
-                    (command).CommandTimeout = 3000;
-                    using (var reader = command.ExecuteReader())
+                    using ((NpgsqlConnection)connection)
                     {
-                        while (reader.Read())
+                        var command = new NpgsqlCommand();
+                        ((NpgsqlConnection)connection).Open();
+                        (command).Connection = (NpgsqlConnection)connection;
+                        (command).CommandText = sql;
+                        (command).CommandTimeout = 3000;
+                        using (var reader = command.ExecuteReader())
                         {
-                            hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                            hss.Add(h);
+                            while (reader.Read())
+                            {
+                                hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                                hss.Add(h);
 
+                            }
                         }
                     }
                 }
                 else if (connection as SqlConnection != null)
                 {
-                    var command = new SqlCommand();
-                    ((SqlConnection)connection).Open();
-                    (command).Connection = (SqlConnection)connection;
-                    (command).CommandText = sql;
-                    (command).CommandTimeout = 3000;
-                    using (var reader = command.ExecuteReader())
+                    using ((SqlConnection)connection)
                     {
-                        while (reader.Read())
+                        var command = new SqlCommand();
+                        ((SqlConnection)connection).Open();
+                        (command).Connection = (SqlConnection)connection;
+                        (command).CommandText = sql;
+                        (command).CommandTimeout = 3000;
+                        using (var reader = command.ExecuteReader())
                         {
-                            hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
-                            hss.Add(h);
+                            while (reader.Read())
+                            {
+                                hourSale h = new hourSale(idShop, reader.GetDateTime(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetDouble(6));
+                                hss.Add(h);
 
+                            }
                         }
                     }
-                }   
-
+                }
             }
             catch (Exception ex)
             {

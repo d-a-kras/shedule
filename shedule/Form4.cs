@@ -39,12 +39,14 @@ namespace schedule
                 // _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
                 _handledShop = new Shop(Program.currentShop.getIdShop(), Program.currentShop.getAddress());
                 _handledShop.DFCs = Program.currentShop.DFCs.FindAll(t => t.getData().Year == DateTime.Now.Year);
-
+                _handledShop.NormaChasov= Program.currentShop.NormaChasov;
+                CalendarHelper.GetListDateForShop(_handledShop, year);
             }
             else
             {
                // _handledShop = CopyHelper.CreateDeepCopy(Program.currentShop);
                 _handledShop = new Shop(Program.currentShop.getIdShop(), Program.currentShop.getAddress());
+                _handledShop.NormaChasov = Program.currentShop.NormaChasov;
                 CalendarHelper.GetListDateForShop(_handledShop, year);
             }
 
@@ -188,6 +190,8 @@ namespace schedule
             //создаём таблицу
            // string[] months = Program.getMonths();
             DataTable dt = new DataTable("norm");
+            bool next=DateTime.Now.Year<Year;
+            Program.getListDate(Year, next);
             //создаём три колонки
             DataColumn Mounth = new DataColumn("месяц", typeof(string));
 

@@ -34,6 +34,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridViewDB = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Server = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sheme = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TypeDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.bSaveSettings = new System.Windows.Forms.Button();
@@ -45,14 +53,6 @@
             this.buttonActivateConnection = new System.Windows.Forms.Button();
             this.buttonDefaultForShop = new System.Windows.Forms.Button();
             this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Server = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NameDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sheme = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TypeDB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
@@ -118,9 +118,61 @@
             this.dataGridViewDB.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewDB.Name = "dataGridViewDB";
             this.dataGridViewDB.ReadOnly = true;
+            this.dataGridViewDB.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewDB.Size = new System.Drawing.Size(737, 153);
             this.dataGridViewDB.TabIndex = 9;
             this.dataGridViewDB.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // IsActive
+            // 
+            this.IsActive.HeaderText = "Основное соединение";
+            this.IsActive.Name = "IsActive";
+            this.IsActive.ReadOnly = true;
+            this.IsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.IsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Server
+            // 
+            this.Server.HeaderText = "Сервер";
+            this.Server.Name = "Server";
+            this.Server.ReadOnly = true;
+            // 
+            // NameDB
+            // 
+            this.NameDB.HeaderText = "Имя БД";
+            this.NameDB.Name = "NameDB";
+            this.NameDB.ReadOnly = true;
+            // 
+            // Login
+            // 
+            this.Login.HeaderText = "Пользователь";
+            this.Login.Name = "Login";
+            this.Login.ReadOnly = true;
+            // 
+            // Password
+            // 
+            this.Password.HeaderText = "Пароль";
+            this.Password.Name = "Password";
+            this.Password.ReadOnly = true;
+            // 
+            // Sheme
+            // 
+            this.Sheme.HeaderText = "Схема";
+            this.Sheme.Name = "Sheme";
+            this.Sheme.ReadOnly = true;
+            // 
+            // TypeDB
+            // 
+            this.TypeDB.HeaderText = "Тип БД";
+            this.TypeDB.Name = "TypeDB";
+            this.TypeDB.ReadOnly = true;
             // 
             // button2
             // 
@@ -216,57 +268,6 @@
             // form1BindingSource
             // 
             this.form1BindingSource.DataSource = typeof(schedule.Form1);
-            // 
-            // Id
-            // 
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // IsActive
-            // 
-            this.IsActive.HeaderText = "Основное соединение";
-            this.IsActive.Name = "IsActive";
-            this.IsActive.ReadOnly = true;
-            this.IsActive.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.IsActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Server
-            // 
-            this.Server.HeaderText = "Сервер";
-            this.Server.Name = "Server";
-            this.Server.ReadOnly = true;
-            // 
-            // NameDB
-            // 
-            this.NameDB.HeaderText = "Имя БД";
-            this.NameDB.Name = "NameDB";
-            this.NameDB.ReadOnly = true;
-            // 
-            // Login
-            // 
-            this.Login.HeaderText = "Пользователь";
-            this.Login.Name = "Login";
-            this.Login.ReadOnly = true;
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Пароль";
-            this.Password.Name = "Password";
-            this.Password.ReadOnly = true;
-            // 
-            // Sheme
-            // 
-            this.Sheme.HeaderText = "Схема";
-            this.Sheme.Name = "Sheme";
-            this.Sheme.ReadOnly = true;
-            // 
-            // TypeDB
-            // 
-            this.TypeDB.HeaderText = "Тип БД";
-            this.TypeDB.Name = "TypeDB";
-            this.TypeDB.ReadOnly = true;
             // 
             // fSettings
             // 

@@ -1136,7 +1136,7 @@ namespace schedule
             Program.ReadListShops();
             // Program.setListShops();
             tabControl1.Visible = false;
-            buttonTest.Visible = false;
+            //buttonTest.Visible = false;
             progressBar1.Visible = false;
             label3.Visible = false;
 
