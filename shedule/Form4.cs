@@ -320,18 +320,31 @@ namespace schedule
                     SetCheckedDaysByDates(ldfc);
                     break;
                 case 3:
-                    textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 8)).getTimeStart().ToString();
-                    textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
                     ldfc = _handledShop.DFCs.FindAll(t => (t.getTip() == 8));
-                    SetCheckedDaysByDates(ldfc);
+                    if (ldfc.Count > 0)
+                    {
+                        textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 8)).getTimeStart().ToString();
+                        textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
+                        SetCheckedDaysByDates(ldfc);
+                    }else
+                    {
+                        MessageBox.Show("Праздничные дни отсутствуют");
+                        comboBox1.SelectedIndex = 0;
+                    }
                     break;
                 case 4:
-                    textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 9)).getTimeStart().ToString();
-                    textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
                     ldfc.Clear();
                     ldfc = _handledShop.DFCs.FindAll(t => (t.getTip() == 9));
-                    SetCheckedDaysByDates(ldfc);
+                    if (ldfc.Count > 0)
+                    {
+                        textBoxStart.Text = _handledShop.DFCs.Find(t => (t.getTip() == 9)).getTimeStart().ToString();
+                        textBoxEnd.Text = _handledShop.DFCs.Find(t => (t.getTip() == 1)).getTimeEnd().ToString();
+                        SetCheckedDaysByDates(ldfc);
+                    }else {
+                        MessageBox.Show("Предпраздничные дни отсутствуют");
+                        comboBox1.SelectedIndex = 0;
+                    }
                     break;
                 case 5:
                     {
@@ -384,7 +397,7 @@ namespace schedule
             else
             {
                 int dayLength = int.Parse(textBoxEnd.Text) - int.Parse(textBoxStart.Text);
-                if (dayLength < 9)
+                if (dayLength < 8)
                 {
                     MessageBox.Show("Длина дня не должна быть меньше 8 часов!");
                     return;

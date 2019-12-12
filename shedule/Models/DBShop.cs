@@ -19,13 +19,13 @@ namespace schedule.Models
         private int ShopId;
         private string Address;
         private int ConnectionId;
-        private bool Mixing;
+        private int Mixing;
 
         public DBShop(int id, string address, int connection) {
             this.Address = address;
             this.ShopId = id;
             this.ConnectionId = connection;
-            this.Mixing = false;
+            this.Mixing = 0;
             this.ConnectionId = Connection.getActiveConnection().Id;
         }
         public DBShop()
@@ -64,7 +64,7 @@ namespace schedule.Models
             }
         }
 
-        public bool mixing
+        public int mixing
         {
             get { return Mixing; }
             set
@@ -124,7 +124,7 @@ namespace schedule.Models
             }
         }
 
-        public static void SaveMixing(int shopId, bool isMixing)
+        public static void SaveMixing(int shopId, int isMixing)
         {
             try
             {
@@ -143,9 +143,9 @@ namespace schedule.Models
             }
         }
 
-        public static bool getMixing(int shopId)
+        public static int getMixing(int shopId)
         {
-            bool mix=false;
+            int mix=0;
             try
             {
                 

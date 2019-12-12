@@ -749,24 +749,7 @@ namespace schedule.Code
 
         }
 
-        static public void initForecasts()
-        {
-            List<mShop> shops = DBShop.getShops().Select(t=> t.convertMShop()).ToList();
-            List<daySale> listDaySale = new List<daySale>();
-            List<Forecast> forecasts = new List<Forecast>();
-            shops = shops.FindAll(t => t.getIdShop() >= 396);
-            foreach (var shop in shops) {
-           // Shop shop = new Shop(301, "");
-                Program.currentShop = new Shop(shop.getIdShop(), shop.getAddress());
-                Logger.Log.Info("Init="+shop.getIdShop());
-                DateTime dt = new DateTime(2019,9,1);
-                for (int i=0;i<2;i++) {
-                listDaySale = createListDaySale(dt.AddMonths(i), dt.AddMonths(i+1), shop.getIdShop(), true);
-                forecasts = convertToForecast(listDaySale,shop.getIdShop(), dt.AddMonths(i).Month, dt.AddMonths(i).Year);
-                Forecast.CreateOrUpdate(forecasts);
-               }
-            }
-        }
+       
 
     }
 }

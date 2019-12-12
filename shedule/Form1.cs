@@ -20,6 +20,9 @@ using System.Linq;
 using Application = System.Windows.Forms.Application;
 using schedule.Models;
 using shedule.Models;
+using shedule.Code;
+using Constants = schedule.Code.Constants;
+using System.Threading;
 
 namespace schedule
 {
@@ -1115,11 +1118,54 @@ namespace schedule
             }
         }
 
+        public IEnumerable<Control> GetSelfAndChildrenRecursive(Control parent)
+        {
+            List<Control> controls = new List<Control>();
 
+            foreach (Control child in parent.Controls)
+            {
+                controls.AddRange(GetSelfAndChildrenRecursive(child));
+            }
+
+            controls.Add(parent);
+
+            return controls;
+        }
+
+
+        private void new_style(Form f1) {
+            List<Control> elements = new List<Control>();
+            /*elements.Add(this);
+            elements.Add(button1);
+            elements.Add(button10);
+            elements.Add(button12);
+            elements.Add(button6);
+            elements.Add(button13);
+            elements.Add(button14);
+            elements.Add(buttonVygr);
+            elements.Add(buttonExport1);
+            elements.Add(bSettings);
+            elements.Add(comboBox3);
+            elements.Add(comboBox1);
+            elements.Add(comboBox2);
+            elements.Add(comboBox4);
+            elements.Add(button_refresh_list_shops);
+            elements.Add(buttonMultShops);
+            elements.Add(bAlphabetSort);
+            elements.Add(bNumberSort);
+            elements.Add(tabControl1);
+            elements.Add(listBox1);
+            elements.Add(tabPage1);
+            elements.Add(tabPage2);
+            elements.Add(tabPage3);
+            elements.Add(buttonCalendar);*/
+            var controls = GetSelfAndChildrenRecursive(f1);
+            Init.initNewStyle(controls.ToList());
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            new_style(this);
             lbCurrentVersion.Text = $"v {Code.Constants.Version} от {Code.Constants.ReleaseDate} ";
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
@@ -1136,7 +1182,7 @@ namespace schedule
             Program.ReadListShops();
             // Program.setListShops();
             tabControl1.Visible = false;
-            //buttonTest.Visible = false;
+            buttonTest.Visible = false;
             progressBar1.Visible = false;
             label3.Visible = false;
 
@@ -1218,7 +1264,13 @@ namespace schedule
             buttonFactors.BackColor = Color.White;
             buttonVariantsSmen.BackColor = Color.White;
             panelParamOptim.BringToFront();
-            checkBox1.Checked = Program.currentShop.SortSotr;
+            //checkBox1.Checked = Program.currentShop.SortSotr;
+            switch (Program.currentShop.SortSotr) {
+                case 0: radioButton3.Checked = true; break;
+                case 2: radioButton2.Checked = true; break;
+                case 1: radioButton1.Checked = true; break;
+            }
+
             String readPath = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() +
                               "/parametrOptimization.txt";
             ;
@@ -1617,7 +1669,8 @@ namespace schedule
         {
             try
             {
-                ForForecast.initForecasts();
+                Init.initCalendar();
+                //Init.initForecasts();
             }
             catch (Exception ex)
             {
@@ -1695,6 +1748,7 @@ namespace schedule
         private void buttonMultShops_Click(object sender, EventArgs e)
         {
             panelMultShops.BringToFront();
+            bSettings.Visible = false;
             Program.shops = new List<Shop>();
             Program.currentShop = null;
             Program.IsMpRezhim = true;
@@ -1730,6 +1784,7 @@ namespace schedule
             tabControl1.Visible = false;
             Program.IsMpRezhim = false;
             Program.currentShop = null;
+            bSettings.Visible = true;
             //Program.shops = new List<Shop>();
         }
 
@@ -1826,7 +1881,7 @@ namespace schedule
                 }
             }
 
-            DBShop.SaveMixing(Program.currentShop.getIdShop(), checkBox1.Checked);
+            DBShop.SaveMixing(Program.currentShop.getIdShop(), Program.currentShop.SortSotr);
            /* String writePath2 = Environment.CurrentDirectory + "/Shops/" + Program.currentShop.getIdShop() + @"\SortSotr"; ;
             using (StreamWriter sw = new StreamWriter(writePath2, false, Encoding.Default))
             {
@@ -1855,7 +1910,9 @@ namespace schedule
             switch (comboBox3.SelectedIndex)
             {
                 case 0:
-                    button14.Visible = true; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count == 0))
+                    button6.Enabled = false; button6.BackColor = Color.Gray;
+                    buttonExport1.Enabled = true;  buttonExport1.BackColor = Constants.buttonColor;
+                    button14.Enabled = true; button14.BackColor = Constants.buttonColor; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count == 0))
                     {
                         button14.BackColor = Color.PaleGreen;
                         checkBox2.Visible = false;
@@ -1866,18 +1923,27 @@ namespace schedule
                     }
                     else
                     {
-                        button14.BackColor = Color.DarkGray;
+                        button14.BackColor = Color.LightYellow;
                         checkBox2.Visible = true;
                         comboBoxCountSotr.Items.Clear();
                         comboBoxCountSotr.Items.Add("штатного расписания");
                         comboBoxCountSotr.Items.Add("прогноза продаж");
                     }
                     break;
-                case 1: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
-                case 2: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
-                case 3: Sotrudniki.CountSotr = "прогноза продаж"; button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case 1: Sotrudniki.CountSotr = "прогноза продаж"; button14.Enabled = false; button14.BackColor = Color.Gray;
+                    button6.Enabled = true; button6.BackColor = Constants.buttonColor;
+                    checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case 2: Sotrudniki.CountSotr = "прогноза продаж"; button14.Enabled = false; button14.BackColor = Color.Gray;
+                    button6.Enabled = true; button6.BackColor = Constants.buttonColor;
+                    checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case 3: Sotrudniki.CountSotr = "прогноза продаж"; button14.Enabled = false; button14.BackColor = Color.Gray;
+                    button6.Enabled = true; button6.BackColor = Constants.buttonColor; 
+                    checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
                 case 4:
-                    button14.Visible = true; checkBox2.Visible = true; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true;
+                    button14.Enabled = true; button14.BackColor = Constants.buttonColor;
+                    checkBox2.Visible = true; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true;
+                    button6.BackColor = Color.Gray;
+                    button6.Enabled = false;
                     if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count > 0))
                     {
                         button14.BackColor = Color.PaleGreen;
@@ -1889,14 +1955,17 @@ namespace schedule
                     }
                     else
                     {
-                        button14.BackColor = Color.DarkGray;
+                        button14.BackColor = Color.LightYellow;
                         checkBox2.Visible = true;
                         comboBoxCountSotr.Items.Clear();
                         comboBoxCountSotr.Items.Add("штатного расписания");
                         comboBoxCountSotr.Items.Add("прогноза продаж");
                     }
                     break;
-                case -1: button14.Visible = false; checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
+                case -1: button14.BackColor = Color.Gray; button14.Enabled = false;
+                    button6.BackColor = Color.Gray; button6.Enabled = false;
+                    buttonExport1.BackColor = Color.Gray; buttonExport1.Enabled = false;
+                    checkBox2.Visible = false; comboBoxCountSotr.Visible = false; labelCountSotr.Visible = false; break;
 
 
 
@@ -2496,7 +2565,7 @@ namespace schedule
                 Program.ReadNormaChas(DateTime.Now.Year);
                 Program.currentShop.setIdShopFM(shop.getIdShop());
                 Program.getListDate(DateTime.Today.Year, false);
-                string readPath = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
+                string readPath = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShop() + $@"\Calendar{DateTime.Today.AddYears(1).Year}";
                 if (File.Exists(readPath))
                 {
                     Program.getListDate(DateTime.Today.AddYears(1).Year, true);
@@ -2531,11 +2600,11 @@ namespace schedule
                             {
                                 if (ForExcel.checkBoxMPeremSotr1)
                                 {
-                                    Program.currentShop.SortSotr = true;
+                                    Program.currentShop.SortSotr = 1;
                                 }
                                 else
                                 {
-                                    Program.currentShop.SortSotr = false;
+                                    Program.currentShop.SortSotr = 0;
                                 }
                                 if (!ForExcel.checkBoxMReadschedule1)
                                 {
@@ -2842,11 +2911,11 @@ namespace schedule
                             {
                                 if (ForExcel.checkBoxMPeremSotr1)
                                 {
-                                    Program.currentShop.SortSotr = true;
+                                    Program.currentShop.SortSotr = 1;
                                 }
                                 else
                                 {
-                                    Program.currentShop.SortSotr = false;
+                                    Program.currentShop.SortSotr = 0;
                                 }
 
                                 string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
@@ -3267,7 +3336,7 @@ namespace schedule
                     labelStatus2.Text = "режим работы локальный ";
                     buttonVygr.Visible = false;
                     comboBox2.Visible = false;
-
+                    MessageBox.Show("Ошибка соединения с БД");
                     // this.Close();
                 }
 
@@ -3275,135 +3344,82 @@ namespace schedule
             }
             else
             {
-                try
+                if (comboBox2.SelectedIndex > -1)
                 {
-                    buttonRaspisanie.Enabled = false;
-                    buttonCalendar.Enabled = false;
-                    buttonKassov.Enabled = false;
-                    tabControl1.Enabled = false;
-                    button_refresh_list_shops.Enabled = false;
-                    buttonMultShops.Enabled = false;
-
-                    string filename;
-                    saveFileDialog1.DefaultExt = ".xlsx";
-                    saveFileDialog1.AddExtension = true;
-                    saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
-                    if (Settings.Default.folder == "")
-                    {
-                        saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
-                    }
-                    else
-                    {
-                        saveFileDialog1.InitialDirectory = Settings.Default.folder;
-                    }
-                    saveFileDialog1.Title = "Выберите папку для сохранения выгрузки из БД";
-                    saveFileDialog1.FileName = "Выгрузка по кассовым операциям за " + comboBox2.Text;
-                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        filename = Path.GetFullPath(saveFileDialog1.FileName);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                    int year;
-
-
-                    if (DateTime.Now.Month < comboBox2.SelectedIndex + 1)
-                    {
-                        year = DateTime.Now.Year - 1;
-
-
-                    }
-                    else { year = DateTime.Now.Year; }
-
-                    DateTime dt = new DateTime(year, comboBox2.SelectedIndex + 1, 1);
-                    Program.currentShop.daysSale = ForForecast.createListDaySale(dt, dt.AddDays(31), Program.currentShop.getIdShop());
-
-                    Excel.Application ObjExcel = new Excel.Application();
-                    Workbook ObjWorkBook;
-                    Worksheet ObjWorkSheet;
-
-                    ObjWorkBook = ObjExcel.Workbooks.Add(System.Reflection.Missing.Value);
-                    Excel.Range excelcells;
-                    ObjWorkBook.Sheets.Add();
-                    ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-                    ObjWorkSheet.Name = "График";
-                    excelcells = ObjWorkSheet.get_Range("C1", "E1000");
-                    excelcells.Font.Size = 10;
-                    excelcells.ColumnWidth = 20;
-
-                    excelcells.HorizontalAlignment = Excel.Constants.xlCenter;
-                    excelcells.VerticalAlignment = Excel.Constants.xlCenter;
-
-                    ObjWorkSheet.Cells[1, 1] = "День недели";
-                    ObjWorkSheet.Cells[1, 2] = "Время";
-                    ObjWorkSheet.Cells[1, 3] = "Дата";
-                    ObjWorkSheet.Cells[1, 4] = "Количество товаров";
-                    ObjWorkSheet.Cells[1, 5] = "Количество чеков";
-                    ObjWorkSheet.Cells[1, 6] = "Количество сканирований";
-
-                    int i = 2;
-                    progressBar3.Visible = true;
-                    progressBar3.Value = 0;
-                    progressBar3.Maximum = Program.currentShop.daysSale.Count;
-                    foreach (daySale twd in Program.currentShop.daysSale)
-                    {
-                        progressBar3.PerformStep();
-                        foreach (hourSale hs in twd.hoursSale)
-                        {
-                            ObjWorkSheet.Cells[i, 1] = twd.getWeekDay2();
-                            ObjWorkSheet.Cells[i, 2] = hs.getNHour() + ":00";
-                            ObjWorkSheet.Cells[i, 3] = hs.getData();
-                            ObjWorkSheet.Cells[i, 4] = hs.getCountTov();
-                            ObjWorkSheet.Cells[i, 5] = hs.getCountCheck();
-                            ObjWorkSheet.Cells[i, 6] = hs.getCountClick();
-
-                            i++;
-                        }
-                    }
-
-
-                    ObjExcel.Visible = false;
-                    ObjExcel.UserControl = true;
-                    ObjExcel.DisplayAlerts = false;
-                    ObjWorkBook.Saved = true;
-                    ObjExcel.DisplayAlerts = true;
                     try
                     {
+                        buttonRaspisanie.Enabled = false;
+                        buttonCalendar.Enabled = false;
+                        buttonKassov.Enabled = false;
+                        tabControl1.Enabled = false;
+                        button_refresh_list_shops.Enabled = false;
+                        buttonMultShops.Enabled = false;
+                        progressBar3.Visible = true;
+                        progressBar3.Value = 0;
+                        progressBar3.Maximum = 100;
+                        progressBar3.Step = 1;
 
-                        ObjWorkBook.SaveAs(filename, XlFileFormat.xlWorkbookDefault);
-                        Program.HandledShops.Add(Program.currentShop.getIdShop());
-
-
-                        ObjWorkBook.Close(0);
-
-                        ObjExcel.Quit();
-                        MessageBox.Show("Файл создан");
-
+                        saveFileDialog1.DefaultExt = ".xlsx";
+                        saveFileDialog1.AddExtension = true;
+                        saveFileDialog1.Filter = "Файл Excel|*.XLSX;*.XLS";
+                        if (Settings.Default.folder == "")
+                        {
+                            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory + @"\Shops\" + Program.currentShop.getIdShop();
+                        }
+                        else
+                        {
+                            saveFileDialog1.InitialDirectory = Settings.Default.folder;
+                        }
+                        saveFileDialog1.Title = "Выберите папку для сохранения выгрузки из БД";
+                        saveFileDialog1.FileName = "Выгрузка по кассовым операциям за " + comboBox2.Text;
+                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            Program.file = Path.GetFullPath(saveFileDialog1.FileName);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                        
+                        ExportFromDB.combobox2 = comboBox2.SelectedIndex;
+                        ExportFromDB.thread = new Thread(ExportFromDB.BackgroundThread);
+                        ExportFromDB.thread.Priority = ThreadPriority.Highest;
+                        ExportFromDB.thread.IsBackground = true;
+                        try
+                        {
+                            buttonVygr.Enabled = false;
+                            buttonVygr.BackColor = Color.Gray;
+                            ExportFromDB.isExport = true;
+                            ExportFromDB.thread.Start();
+                            timer2.Enabled = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        //progressBar3.Value = 100;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Ошибка записи в файл " + ex.Message);
-                        ObjWorkBook.Close(0);
-                        ObjExcel.Quit();
+                        MessageBox.Show(ex.ToString());
+                    }
+                    finally
+                    {
+                       
+                        buttonRaspisanie.Enabled = true;
+                        buttonCalendar.Enabled = true;
+                        buttonKassov.Enabled = true;
+                        tabControl1.Enabled = true;
+                        button_refresh_list_shops.Enabled = true;
+                        buttonMultShops.Enabled = true;
+
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                finally
-                {
-                    progressBar3.Visible = false;
-                    buttonRaspisanie.Enabled = true;
-                    buttonCalendar.Enabled = true;
-                    buttonKassov.Enabled = true;
-                    tabControl1.Enabled = true;
-                    button_refresh_list_shops.Enabled = true;
-                    buttonMultShops.Enabled = true;
+                else {
+                    MessageBox.Show("Выберите месяц для выгрузки");
                 }
             }
+
 
         }
 
@@ -3933,38 +3949,56 @@ namespace schedule
             }
         }
 
-        public static void CheckDone(Thread ts, System.Windows.Forms.Timer t, System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1, ComboBox cb1)
+        public static void CheckDone(Thread ts, System.Windows.Forms.Timer t, System.Windows.Forms.ProgressBar pb1, System.Windows.Forms.Button btn,  ComboBox cb1=null)
         {
             pb1.Value = ForExcel.progress;
             if (!ts.IsAlive)
             {
                 t.Enabled = false;
                 t.Stop();
-                Done(btn, pb1, cb1);
+                if (cb1 != null)
+                {
+                    Done(btn, pb1, cb1);
+                }
+                else {
+                    Done(btn, pb1);
+                }
 
 
             }
             else
             {
+                if (cb1 == null)
+                {
+                    pb1.Value = ExportFromDB.barvalue;
+                }
                 return;
             }
 
         }
 
-        public static void Done(System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1, ComboBox cb1)
+        public static void Done(System.Windows.Forms.Button btn, System.Windows.Forms.ProgressBar pb1, ComboBox cb1=null)
         {
-            if ((Program.currentShop.Semployes.Count != 0) && (!ForExcel.error))
-            {
-                MessageBox.Show("Чтение завершено успешно");
-                btn.BackColor = Color.PaleGreen;
-                refreshCountSotr(cb1);
+            if (cb1!=null) {
+                if ((Program.currentShop.Semployes.Count != 0) && (!ForExcel.error))
+                {
+                    MessageBox.Show("Чтение завершено успешно");
+                    btn.BackColor = Color.PaleGreen;
+                    refreshCountSotr(cb1);
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка чтения! Файл имеет неверные данные");
+                    Program.currentShop.Semployes.Clear();
+                }
+                pb1.Visible = false; }
+            else {
+                btn.Enabled = true;
+                btn.BackColor = Constants.buttonColor;
+                pb1.Visible = false;
+                ExportFromDB.isExport = false;
+                MessageBox.Show("Файл успешно сохранен");
             }
-            else
-            {
-                MessageBox.Show("Ошибка чтения! Файл имеет неверные данные");
-                Program.currentShop.Semployes.Clear();
-            }
-            pb1.Visible = false;
         }
 
         public static void refreshCountSotr(ComboBox cb)
@@ -3996,7 +4030,12 @@ namespace schedule
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            CheckDone(ForExcel.thread1, timer2, button14, progressBar1, comboBoxCountSotr);
+            if (ExportFromDB.isExport) {
+                ExportFromDB.barvalue += 1;
+                CheckDone(ExportFromDB.thread, timer2, progressBar3, buttonVygr);
+            } else {
+                CheckDone(ForExcel.thread1, timer2, progressBar1, button14, comboBoxCountSotr); 
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -4021,7 +4060,7 @@ namespace schedule
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
-            Program.currentShop.SortSotr = checkBox1.Checked;
+           // Program.currentShop.SortSotr = checkBox1.Checked;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -4127,6 +4166,45 @@ namespace schedule
         }
 
         private void labelMinRabCount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButtonLocalDB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonLocalDB.Checked)
+            {
+                buttonImportKasOper.Visible = true;
+                buttonVygr.Visible = false;
+                comboBox2.Visible = false;
+                Program.isOffline = true;
+            }
+        }
+
+        private void radioButton1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked) {
+                Program.currentShop.SortSotr = 1;
+            }
+        }
+
+        private void radioButton2_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                Program.currentShop.SortSotr = 2;
+            }
+        }
+
+        private void radioButton3_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked)
+            {
+                Program.currentShop.SortSotr = 0;
+            }
+        }
+
+        private void progressBar3_Click(object sender, EventArgs e)
         {
 
         }

@@ -28,7 +28,7 @@ namespace schedule.Models
         public List<VarSmen> VarSmens = new List<VarSmen>();
         public List<MinRab> ListMinRab;
         public int RaznChas;
-        public bool SortSotr = false;
+        public int SortSotr = 0;
         // public int countPrilavok = 0;
         public Prilavki prilavki;
 

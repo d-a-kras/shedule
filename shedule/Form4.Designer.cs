@@ -83,7 +83,7 @@
             "выбрать несколько дат"});
             this.comboBox1.Location = new System.Drawing.Point(12, 425);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(139, 21);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -560,7 +560,7 @@
             // 
             this.bResetSelection.Location = new System.Drawing.Point(12, 452);
             this.bResetSelection.Name = "bResetSelection";
-            this.bResetSelection.Size = new System.Drawing.Size(121, 23);
+            this.bResetSelection.Size = new System.Drawing.Size(139, 23);
             this.bResetSelection.TabIndex = 37;
             this.bResetSelection.Text = "Сброс выделения";
             this.bResetSelection.UseVisualStyleBackColor = true;
@@ -594,7 +594,7 @@
             // 
             this.bMSelectOff.Location = new System.Drawing.Point(13, 481);
             this.bMSelectOff.Name = "bMSelectOff";
-            this.bMSelectOff.Size = new System.Drawing.Size(120, 38);
+            this.bMSelectOff.Size = new System.Drawing.Size(138, 38);
             this.bMSelectOff.TabIndex = 39;
             this.bMSelectOff.Text = "Выключить режим выделения";
             this.bMSelectOff.UseVisualStyleBackColor = true;

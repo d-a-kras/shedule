@@ -808,7 +808,8 @@ namespace schedule.Code
 
                         wd.minKassVech.Ncount = ck2;
                     }
-                    if (Program.currentShop.SortSotr)
+
+                    if (Program.currentShop.SortSotr == 1)
                     {
                         if (sort)
                         {
@@ -827,13 +828,21 @@ namespace schedule.Code
                 }
 
 
-                if (Program.currentShop.SortSotr)
+                if (Program.currentShop.SortSotr==1)
                 {
                     if (wd.getData().Day == 15)
                     {
                         emplo.Sort(delegate (employee s1, employee s2)
                         { return s2.getID().CompareTo(s1.getID()); });
                     }
+                }else if (Program.currentShop.SortSotr == 2)
+                {
+                    var emps = emplo.FindAll(t => t.getOtrabotal() == 0 && ((t.TipTekSmen == 1) || (t.TipTekSmen == 3)) && ((t.getVS().getR() == 2) || (t.getVS().getR() == 3)));
+                    foreach (var emp in emps)
+                    {
+                        if (emp.TipTekSmen == 1) { emp.TipTekSmen = 3; } else if (emp.TipTekSmen == 3) { emp.TipTekSmen = 1; }
+                    }
+
                 }
                 if (wd.DS.getTip() == 8)
                 {
@@ -1281,7 +1290,8 @@ namespace schedule.Code
 
                         wd.minProdVech.Ncount = ck2;
                     }
-                    if (Program.currentShop.SortSotr)
+
+                    if (Program.currentShop.SortSotr == 1)
                     {
                         if (sort)
                         {
@@ -1296,10 +1306,13 @@ namespace schedule.Code
                             sort = true;
                         }
                     }
+                    else if(Program.currentShop.SortSotr == 2) { 
+                        
+                    }
                 }
 
                 int start = wd.DS.getStartDaySale();
-                if (Program.currentShop.SortSotr)
+                if (Program.currentShop.SortSotr==1)
                 {
                     if (wd.getData().Day == 15)
                     {

@@ -428,10 +428,10 @@ namespace schedule
             {
                 currentShop.tsr.Clear();
                 readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShop() + @"\TSR";
-                if (IsMpRezhim)
+               /* if (IsMpRezhim)
                 {
                     readPath = Environment.CurrentDirectory + "/Shops/" + currentShop.getIdShopFM() + @"\TSR";
-                }
+                }*/
 
                 try
                 {

@@ -125,6 +125,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\CalendarHelper.cs" />
+    <Compile Include="Code\ExportFromDB.cs" />
+    <Compile Include="Code\Init.cs" />
     <Compile Include="Models\Models.cs" />
     <Compile Include="Struct\Dict.cs" />
     <Compile Include="Code\ForDB.cs" />
