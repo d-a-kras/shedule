@@ -10,10 +10,14 @@ namespace schedule.Code
     public static class Constants
     {
         public const string ListName = "График";
-        public const string Version = "1.4.1";
-        public const string ReleaseDate = "10.12.2019";
+        public const string Version = "1.4.2";
+        public const string ReleaseDate = "12.12.2019";
         public const bool IsThrowExceptionOnNullResult = true; //будет ли программа порождать исключение если из базы вернулось 0 результатов
 
-        public static Color buttonColor = Color.FromArgb(255, 160, 122);
+        public static Color buttonColor = Color.FromArgb(13, 88, 166);//Color.FromArgb(50, 110, 255);
+
+        public static Color formColor = Color.SteelBlue;
+        public static Color backColor = Color.Azure;
+
     }
 }

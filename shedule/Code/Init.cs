@@ -117,23 +117,38 @@ namespace shedule.Code
         static public void initNewStyle(List<Control> elements)
         {
             foreach (var element in elements) {
-                if (element is Form) {
-                    ((Form)element).BackColor = Color.FromArgb(29, 125, 143);
-                } else if (element is Button) {
+                if (element is Form)
+                {
+                    ((Form)element).BackColor = Constants.formColor;//Color.FromArgb(29, 125, 143);
+                }
+                else if (element is Button)
+                {
                     ((Button)element).BackColor = Constants.buttonColor;
-                    if ((element.Name== "button14")||(element.Name == "button6") ||(element.Name == "buttonExport1"))
+                    ((Button)element).FlatStyle = FlatStyle.Flat;
+                    ((Button)element).ForeColor = Constants.backColor;
+                    ((Button)element).Font = new Font("Yu Gothic Ul Semibold", 7);
+                    if ((element.Name == "button14") || (element.Name == "button6") || (element.Name == "buttonExport1"))
                     {
                         element.BackColor = Color.Gray;
                         element.Enabled = false;
                     }
+                }else if (element is Label){
+                    ((Label)element).ForeColor = Constants.backColor;
+                    if (element.Name!="label17" && element.Name != "lbCurrentVersion") {
+                        ((Label)element).Font = new Font("Yu Gothic Ul Semibold", 9, FontStyle.Bold); 
+                    }
                 }
-                else if (element is ComboBox){
-                    ((ComboBox)element).BackColor = Color.FromArgb(92, 181, 197);
-                } else if (element is ListBox){
-                    ((ListBox)element).BackColor = Color.FromArgb(186, 223, 209);
-                }else if (element is TabPage)
+                else if (element is ComboBox)
                 {
-                    ((TabPage)element).BackColor = Color.FromArgb(186, 223, 209);
+                    ((ComboBox)element).BackColor = Constants.backColor;//Color.FromArgb(92, 181, 197);
+                }
+                else if (element is ListBox)
+                {
+                    ((ListBox)element).BackColor = Constants.backColor;// Color.FromArgb(186, 223, 209);
+                }
+                else if (element is TabPage)
+                {
+                    ((TabPage)element).BackColor = Constants.backColor; //Color.FromArgb(186, 223, 209);
                 }
             }
            
