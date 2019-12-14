@@ -153,6 +153,27 @@ namespace shedule.Code
             }
            
         }
+
+        public static IEnumerable<Control> GetSelfAndChildrenRecursive(Control parent)
+        {
+            List<Control> controls = new List<Control>();
+
+            foreach (Control child in parent.Controls)
+            {
+                controls.AddRange(GetSelfAndChildrenRecursive(child));
+            }
+
+            controls.Add(parent);
+
+            return controls;
+        }
+
+
+        public static void new_style(Form f)
+        {
+            var controls = GetSelfAndChildrenRecursive(f);
+            Init.initNewStyle(controls.ToList());
+        }
     }
      
 }

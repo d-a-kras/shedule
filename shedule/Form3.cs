@@ -1,4 +1,5 @@
-﻿using System;
+﻿using shedule.Code;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -83,6 +84,7 @@ namespace schedule
 
         private void Form3_Load(object sender, EventArgs e)
         {
+            Init.new_style(this);
             textBoxLogin.Text = Settings.Default.DatabaseLogin;
             textBoxPassword.Text  = Settings.Default.DatabasePassword;
         }

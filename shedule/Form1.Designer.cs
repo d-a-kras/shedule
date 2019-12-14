@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿
+using schedule.Code;
+using System.Drawing;
 
 namespace schedule
 {
@@ -540,7 +542,7 @@ namespace schedule
             // 
             // bNumberSort
             // 
-            this.bNumberSort.BackColor = System.Drawing.SystemColors.Control;
+         //   this.bNumberSort.BackColor = System.Drawing.SystemColors.Control;
             this.bNumberSort.Enabled = false;
             this.bNumberSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.bNumberSort.Location = new System.Drawing.Point(4, 384);
@@ -560,7 +562,7 @@ namespace schedule
             // 
             // bAlphabetSort
             // 
-            this.bAlphabetSort.BackColor = System.Drawing.SystemColors.Control;
+       //    this.bAlphabetSort.BackColor = System.Drawing.SystemColors.Control;
             this.bAlphabetSort.Location = new System.Drawing.Point(4, 358);
             this.bAlphabetSort.Name = "bAlphabetSort";
             this.bAlphabetSort.Size = new System.Drawing.Size(18, 23);
@@ -619,7 +621,7 @@ namespace schedule
             // 
             // buttonRaspisanie
             // 
-            this.buttonRaspisanie.BackColor = System.Drawing.Color.White;
+          //  this.buttonRaspisanie.BackColor = Constants.buttonColor;
             this.buttonRaspisanie.Location = new System.Drawing.Point(287, 12);
             this.buttonRaspisanie.Name = "buttonRaspisanie";
             this.buttonRaspisanie.Size = new System.Drawing.Size(120, 40);
@@ -630,7 +632,7 @@ namespace schedule
             // 
             // buttonCalendar
             // 
-            this.buttonCalendar.BackColor = System.Drawing.Color.White;
+          //  this.buttonCalendar.BackColor = Constants.buttonColor;
             this.buttonCalendar.Location = new System.Drawing.Point(161, 12);
             this.buttonCalendar.Name = "buttonCalendar";
             this.buttonCalendar.Size = new System.Drawing.Size(120, 40);
@@ -641,7 +643,7 @@ namespace schedule
             // 
             // buttonKassov
             // 
-            this.buttonKassov.BackColor = System.Drawing.Color.MistyRose;
+            this.buttonKassov.BackColor = Constants .selectedButtonColor;
             this.buttonKassov.Location = new System.Drawing.Point(36, 12);
             this.buttonKassov.Name = "buttonKassov";
             this.buttonKassov.Size = new System.Drawing.Size(120, 40);
@@ -754,7 +756,7 @@ namespace schedule
             // 
             // panelCalendar
             // 
-            this.panelCalendar.BackColor = System.Drawing.Color.White;
+           // this.panelCalendar.BackColor = System.Drawing.Color.White;
             this.panelCalendar.Controls.Add(this.monthCalendar1);
             this.panelCalendar.Location = new System.Drawing.Point(20, 55);
             this.panelCalendar.Name = "panelCalendar";
@@ -835,7 +837,7 @@ namespace schedule
             // 
             // buttonParamOptimiz
             // 
-            this.buttonParamOptimiz.BackColor = System.Drawing.Color.MistyRose;
+            this.buttonParamOptimiz.BackColor = Constants.selectedButtonColor;
             this.buttonParamOptimiz.Location = new System.Drawing.Point(53, 15);
             this.buttonParamOptimiz.Name = "buttonParamOptimiz";
             this.buttonParamOptimiz.Size = new System.Drawing.Size(120, 40);
@@ -846,7 +848,7 @@ namespace schedule
             // 
             // buttonVariantsSmen
             // 
-            this.buttonVariantsSmen.BackColor = System.Drawing.Color.White;
+           // this.buttonVariantsSmen.BackColor = Constants.buttonColor;
             this.buttonVariantsSmen.Location = new System.Drawing.Point(305, 15);
             this.buttonVariantsSmen.Name = "buttonVariantsSmen";
             this.buttonVariantsSmen.Size = new System.Drawing.Size(120, 40);
@@ -857,7 +859,7 @@ namespace schedule
             // 
             // buttonFactors
             // 
-            this.buttonFactors.BackColor = System.Drawing.Color.White;
+           // this.buttonFactors.BackColor = Constants.buttonColor;
             this.buttonFactors.Location = new System.Drawing.Point(179, 15);
             this.buttonFactors.Name = "buttonFactors";
             this.buttonFactors.Size = new System.Drawing.Size(120, 40);
@@ -1350,9 +1352,9 @@ namespace schedule
             this.label4.Location = new System.Drawing.Point(28, 40);
             this.label4.MaximumSize = new System.Drawing.Size(450, 50);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(424, 17);
+            this.label4.Size = new System.Drawing.Size(439, 17);
             this.label4.TabIndex = 1;
-            this.label4.Text = "Что образить (с учетом факторов и параметров оптимизации)";
+            this.label4.Text = "Что отобразить (с учетом факторов и параметров оптимизации)";
             // 
             // notifyIcon1
             // 
@@ -1393,7 +1395,7 @@ namespace schedule
             // 
             // button12
             // 
-            this.button12.BackColor = System.Drawing.SystemColors.ControlLight;
+           // this.button12.BackColor = System.Drawing.SystemColors.ControlLight;
             this.button12.Location = new System.Drawing.Point(838, 13);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(23, 23);

@@ -1,5 +1,6 @@
 ﻿
 using schedule.Code;
+using shedule.Code;
 using shedule.Models;
 using System;
 using System.ComponentModel;
@@ -189,6 +190,7 @@ namespace schedule
 
     private void Form5_Load(object sender, EventArgs e)
         {
+            Init.new_style(this);
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
             bw.DoWork += new DoWorkEventHandler(bw_DoWork);

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form4));
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.labelData = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -657,6 +658,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelData);
             this.Controls.Add(this.comboBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form4";
             this.Text = "Производственный календарь";
             this.Load += new System.EventHandler(this.Form4_Load);

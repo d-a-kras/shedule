@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using schedule.Code;
 using schedule.Models;
+using shedule.Code;
 using shedule.Models;
 
 namespace schedule
@@ -256,6 +257,7 @@ namespace schedule
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            Init.new_style(this);
             CalendarLoad();
         }
 

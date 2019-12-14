@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fSettings));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.labelDBdefault = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -282,6 +283,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.bSaveSettings);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fSettings";
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.fSettings_Load);

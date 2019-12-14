@@ -1118,54 +1118,11 @@ namespace schedule
             }
         }
 
-        public IEnumerable<Control> GetSelfAndChildrenRecursive(Control parent)
-        {
-            List<Control> controls = new List<Control>();
 
-            foreach (Control child in parent.Controls)
-            {
-                controls.AddRange(GetSelfAndChildrenRecursive(child));
-            }
-
-            controls.Add(parent);
-
-            return controls;
-        }
-
-
-        private void new_style(Form f1) {
-            List<Control> elements = new List<Control>();
-            /*elements.Add(this);
-            elements.Add(button1);
-            elements.Add(button10);
-            elements.Add(button12);
-            elements.Add(button6);
-            elements.Add(button13);
-            elements.Add(button14);
-            elements.Add(buttonVygr);
-            elements.Add(buttonExport1);
-            elements.Add(bSettings);
-            elements.Add(comboBox3);
-            elements.Add(comboBox1);
-            elements.Add(comboBox2);
-            elements.Add(comboBox4);
-            elements.Add(button_refresh_list_shops);
-            elements.Add(buttonMultShops);
-            elements.Add(bAlphabetSort);
-            elements.Add(bNumberSort);
-            elements.Add(tabControl1);
-            elements.Add(listBox1);
-            elements.Add(tabPage1);
-            elements.Add(tabPage2);
-            elements.Add(tabPage3);
-            elements.Add(buttonCalendar);*/
-            var controls = GetSelfAndChildrenRecursive(f1);
-            Init.initNewStyle(controls.ToList());
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            new_style(this);
+            Init.new_style(this);
             lbCurrentVersion.Text = $"v {Code.Constants.Version} от {Code.Constants.ReleaseDate} ";
             bw.WorkerReportsProgress = true;
             bw.WorkerSupportsCancellation = true;
@@ -1216,9 +1173,9 @@ namespace schedule
 
         private void buttonFactors_Click(object sender, EventArgs e)
         {
-            buttonFactors.BackColor = Color.MistyRose;
-            buttonVariantsSmen.BackColor = Color.White;
-            buttonParamOptimiz.BackColor = Color.White;
+            buttonFactors.BackColor = Constants.selectedButtonColor;
+            buttonVariantsSmen.BackColor = Constants.buttonColor;
+            buttonParamOptimiz.BackColor = Constants.buttonColor;
             panelFactors.BringToFront();
             dataGridViewFactors.DataSource = viewFactors();
             dataGridViewFactors.Columns[0].ReadOnly = true;
@@ -1226,9 +1183,9 @@ namespace schedule
 
         private void buttonVariantsSmen_Click(object sender, EventArgs e)
         {
-            buttonVariantsSmen.BackColor = Color.MistyRose;
-            buttonFactors.BackColor = Color.White;
-            buttonParamOptimiz.BackColor = Color.White;
+            buttonVariantsSmen.BackColor = Constants.selectedButtonColor;
+            buttonFactors.BackColor = Constants.buttonColor;
+            buttonParamOptimiz.BackColor = Constants.buttonColor;
             panelDopusVarSmen.BringToFront();
             comboBox4.SelectedIndex = 0;
             dataGridViewVarSmen.DataSource = viewVarSmen(false);
@@ -1260,9 +1217,9 @@ namespace schedule
 
         private void buttonParamOptimiz_Click(object sender, EventArgs e)
         {
-            buttonParamOptimiz.BackColor = Color.MistyRose;
-            buttonFactors.BackColor = Color.White;
-            buttonVariantsSmen.BackColor = Color.White;
+            buttonParamOptimiz.BackColor = Constants.selectedButtonColor;
+            buttonFactors.BackColor = Constants.buttonColor;
+            buttonVariantsSmen.BackColor = Constants.buttonColor;
             panelParamOptim.BringToFront();
             //checkBox1.Checked = Program.currentShop.SortSotr;
             switch (Program.currentShop.SortSotr) {
@@ -1651,9 +1608,9 @@ namespace schedule
 
         private void buttonCalendar_Click(object sender, EventArgs e)
         {
-            buttonCalendar.BackColor = Color.MistyRose;
-            buttonRaspisanie.BackColor = Color.White;
-            buttonKassov.BackColor = Color.White;
+            buttonCalendar.BackColor = Constants.selectedButtonColor;
+            buttonRaspisanie.BackColor = Constants.buttonColor;
+            buttonKassov.BackColor = Constants.buttonColor;
             panelCalendar.BringToFront();
 
             buttonImportKasOper.Visible = false;
@@ -1681,9 +1638,9 @@ namespace schedule
 
         private void buttonKassov_Click(object sender, EventArgs e)
         {
-            buttonKassov.BackColor = Color.MistyRose;
-            buttonCalendar.BackColor = Color.White;
-            buttonRaspisanie.BackColor = Color.White;
+            buttonKassov.BackColor = Constants.selectedButtonColor;
+            buttonCalendar.BackColor = Constants.buttonColor;
+            buttonRaspisanie.BackColor = Constants.buttonColor;
             panelKassOper.BringToFront();
 
         }
@@ -1691,9 +1648,9 @@ namespace schedule
         private void buttonRaspisanie_Click(object sender, EventArgs e)
         {
             Program.TSRTG = true;
-            buttonRaspisanie.BackColor = Color.MistyRose;
-            buttonCalendar.BackColor = Color.White;
-            buttonKassov.BackColor = Color.White;
+            buttonRaspisanie.BackColor = Constants.selectedButtonColor;
+            buttonCalendar.BackColor = Constants.buttonColor;
+            buttonKassov.BackColor = Constants.buttonColor;
             panelTRasp.BringToFront();
             dataGridViewForTSR.DataSource = viewTSR();
             dataGridViewForTSR.Columns[0].ReadOnly = true;
@@ -3454,9 +3411,9 @@ namespace schedule
 
         private void buttonCalendarNextYear_Click(object sender, EventArgs e)
         {
-            buttonCalendar.BackColor = Color.MistyRose;
-            buttonRaspisanie.BackColor = Color.White;
-            buttonKassov.BackColor = Color.White;
+            buttonCalendar.BackColor = Constants.selectedButtonColor;
+            buttonRaspisanie.BackColor = Constants.buttonColor;
+            buttonKassov.BackColor = Constants.buttonColor;
             panelCalendar.BringToFront();
 
             buttonImportKasOper.Visible = false;

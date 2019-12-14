@@ -12,6 +12,7 @@ using schedule.Models;
 using System.Data.Entity;
 using System.Data.SQLite;
 using schedule.Code;
+using shedule.Code;
 
 namespace schedule
 {
@@ -36,9 +37,10 @@ namespace schedule
 
         private void fSettings_Load(object sender, EventArgs e)
         {
-           // tbServerAddress.Text = Settings.Default.DatabaseAddress;
-           // tbServerLogin.Text = Settings.Default.DatabaseLogin;
-           // tbServerPassword.Text = Settings.Default.DatabasePassword;
+            Init.new_style(this);
+            // tbServerAddress.Text = Settings.Default.DatabaseAddress;
+            // tbServerLogin.Text = Settings.Default.DatabaseLogin;
+            // tbServerPassword.Text = Settings.Default.DatabasePassword;
             label4.Text = Settings.Default.folder;
             List<ListViewItem> listViewItems = new List<ListViewItem>();
             m_dbConn = new SQLiteConnection();

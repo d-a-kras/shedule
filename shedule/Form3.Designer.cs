@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            schedule.Settings settings1 = new schedule.Settings();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
             this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.labelLogin = new System.Windows.Forms.Label();
@@ -42,7 +44,12 @@
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
             this.textBoxLogin.TabIndex = 0;
-            this.textBoxLogin.Text = global::schedule.Settings.Default.DatabaseLogin;
+            settings1.DatabaseAddress = "CENTRUMSRV";
+            settings1.DatabaseLogin = "";
+            settings1.DatabasePassword = "";
+            settings1.folder = "";
+            settings1.SettingsKey = "";
+            this.textBoxLogin.Text = settings1.DatabaseLogin;
             // 
             // textBoxPassword
             // 
@@ -50,7 +57,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.textBoxPassword.TabIndex = 1;
-            this.textBoxPassword.Text = global::schedule.Settings.Default.DatabasePassword;
+            this.textBoxPassword.Text = settings1.DatabasePassword;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // labelLogin
@@ -97,6 +104,7 @@
             this.Controls.Add(this.labelLogin);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxLogin);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form3";

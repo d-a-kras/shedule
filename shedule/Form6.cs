@@ -1,4 +1,5 @@
-﻿using shedule.Models;
+﻿using shedule.Code;
+using shedule.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,7 +41,7 @@ namespace schedule
 
         private void Form6_Load(object sender, EventArgs e)
         {
-            
+            Init.new_style(this);
             if (Program.listShops != null)
             {
                 foreach (mShop h in Program.listShops)
