@@ -1465,7 +1465,7 @@ namespace schedule
                 else {
                     Program.listShops = DBShop.ReadFromFile();
                 }
-              
+                Program.listShops = Program.listShops.OrderBy(t => t.getIdShop()).ToList();
 
             }
             catch (Exception ex)

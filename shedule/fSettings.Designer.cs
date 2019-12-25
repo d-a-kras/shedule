@@ -79,7 +79,7 @@
             // labelDBdefault
             // 
             this.labelDBdefault.AutoSize = true;
-            this.labelDBdefault.Location = new System.Drawing.Point(248, 178);
+            this.labelDBdefault.Location = new System.Drawing.Point(251, 183);
             this.labelDBdefault.Name = "labelDBdefault";
             this.labelDBdefault.Size = new System.Drawing.Size(0, 13);
             this.labelDBdefault.TabIndex = 13;
@@ -87,7 +87,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 204);
+            this.label3.Location = new System.Drawing.Point(10, 209);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(218, 13);
             this.label3.TabIndex = 12;
@@ -96,7 +96,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 178);
+            this.label2.Location = new System.Drawing.Point(10, 183);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(235, 13);
             this.label2.TabIndex = 11;
@@ -188,7 +188,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(231, 204);
+            this.label4.Location = new System.Drawing.Point(234, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 7;
@@ -218,7 +218,7 @@
             // buttonDBEdit
             // 
             this.buttonDBEdit.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.buttonDBEdit.Location = new System.Drawing.Point(792, 127);
+            this.buttonDBEdit.Location = new System.Drawing.Point(792, 132);
             this.buttonDBEdit.Name = "buttonDBEdit";
             this.buttonDBEdit.Size = new System.Drawing.Size(75, 23);
             this.buttonDBEdit.TabIndex = 4;
@@ -228,7 +228,7 @@
             // 
             // buttonDBAdd
             // 
-            this.buttonDBAdd.Location = new System.Drawing.Point(792, 156);
+            this.buttonDBAdd.Location = new System.Drawing.Point(792, 161);
             this.buttonDBAdd.Name = "buttonDBAdd";
             this.buttonDBAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonDBAdd.TabIndex = 5;
@@ -260,7 +260,7 @@
             // 
             this.buttonDefaultForShop.Location = new System.Drawing.Point(792, 60);
             this.buttonDefaultForShop.Name = "buttonDefaultForShop";
-            this.buttonDefaultForShop.Size = new System.Drawing.Size(75, 61);
+            this.buttonDefaultForShop.Size = new System.Drawing.Size(75, 66);
             this.buttonDefaultForShop.TabIndex = 8;
             this.buttonDefaultForShop.Text = "Сделать по умолчанию для магазина";
             this.buttonDefaultForShop.UseVisualStyleBackColor = true;

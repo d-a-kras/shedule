@@ -201,11 +201,11 @@ namespace schedule.Code
             List<VarSmen> DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Грузчик");
 
             List<VarSmen> DVS = DVS0.FindAll(t => t.getDeistvie() == true);
-            if (DVS.Count == 0)
+            if (DVS.Count == 0) 
             {
-                Exception ex = new Exception("Не выбрана ни одна смена у грузчиков");
+               // Exception ex = new Exception("Не выбрана ни одна смена у грузчиков");
                 MessageBox.Show("Не выбрана ни одна смена у грузчиков");
-                return;
+                //return;
             }
             List<VarSmen> DVS23 = DVS.FindAll(t => ((t.getR() == 2) || (t.getR() == 3)));
             List<VarSmen> DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
@@ -411,11 +411,11 @@ namespace schedule.Code
                 DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Продавец");
 
                 DVS = DVS0.FindAll(t => t.getDeistvie() == true);
-                if (DVS.Count == 0)
+                if ((DVS.Count == 0) && CountProd > 0)
                 {
-                    Exception ex = new Exception("Не выбрана ни одна смена у продавцов");
+                   // Exception ex = new Exception("Не выбрана ни одна смена у продавцов");
                     MessageBox.Show("Не выбрана ни одна смена у продавцов");
-                    return;
+                   // return;
                 }
                 DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
                 DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
@@ -493,11 +493,11 @@ namespace schedule.Code
 
                 DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Гастроном");
                 DVS = DVS0.FindAll(t => t.getDeistvie() == true);
-                if (DVS.Count == 0)
+                if ((DVS.Count == 0) && CountGastr > 0)
                 {
-                    Exception ex = new Exception("Не выбрана ни одна смена у гастрономов");
+                    //Exception ex = new Exception("Не выбрана ни одна смена у гастрономов");
                     MessageBox.Show("Не выбрана ни одна смена у гастрономов");
-                    return;
+                    //return;
                 }
                 DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
                 DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));
@@ -567,11 +567,11 @@ namespace schedule.Code
 
                 DVS0 = Program.currentShop.VarSmens.FindAll(t => t.getDolgnost() == "Кассир");
                 DVS = DVS0.FindAll(t => t.getDeistvie() == true);
-                if (DVS.Count == 0)
+                if ((DVS.Count == 0) && CountKassirov > 0)
                 {
-                    Exception ex = new Exception();
+                    //Exception ex = new Exception();
                     MessageBox.Show("Не выбрана ни одна смена у кассиров");
-                    return;
+                   // return;
                 }
                 DVS2 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3)));
                 DVS3 = DVS.FindAll(t => !((t.getR() == 2) || (t.getR() == 3) || (t.getR() == 4)));

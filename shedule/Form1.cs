@@ -1747,17 +1747,19 @@ namespace schedule
 
         public void CheckMShops() {
             if (Program.shops.Count==0) {
-                buttonReadMGraf.BackColor = Color.White;
+               // buttonReadMGraf.BackColor = Color.White;
                 return;
             }
             foreach (Shop shop in Program.shops) {
                 String s;
                 if (!Program.GrafM.TryGetValue(shop.getIdShopFM(), out s)) {
                     buttonReadMGraf.BackColor = Color.Yellow;
+                    buttonReadMGraf.ForeColor = Color.Black;
                     return;
                 }
             }
             buttonReadMGraf.BackColor = Color.Green;
+            buttonReadMGraf.ForeColor = Color.Black;
         }
 
         private void buttonMadd_Click(object sender, EventArgs e)
@@ -1871,7 +1873,8 @@ namespace schedule
                     buttonExport1.Enabled = true;  buttonExport1.BackColor = Constants.buttonColor;
                     button14.Enabled = true; button14.BackColor = Constants.buttonColor; comboBoxCountSotr.Visible = true; labelCountSotr.Visible = true; if ((Program.currentShop.Semployes != null) && (Program.currentShop.Semployes.Count > 0) && (Program.currentShop.Semployes[0].smens.Count == 0))
                     {
-                        button14.BackColor = Color.PaleGreen;
+                        button14.BackColor = Color.LightGreen;
+                        button14.ForeColor = Color.Black;
                         checkBox2.Visible = false;
                         comboBoxCountSotr.Items.Clear();
                         comboBoxCountSotr.Items.Add("штатного расписания");
@@ -1880,7 +1883,8 @@ namespace schedule
                     }
                     else
                     {
-                        button14.BackColor = Color.LightYellow;
+                        button14.BackColor = Color.Yellow;
+                        button14.ForeColor = Color.Black;
                         checkBox2.Visible = true;
                         comboBoxCountSotr.Items.Clear();
                         comboBoxCountSotr.Items.Add("штатного расписания");
@@ -2029,7 +2033,7 @@ namespace schedule
 
             {
                 case 0:
-                    saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
+                    saveFileDialog1.FileName = "График_"+ Program.currentShop.getIdShop()+"_"+ Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(1).Month);
 
                     Program.TipExporta = 0;
@@ -2047,7 +2051,7 @@ namespace schedule
                     Program.TipExporta = 3;
                     break;
                 case 4:
-                    saveFileDialog1.FileName = "График_" + Program.currentShop.getAddress() + "_" +
+                    saveFileDialog1.FileName = "График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(0).Month);
 
                     Program.TipExporta = 4;
@@ -2551,7 +2555,7 @@ namespace schedule
                 {
                     case 0:
                         {
-                            filename = Environment.CurrentDirectory + @"\mult\" + "График_" + Program.currentShop.getAddress() + "_" +
+                            filename = Environment.CurrentDirectory + @"\mult\" + "График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(1).Month) + ".xlsx";
                             try
                             {
@@ -2862,7 +2866,7 @@ namespace schedule
                         }
                     case 3:
                         {
-                            filename = Environment.CurrentDirectory + @"\mult\" + "График_" + Program.currentShop.getAddress() + "_" +
+                            filename = Environment.CurrentDirectory + @"\mult\" + "График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
                             try
                             {
@@ -2875,7 +2879,7 @@ namespace schedule
                                     Program.currentShop.SortSotr = 0;
                                 }
 
-                                string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
+                                string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
                                            Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
 
                                 if (!File.Exists(fc))
@@ -4072,7 +4076,7 @@ namespace schedule
                         Program.currentShop.setIdShop(shop.getIdShopFM());
                         Program.currentShop.setAdresShop(shop.getAddress());
                         Program.GrafM = new Dictionary<int, string>();
-                        string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_" + Program.currentShop.getAddress() + "_" +
+                        string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_"+shop.getIdShopFM()+"_" + Program.currentShop.getAddress() + "_" +
                                                       Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
                         while (!File.Exists(fc))
                         {
@@ -4102,6 +4106,7 @@ namespace schedule
                     }
                     MessageBox.Show("Считывание графиков завершено успешно");
                     buttonReadMGraf.BackColor = Color.Green;
+                    buttonReadMGraf.ForeColor = Color.Black;
                 }
                 catch (Exception ex)
                 {
@@ -4162,6 +4167,11 @@ namespace schedule
         }
 
         private void progressBar3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

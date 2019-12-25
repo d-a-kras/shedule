@@ -10,8 +10,8 @@ namespace schedule.Code
     public static class Constants
     {
         public const string ListName = "График";
-        public const string Version = "1.4.3";
-        public const string ReleaseDate = "15.12.2019";
+        public const string Version = "1.4.7";
+        public const string ReleaseDate = "24.12.2019";
         public const bool IsThrowExceptionOnNullResult = true; //будет ли программа порождать исключение если из базы вернулось 0 результатов
 
         #region цвета
@@ -19,6 +19,7 @@ namespace schedule.Code
         public static Color selectedButtonColor = Color.FromArgb(51, 0, 153);
         public static Color formColor = Color.SteelBlue;
         public static Color backColor = Color.Azure;
+        public static Color comboBoxColor = Color.FromArgb(150, 203, 255);
         #endregion
 
     }

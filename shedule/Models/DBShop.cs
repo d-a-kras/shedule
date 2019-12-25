@@ -106,17 +106,24 @@ namespace schedule.Models
                 db = new Models.ApplicationContext();
                 db.DBShops.Load();
                 BindingList<DBShop> DataContext = db.DBShops.Local.ToBindingList();
-                List<DBShop> dBShops = db.DBShops.ToList();
-                foreach (var shop in dBShops) {
-                    db.DBShops.Remove(shop);
-                }
+
                 foreach (var shop in listShop)
                 {
+                    int shopId = shop.getIdShop();
+                    DBShop dBShop = db.DBShops.FirstOrDefault(t => t.shopid == shopId);
+                    if (dBShop!=null) {
+                        db.DBShops.Remove(dBShop); 
+                    }
                     db.DBShops.Add(DBShop.convertDBShop(shop));
                 }
                 db.SaveChanges();
-
-
+                Program.listShops.Clear();
+                List<DBShop> dBShops = db.DBShops.ToList();
+                foreach (var sh in dBShops) {
+                    var h = new mShop(sh.shopid, sh.address);
+                    Program.listShops.Add(h);
+                }
+                Program.listShops = Program.listShops.OrderBy(t => t.getIdShop()).ToList();
             }
             catch (Exception ex)
             {
@@ -170,7 +177,14 @@ namespace schedule.Models
 
         public static DBShop convertDBShop(mShop shop)
         {
-            return new DBShop(shop.getIdShop(), shop.getAddress(), Connection.getActiveConnection(Program.currentShop.getIdShop()).Id );
+            
+            DBShop newshop=new DBShop(shop.getIdShop(), shop.getAddress(), Connection.getActiveConnection(shop.getIdShop()).Id);
+            if (shop.getAddress().IndexOf("SET10") > -1)
+            {
+                newshop.connectionId = 2;
+            }
+            
+            return newshop;
         }
 
         public static int getConnection(int Id)

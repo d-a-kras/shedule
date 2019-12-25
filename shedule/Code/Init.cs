@@ -125,22 +125,33 @@ namespace shedule.Code
                 {
                     ((Button)element).BackColor = Constants.buttonColor;
                     ((Button)element).FlatStyle = FlatStyle.Flat;
-                    ((Button)element).ForeColor = Constants.backColor;
+                   // if (element.Name!="buttonReadMGraf") {
+                        ((Button)element).ForeColor = Constants.backColor; 
+                   // }
                     ((Button)element).Font = new Font("Yu Gothic Ul Semibold", 7);
                     if ((element.Name == "button14") || (element.Name == "button6") || (element.Name == "buttonExport1"))
                     {
                         element.BackColor = Color.Gray;
                         element.Enabled = false;
+                        ((Button)element).Font = new Font("Yu Gothic Ul Semibold", 9);
                     }
-                }else if (element is Label){
-                    ((Label)element).ForeColor = Constants.backColor;
+                }else if (element is Label && element.Name!= "label9")
+                {
+                    if (element.Name != "label4" && element.Name!= "label5" && element.Name != "label3")
+                    {
+                        ((Label)element).ForeColor = Constants.backColor;
+                    }
+                    
                     if (element.Name!="label17" && element.Name != "lbCurrentVersion") {
                         ((Label)element).Font = new Font("Yu Gothic Ul Semibold", 9, FontStyle.Bold); 
                     }
+                   
                 }
                 else if (element is ComboBox)
                 {
-                    ((ComboBox)element).BackColor = Constants.backColor;//Color.FromArgb(92, 181, 197);
+                    
+                    ((ComboBox)element).BackColor = Constants.comboBoxColor;//Color.FromArgb(92, 181, 197);
+                    
                 }
                 else if (element is ListBox)
                 {

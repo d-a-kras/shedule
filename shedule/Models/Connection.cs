@@ -183,16 +183,12 @@ namespace schedule.Models
                     DBShop shop = db.DBShops.First(t=>t.shopid==shopid);
                     connectionId=shop.connectionId;
                 }
-                Connection con;
-                if (connectionId==0) {
+                Connection con = db.Connections.Find(connectionId);
+                if ((connectionId==0)||(con==null)) {
                     con = db.Connections.First(t => t.IsActive == true);
                 }
-                else {
-                    con = db.Connections.Find(connectionId);
-                }
+                
                 return con;
-
-
             }
             catch (Exception ex)
             {
