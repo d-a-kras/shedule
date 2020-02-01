@@ -33,7 +33,7 @@ namespace schedule.Code
                         ((NpgsqlConnection)connection).Open();
                         (command).Connection = (NpgsqlConnection)connection;
                         (command).CommandText = sql;
-                        (command).CommandTimeout = 3000;
+                        (command).CommandTimeout = 5000;
                         using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -53,7 +53,7 @@ namespace schedule.Code
                         ((SqlConnection)connection).Open();
                         (command).Connection = (SqlConnection)connection;
                         (command).CommandText = sql;
-                        (command).CommandTimeout = 3000;
+                        (command).CommandTimeout = 5000;
                         using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())

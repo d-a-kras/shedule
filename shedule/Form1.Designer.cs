@@ -823,9 +823,9 @@ namespace schedule
             this.panelUpravlenie.Controls.Add(this.buttonParamOptimiz);
             this.panelUpravlenie.Controls.Add(this.buttonVariantsSmen);
             this.panelUpravlenie.Controls.Add(this.buttonFactors);
-            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Controls.Add(this.panelDopusVarSmen);
             this.panelUpravlenie.Controls.Add(this.panelFactors);
+            this.panelUpravlenie.Controls.Add(this.panelParamOptim);
             this.panelUpravlenie.Location = new System.Drawing.Point(6, 6);
             this.panelUpravlenie.Name = "panelUpravlenie";
             this.panelUpravlenie.Size = new System.Drawing.Size(498, 352);
@@ -1011,7 +1011,7 @@ namespace schedule
             "продавцов",
             "грузчиков",
             "гастрономов"});
-            this.comboBox4.Location = new System.Drawing.Point(116, 6);
+            this.comboBox4.Location = new System.Drawing.Point(153, 4);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(121, 21);
             this.comboBox4.TabIndex = 19;
@@ -1020,37 +1020,37 @@ namespace schedule
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(360, 105);
+            this.label19.Location = new System.Drawing.Point(354, 105);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(59, 13);
+            this.label19.Size = new System.Drawing.Size(99, 13);
             this.label19.TabIndex = 18;
-            this.label19.Text = "магазина.";
+            this.label19.Text = "работы магазина.";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(360, 87);
+            this.label18.Location = new System.Drawing.Point(354, 89);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(85, 13);
+            this.label18.Size = new System.Drawing.Size(89, 13);
             this.label18.TabIndex = 17;
-            this.label18.Text = "начала работы ";
+            this.label18.Text = "времени начала";
             this.label18.Click += new System.EventHandler(this.label18_Click);
             // 
             // labelMinRabCount
             // 
             this.labelMinRabCount.AutoSize = true;
-            this.labelMinRabCount.Location = new System.Drawing.Point(360, 67);
+            this.labelMinRabCount.Location = new System.Drawing.Point(354, 69);
             this.labelMinRabCount.Name = "labelMinRabCount";
             this.labelMinRabCount.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelMinRabCount.Size = new System.Drawing.Size(114, 13);
+            this.labelMinRabCount.Size = new System.Drawing.Size(64, 13);
             this.labelMinRabCount.TabIndex = 16;
-            this.labelMinRabCount.Text = "кассиров с времени ";
+            this.labelMinRabCount.Text = "кассиров с";
             this.labelMinRabCount.Click += new System.EventHandler(this.labelMinRabCount_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(440, 49);
+            this.label7.Location = new System.Drawing.Point(447, 51);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(27, 13);
             this.label7.TabIndex = 15;
@@ -1068,7 +1068,7 @@ namespace schedule
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(278, 219);
+            this.textBox5.Location = new System.Drawing.Point(304, 226);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(50, 20);
             this.textBox5.TabIndex = 13;
@@ -1078,7 +1078,7 @@ namespace schedule
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(278, 197);
+            this.textBox4.Location = new System.Drawing.Point(304, 201);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(50, 20);
             this.textBox4.TabIndex = 12;
@@ -1108,7 +1108,7 @@ namespace schedule
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(278, 175);
+            this.textBox3.Location = new System.Drawing.Point(305, 175);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(50, 20);
             this.textBox3.TabIndex = 9;
@@ -1128,9 +1128,9 @@ namespace schedule
             // 
             // tbMinRabCount
             // 
-            this.tbMinRabCount.Location = new System.Drawing.Point(413, 41);
+            this.tbMinRabCount.Location = new System.Drawing.Point(431, 46);
             this.tbMinRabCount.Name = "tbMinRabCount";
-            this.tbMinRabCount.Size = new System.Drawing.Size(22, 20);
+            this.tbMinRabCount.Size = new System.Drawing.Size(13, 20);
             this.tbMinRabCount.TabIndex = 4;
             this.tbMinRabCount.TextChanged += new System.EventHandler(this.tbKassirCount_TextChanged);
             this.tbMinRabCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbKassirCount_KeyPress);
@@ -1139,7 +1139,7 @@ namespace schedule
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(360, 49);
+            this.label6.Location = new System.Drawing.Point(354, 49);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(56, 13);
             this.label6.TabIndex = 3;
@@ -1247,7 +1247,7 @@ namespace schedule
             "прогноза продаж",
             "штатного расписания",
             "загруженного графика"});
-            this.comboBoxCountSotr.Location = new System.Drawing.Point(280, 296);
+            this.comboBoxCountSotr.Location = new System.Drawing.Point(273, 295);
             this.comboBoxCountSotr.Name = "comboBoxCountSotr";
             this.comboBoxCountSotr.Size = new System.Drawing.Size(158, 21);
             this.comboBoxCountSotr.TabIndex = 16;

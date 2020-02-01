@@ -1210,7 +1210,7 @@ namespace schedule
               */
 
             tbMinRabCount.Text= MinRab.Read(EmployeeType.Cashier, Program.currentShop.getIdShop()).getMinCount().ToString();
-            labelMinRabCount.Text = comboBox4.Text + " с времени";
+            labelMinRabCount.Text = comboBox4.Text + " с";
 
         }
 
@@ -2033,7 +2033,7 @@ namespace schedule
 
             {
                 case 0:
-                    saveFileDialog1.FileName = "График_"+ Program.currentShop.getIdShop()+"_"+ Program.currentShop.getAddress() + "_" +
+                    saveFileDialog1.FileName = "График_"+ Program.currentShop.getIdShop()+"-Лев-"+ Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(1).Month);
 
                     Program.TipExporta = 0;
@@ -2555,7 +2555,7 @@ namespace schedule
                 {
                     case 0:
                         {
-                            filename = Environment.CurrentDirectory + @"\mult\" + "График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
+                            filename = Environment.CurrentDirectory + @"\mult\" + "График_"+Program.currentShop.getIdShop() + "-Лев-" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(1).Month) + ".xlsx";
                             try
                             {
@@ -2866,7 +2866,7 @@ namespace schedule
                         }
                     case 3:
                         {
-                            filename = Environment.CurrentDirectory + @"\mult\" + "График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
+                            filename = Environment.CurrentDirectory + @"\mult\" + "График_"+Program.currentShop.getIdShop() + "-Лев-" + Program.currentShop.getAddress() + "_" +
                                                Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
                             try
                             {
@@ -2879,7 +2879,7 @@ namespace schedule
                                     Program.currentShop.SortSotr = 0;
                                 }
 
-                                string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_"+Program.currentShop.getIdShop() + "_" + Program.currentShop.getAddress() + "_" +
+                                string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_"+Program.currentShop.getIdShop() + "-Лев-" + Program.currentShop.getAddress() + "_" +
                                            Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
 
                                 if (!File.Exists(fc))
@@ -4007,7 +4007,7 @@ namespace schedule
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataGridViewVarSmen.DataSource = viewVarSmen(false);
-            labelMinRabCount.Text = comboBox4.Text + " с времени";
+            labelMinRabCount.Text = comboBox4.Text + " с";
             EmployeeType employeeType = MinRab.getType(comboBox4.Text);
             tbMinRabCount.Text = MinRab.Read(employeeType, Program.currentShop.getIdShop()).getMinCount().ToString();
         }
@@ -4076,7 +4076,7 @@ namespace schedule
                         Program.currentShop.setIdShop(shop.getIdShopFM());
                         Program.currentShop.setAdresShop(shop.getAddress());
                         Program.GrafM = new Dictionary<int, string>();
-                        string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_"+shop.getIdShopFM()+"_" + Program.currentShop.getAddress() + "_" +
+                        string fc = Environment.CurrentDirectory + @"\Shops\" + shop.getIdShopFM() + "\\График_"+shop.getIdShopFM()+ "-Лев-" + Program.currentShop.getAddress() + "_" +
                                                       Program.getMonths(DateTime.Now.AddMonths(0).Month) + ".xlsx";
                         while (!File.Exists(fc))
                         {

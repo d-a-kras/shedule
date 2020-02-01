@@ -36,18 +36,18 @@
             this.textBoxStart = new System.Windows.Forms.TextBox();
             this.textBoxEnd = new System.Windows.Forms.TextBox();
             this.dataGridViewCalendar = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.labelM1 = new System.Windows.Forms.Label();
+            this.labelM2 = new System.Windows.Forms.Label();
+            this.labelM3 = new System.Windows.Forms.Label();
+            this.labelM4 = new System.Windows.Forms.Label();
+            this.labelM5 = new System.Windows.Forms.Label();
+            this.labelM6 = new System.Windows.Forms.Label();
+            this.labelM7 = new System.Windows.Forms.Label();
+            this.labelM8 = new System.Windows.Forms.Label();
+            this.labelM9 = new System.Windows.Forms.Label();
+            this.labelM10 = new System.Windows.Forms.Label();
+            this.labelM11 = new System.Windows.Forms.Label();
+            this.labelM12 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -152,125 +152,125 @@
             this.dataGridViewCalendar.CellErrorTextChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCalendar_CellErrorTextChanged);
             this.dataGridViewCalendar.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewCalendar_DataError);
             // 
-            // label3
+            // labelM1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label3.Location = new System.Drawing.Point(69, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 20);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Январь";
+            this.labelM1.AutoSize = true;
+            this.labelM1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM1.Location = new System.Drawing.Point(69, 0);
+            this.labelM1.Name = "labelM1";
+            this.labelM1.Size = new System.Drawing.Size(72, 20);
+            this.labelM1.TabIndex = 11;
+            this.labelM1.Text = "Январь";
             // 
-            // label4
+            // labelM2
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label4.Location = new System.Drawing.Point(251, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 20);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Февраль";
+            this.labelM2.AutoSize = true;
+            this.labelM2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM2.Location = new System.Drawing.Point(251, 0);
+            this.labelM2.Name = "labelM2";
+            this.labelM2.Size = new System.Drawing.Size(85, 20);
+            this.labelM2.TabIndex = 12;
+            this.labelM2.Text = "Февраль";
             // 
-            // label5
+            // labelM3
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label5.Location = new System.Drawing.Point(453, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 20);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Март";
+            this.labelM3.AutoSize = true;
+            this.labelM3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM3.Location = new System.Drawing.Point(453, 0);
+            this.labelM3.Name = "labelM3";
+            this.labelM3.Size = new System.Drawing.Size(53, 20);
+            this.labelM3.TabIndex = 13;
+            this.labelM3.Text = "Март";
             // 
-            // label6
+            // labelM4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label6.Location = new System.Drawing.Point(641, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(71, 20);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Апрель";
+            this.labelM4.AutoSize = true;
+            this.labelM4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM4.Location = new System.Drawing.Point(641, 0);
+            this.labelM4.Name = "labelM4";
+            this.labelM4.Size = new System.Drawing.Size(71, 20);
+            this.labelM4.TabIndex = 14;
+            this.labelM4.Text = "Апрель";
             // 
-            // label7
+            // labelM5
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label7.Location = new System.Drawing.Point(77, 137);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(43, 20);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "Май";
+            this.labelM5.AutoSize = true;
+            this.labelM5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM5.Location = new System.Drawing.Point(77, 137);
+            this.labelM5.Name = "labelM5";
+            this.labelM5.Size = new System.Drawing.Size(43, 20);
+            this.labelM5.TabIndex = 15;
+            this.labelM5.Text = "Май";
             // 
-            // label8
+            // labelM6
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label8.Location = new System.Drawing.Point(266, 137);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 20);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Июнь";
+            this.labelM6.AutoSize = true;
+            this.labelM6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM6.Location = new System.Drawing.Point(266, 137);
+            this.labelM6.Name = "labelM6";
+            this.labelM6.Size = new System.Drawing.Size(53, 20);
+            this.labelM6.TabIndex = 16;
+            this.labelM6.Text = "Июнь";
             // 
-            // label9
+            // labelM7
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label9.Location = new System.Drawing.Point(444, 137);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 20);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Июль";
+            this.labelM7.AutoSize = true;
+            this.labelM7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM7.Location = new System.Drawing.Point(444, 137);
+            this.labelM7.Name = "labelM7";
+            this.labelM7.Size = new System.Drawing.Size(53, 20);
+            this.labelM7.TabIndex = 17;
+            this.labelM7.Text = "Июль";
             // 
-            // label10
+            // labelM8
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label10.Location = new System.Drawing.Point(641, 137);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(66, 20);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Август";
+            this.labelM8.AutoSize = true;
+            this.labelM8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM8.Location = new System.Drawing.Point(641, 137);
+            this.labelM8.Name = "labelM8";
+            this.labelM8.Size = new System.Drawing.Size(66, 20);
+            this.labelM8.TabIndex = 18;
+            this.labelM8.Text = "Август";
             // 
-            // label11
+            // labelM9
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label11.Location = new System.Drawing.Point(60, 277);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 20);
-            this.label11.TabIndex = 19;
-            this.label11.Text = "Сентябрь";
+            this.labelM9.AutoSize = true;
+            this.labelM9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM9.Location = new System.Drawing.Point(60, 277);
+            this.labelM9.Name = "labelM9";
+            this.labelM9.Size = new System.Drawing.Size(91, 20);
+            this.labelM9.TabIndex = 19;
+            this.labelM9.Text = "Сентябрь";
             // 
-            // label12
+            // labelM10
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label12.Location = new System.Drawing.Point(251, 277);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(81, 20);
-            this.label12.TabIndex = 20;
-            this.label12.Text = "Октябрь";
+            this.labelM10.AutoSize = true;
+            this.labelM10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM10.Location = new System.Drawing.Point(251, 277);
+            this.labelM10.Name = "labelM10";
+            this.labelM10.Size = new System.Drawing.Size(81, 20);
+            this.labelM10.TabIndex = 20;
+            this.labelM10.Text = "Октябрь";
             // 
-            // label13
+            // labelM11
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label13.Location = new System.Drawing.Point(444, 277);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(72, 20);
-            this.label13.TabIndex = 21;
-            this.label13.Text = "Ноябрь";
+            this.labelM11.AutoSize = true;
+            this.labelM11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM11.Location = new System.Drawing.Point(444, 277);
+            this.labelM11.Name = "labelM11";
+            this.labelM11.Size = new System.Drawing.Size(72, 20);
+            this.labelM11.TabIndex = 21;
+            this.labelM11.Text = "Ноябрь";
             // 
-            // label14
+            // labelM12
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
-            this.label14.Location = new System.Drawing.Point(631, 277);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(81, 20);
-            this.label14.TabIndex = 22;
-            this.label14.Text = "Декабрь";
+            this.labelM12.AutoSize = true;
+            this.labelM12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.labelM12.Location = new System.Drawing.Point(631, 277);
+            this.labelM12.Name = "labelM12";
+            this.labelM12.Size = new System.Drawing.Size(81, 20);
+            this.labelM12.TabIndex = 22;
+            this.labelM12.Text = "Декабрь";
             // 
             // tableLayoutPanel1
             // 
@@ -639,18 +639,18 @@
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelM12);
+            this.Controls.Add(this.labelM11);
+            this.Controls.Add(this.labelM10);
+            this.Controls.Add(this.labelM9);
+            this.Controls.Add(this.labelM8);
+            this.Controls.Add(this.labelM7);
+            this.Controls.Add(this.labelM6);
+            this.Controls.Add(this.labelM5);
+            this.Controls.Add(this.labelM4);
+            this.Controls.Add(this.labelM3);
+            this.Controls.Add(this.labelM2);
+            this.Controls.Add(this.labelM1);
             this.Controls.Add(this.dataGridViewCalendar);
             this.Controls.Add(this.textBoxEnd);
             this.Controls.Add(this.textBoxStart);
@@ -679,18 +679,18 @@
         private System.Windows.Forms.TextBox textBoxStart;
         private System.Windows.Forms.TextBox textBoxEnd;
         private System.Windows.Forms.DataGridView dataGridViewCalendar;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label labelM1;
+        private System.Windows.Forms.Label labelM2;
+        private System.Windows.Forms.Label labelM3;
+        private System.Windows.Forms.Label labelM4;
+        private System.Windows.Forms.Label labelM5;
+        private System.Windows.Forms.Label labelM6;
+        private System.Windows.Forms.Label labelM7;
+        private System.Windows.Forms.Label labelM8;
+        private System.Windows.Forms.Label labelM9;
+        private System.Windows.Forms.Label labelM10;
+        private System.Windows.Forms.Label labelM11;
+        private System.Windows.Forms.Label labelM12;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;

@@ -135,9 +135,12 @@ namespace shedule.Code
                         element.Enabled = false;
                         ((Button)element).Font = new Font("Yu Gothic Ul Semibold", 9);
                     }
-                }else if (element is Label && element.Name!= "label9")
+                }else if (element is Label && element.Name!= "label9" && element.Name != "labelCountSotr")
                 {
-                    if (element.Name != "label4" && element.Name!= "label5" && element.Name != "label3")
+                    if (element.Name != "label4" && element.Name!= "label5" && element.Name != "label3" 
+                        && element.Name != "label1" && element.Name != "label6" && element.Name != "label7" && element.Name != "labelMinRabCount" 
+                        && element.Name != "label18" && element.Name != "label19" && element.Name != "label12" 
+                        && element.Name != "label13" && element.Name != "label15")
                     {
                         ((Label)element).ForeColor = Constants.backColor;
                     }

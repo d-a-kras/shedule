@@ -79,7 +79,7 @@
             // labelDBdefault
             // 
             this.labelDBdefault.AutoSize = true;
-            this.labelDBdefault.Location = new System.Drawing.Point(251, 183);
+            this.labelDBdefault.Location = new System.Drawing.Point(312, 183);
             this.labelDBdefault.Name = "labelDBdefault";
             this.labelDBdefault.Size = new System.Drawing.Size(0, 13);
             this.labelDBdefault.TabIndex = 13;
@@ -188,7 +188,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(234, 209);
+            this.label4.Location = new System.Drawing.Point(283, 209);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 7;
@@ -265,10 +265,6 @@
             this.buttonDefaultForShop.Text = "Сделать по умолчанию для магазина";
             this.buttonDefaultForShop.UseVisualStyleBackColor = true;
             this.buttonDefaultForShop.Click += new System.EventHandler(this.button4_Click_2);
-            // 
-            // form1BindingSource
-            // 
-            this.form1BindingSource.DataSource = typeof(schedule.Form1);
             // 
             // fSettings
             // 

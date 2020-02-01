@@ -908,11 +908,16 @@ namespace schedule.Code
                                     e1 = e.Find(t => t.TipTekSmen == 0);
                                 }
 
-                                e1.TipTekSmen = 1;
+                                if (e1!=null) {
+                                    e1.TipTekSmen = 1; 
+                                }
                                 if (emplo.FindAll(t => t.IdEmployee2 == e1.IdEmployee2).Count() > 1)
                                 {
                                     var e2 = emplo.Find(t => (t.IdEmployee2 == e1.IdEmployee2) && (t.getID() != e1.getID()));
-                                    e2.TipTekSmen = 1;
+                                    if (e2 != null)
+                                    {
+                                        e2.TipTekSmen = 1;
+                                    }
                                 }
                                 nu--;
                             }
@@ -929,11 +934,16 @@ namespace schedule.Code
                                     e1 = e.Find(t => t.TipTekSmen == 0);
 
                                 }
-                                e1.TipTekSmen = 3;
+                                if(e1!=null) {
+                                    e1.TipTekSmen = 3; 
+                                }
                                 if (emplo.FindAll(t => t.IdEmployee2 == e1.IdEmployee2).Count() > 1)
                                 {
                                     var e2 = emplo.Find(t => (t.IdEmployee2 == e1.IdEmployee2) && (t.getID() != e1.getID()));
-                                    e2.TipTekSmen = 3;
+                                    if (e2 != null)
+                                    {
+                                        e2.TipTekSmen = 3;
+                                    }
                                 }
                                 nv--;
                             }

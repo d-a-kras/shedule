@@ -183,10 +183,14 @@ namespace schedule.Models
                 forecasts1 = db.Forecasts.Where(t => t.shopId == shopId).ToList();
                 List< DateTime> dates = new List< DateTime>();
                 DateTime now = DateTime.Now;
-                dates.Add( new DateTime(now.Year, now.AddMonths(-1).Month, 1));
-                dates.Add( new DateTime(now.Year, now.AddMonths(-2).Month, 1));
-                dates.Add( new DateTime(now.Year, now.AddMonths(-3).Month, 1));
-                dates.Add( new DateTime(now.AddYears(-1).Year, now.AddMonths(1).Month, 1));
+                DateTime datatemp = now.AddMonths(-1);
+                dates.Add( new DateTime(datatemp.Year, datatemp.Month, 1));
+                datatemp = now.AddMonths(-2);
+                dates.Add( new DateTime(datatemp.Year, datatemp.Month, 1));
+                datatemp = now.AddMonths(-3);
+                dates.Add( new DateTime(datatemp.Year, datatemp.Month, 1));
+                datatemp = now.AddMonths(-12);
+                dates.Add( new DateTime(datatemp.Year, datatemp.Month, 1));
 
 
                 temp= forecasts1.FindAll(t => 
