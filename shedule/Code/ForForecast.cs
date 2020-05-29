@@ -283,7 +283,7 @@ namespace schedule.Code
                 Forecast.CreateOrUpdate(forecastfordb);
             }
 
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 9; i++)
             {
                 for (int j = 7; j < 24; j++)
                 {
@@ -292,7 +292,7 @@ namespace schedule.Code
                     if (tempforecasts.Count > 0) {
 
                         temp.Add(ActualPrognoz(tempforecasts));
-                        if (PDSs.ElementAtOrDefault(i).hoursSale.Find(t => t.getIntHour() == j) == null)
+                        if (PDSs.ElementAtOrDefault(i) != null && PDSs.ElementAtOrDefault(i).hoursSale.Find(t => t.getIntHour() == j) == null)
                         {
                             PDSs.ElementAtOrDefault(i).hoursSale.Add(new hourSale(shopId, new DateTime(), j.ToString(), temp.Find(t => t.hour == j && t.dayType == i).countCheques, temp.Find(t => t.hour == j && t.dayType == i).countClick));
                         }
