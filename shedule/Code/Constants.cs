@@ -10,8 +10,8 @@ namespace schedule.Code
     public static class Constants
     {
         public const string ListName = "График";
-        public const string Version = "1.4.10";
-        public const string ReleaseDate = "27.05.2020";
+        public const string Version = "1.4.11";
+        public const string ReleaseDate = "25.08.2020";
         public const bool IsThrowExceptionOnNullResult = true; //будет ли программа порождать исключение если из базы вернулось 0 результатов
 
         #region цвета

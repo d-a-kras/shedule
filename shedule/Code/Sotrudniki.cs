@@ -911,7 +911,7 @@ namespace schedule.Code
                                 if (e1!=null) {
                                     e1.TipTekSmen = 1; 
                                 }
-                                if (emplo.FindAll(t => t.IdEmployee2 == e1.IdEmployee2).Count() > 1)
+                                if (e1!=null && emplo.FindAll(t => t.IdEmployee2 == e1.IdEmployee2).Count() > 1)
                                 {
                                     var e2 = emplo.Find(t => (t.IdEmployee2 == e1.IdEmployee2) && (t.getID() != e1.getID()));
                                     if (e2 != null)

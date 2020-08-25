@@ -62,11 +62,11 @@ namespace schedule
             textBoxStart.Enabled = false;
 
             dataGridViewCalendar.DataSource = CreateTable(calendarYear);
-            if (calendarYear==DateTime.Now.Year) {
+          /*  if (calendarYear==DateTime.Now.Year) {
                 for (int i = 0; i < DateTime.Now.Month; i++)
                 {
                     dataGridViewCalendar.Rows[i].Cells[4].ReadOnly = true;
-                } }
+                } }*/
             dataGridViewCalendar.Columns[0].ReadOnly = true;
             dataGridViewCalendar.Columns[1].ReadOnly = true;
             dataGridViewCalendar.Columns[2].ReadOnly = true;
